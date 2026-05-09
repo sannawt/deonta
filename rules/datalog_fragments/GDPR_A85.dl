@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A85 provision_id=G121
+// GDPR_A85 — Processing, freedom of expression (chapeau)
+gdpr_scope_article('gdpr_a85', 'reconcile_with_freedom_of_expression').
+

@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A52.1 provision_id=A198
+// AIAct_A52_P1 — provider notifies Commission within 2 weeks
+obligation(P, X, 'notify_commission_within_2_weeks') :- provider(P, X), gpai_model(X), has_feature(X, 'compute_above_10e25').
+// Commission may designate sua sponte
+commission_power('ai_act', 'a52_p1', 'designate_systemic_risk_sua_sponte').
+

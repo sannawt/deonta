@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A52.5 provision_id=A202
+// AIAct_A52_P5 — provider may request reassessment after 6 months
+provider_right(P, X, 'request_reassessment_after_6_months') :- provider(P, X), gpai_systemic_risk(X).
+

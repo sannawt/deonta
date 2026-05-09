@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A51.1.b provision_id=A193
+// AIAct_A51_P1_PT_b
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+

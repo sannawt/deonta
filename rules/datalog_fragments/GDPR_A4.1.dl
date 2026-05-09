@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_A4.1 provision_id=G040
+// GDPR_A4_P1 — 'personal data'
+personal_data(X) :- concerns(X, A), natural_person(A), identifies(X, A).
+personal_data(X) :- concerns(X, A), natural_person(A), identifiable(X, A).
+identifies(X, A) :- contains_identifier(X, 'name', A).
+identifies(X, A) :- contains_identifier(X, 'id_number', A).
+identifies(X, A) :- contains_identifier(X, 'location_data', A).
+identifies(X, A) :- contains_identifier(X, 'online_identifier', A).
+identifiable(X, A) :- contains_factor(X, 'physical', A) | contains_factor(X, 'physiological', A) | contains_factor(X, 'genetic', A) | contains_factor(X, 'mental', A) | contains_factor(X, 'economic', A) | contains_factor(X, 'cultural', A) | contains_factor(X, 'social', A).
+

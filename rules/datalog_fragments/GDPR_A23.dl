@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23 provision_id=G092
+// GDPR_A23 — Restrictions chapeau
+gdpr_scope_article('gdpr_a23', 'restrictions_member_state_law').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.59 provision_id=A108
+// AIAct_A3_P59 — 'informed consent' (testing)
+informed_consent_testing(P, S) :- freely_given(P, S), specific(P, S, _), unambiguous(P, S), voluntary(P, S), informed_about_relevant_aspects(P, S).
+

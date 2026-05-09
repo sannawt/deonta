@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2.1.d provision_id=A027
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- importer(A, S), places_on_eu_market(A, S).
+
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- distributor(A, S), made_available_on_market(S, 'eu').
+

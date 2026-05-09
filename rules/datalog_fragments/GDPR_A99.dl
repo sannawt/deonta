@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A99 provision_id=G147
+// GDPR_A99 — Entry into force and application (chapeau)
+gdpr_scope_article('gdpr_a99', 'entry_into_force_and_application').
+

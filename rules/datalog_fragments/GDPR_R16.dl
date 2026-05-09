@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R16 provision_id=G003
+// GDPR_R16 — RECITAL — exclusion: outside Union law / national security
+gdpr_excluded(S) :- activity_outside_union_law(S).
+
+// GDPR_R16 — RECITAL — exclusion: CFSP (Title V Ch.2 TEU)
+gdpr_excluded(S) :- cfsp_activity(S).
+
+// GDPR_R16 — RECITAL — narrative aid
+recital_principle('gdpr', 'r16', 'no_application_outside_union_law').
+

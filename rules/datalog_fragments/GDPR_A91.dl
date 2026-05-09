@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A91 provision_id=G139
+// GDPR_A91 — Churches and religious associations (chapeau)
+gdpr_scope_article('gdpr_a91', 'churches_religious_associations').
+

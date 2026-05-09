@@ -1,0 +1,98 @@
+[
+  {
+    "Term": "MATERIAL",
+    "Meaning": "Tests whether the activity / artefact substantively falls within the law (what?)."
+  },
+  {
+    "Term": "TEMPORAL",
+    "Meaning": "Tests whether the law is in force / a provision is applicable at the relevant time (when?)."
+  },
+  {
+    "Term": "TERRITORIAL",
+    "Meaning": "Tests whether the situation has a jurisdictional link to the EU (where?)."
+  },
+  {
+    "Term": "EXCLUSION",
+    "Meaning": "Hard carve-out — when satisfied, the law does not apply at all to the scenario."
+  },
+  {
+    "Term": "EXCEPTION",
+    "Meaning": "Member-State or context-specific derogation that modifies obligations without removing scope."
+  },
+  {
+    "Term": "DEFINITION",
+    "Meaning": "Defines a term needed to evaluate scope (e.g. 'personal data', 'AI system')."
+  },
+  {
+    "Term": "ROLE",
+    "Meaning": "Defines an actor type (controller, provider, deployer, etc.). Roles attach obligations and anchor territorial scope."
+  },
+  {
+    "Term": "CLASSIFICATION",
+    "Meaning": "Tests that classify an artefact (high-risk AI, special-category data, GPAI with systemic risk, etc.)."
+  },
+  {
+    "Term": "ORCHESTRATION",
+    "Meaning": "Top-level rules that combine material + temporal + territorial - exclusions to decide applies/3."
+  },
+  {
+    "Term": "ANNEX",
+    "Meaning": "Hand-encoded list (Annex I, Annex III) referenced by classification rules."
+  },
+  {
+    "Term": "UNSURE",
+    "Meaning": "Provision flagged for human review — kept in the corpus but no rules generated yet."
+  },
+  {
+    "Term": "Unique identifier",
+    "Meaning": "Short form ID for each Articles+Rules row: G001..Gnnn for GDPR, A001..Annn for AI Act. Independent of provision_id."
+  },
+  {
+    "Term": "fact_id",
+    "Meaning": "F001..Fnnn — short ID for each predicate row in Required facts."
+  },
+  {
+    "Term": "node_id",
+    "Meaning": "N001..Nnnn — KG node-class identifier."
+  },
+  {
+    "Term": "rel_id",
+    "Meaning": "E001..Ennn — KG relationship identifier."
+  },
+  {
+    "Term": "prop_id",
+    "Meaning": "P001..Pnnn — KG property/label identifier."
+  },
+  {
+    "Term": "kind: extensional",
+    "Meaning": "World asserts it. Extracted by the LLM into the company playbook KG."
+  },
+  {
+    "Term": "kind: intensional",
+    "Meaning": "Engine derives it from rules. Written back as derived labels / reified events. Do NOT extract."
+  },
+  {
+    "Term": "kind: reference",
+    "Meaning": "Static lookup data (Annex I, Annex III, entry-into-force dates). Engine-seeded."
+  },
+  {
+    "Term": "kg_role: node_label",
+    "Meaning": "Arity-1 type predicate (processing/1, natural_person/1) — sets a node label."
+  },
+  {
+    "Term": "kg_role: node_property",
+    "Meaning": "Arity-1 flag predicate (automated_means/1) — sets a boolean property on the node."
+  },
+  {
+    "Term": "kg_role: edge",
+    "Meaning": "Arity-2 predicate (controller/2) — becomes a relationship between two nodes."
+  },
+  {
+    "Term": "kg_role: reified_event",
+    "Meaning": "Arity-3+ predicate (applies/3) — materialises as a node with edges to its arguments."
+  },
+  {
+    "Term": "kg_role: derived_label",
+    "Meaning": "Intensional arity-1 predicate (high_risk_ai/1) — engine-written label."
+  }
+]

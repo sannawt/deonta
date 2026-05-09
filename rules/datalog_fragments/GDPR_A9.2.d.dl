@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.d provision_id=G078
+// GDPR_A9_P2_PT_d — not-for-profit body legitimate activities
+art9_lawful(S) :- legitimate_activity_of_nonprofit(S), relates_to_members_or_close(S), ~discloses_outside_without_consent(S), appropriate_safeguards_present(S).
+

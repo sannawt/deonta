@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.a provision_id=G075
+// GDPR_A9_P2_PT_a — explicit consent
+art9_lawful(S) :- explicit_consent_given(D, S, _), ~ms_law_prohibits_consent_lift(S).
+

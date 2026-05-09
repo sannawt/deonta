@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.42 provision_id=A085
+// AIAct_A3_P42 — 'real-time RBI system'
+realtime_rbi_system(X) :- remote_biometric_identification_system(X), without_significant_delay(X).
+has_feature(X, 'realtime_remote_biometric_id_public') :- realtime_rbi_system(X), in_publicly_accessible_space(X).
+

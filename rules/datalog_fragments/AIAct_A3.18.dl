@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.18 provision_id=A061
+// AIAct_A3_P18 — 'performance'
+performance(X) :- ability_to_achieve_intended_purpose(X).
+

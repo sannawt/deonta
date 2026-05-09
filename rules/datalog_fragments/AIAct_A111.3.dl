@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A111.3 provision_id=A207
+// AIAct_A111_P3
++ transitional_grace('ai_act', 'gpai_predeployed',      '2027-08-02')
+

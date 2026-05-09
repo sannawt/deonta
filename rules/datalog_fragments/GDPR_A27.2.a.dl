@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A27.2.a provision_id=G115
+// GDPR_A27_P2_PT_a — occasional, low-risk processing exemption
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), processing_occasional(S), ~large_scale_special_data(S), ~large_scale_criminal_data(S), ~likely_to_risk_rights(S).
+

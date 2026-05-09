@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A1.1 provision_id=A014
+// AIAct_A1_P1 — purpose
+ai_act_purpose('improve_internal_market_functioning').
+ai_act_purpose('uphold_health_safety_fundamental_rights_in_eu').
+ai_act_purpose('support_innovation').
+

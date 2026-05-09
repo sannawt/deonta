@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A52.3 provision_id=A200
+// AIAct_A52_P3 — Commission may reject rebuttal -> systemic-risk classification confirmed
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25'), rebuttal_rejected_by_commission(X).
+

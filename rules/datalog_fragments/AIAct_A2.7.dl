@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_A2.7 provision_id=A037
+// AIAct_A2_P7 — DP/privacy/e-comm law continues to apply
+ai_act_without_prejudice_to('reg_2016_679_gdpr').
+ai_act_without_prejudice_to('reg_2018_1725').
+ai_act_without_prejudice_to('directive_2002_58_ec').
+ai_act_without_prejudice_to('directive_2016_680').
+// with carve-outs for Art 10(5) and Art 59 of the AI Act itself
+ai_act_carve_out('a10_p5').
+ai_act_carve_out('a59').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.1 provision_id=A044
+// AIAct_A3_P1
+ai_system(X) :- has_feature(X, 'machine_based'), has_capability(X, 'autonomous_operation'), has_capability(X, 'inference_from_input').
+

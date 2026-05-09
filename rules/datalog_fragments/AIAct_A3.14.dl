@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.14 provision_id=A057
+// AIAct_A3_P14 — 'safety component'
+safety_component(C, X) :- component_of(C, X), fulfils_safety_function(C, X).
+safety_component(C, X) :- component_of(C, X), failure_endangers_health_safety(C).
+

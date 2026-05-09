@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A52.4 provision_id=A201
+// AIAct_A52_P4 — Commission may designate sua sponte using Annex XIII
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+commission_delegated_act_basis('ai_act', 'a52_p4', 'amend_annex_xiii_criteria').
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.18 provision_id=G059
+// GDPR_A4_P18 — 'enterprise'
+enterprise(A) :- engaged_in_economic_activity(A).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.1 provision_id=A165
+// AIAct_A7_P1 — Commission empowered to amend Annex III when both conditions met
+commission_delegated_act_basis('ai_act', 'a7_p1', 'add_or_modify_annex_iii_use_cases').
+

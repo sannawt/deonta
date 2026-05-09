@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A111.2 provision_id=A206
+// AIAct_A111_P2 — high-risk pre-deployed (other than A111(1)): apply only if significant changes after 2026-08-02
+ai_act_applies_pre_deployed(S) :- high_risk_ai(S), placed_on_market_before(S, '2026-08-02'), significant_changes_after(S, '2026-08-02').
+
+// public-authority deployers: full compliance by 2030-08-02
++ application_date('ai_act', 'high_risk_predeployed_public_authority', '2030-08-02')
+

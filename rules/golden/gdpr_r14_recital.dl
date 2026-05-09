@@ -1,0 +1,22 @@
+// Legacy micro-example (recital fragment). Use profile=legacy_gdpr_r14 in API only if needed.
+
+.decl natural_person(x:symbol)
+.input natural_person
+
+.decl legal_person_data(x:symbol)
+.input legal_person_data
+
+.decl gdpr_protects(x:symbol)
+.output gdpr_protects
+
+.decl not_personal_data(x:symbol)
+.output not_personal_data
+
+.decl recital_principle(v0:symbol, v1:symbol, v2:symbol)
+.output recital_principle
+
+gdpr_protects(A) :- natural_person(A).
+
+not_personal_data(X) :- legal_person_data(X).
+
+recital_principle("gdpr", "r14", "protects_natural_persons_only").

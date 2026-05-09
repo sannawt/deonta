@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.2.d provision_id=G029
+// GDPR_A2_P2_PT_d
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.3 provision_id=A182
+// AIAct_A7_P3 — Commission empowered to remove from Annex III when both met
+commission_delegated_act_basis('ai_act', 'a7_p3', 'remove_from_annex_iii').
+

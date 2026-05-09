@@ -1,0 +1,9 @@
+// provision_long_id=AIAct_A50.5 provision_id=A188
+// AIAct_A50_P5 — information must be clear, distinguishable, accessible, at first interaction
+obligation(A, X, 'inform_at_first_interaction_clearly_and_accessibly') :- obligation(A, X, OBLG), a50_transparency_obligation(OBLG).
+a50_transparency_obligation('inform_persons_of_ai_interaction').
+a50_transparency_obligation('mark_synthetic_outputs_machine_readable').
+a50_transparency_obligation('inform_natural_persons_of_emotion_or_categorisation').
+a50_transparency_obligation('disclose_deep_fake_content').
+a50_transparency_obligation('disclose_ai_text_for_public_interest_news').
+

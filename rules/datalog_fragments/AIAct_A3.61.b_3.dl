@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.61.b_3 provision_id=A114
+// AIAct_A3_P61_PT_b — common-features same-operator concurrent infringement in 3+ MS
+a3_p61_b_basis(I) :- harms_collective_interests_individuals(I), has_common_features(I), same_operator_in_at_least_three_ms(I), concurrent(I).
+

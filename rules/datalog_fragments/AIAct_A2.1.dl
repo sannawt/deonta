@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_A2.1 provision_id=A031
+// AIAct_A2_P1 — chapeau: scope of application carried by points (a)-(g)
+ai_act_in_scope_role('provider').
+ai_act_in_scope_role('deployer').
+ai_act_in_scope_role('importer').
+ai_act_in_scope_role('distributor').
+ai_act_in_scope_role('manufacturer').
+ai_act_in_scope_role('authorised_representative').
+ai_act_in_scope_role('affected_person').
+

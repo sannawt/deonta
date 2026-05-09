@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.62 provision_id=A116
+// AIAct_A3_P62 — 'critical infrastructure' (cross-ref)
+critical_infrastructure(CI) :- critical_infrastructure_per_dir_2022_2557(CI).
+

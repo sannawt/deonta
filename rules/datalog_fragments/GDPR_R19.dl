@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R19 provision_id=G006
+// GDPR_R19 — RECITAL — law-enforcement processing covered by Dir 2016/680
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+
+// GDPR_R19 — RECITAL — Member States may impose more specific rules within scope
+ms_derogation_basis('gdpr', 'r19', 'specific_provisions_for_competent_authorities').
+
+// GDPR_R19 — RECITAL — narrative aid
+recital_principle('gdpr', 'r19', 'le_directive_lex_specialis').
+

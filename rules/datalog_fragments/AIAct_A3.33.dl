@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.33 provision_id=A076
+// AIAct_A3_P33 — 'input data'
+input_data(D, X) :- provided_to_or_acquired_by(D, X), basis_for_output(D, X).
+

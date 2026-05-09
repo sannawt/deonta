@@ -1,0 +1,107 @@
+[
+  {
+    "node_id": "N001",
+    "node class": "Actor",
+    "description": "Natural or legal person, public authority, agency, or EU institution that plays a role in a Scenario.",
+    "identifying predicates": "natural_person/1 (label); controller/2; processor/2; provider/2; deployer/2; importer/2; distributor/2; manufacturer/2; authorised_representative/2",
+    "source articles": "GDPR_A4.7; GDPR_A4.8; AIAct_A3.3; AIAct_A3.4; AIAct_A3.5; AIAct_A3.6; AIAct_A3.7; AIAct_A3.8"
+  },
+  {
+    "node_id": "N003",
+    "node class": "AISystem",
+    "description": "Subtype of Scenario: an AI system per Art 3(1). Set as a derived label by the engine when has_feature/has_capability conjunction holds.",
+    "identifying predicates": "ai_system/1",
+    "source articles": "AIAct_A3.1"
+  },
+  {
+    "node_id": "N004",
+    "node class": "GPAIModel",
+    "description": "Subtype of Scenario: a general-purpose AI model per Art 3(63).",
+    "identifying predicates": "gpai_model/1",
+    "source articles": "AIAct_A3.63"
+  },
+  {
+    "node_id": "N005",
+    "node class": "Datum",
+    "description": "A piece of data potentially qualifying as personal data.",
+    "identifying predicates": "concerns/2 (1st arg); identifies/2 (1st arg); category/2 (1st arg); criminal_offence_data/1",
+    "source articles": "GDPR_A4.1; GDPR_A9.1; GDPR_A10"
+  },
+  {
+    "node_id": "N006",
+    "node class": "Product",
+    "description": "Non-AI product anchored by Annex I harmonisation legislation; relevant via the Art 6(1) safety-component route.",
+    "identifying predicates": "safety_component_of/2 (2nd arg); subject_to_third_party_assessment/2 (1st arg)",
+    "source articles": "AIAct_A6.1.a; AIAct_A6.1.b"
+  },
+  {
+    "node_id": "N007",
+    "node class": "Jurisdiction",
+    "description": "Geographic anchor: 'eu', a member-state code, or 'third_country'.",
+    "identifying predicates": "established_in/2 (2nd arg); located_in/2 (2nd arg); made_available_on_market/2 (2nd arg)",
+    "source articles": "GDPR_A3; AIAct_A2.1"
+  },
+  {
+    "node_id": "N008",
+    "node class": "Regulation",
+    "description": "Enum: 'gdpr' | 'ai_act'.",
+    "identifying predicates": "entry_into_force/2 (1st arg); application_date/3 (1st arg); applies/3 (3rd arg)",
+    "source articles": "GDPR_A99; AIAct_A113"
+  },
+  {
+    "node_id": "N009",
+    "node class": "Provision",
+    "description": "A reference to a provision_id in the legal database (e.g. 'chapter_ii_prohibitions'). Used by application_date/3 and transitional_grace/3.",
+    "identifying predicates": "application_date/3 (2nd arg); transitional_grace/3 (2nd arg)",
+    "source articles": "AIAct_A113; AIAct_A111"
+  },
+  {
+    "node_id": "N010",
+    "node class": "FeatureTag",
+    "description": "Closed vocabulary of AI/data feature tags (machine_based, social_scoring, compute_above_10e25, ...).",
+    "identifying predicates": "has_feature/2 (2nd arg); has_capability/2 (2nd arg)",
+    "source articles": "AIAct_A3.1; AIAct_A5; AIAct_A51"
+  },
+  {
+    "node_id": "N011",
+    "node class": "Use",
+    "description": "Annex III high-risk use-case tag (biometrics, employment_workers_management, law_enforcement, ...).",
+    "identifying predicates": "used_in/2 (2nd arg); annex_iii_use_case/1",
+    "source articles": "AIAct_AnnexIII; AIAct_A6.2"
+  },
+  {
+    "node_id": "N012",
+    "node class": "Legislation",
+    "description": "Annex I Union harmonisation legislation tag (medical_devices_2017_745, machinery_2023_1230, ...).",
+    "identifying predicates": "subject_to_third_party_assessment/2 (2nd arg); annex_i_legislation/1",
+    "source articles": "AIAct_AnnexI; AIAct_A6.1.b"
+  },
+  {
+    "node_id": "N013",
+    "node class": "Category",
+    "description": "Special-category data tag (racial, ethnic, biometric, health, sexual_orientation, ...).",
+    "identifying predicates": "category/2 (2nd arg)",
+    "source articles": "GDPR_A9.1"
+  },
+  {
+    "node_id": "N014",
+    "node class": "Applicability",
+    "description": "Reified event node: applies/3 and applies_via_actor/4. Connects a Scenario, a Time, a Regulation (and an Actor for provenance). Engine-written.",
+    "identifying predicates": "applies/3; applies_via_actor/4",
+    "source articles": "GDPR_A1; AIAct_A1"
+  },
+  {
+    "node_id": "N015",
+    "node class": "ApplicationDate",
+    "description": "Reified event: a staggered application date — links a Regulation, a Provision, and a Time.",
+    "identifying predicates": "application_date/3",
+    "source articles": "AIAct_A113"
+  },
+  {
+    "node_id": "N016",
+    "node class": "TransitionalGrace",
+    "description": "Reified event: a transitional-grace deadline cohort.",
+    "identifying predicates": "transitional_grace/3",
+    "source articles": "AIAct_A111"
+  }
+]

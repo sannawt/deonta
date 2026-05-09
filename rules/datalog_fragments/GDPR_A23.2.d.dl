@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.2.d provision_id=G107
+// GDPR_A23_P2_PT_d — safeguards against abuse
+restriction_specification_kind('safeguards_against_abuse').
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.23.b_3 provision_id=G068
+// GDPR_A4_P23_PT_b — single establishment but cross-MS impact
+cross_border_basis_b(S) :- controller_or_processor(A, S), processing_in_context_of_establishment(S, A), substantially_affects_subjects_in_multiple_ms(S).
+

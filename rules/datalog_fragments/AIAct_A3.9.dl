@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.9 provision_id=A052
+// AIAct_A3_P9 — 'placing on the market' = first making available on EU market
+placing_on_eu_market(X) :- first_making_available_on_eu_market(X).
+

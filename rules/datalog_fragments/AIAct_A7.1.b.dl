@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.1.b provision_id=A164
+// AIAct_A7_P1_PT_b — system poses equivalent or greater risk
+a7_p1_condition('a7_p1_b', 'risk_equivalent_or_greater_than_existing_annex_iii').
+

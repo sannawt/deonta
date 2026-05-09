@@ -1,0 +1,6 @@
+// provision_long_id=GDPR_A89.1 provision_id=G132
+// GDPR_A89_P1 — appropriate safeguards required
+art89_safeguards_present(S) :- for_archiving_research_statistics(S), technical_org_measures_in_place(_, S), data_minimisation_respected(S).
+art89_safeguards_present(S) :- for_archiving_research_statistics(S), pseudonymisation_applied(S).
+obligation(A, S, 'fulfil_purposes_without_identification_if_possible') :- controller(A, S), for_archiving_research_statistics(S), purposes_fulfillable_without_identification(S).
+

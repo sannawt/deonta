@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2 provision_id=A023
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+

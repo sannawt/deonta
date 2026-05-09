@@ -1,0 +1,11 @@
+// provision_long_id=AIAct_R25 provision_id=A010
+// AIAct_R25 — RECITAL — scientific R, D-only exclusion + pre-market testing exclusion
+ai_act_excluded(S) :- scientific_research_development_only(S).
+ai_act_excluded(S) :- pre_market_research_testing(S).
+
+// AIAct_R25 — RECITAL — once placed on market or put into service, falls back into scope (positive flag)
+ai_act_rd_carveout_lifted(S) :- placed_on_market(_, S).
+ai_act_rd_carveout_lifted(S) :- put_into_service(_, S).
+
+recital_principle('ai_act', 'r25', 'rd_exclusion_with_carveouts').
+

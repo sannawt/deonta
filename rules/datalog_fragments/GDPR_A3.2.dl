@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A3.2 provision_id=G037
+// GDPR_A3_P2 — chapeau: extra-EU controllers/processors targeting EU subjects
+gdpr_territorial_link(A, S) :- controller(A, S), ~established_in(A, 'eu'), data_subjects_in_eu_targeted(S, A).
+gdpr_territorial_link(A, S) :- processor(A, S), ~established_in(A, 'eu'), data_subjects_in_eu_targeted(S, A).
+gdpr_territorial_link(A, S) :- controller(A, S), ~established_in(A, 'eu'), monitors_behaviour_in_eu(A, S).
+gdpr_territorial_link(A, S) :- processor(A, S), ~established_in(A, 'eu'), monitors_behaviour_in_eu(A, S).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.27 provision_id=A070
+// AIAct_A3_P27 — 'harmonised standard' per Art 2(1)(c) of Reg 1025/2012
+harmonised_standard(STD) :- harmonised_standard_per_reg_1025_2012(STD).
+

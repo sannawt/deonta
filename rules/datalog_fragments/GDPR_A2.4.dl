@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.4 provision_id=G032
+// GDPR_A2_P4 — without prejudice to Directive 2000/31/EC (e-commerce)
+intermediary_liability_safe_harbour(S) :- intermediary_service_provider(A), by_actor(S, A), processing(S).
+

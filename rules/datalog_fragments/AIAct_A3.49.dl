@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.49 provision_id=A098
+// AIAct_A3_P49 — 'serious incident' chapeau
+serious_incident(I) :- incident_of_ai_system(I), a3_p49_consequence(I, _).
+

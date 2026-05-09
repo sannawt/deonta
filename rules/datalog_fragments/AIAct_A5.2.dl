@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.2 provision_id=A140
+// AIAct_A5_P2 — RBI in publicly accessible spaces: deployment criteria
+obligation(A, X, 'a5_p2_deployment_criteria') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), a5_p1_h_exception(X).
+

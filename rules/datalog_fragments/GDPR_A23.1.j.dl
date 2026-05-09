@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.j provision_id=G102
+// GDPR_A23_P1_PT_j — civil law claims enforcement
+restriction_objective_lawful('civil_law_claims_enforcement').
+

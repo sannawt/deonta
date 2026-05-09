@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_R21 provision_id=G008
+// GDPR_R21 — RECITAL — without prejudice to e-Commerce Directive 2000/31/EC
+intermediary_liability_safe_harbour(S) :- intermediary_service_provider(A), processing(S), by_actor(S, A).
+
+// GDPR_R21 — RECITAL — narrative aid
+recital_principle('gdpr', 'r21', 'without_prejudice_to_2000_31_ec').
+

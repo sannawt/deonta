@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4 provision_id=G039
+// GDPR_A4_P1_PT1
+personal_data(X) :- concerns(X, A), natural_person(A), identifies(X, A).
+

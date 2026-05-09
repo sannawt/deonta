@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.1.f provision_id=A029
+// AIAct_A2_P1_PT_f — non-EU providers' authorised representatives in scope
+ai_act_territorial_link(A, S) :- authorised_representative(A, S), provider(P, S), ~established_in(P, 'eu').
+

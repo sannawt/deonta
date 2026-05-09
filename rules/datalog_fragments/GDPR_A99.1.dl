@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A99.1 provision_id=G148
+// GDPR_A99_P1
++ entry_into_force('gdpr', '2016-05-24')
+

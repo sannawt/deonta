@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.65 provision_id=A119
+// AIAct_A3_P65 — 'systemic risk'
+systemic_risk(R) :- specific_to_high_impact_gpai_capabilities(R), significant_eu_market_impact(R).
+systemic_risk(R) :- specific_to_high_impact_gpai_capabilities(R), negative_effects_on_health_safety_security_rights(R).
+

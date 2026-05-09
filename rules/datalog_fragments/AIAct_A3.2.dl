@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.2 provision_id=A045
+// AIAct_A3_P2 — 'risk' = probability × severity of harm
+risk(R) :- probability_of_harm(R, P), severity_of_harm(R, V).
+

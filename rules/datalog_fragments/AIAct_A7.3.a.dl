@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.3.a provision_id=A180
+// AIAct_A7_P3_PT_a — no significant risks
+a7_p3_condition('a7_p3_a', 'no_significant_risks_to_health_safety_rights').
+

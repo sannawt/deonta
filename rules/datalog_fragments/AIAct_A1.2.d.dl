@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A1.2.d provision_id=A018
+// AIAct_A1_P2_PT_d — transparency rules for certain AI systems
+ai_act_subject_matter('transparency_rules').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.52 provision_id=A101
+// AIAct_A3_P52 — 'profiling' (cross-ref)
+profiling(S) :- profiling_per_gdpr_a4_p4(S).
+

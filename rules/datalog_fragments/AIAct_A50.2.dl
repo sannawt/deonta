@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A50.2 provision_id=A185
+// AIAct_A50_P2 — providers of synthetic-content AI: machine-readable marking
+obligation(P, X, 'mark_synthetic_outputs_machine_readable') :- provider(P, X), ai_system(X), generates_synthetic_content(X), ~assistive_editing_only(X), ~le_authorised_with_safeguards(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_synthetic_content(X).
+

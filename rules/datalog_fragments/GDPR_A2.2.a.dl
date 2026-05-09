@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.2.a provision_id=G026
+// GDPR_A2_P2_PT_a
+gdpr_excluded(S) :- activity_outside_union_law(S).
+

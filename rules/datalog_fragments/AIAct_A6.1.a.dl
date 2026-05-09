@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A6.1.a provision_id=A148
+// AIAct_A6_P1_PT_a — safety component or product covered by Annex I
+high_risk_ai_basis_a(X, Y, L) :- ai_system(X), safety_component_of(X, Y), annex_i_legislation(L).
+high_risk_ai_basis_a(X, X, L) :- ai_system(X), is_product(X), annex_i_legislation(L), covered_by(X, L).
+

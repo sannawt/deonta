@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A111.1 provision_id=A205
+// AIAct_A111_P1
++ transitional_grace('ai_act', 'high_risk_predeployed', '2026-08-02')
+

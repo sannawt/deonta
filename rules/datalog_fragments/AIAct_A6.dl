@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6 provision_id=A147
+// AIAct_A6 — Classification rules for high-risk AI (chapeau)
+ai_act_scope_article('ai_act_a6', 'classification_high_risk').
+

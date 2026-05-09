@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A89.4 provision_id=G135
+// GDPR_A89_P4 — derogations apply only to the relevant purposes when joint
+derogation_blocked(S, R) :- dual_purpose(S, P_research, P_other), archiving_derogated_right(R), ~for_purpose(R, P_research).
+

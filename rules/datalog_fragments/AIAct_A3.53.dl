@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.53 provision_id=A102
+// AIAct_A3_P53 — 'real-world testing plan'
+real_world_testing_plan(P) :- document(P), describes_objectives_methodology_scope(P).
+

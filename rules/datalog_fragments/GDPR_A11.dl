@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A11 provision_id=G089
+// GDPR_A11 — chapeau (rules carried by paragraphs)
+gdpr_scope_article('gdpr_a11', 'processing_without_identification').
+

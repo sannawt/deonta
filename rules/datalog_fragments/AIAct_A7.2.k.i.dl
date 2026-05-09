@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.k.i provision_id=A176
+// AIAct_A7_P2_PT_k_i — effective measures of redress
+a7_p2_criterion_subkind('a7_p2_k', 'effective_redress_measures').
+

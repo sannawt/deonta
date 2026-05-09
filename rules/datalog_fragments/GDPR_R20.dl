@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R20 provision_id=G007
+// GDPR_R20 — RECITAL — applies to courts/judicial authorities
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), by_court_or_judicial_authority(S).
+
+// GDPR_R20 — RECITAL — supervisory authority does not cover judicial processing in judicial capacity
+supervisory_competence_excluded(SA, S) :- supervisory_authority(SA), court_in_judicial_capacity(C, S).
+
+// GDPR_R20 — RECITAL — narrative aid
+recital_principle('gdpr', 'r20', 'judicial_independence_safeguard').
+

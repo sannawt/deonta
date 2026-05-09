@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A3.2.a provision_id=G035
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+

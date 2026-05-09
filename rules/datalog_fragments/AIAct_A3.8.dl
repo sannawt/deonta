@@ -1,0 +1,9 @@
+// provision_long_id=AIAct_A3.8 provision_id=A051
+// AIAct_A3_P8 — 'operator'
+operator(A, X) :- provider(A, X).
+operator(A, X) :- manufacturer(A, X).
+operator(A, X) :- deployer(A, X).
+operator(A, X) :- authorised_representative(A, X).
+operator(A, X) :- importer(A, X).
+operator(A, X) :- distributor(A, X).
+

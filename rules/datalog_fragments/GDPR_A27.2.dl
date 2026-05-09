@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A27.2 provision_id=G117
+// GDPR_A27_P2 — exemption chapeau
+obligation_disapplied(A, S, 'designate_eu_representative') :- a27_p2_exempt(A, S).
+

@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.13 provision_id=G052
+// GDPR_A4_P13 — 'genetic data'
+genetic_data(X) :- personal_data(X), relates_to_genetic_characteristics(X).
+category(X, 'genetic') :- genetic_data(X).
+

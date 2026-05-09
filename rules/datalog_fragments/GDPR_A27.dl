@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A27 provision_id=G113
+// GDPR_A27 — Representatives of non-EU controllers/processors (chapeau)
+gdpr_scope_article('gdpr_a27', 'non_eu_representative').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3 provision_id=A043
+// AIAct_A3 — Definitions chapeau
+ai_act_scope_article('ai_act_a3', 'definitions').
+

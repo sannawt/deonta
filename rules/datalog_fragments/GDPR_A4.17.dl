@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.17 provision_id=G058
+// GDPR_A4_P17 — 'representative'
+representative(R, A) :- established_in(R, 'eu'), designated_by(A, R), represents_for_compliance(R, A).
+

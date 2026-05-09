@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.45.b provision_id=A089
+// AIAct_A3_P45_PT_b — body entrusted by MS law for criminal matters
+a3_p45_b_la(A) :- entrusted_by_ms_law_for_criminal_matters(A).
+

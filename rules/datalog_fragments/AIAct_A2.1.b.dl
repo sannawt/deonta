@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2.1.b provision_id=A025
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), established_in(A, 'eu').
+
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), located_in(A, 'eu').
+

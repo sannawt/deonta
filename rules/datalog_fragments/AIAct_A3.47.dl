@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.47 provision_id=A092
+// AIAct_A3_P47 — 'AI Office' = Commission function
+ai_office(AO) :- commission_function(AO).
++ reference_construction('ai_office', 'commission')
+

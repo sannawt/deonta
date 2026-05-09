@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.46 provision_id=A091
+// AIAct_A3_P46 — 'law enforcement'
+led_law_enforcement_activity(S) :- carried_out_by_le_authority(S) | carried_out_on_behalf_of_le(S).
+led_law_enforcement_activity(S) :- for_prevention_or_investigation_or_prosecution(S).
+

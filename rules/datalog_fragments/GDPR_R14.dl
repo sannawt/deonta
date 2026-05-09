@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R14 provision_id=G001
+// GDPR_R14 — RECITAL — material scope: natural persons only
+gdpr_protects(A) :- natural_person(A).
+
+// GDPR_R14 — RECITAL — exclusion of legal-person data (positive 'not_personal_data' label)
+not_personal_data(X) :- legal_person_data(X).
+
+// GDPR_R14 — RECITAL — narrative aid
+recital_principle('gdpr', 'r14', 'protects_natural_persons_only').
+

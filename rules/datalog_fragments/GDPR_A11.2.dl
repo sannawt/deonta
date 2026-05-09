@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_A11.2 provision_id=G091
+// GDPR_A11_P2 — Articles 15-20 disapplied where controller cannot identify
+right_disapplied(D, S, 'access') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'rectification') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'erasure') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'restriction') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'portability') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+
+obligation(A, S, 'inform_subject_of_inability_to_identify') :- controller(A, S), cannot_identify_subject(A, S, D), possible_to_inform(A, S).
+

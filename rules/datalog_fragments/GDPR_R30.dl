@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R30 provision_id=G017
+// GDPR_R30 — RECITAL — online identifiers may identify natural persons
+identifiable(X, A) :- online_identifier(X), combined_with_unique_identifiers(X, A).
+online_identifier_kinds('ip_address').
+online_identifier_kinds('cookie_id').
+online_identifier_kinds('rfid_tag').
+
+// GDPR_R30 — RECITAL — narrative aid
+recital_principle('gdpr', 'r30', 'online_identifiers_within_personal_data').
+

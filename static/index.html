@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliance QA</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color: #111; background: #f6f6f6; }
+    body { max-width: 960px; margin: 0 auto; padding: 1.25rem; }
+    h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 0.75rem; }
+    textarea {
+      width: 100%; min-height: 5rem; padding: 0.6rem; font-size: 1rem;
+      border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+    }
+    button {
+      margin-top: 0.5rem; padding: 0.45rem 1rem; font-size: 1rem;
+      border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer;
+    }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .terms { margin: 1rem 0; font-size: 0.9rem; color: #444; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+    section {
+      background: #fff; border: 1px solid #e5e5e5; border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+    section h2 { font-size: 1rem; margin: 0 0 0.5rem; }
+    .err { color: #b91c1c; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    pre {
+      margin: 0; white-space: pre-wrap; word-break: break-word;
+      font-size: 0.78rem; background: #f1f5f9; padding: 0.5rem; border-radius: 4px;
+      max-height: 28rem; overflow: auto;
+    }
+    .empty { color: #64748b; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Compliance question</h1>
+  <textarea id="q" placeholder="e.g. Does GDPR apply to my product?"></textarea>
+  <button id="go" type="button">Ask</button>
+  <div class="terms" id="terms"></div>
+  <div class="grid">
+    <section>
+      <h2>Legal knowledge graph</h2>
+      <div id="legal"></div>
+    </section>
+    <section>
+      <h2>Company playbook graph</h2>
+      <div id="playbook"></div>
+    </section>
+  </div>
+
+  <h1 style="margin-top:2rem;">Applicability (scope test)</h1>
+  <p class="terms">Default: <strong>scope_applicability</strong> — MATERIAL, TERRITORIAL, TEMPORAL, EXCLUSION → <code>law_applies</code> (<code>rules/golden/scope_applicability.dl</code>). See <code>rules/SCOPE_TESTING.md</code>. Optional question still drives Neo4j retrieval.</p>
+  <textarea id="rq" placeholder="Optional question for graph retrieval"></textarea>
+  <textarea id="facts" style="min-height:7rem;margin-top:0.5rem;" placeholder='Facts JSON (scope profile)'></textarea>
+  <button id="reason" type="button">Run reason</button>
+  <div class="terms" id="rmeta"></div>
+  <pre id="rout" class="empty" style="margin-top:0.75rem;">Results appear here.</pre>
+
+  <script>
+    const q = document.getElementById("q");
+    const go = document.getElementById("go");
+    const termsEl = document.getElementById("terms");
+    const legalEl = document.getElementById("legal");
+    const playbookEl = document.getElementById("playbook");
+
+    function renderBlock(data) {
+      if (data.error) {
+        return '<div class="err">' + escapeHtml(data.error) + "</div>";
+      }
+      const m = data.matches || [];
+      if (!m.length) {
+        return '<p class="empty">No nodes matched the search terms on string properties.</p>';
+      }
+      return "<pre>" + escapeHtml(JSON.stringify(m, null, 2)) + "</pre>";
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    async function run() {
+      const question = q.value.trim();
+      if (!question) return;
+      go.disabled = true;
+      termsEl.textContent = "";
+      legalEl.innerHTML = "<p class=\"empty\">Loading…</p>";
+      playbookEl.innerHTML = "<p class=\"empty\">Loading…</p>";
+      try {
+        const res = await fetch("/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || res.statusText);
+        }
+        const body = await res.json();
+        termsEl.textContent =
+          "Search terms used: " + (body.terms_used && body.terms_used.length
+            ? body.terms_used.join(", ")
+            : "(none)");
+        legalEl.innerHTML = renderBlock(body.legal);
+        playbookEl.innerHTML = renderBlock(body.playbook);
+      } catch (e) {
+        legalEl.innerHTML = '<div class="err">' + escapeHtml(e.message) + "</div>";
+        playbookEl.innerHTML = "";
+      } finally {
+        go.disabled = false;
+      }
+    }
+
+    go.addEventListener("click", run);
+    q.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" && (ev.metaKey || ev.ctrlKey)) run();
+    });
+
+    const rq = document.getElementById("rq");
+    const factsEl = document.getElementById("facts");
+    const reasonBtn = document.getElementById("reason");
+    const rmeta = document.getElementById("rmeta");
+    const rout = document.getElementById("rout");
+    if (!factsEl.value.trim()) {
+      factsEl.value = JSON.stringify(
+        [
+          { predicate: "case", args: ["s1"] },
+          { predicate: "regulation", args: ["gdpr"] },
+          { predicate: "processing_personal_data", args: ["s1"] },
+          { predicate: "territorial_link_eu", args: ["s1"] },
+          { predicate: "law_in_force", args: ["gdpr"] },
+        ],
+        null,
+        2
+      );
+    }
+
+    async function runReason() {
+      let facts;
+      try {
+        facts = JSON.parse(factsEl.value.trim() || "[]");
+        if (!Array.isArray(facts)) throw new Error("facts must be a JSON array");
+      } catch (e) {
+        rout.textContent = "Invalid JSON: " + e.message;
+        return;
+      }
+      reasonBtn.disabled = true;
+      rmeta.textContent = "";
+      rout.textContent = "Loading…";
+      try {
+        const res = await fetch("/api/reason", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question: rq.value.trim() || null,
+            facts,
+            profile: "scope_applicability",
+          }),
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || res.statusText);
+        }
+        const body = await res.json();
+        rmeta.textContent =
+          "profile: " +
+          body.profile +
+          " | Soufflé: " +
+          body.souffle_installed +
+          (body.applicability && body.applicability.verdict
+            ? " | verdict: " + body.applicability.verdict
+            : "") +
+          (body.schema_errors && body.schema_errors.length
+            ? " | errors: " + body.schema_errors.length
+            : "");
+        rout.textContent = JSON.stringify(body, null, 2);
+      } catch (e) {
+        rout.textContent = e.message;
+      } finally {
+        reasonBtn.disabled = false;
+      }
+    }
+    reasonBtn.addEventListener("click", runReason);
+  </script>
+</body>
+</html>

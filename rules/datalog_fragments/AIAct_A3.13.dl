@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.13 provision_id=A056
+// AIAct_A3_P13 — 'reasonably foreseeable misuse'
+reasonably_foreseeable_misuse(X, U) :- use_of(X, U), ~consistent_with_intended_purpose(X, U), foreseeable_human_or_system_behaviour(U).
+

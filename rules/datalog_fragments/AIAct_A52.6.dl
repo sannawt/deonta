@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A52.6 provision_id=A203
+// AIAct_A52_P6 — Commission publishes, maintains list
+obligation('commission', _, 'publish_gpai_systemic_risk_list').
+

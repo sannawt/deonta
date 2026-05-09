@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.25 provision_id=G071
+// GDPR_A4_P25 — 'information society service'
+information_society_service(SVC) :- service_per_dir_2015_1535(SVC).
+

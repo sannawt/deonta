@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.f provision_id=A131
+// AIAct_A5_P1_PT_f
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'emotion_inference_workplace_edu').
+

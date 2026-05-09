@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.8 provision_id=A038
+// AIAct_A2_P8
+ai_act_excluded(S) :- pre_market_research_testing(S).
+

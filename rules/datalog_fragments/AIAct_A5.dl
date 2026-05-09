@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5 provision_id=A123
+// AIAct_A5 — Prohibited AI practices (chapeau)
+ai_act_scope_article('ai_act_a5', 'prohibited_practices').
+

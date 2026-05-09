@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.b provision_id=G076
+// GDPR_A9_P2_PT_b — employment / social security obligations
+art9_lawful(S) :- necessary_for_employment_social_security(S), authorised_by_law_or_collective_agreement(S), appropriate_safeguards_present(S).
+

@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A3.48 provision_id=A093
+// AIAct_A3_P48 — 'national competent authority'
+national_competent_authority(NCA) :- notifying_authority(NCA).
+national_competent_authority(NCA) :- market_surveillance_authority(NCA).
++ reference_construction('national_competent_authority_for_eu_institutions', 'edps')
+

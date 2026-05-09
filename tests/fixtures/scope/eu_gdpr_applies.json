@@ -1,0 +1,11 @@
+{
+  "profile": "scope_applicability",
+  "facts": [
+    { "predicate": "case", "args": ["s1"] },
+    { "predicate": "regulation", "args": ["gdpr"] },
+    { "predicate": "processing_personal_data", "args": ["s1"] },
+    { "predicate": "territorial_link_eu", "args": ["s1"] },
+    { "predicate": "law_in_force", "args": ["gdpr"] }
+  ],
+  "expect_verdict": "applies"
+}

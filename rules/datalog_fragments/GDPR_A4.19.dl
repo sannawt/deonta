@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.19 provision_id=G060
+// GDPR_A4_P19 — 'group of undertakings'
+group_of_undertakings(G) :- controlling_undertaking(G, U_top), controlled_undertaking(G, U_sub).
+

@@ -1,0 +1,18 @@
+// provision_long_id=GDPR_R23 provision_id=G010
+// GDPR_R23 — RECITAL — targeting limb of Art 3(2)(a)
+gdpr_territorial_link(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_R23 — RECITAL — same for processors
+gdpr_territorial_link(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_R23 — RECITAL — accessibility alone insufficient (positive flag)
+data_subjects_in_eu_targeted_excluded(S, A) :- mere_website_accessibility(S, A), ~targeting_indicia(S, A).
+
+// GDPR_R23 — RECITAL — targeting indicia (language/currency/customer references)
+targeting_indicia(S, A) :- controller_or_processor(A, S), use_of_eu_language(S).
+targeting_indicia(S, A) :- controller_or_processor(A, S), use_of_eu_currency(S).
+targeting_indicia(S, A) :- controller_or_processor(A, S), references_to_eu_customers(S).
+
+// GDPR_R23 — RECITAL — narrative aid
+recital_principle('gdpr', 'r23', 'targeting_test_factors').
+

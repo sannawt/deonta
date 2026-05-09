@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A2.1.e provision_id=A028
+// AIAct_A2_P1_PT_e — product manufacturer placing on market or putting into service
+ai_act_territorial_link(A, S) :- manufacturer(A, S), places_on_eu_market_with_product(A, S).
+ai_act_territorial_link(A, S) :- manufacturer(A, S), puts_into_service_in_eu(A, S), with_own_name_or_trademark(A, S).
+

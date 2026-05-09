@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.6 provision_id=A036
+// AIAct_A2_P6
+ai_act_excluded(S) :- scientific_research_development_only(S).
+

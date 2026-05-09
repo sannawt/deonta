@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_R22 provision_id=A007
+// AIAct_R22 — RECITAL — output-used-in-EU limb
+ai_act_territorial_link(A, S) :- provider(A, S), ~established_in(A, 'eu'), output_used_in_eu(S).
+ai_act_territorial_link(A, S) :- deployer(A, S), ~established_in(A, 'eu'), output_used_in_eu(S).
+
+// AIAct_R22 — RECITAL — narrow exclusion: third-country authorities under cooperation agreements with adequate safeguards
+ai_act_excluded(S) :- third_country_authority_in_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+
+recital_principle('ai_act', 'r22', 'output_used_in_eu_anti_circumvention').
+

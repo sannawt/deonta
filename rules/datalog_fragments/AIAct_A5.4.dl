@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.4 provision_id=A142
+// AIAct_A5_P4 — notify market-surveillance and DPA
+obligation(A, X, 'notify_msa_and_dpa_of_rbi_use') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), rbi_use_authorised(X).
+

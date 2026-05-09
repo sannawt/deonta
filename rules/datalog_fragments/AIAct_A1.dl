@@ -1,0 +1,13 @@
+// provision_long_id=AIAct_A1 provision_id=A013
+// AIAct_applies
+applies(S, T, 'ai_act') :- in_force('ai_act', T), ai_act_territorial_link(A, S), ai_act_material(S), ~ai_act_excluded(S).
+
+// AIAct_applies_with_actor
+applies_via_actor(S, T, 'ai_act', A) :- in_force('ai_act', T), ai_act_territorial_link(A, S), ai_act_material(S), ~ai_act_excluded(S).
+
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+

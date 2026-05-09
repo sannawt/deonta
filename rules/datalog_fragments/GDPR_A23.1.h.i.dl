@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.h.i provision_id=G100
+// GDPR_A23_P1_PT_h_i — protection of data subject and rights/freedoms of others
+restriction_objective_lawful('protection_of_subject_or_others').
+

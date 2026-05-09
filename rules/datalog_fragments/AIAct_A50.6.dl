@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A50.6 provision_id=A189
+// AIAct_A50_P6 — without prejudice to Chapter III, other transparency law
+ai_act_without_prejudice_to('chapter_iii_high_risk_obligations').
+ai_act_without_prejudice_to('other_union_or_national_transparency_law').
+

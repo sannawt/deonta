@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.c.i provision_id=A126
+// AIAct_A5_P1_PT_c_i — social-scoring effect: detrimental treatment in unrelated contexts
+has_feature(X, 'social_scoring') :- social_scoring_evaluation(X), detrimental_treatment_in_unrelated_context(X).
+

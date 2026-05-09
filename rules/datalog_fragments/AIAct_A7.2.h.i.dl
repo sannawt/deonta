@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.h.i provision_id=A173
+// AIAct_A7_P2_PT_h_i — corrigibility/reversibility of outcome
+a7_p2_criterion('corrigibility_or_reversibility').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.61.a_3.i provision_id=A110
+// AIAct_A3_P61_PT_a_i — origin MS = where act/omission took place
+origin_ms_basis(I, MS) :- act_or_omission_took_place_in(I, MS).
+

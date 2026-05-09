@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A52.2 provision_id=A199
+// AIAct_A52_P2 — provider may rebut presumption with substantiated arguments
+provider_right(P, X, 'rebut_systemic_risk_presumption') :- provider(P, X), gpai_model(X), has_feature(X, 'compute_above_10e25').
+

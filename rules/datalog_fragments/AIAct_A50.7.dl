@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A50.7 provision_id=A190
+// AIAct_A50_P7 — AI Office to facilitate codes of practice on labelling
+obligation(AO, _, 'facilitate_codes_of_practice_for_labelling') :- ai_office(AO).
+commission_implementing_act_basis('ai_act', 'a50_p7', 'approve_or_specify_labelling_rules').
+

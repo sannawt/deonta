@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.4 provision_id=G043
+// GDPR_A4_P4 — 'profiling'
+profiling(S) :- processing(S), automated_means(S), evaluates_personal_aspects(S, A), natural_person(A).
+

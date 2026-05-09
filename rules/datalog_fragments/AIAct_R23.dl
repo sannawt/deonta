@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_R23 provision_id=A008
+// AIAct_R23 — RECITAL — Union institutions covered when acting as provider/deployer
+ai_act_material(S) :- eu_institution_acting_as_provider(S).
+ai_act_material(S) :- eu_institution_acting_as_deployer(S).
+
+recital_principle('ai_act', 'r23', 'eu_institutions_covered_as_operators').
+

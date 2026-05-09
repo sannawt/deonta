@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A94 provision_id=G142
+// GDPR_A94
++ transitional_grace('gdpr', 'directive_9546_repealed', '2018-05-25')
+

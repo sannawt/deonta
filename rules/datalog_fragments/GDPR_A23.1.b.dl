@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.b provision_id=G094
+// GDPR_A23_P1_PT_b — defence
+restriction_objective_lawful('defence').
+

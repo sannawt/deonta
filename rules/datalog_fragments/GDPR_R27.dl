@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R27 provision_id=G014
+// GDPR_R27 — RECITAL — exclusion: deceased persons (positive label)
+not_personal_data(X) :- deceased_personal_data(X).
+
+// GDPR_R27 — RECITAL — Member States may regulate deceased-person data
+ms_derogation_basis('gdpr', 'r27', 'deceased_persons_data').
+
+// GDPR_R27 — RECITAL — narrative aid
+recital_principle('gdpr', 'r27', 'deceased_data_excluded').
+

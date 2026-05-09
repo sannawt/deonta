@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_A1.2 provision_id=A022
+// AIAct_A1_P2 — chapeau (rules carried by points)
+ai_act_subject_matter_kind('harmonised_rules').
+ai_act_subject_matter_kind('prohibitions').
+ai_act_subject_matter_kind('high_risk_requirements').
+ai_act_subject_matter_kind('transparency_rules').
+ai_act_subject_matter_kind('gpai_rules').
+ai_act_subject_matter_kind('governance_enforcement').
+ai_act_subject_matter_kind('innovation_support').
+

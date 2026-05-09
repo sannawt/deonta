@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.6 provision_id=G045
+// GDPR_A4_P6 — 'filing system'
+filing_system(S) :- structured_personal_data_set(S), accessible_per_specific_criteria(S).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A91.2 provision_id=G141
+// GDPR_A91_P2 — those associations subject to independent SA supervision
+obligation(RC, _, 'subject_to_independent_sa_supervision') :- church_rules_carryover_valid(_, RC).
+

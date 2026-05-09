@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.57 provision_id=A106
+// AIAct_A3_P57 — 'testing in real-world conditions'
+testing_in_real_world(S) :- temporary_testing(S), for_intended_purpose(S), outside_lab_or_simulated(S), ~placing_on_market(S), ~putting_into_service(S), a57_or_a60_conditions_satisfied(S).
+

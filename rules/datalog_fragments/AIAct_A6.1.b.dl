@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A6.1.b provision_id=A149
+// AIAct_A6_P1_PT_b — third-party assessment required
+high_risk_ai_basis_b(X, Y, L) :- ai_system(X), safety_component_of(X, Y), subject_to_third_party_assessment(Y, L).
+high_risk_ai_basis_b(X, X, L) :- ai_system(X), is_product(X), subject_to_third_party_assessment(X, L).
+

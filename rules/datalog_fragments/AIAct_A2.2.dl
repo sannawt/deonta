@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2.2 provision_id=A032
+// AIAct_A2_P2 — high-risk AI in Annex I Section B products: only Art 6(1), 102-109, 112 apply (and 57 if integrated)
+limited_scope_aiact(S, 'art_6_1') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'arts_102_109') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'art_112') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'art_57') :- high_risk_ai(S), related_to_annex_i_section_b(S), integrated_in_annex_i_legislation(S).
+

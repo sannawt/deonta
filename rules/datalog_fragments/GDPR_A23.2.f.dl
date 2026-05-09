@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.2.f provision_id=G109
+// GDPR_A23_P2_PT_f — storage periods
+restriction_specification_kind('storage_periods').
+

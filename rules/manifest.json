@@ -1,0 +1,3215 @@
+[
+  {
+    "provision_id": "G001",
+    "provision_long_id": "GDPR_R14",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "14",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R14.dl"
+  },
+  {
+    "provision_id": "G002",
+    "provision_long_id": "GDPR_R15",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "15",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R15.dl"
+  },
+  {
+    "provision_id": "G003",
+    "provision_long_id": "GDPR_R16",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "16",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R16.dl"
+  },
+  {
+    "provision_id": "G004",
+    "provision_long_id": "GDPR_R17",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "17",
+    "scope_tag": "EXCLUSION;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R17.dl"
+  },
+  {
+    "provision_id": "G005",
+    "provision_long_id": "GDPR_R18",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "18",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R18.dl"
+  },
+  {
+    "provision_id": "G006",
+    "provision_long_id": "GDPR_R19",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "19",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R19.dl"
+  },
+  {
+    "provision_id": "G007",
+    "provision_long_id": "GDPR_R20",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "20",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R20.dl"
+  },
+  {
+    "provision_id": "G008",
+    "provision_long_id": "GDPR_R21",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "21",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R21.dl"
+  },
+  {
+    "provision_id": "G009",
+    "provision_long_id": "GDPR_R22",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "22",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R22.dl"
+  },
+  {
+    "provision_id": "G010",
+    "provision_long_id": "GDPR_R23",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "23",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R23.dl"
+  },
+  {
+    "provision_id": "G011",
+    "provision_long_id": "GDPR_R24",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "24",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R24.dl"
+  },
+  {
+    "provision_id": "G012",
+    "provision_long_id": "GDPR_R25",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "25",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R25.dl"
+  },
+  {
+    "provision_id": "G013",
+    "provision_long_id": "GDPR_R26",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "26",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R26.dl"
+  },
+  {
+    "provision_id": "G014",
+    "provision_long_id": "GDPR_R27",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "27",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R27.dl"
+  },
+  {
+    "provision_id": "G015",
+    "provision_long_id": "GDPR_R28",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "28",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R28.dl"
+  },
+  {
+    "provision_id": "G016",
+    "provision_long_id": "GDPR_R29",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "29",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R29.dl"
+  },
+  {
+    "provision_id": "G017",
+    "provision_long_id": "GDPR_R30",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "30",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R30.dl"
+  },
+  {
+    "provision_id": "G018",
+    "provision_long_id": "GDPR_R31",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "31",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R31.dl"
+  },
+  {
+    "provision_id": "G019",
+    "provision_long_id": "GDPR_R171",
+    "regulation": "GDPR",
+    "type": "recital",
+    "number": "171",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_R171.dl"
+  },
+  {
+    "provision_id": "G020",
+    "provision_long_id": "GDPR_A1",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A1.dl"
+  },
+  {
+    "provision_id": "G021",
+    "provision_long_id": "GDPR_A1.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A1.1.dl"
+  },
+  {
+    "provision_id": "G022",
+    "provision_long_id": "GDPR_A1.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A1.2.dl"
+  },
+  {
+    "provision_id": "G023",
+    "provision_long_id": "GDPR_A1.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A1.3.dl"
+  },
+  {
+    "provision_id": "G024",
+    "provision_long_id": "GDPR_A2",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "2",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.dl"
+  },
+  {
+    "provision_id": "G025",
+    "provision_long_id": "GDPR_A2.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.1.dl"
+  },
+  {
+    "provision_id": "G026",
+    "provision_long_id": "GDPR_A2.2.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.2.a.dl"
+  },
+  {
+    "provision_id": "G027",
+    "provision_long_id": "GDPR_A2.2.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.2.b.dl"
+  },
+  {
+    "provision_id": "G028",
+    "provision_long_id": "GDPR_A2.2.c",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.2.c.dl"
+  },
+  {
+    "provision_id": "G029",
+    "provision_long_id": "GDPR_A2.2.d",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.2.d.dl"
+  },
+  {
+    "provision_id": "G030",
+    "provision_long_id": "GDPR_A2.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.2.dl"
+  },
+  {
+    "provision_id": "G031",
+    "provision_long_id": "GDPR_A2.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.3.dl"
+  },
+  {
+    "provision_id": "G032",
+    "provision_long_id": "GDPR_A2.4",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "MATERIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A2.4.dl"
+  },
+  {
+    "provision_id": "G033",
+    "provision_long_id": "GDPR_A3",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "3",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.dl"
+  },
+  {
+    "provision_id": "G034",
+    "provision_long_id": "GDPR_A3.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.1.dl"
+  },
+  {
+    "provision_id": "G035",
+    "provision_long_id": "GDPR_A3.2.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.2.a.dl"
+  },
+  {
+    "provision_id": "G036",
+    "provision_long_id": "GDPR_A3.2.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.2.b.dl"
+  },
+  {
+    "provision_id": "G037",
+    "provision_long_id": "GDPR_A3.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.2.dl"
+  },
+  {
+    "provision_id": "G038",
+    "provision_long_id": "GDPR_A3.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A3.3.dl"
+  },
+  {
+    "provision_id": "G039",
+    "provision_long_id": "GDPR_A4",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "4",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.dl"
+  },
+  {
+    "provision_id": "G040",
+    "provision_long_id": "GDPR_A4.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.1.dl"
+  },
+  {
+    "provision_id": "G041",
+    "provision_long_id": "GDPR_A4.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.2.dl"
+  },
+  {
+    "provision_id": "G042",
+    "provision_long_id": "GDPR_A4.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.3.dl"
+  },
+  {
+    "provision_id": "G043",
+    "provision_long_id": "GDPR_A4.4",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.4.dl"
+  },
+  {
+    "provision_id": "G044",
+    "provision_long_id": "GDPR_A4.5",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.5.dl"
+  },
+  {
+    "provision_id": "G045",
+    "provision_long_id": "GDPR_A4.6",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.6.dl"
+  },
+  {
+    "provision_id": "G046",
+    "provision_long_id": "GDPR_A4.7",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.7.dl"
+  },
+  {
+    "provision_id": "G047",
+    "provision_long_id": "GDPR_A4.8",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "8",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.8.dl"
+  },
+  {
+    "provision_id": "G048",
+    "provision_long_id": "GDPR_A4.9",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "9",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.9.dl"
+  },
+  {
+    "provision_id": "G049",
+    "provision_long_id": "GDPR_A4.10",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "10",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.10.dl"
+  },
+  {
+    "provision_id": "G050",
+    "provision_long_id": "GDPR_A4.11",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "11",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.11.dl"
+  },
+  {
+    "provision_id": "G051",
+    "provision_long_id": "GDPR_A4.12",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "12",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.12.dl"
+  },
+  {
+    "provision_id": "G052",
+    "provision_long_id": "GDPR_A4.13",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "13",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.13.dl"
+  },
+  {
+    "provision_id": "G053",
+    "provision_long_id": "GDPR_A4.14",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "14",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.14.dl"
+  },
+  {
+    "provision_id": "G054",
+    "provision_long_id": "GDPR_A4.15",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "15",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.15.dl"
+  },
+  {
+    "provision_id": "G055",
+    "provision_long_id": "GDPR_A4.16.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.16.a.dl"
+  },
+  {
+    "provision_id": "G056",
+    "provision_long_id": "GDPR_A4.16.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.16.b.dl"
+  },
+  {
+    "provision_id": "G057",
+    "provision_long_id": "GDPR_A4.16",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "16",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.16.dl"
+  },
+  {
+    "provision_id": "G058",
+    "provision_long_id": "GDPR_A4.17",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "17",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.17.dl"
+  },
+  {
+    "provision_id": "G059",
+    "provision_long_id": "GDPR_A4.18",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "18",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.18.dl"
+  },
+  {
+    "provision_id": "G060",
+    "provision_long_id": "GDPR_A4.19",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "19",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.19.dl"
+  },
+  {
+    "provision_id": "G061",
+    "provision_long_id": "GDPR_A4.20",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "20",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.20.dl"
+  },
+  {
+    "provision_id": "G062",
+    "provision_long_id": "GDPR_A4.21",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "21",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.21.dl"
+  },
+  {
+    "provision_id": "G063",
+    "provision_long_id": "GDPR_A4.22.a_2",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.22.a_2.dl"
+  },
+  {
+    "provision_id": "G064",
+    "provision_long_id": "GDPR_A4.22.b_2",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.22.b_2.dl"
+  },
+  {
+    "provision_id": "G065",
+    "provision_long_id": "GDPR_A4.22.c_2",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "c_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.22.c_2.dl"
+  },
+  {
+    "provision_id": "G066",
+    "provision_long_id": "GDPR_A4.22",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "22",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.22.dl"
+  },
+  {
+    "provision_id": "G067",
+    "provision_long_id": "GDPR_A4.23.a_3",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a_3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.23.a_3.dl"
+  },
+  {
+    "provision_id": "G068",
+    "provision_long_id": "GDPR_A4.23.b_3",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b_3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.23.b_3.dl"
+  },
+  {
+    "provision_id": "G069",
+    "provision_long_id": "GDPR_A4.23",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "23",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.23.dl"
+  },
+  {
+    "provision_id": "G070",
+    "provision_long_id": "GDPR_A4.24",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "24",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.24.dl"
+  },
+  {
+    "provision_id": "G071",
+    "provision_long_id": "GDPR_A4.25",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "25",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.25.dl"
+  },
+  {
+    "provision_id": "G072",
+    "provision_long_id": "GDPR_A4.26",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "26",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A4.26.dl"
+  },
+  {
+    "provision_id": "G073",
+    "provision_long_id": "GDPR_A9",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "9",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.dl"
+  },
+  {
+    "provision_id": "G074",
+    "provision_long_id": "GDPR_A9.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.1.dl"
+  },
+  {
+    "provision_id": "G075",
+    "provision_long_id": "GDPR_A9.2.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.a.dl"
+  },
+  {
+    "provision_id": "G076",
+    "provision_long_id": "GDPR_A9.2.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.b.dl"
+  },
+  {
+    "provision_id": "G077",
+    "provision_long_id": "GDPR_A9.2.c",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.c.dl"
+  },
+  {
+    "provision_id": "G078",
+    "provision_long_id": "GDPR_A9.2.d",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.d.dl"
+  },
+  {
+    "provision_id": "G079",
+    "provision_long_id": "GDPR_A9.2.e",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.e.dl"
+  },
+  {
+    "provision_id": "G080",
+    "provision_long_id": "GDPR_A9.2.f",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.f.dl"
+  },
+  {
+    "provision_id": "G081",
+    "provision_long_id": "GDPR_A9.2.g",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.g.dl"
+  },
+  {
+    "provision_id": "G082",
+    "provision_long_id": "GDPR_A9.2.h.i",
+    "regulation": "GDPR",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.h.i.dl"
+  },
+  {
+    "provision_id": "G083",
+    "provision_long_id": "GDPR_A9.2.h",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "h",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.h.dl"
+  },
+  {
+    "provision_id": "G084",
+    "provision_long_id": "GDPR_A9.2.j",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "j",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.j.dl"
+  },
+  {
+    "provision_id": "G085",
+    "provision_long_id": "GDPR_A9.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.2.dl"
+  },
+  {
+    "provision_id": "G086",
+    "provision_long_id": "GDPR_A9.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.3.dl"
+  },
+  {
+    "provision_id": "G087",
+    "provision_long_id": "GDPR_A9.4",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A9.4.dl"
+  },
+  {
+    "provision_id": "G088",
+    "provision_long_id": "GDPR_A10",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "10",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A10.dl"
+  },
+  {
+    "provision_id": "G089",
+    "provision_long_id": "GDPR_A11",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "11",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A11.dl"
+  },
+  {
+    "provision_id": "G090",
+    "provision_long_id": "GDPR_A11.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A11.1.dl"
+  },
+  {
+    "provision_id": "G091",
+    "provision_long_id": "GDPR_A11.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL;DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A11.2.dl"
+  },
+  {
+    "provision_id": "G092",
+    "provision_long_id": "GDPR_A23",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "23",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.dl"
+  },
+  {
+    "provision_id": "G093",
+    "provision_long_id": "GDPR_A23.1.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.a.dl"
+  },
+  {
+    "provision_id": "G094",
+    "provision_long_id": "GDPR_A23.1.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.b.dl"
+  },
+  {
+    "provision_id": "G095",
+    "provision_long_id": "GDPR_A23.1.c",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.c.dl"
+  },
+  {
+    "provision_id": "G096",
+    "provision_long_id": "GDPR_A23.1.d",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.d.dl"
+  },
+  {
+    "provision_id": "G097",
+    "provision_long_id": "GDPR_A23.1.e",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.e.dl"
+  },
+  {
+    "provision_id": "G098",
+    "provision_long_id": "GDPR_A23.1.f",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.f.dl"
+  },
+  {
+    "provision_id": "G099",
+    "provision_long_id": "GDPR_A23.1.g",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.g.dl"
+  },
+  {
+    "provision_id": "G100",
+    "provision_long_id": "GDPR_A23.1.h.i",
+    "regulation": "GDPR",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.h.i.dl"
+  },
+  {
+    "provision_id": "G101",
+    "provision_long_id": "GDPR_A23.1.h",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "h",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.h.dl"
+  },
+  {
+    "provision_id": "G102",
+    "provision_long_id": "GDPR_A23.1.j",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "j",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.j.dl"
+  },
+  {
+    "provision_id": "G103",
+    "provision_long_id": "GDPR_A23.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.1.dl"
+  },
+  {
+    "provision_id": "G104",
+    "provision_long_id": "GDPR_A23.2.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.a.dl"
+  },
+  {
+    "provision_id": "G105",
+    "provision_long_id": "GDPR_A23.2.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.b.dl"
+  },
+  {
+    "provision_id": "G106",
+    "provision_long_id": "GDPR_A23.2.c",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.c.dl"
+  },
+  {
+    "provision_id": "G107",
+    "provision_long_id": "GDPR_A23.2.d",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.d.dl"
+  },
+  {
+    "provision_id": "G108",
+    "provision_long_id": "GDPR_A23.2.e",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.e.dl"
+  },
+  {
+    "provision_id": "G109",
+    "provision_long_id": "GDPR_A23.2.f",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.f.dl"
+  },
+  {
+    "provision_id": "G110",
+    "provision_long_id": "GDPR_A23.2.g",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.g.dl"
+  },
+  {
+    "provision_id": "G111",
+    "provision_long_id": "GDPR_A23.2.h",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "h",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.h.dl"
+  },
+  {
+    "provision_id": "G112",
+    "provision_long_id": "GDPR_A23.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A23.2.dl"
+  },
+  {
+    "provision_id": "G113",
+    "provision_long_id": "GDPR_A27",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "27",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.dl"
+  },
+  {
+    "provision_id": "G114",
+    "provision_long_id": "GDPR_A27.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.1.dl"
+  },
+  {
+    "provision_id": "G115",
+    "provision_long_id": "GDPR_A27.2.a",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.2.a.dl"
+  },
+  {
+    "provision_id": "G116",
+    "provision_long_id": "GDPR_A27.2.b",
+    "regulation": "GDPR",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.2.b.dl"
+  },
+  {
+    "provision_id": "G117",
+    "provision_long_id": "GDPR_A27.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.2.dl"
+  },
+  {
+    "provision_id": "G118",
+    "provision_long_id": "GDPR_A27.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.3.dl"
+  },
+  {
+    "provision_id": "G119",
+    "provision_long_id": "GDPR_A27.4",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.4.dl"
+  },
+  {
+    "provision_id": "G120",
+    "provision_long_id": "GDPR_A27.5",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "UNSURE;TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A27.5.dl"
+  },
+  {
+    "provision_id": "G121",
+    "provision_long_id": "GDPR_A85",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "85",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A85.dl"
+  },
+  {
+    "provision_id": "G122",
+    "provision_long_id": "GDPR_A85.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A85.1.dl"
+  },
+  {
+    "provision_id": "G123",
+    "provision_long_id": "GDPR_A85.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A85.2.dl"
+  },
+  {
+    "provision_id": "G124",
+    "provision_long_id": "GDPR_A85.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A85.3.dl"
+  },
+  {
+    "provision_id": "G125",
+    "provision_long_id": "GDPR_A86",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "86",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A86.dl"
+  },
+  {
+    "provision_id": "G126",
+    "provision_long_id": "GDPR_A87",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "87",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A87.dl"
+  },
+  {
+    "provision_id": "G127",
+    "provision_long_id": "GDPR_A88",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "88",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A88.dl"
+  },
+  {
+    "provision_id": "G128",
+    "provision_long_id": "GDPR_A88.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A88.1.dl"
+  },
+  {
+    "provision_id": "G129",
+    "provision_long_id": "GDPR_A88.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A88.2.dl"
+  },
+  {
+    "provision_id": "G130",
+    "provision_long_id": "GDPR_A88.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A88.3.dl"
+  },
+  {
+    "provision_id": "G131",
+    "provision_long_id": "GDPR_A89",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "89",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A89.dl"
+  },
+  {
+    "provision_id": "G132",
+    "provision_long_id": "GDPR_A89.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A89.1.dl"
+  },
+  {
+    "provision_id": "G133",
+    "provision_long_id": "GDPR_A89.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A89.2.dl"
+  },
+  {
+    "provision_id": "G134",
+    "provision_long_id": "GDPR_A89.3",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A89.3.dl"
+  },
+  {
+    "provision_id": "G135",
+    "provision_long_id": "GDPR_A89.4",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A89.4.dl"
+  },
+  {
+    "provision_id": "G136",
+    "provision_long_id": "GDPR_A90",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "90",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A90.dl"
+  },
+  {
+    "provision_id": "G137",
+    "provision_long_id": "GDPR_A90.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A90.1.dl"
+  },
+  {
+    "provision_id": "G138",
+    "provision_long_id": "GDPR_A90.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A90.2.dl"
+  },
+  {
+    "provision_id": "G139",
+    "provision_long_id": "GDPR_A91",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "91",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A91.dl"
+  },
+  {
+    "provision_id": "G140",
+    "provision_long_id": "GDPR_A91.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A91.1.dl"
+  },
+  {
+    "provision_id": "G141",
+    "provision_long_id": "GDPR_A91.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "EXCEPTION",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A91.2.dl"
+  },
+  {
+    "provision_id": "G142",
+    "provision_long_id": "GDPR_A94",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "94",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A94.dl"
+  },
+  {
+    "provision_id": "G143",
+    "provision_long_id": "GDPR_A94.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A94.1.dl"
+  },
+  {
+    "provision_id": "G144",
+    "provision_long_id": "GDPR_A94.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A94.2.dl"
+  },
+  {
+    "provision_id": "G145",
+    "provision_long_id": "GDPR_A95",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "95",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A95.dl"
+  },
+  {
+    "provision_id": "G146",
+    "provision_long_id": "GDPR_A96",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "96",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A96.dl"
+  },
+  {
+    "provision_id": "G147",
+    "provision_long_id": "GDPR_A99",
+    "regulation": "GDPR",
+    "type": "article",
+    "number": "99",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A99.dl"
+  },
+  {
+    "provision_id": "G148",
+    "provision_long_id": "GDPR_A99.1",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A99.1.dl"
+  },
+  {
+    "provision_id": "G149",
+    "provision_long_id": "GDPR_A99.2",
+    "regulation": "GDPR",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/GDPR_A99.2.dl"
+  },
+  {
+    "provision_id": "A001",
+    "provision_long_id": "AIAct_R1",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R1.dl"
+  },
+  {
+    "provision_id": "A002",
+    "provision_long_id": "AIAct_R9",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "9",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R9.dl"
+  },
+  {
+    "provision_id": "A003",
+    "provision_long_id": "AIAct_R12",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "12",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R12.dl"
+  },
+  {
+    "provision_id": "A004",
+    "provision_long_id": "AIAct_R13",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "13",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R13.dl"
+  },
+  {
+    "provision_id": "A005",
+    "provision_long_id": "AIAct_R14",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "14",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R14.dl"
+  },
+  {
+    "provision_id": "A006",
+    "provision_long_id": "AIAct_R21",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "21",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R21.dl"
+  },
+  {
+    "provision_id": "A007",
+    "provision_long_id": "AIAct_R22",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "22",
+    "scope_tag": "TERRITORIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R22.dl"
+  },
+  {
+    "provision_id": "A008",
+    "provision_long_id": "AIAct_R23",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "23",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R23.dl"
+  },
+  {
+    "provision_id": "A009",
+    "provision_long_id": "AIAct_R24",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "24",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R24.dl"
+  },
+  {
+    "provision_id": "A010",
+    "provision_long_id": "AIAct_R25",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "25",
+    "scope_tag": "EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R25.dl"
+  },
+  {
+    "provision_id": "A011",
+    "provision_long_id": "AIAct_R26",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "26",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R26.dl"
+  },
+  {
+    "provision_id": "A012",
+    "provision_long_id": "AIAct_R27",
+    "regulation": "AI Act",
+    "type": "recital",
+    "number": "27",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_R27.dl"
+  },
+  {
+    "provision_id": "A013",
+    "provision_long_id": "AIAct_A1",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.dl"
+  },
+  {
+    "provision_id": "A014",
+    "provision_long_id": "AIAct_A1.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.1.dl"
+  },
+  {
+    "provision_id": "A015",
+    "provision_long_id": "AIAct_A1.2.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.a.dl"
+  },
+  {
+    "provision_id": "A016",
+    "provision_long_id": "AIAct_A1.2.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.b.dl"
+  },
+  {
+    "provision_id": "A017",
+    "provision_long_id": "AIAct_A1.2.c",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.c.dl"
+  },
+  {
+    "provision_id": "A018",
+    "provision_long_id": "AIAct_A1.2.d",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.d.dl"
+  },
+  {
+    "provision_id": "A019",
+    "provision_long_id": "AIAct_A1.2.e",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.e.dl"
+  },
+  {
+    "provision_id": "A020",
+    "provision_long_id": "AIAct_A1.2.f",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.f.dl"
+  },
+  {
+    "provision_id": "A021",
+    "provision_long_id": "AIAct_A1.2.g",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.g.dl"
+  },
+  {
+    "provision_id": "A022",
+    "provision_long_id": "AIAct_A1.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A1.2.dl"
+  },
+  {
+    "provision_id": "A023",
+    "provision_long_id": "AIAct_A2",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "2",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.dl"
+  },
+  {
+    "provision_id": "A024",
+    "provision_long_id": "AIAct_A2.1.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.a.dl"
+  },
+  {
+    "provision_id": "A025",
+    "provision_long_id": "AIAct_A2.1.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.b.dl"
+  },
+  {
+    "provision_id": "A026",
+    "provision_long_id": "AIAct_A2.1.c",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.c.dl"
+  },
+  {
+    "provision_id": "A027",
+    "provision_long_id": "AIAct_A2.1.d",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.d.dl"
+  },
+  {
+    "provision_id": "A028",
+    "provision_long_id": "AIAct_A2.1.e",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.e.dl"
+  },
+  {
+    "provision_id": "A029",
+    "provision_long_id": "AIAct_A2.1.f",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.f.dl"
+  },
+  {
+    "provision_id": "A030",
+    "provision_long_id": "AIAct_A2.1.g",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.g.dl"
+  },
+  {
+    "provision_id": "A031",
+    "provision_long_id": "AIAct_A2.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.1.dl"
+  },
+  {
+    "provision_id": "A032",
+    "provision_long_id": "AIAct_A2.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.2.dl"
+  },
+  {
+    "provision_id": "A033",
+    "provision_long_id": "AIAct_A2.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.3.dl"
+  },
+  {
+    "provision_id": "A034",
+    "provision_long_id": "AIAct_A2.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.4.dl"
+  },
+  {
+    "provision_id": "A035",
+    "provision_long_id": "AIAct_A2.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.5.dl"
+  },
+  {
+    "provision_id": "A036",
+    "provision_long_id": "AIAct_A2.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.6.dl"
+  },
+  {
+    "provision_id": "A037",
+    "provision_long_id": "AIAct_A2.7",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.7.dl"
+  },
+  {
+    "provision_id": "A038",
+    "provision_long_id": "AIAct_A2.8",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "8",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.8.dl"
+  },
+  {
+    "provision_id": "A039",
+    "provision_long_id": "AIAct_A2.9",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "9",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.9.dl"
+  },
+  {
+    "provision_id": "A040",
+    "provision_long_id": "AIAct_A2.10",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "10",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.10.dl"
+  },
+  {
+    "provision_id": "A041",
+    "provision_long_id": "AIAct_A2.11",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "11",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.11.dl"
+  },
+  {
+    "provision_id": "A042",
+    "provision_long_id": "AIAct_A2.12",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "12",
+    "scope_tag": "MATERIAL;TERRITORIAL;EXCLUSION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A2.12.dl"
+  },
+  {
+    "provision_id": "A043",
+    "provision_long_id": "AIAct_A3",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.dl"
+  },
+  {
+    "provision_id": "A044",
+    "provision_long_id": "AIAct_A3.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.1.dl"
+  },
+  {
+    "provision_id": "A045",
+    "provision_long_id": "AIAct_A3.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.2.dl"
+  },
+  {
+    "provision_id": "A046",
+    "provision_long_id": "AIAct_A3.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.3.dl"
+  },
+  {
+    "provision_id": "A047",
+    "provision_long_id": "AIAct_A3.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.4.dl"
+  },
+  {
+    "provision_id": "A048",
+    "provision_long_id": "AIAct_A3.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.5.dl"
+  },
+  {
+    "provision_id": "A049",
+    "provision_long_id": "AIAct_A3.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.6.dl"
+  },
+  {
+    "provision_id": "A050",
+    "provision_long_id": "AIAct_A3.7",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.7.dl"
+  },
+  {
+    "provision_id": "A051",
+    "provision_long_id": "AIAct_A3.8",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "8",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.8.dl"
+  },
+  {
+    "provision_id": "A052",
+    "provision_long_id": "AIAct_A3.9",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "9",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.9.dl"
+  },
+  {
+    "provision_id": "A053",
+    "provision_long_id": "AIAct_A3.10",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "10",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.10.dl"
+  },
+  {
+    "provision_id": "A054",
+    "provision_long_id": "AIAct_A3.11",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "11",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.11.dl"
+  },
+  {
+    "provision_id": "A055",
+    "provision_long_id": "AIAct_A3.12",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "12",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.12.dl"
+  },
+  {
+    "provision_id": "A056",
+    "provision_long_id": "AIAct_A3.13",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "13",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.13.dl"
+  },
+  {
+    "provision_id": "A057",
+    "provision_long_id": "AIAct_A3.14",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "14",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.14.dl"
+  },
+  {
+    "provision_id": "A058",
+    "provision_long_id": "AIAct_A3.15",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "15",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.15.dl"
+  },
+  {
+    "provision_id": "A059",
+    "provision_long_id": "AIAct_A3.16",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "16",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.16.dl"
+  },
+  {
+    "provision_id": "A060",
+    "provision_long_id": "AIAct_A3.17",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "17",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.17.dl"
+  },
+  {
+    "provision_id": "A061",
+    "provision_long_id": "AIAct_A3.18",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "18",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.18.dl"
+  },
+  {
+    "provision_id": "A062",
+    "provision_long_id": "AIAct_A3.19",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "19",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.19.dl"
+  },
+  {
+    "provision_id": "A063",
+    "provision_long_id": "AIAct_A3.20",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "20",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.20.dl"
+  },
+  {
+    "provision_id": "A064",
+    "provision_long_id": "AIAct_A3.21",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "21",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.21.dl"
+  },
+  {
+    "provision_id": "A065",
+    "provision_long_id": "AIAct_A3.22",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "22",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.22.dl"
+  },
+  {
+    "provision_id": "A066",
+    "provision_long_id": "AIAct_A3.23",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "23",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.23.dl"
+  },
+  {
+    "provision_id": "A067",
+    "provision_long_id": "AIAct_A3.24",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "24",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.24.dl"
+  },
+  {
+    "provision_id": "A068",
+    "provision_long_id": "AIAct_A3.25",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "25",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.25.dl"
+  },
+  {
+    "provision_id": "A069",
+    "provision_long_id": "AIAct_A3.26",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "26",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.26.dl"
+  },
+  {
+    "provision_id": "A070",
+    "provision_long_id": "AIAct_A3.27",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "27",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.27.dl"
+  },
+  {
+    "provision_id": "A071",
+    "provision_long_id": "AIAct_A3.28",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "28",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.28.dl"
+  },
+  {
+    "provision_id": "A072",
+    "provision_long_id": "AIAct_A3.29",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "29",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.29.dl"
+  },
+  {
+    "provision_id": "A073",
+    "provision_long_id": "AIAct_A3.30",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "30",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.30.dl"
+  },
+  {
+    "provision_id": "A074",
+    "provision_long_id": "AIAct_A3.31",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "31",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.31.dl"
+  },
+  {
+    "provision_id": "A075",
+    "provision_long_id": "AIAct_A3.32",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "32",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.32.dl"
+  },
+  {
+    "provision_id": "A076",
+    "provision_long_id": "AIAct_A3.33",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "33",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.33.dl"
+  },
+  {
+    "provision_id": "A077",
+    "provision_long_id": "AIAct_A3.34",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "34",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.34.dl"
+  },
+  {
+    "provision_id": "A078",
+    "provision_long_id": "AIAct_A3.35",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "35",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.35.dl"
+  },
+  {
+    "provision_id": "A079",
+    "provision_long_id": "AIAct_A3.36",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "36",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.36.dl"
+  },
+  {
+    "provision_id": "A080",
+    "provision_long_id": "AIAct_A3.37",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "37",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.37.dl"
+  },
+  {
+    "provision_id": "A081",
+    "provision_long_id": "AIAct_A3.38",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "38",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.38.dl"
+  },
+  {
+    "provision_id": "A082",
+    "provision_long_id": "AIAct_A3.39",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "39",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.39.dl"
+  },
+  {
+    "provision_id": "A083",
+    "provision_long_id": "AIAct_A3.40",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "40",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.40.dl"
+  },
+  {
+    "provision_id": "A084",
+    "provision_long_id": "AIAct_A3.41",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "41",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.41.dl"
+  },
+  {
+    "provision_id": "A085",
+    "provision_long_id": "AIAct_A3.42",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "42",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.42.dl"
+  },
+  {
+    "provision_id": "A086",
+    "provision_long_id": "AIAct_A3.43",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "43",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.43.dl"
+  },
+  {
+    "provision_id": "A087",
+    "provision_long_id": "AIAct_A3.44",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "44",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.44.dl"
+  },
+  {
+    "provision_id": "A088",
+    "provision_long_id": "AIAct_A3.45.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.45.a.dl"
+  },
+  {
+    "provision_id": "A089",
+    "provision_long_id": "AIAct_A3.45.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.45.b.dl"
+  },
+  {
+    "provision_id": "A090",
+    "provision_long_id": "AIAct_A3.45",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "45",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.45.dl"
+  },
+  {
+    "provision_id": "A091",
+    "provision_long_id": "AIAct_A3.46",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "46",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.46.dl"
+  },
+  {
+    "provision_id": "A092",
+    "provision_long_id": "AIAct_A3.47",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "47",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.47.dl"
+  },
+  {
+    "provision_id": "A093",
+    "provision_long_id": "AIAct_A3.48",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "48",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.48.dl"
+  },
+  {
+    "provision_id": "A094",
+    "provision_long_id": "AIAct_A3.49.a_2",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.49.a_2.dl"
+  },
+  {
+    "provision_id": "A095",
+    "provision_long_id": "AIAct_A3.49.b_2",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.49.b_2.dl"
+  },
+  {
+    "provision_id": "A096",
+    "provision_long_id": "AIAct_A3.49.c_2",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.49.c_2.dl"
+  },
+  {
+    "provision_id": "A097",
+    "provision_long_id": "AIAct_A3.49.d_2",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d_2",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.49.d_2.dl"
+  },
+  {
+    "provision_id": "A098",
+    "provision_long_id": "AIAct_A3.49",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "49",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.49.dl"
+  },
+  {
+    "provision_id": "A099",
+    "provision_long_id": "AIAct_A3.50",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "50",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.50.dl"
+  },
+  {
+    "provision_id": "A100",
+    "provision_long_id": "AIAct_A3.51",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "51",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.51.dl"
+  },
+  {
+    "provision_id": "A101",
+    "provision_long_id": "AIAct_A3.52",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "52",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.52.dl"
+  },
+  {
+    "provision_id": "A102",
+    "provision_long_id": "AIAct_A3.53",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "53",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.53.dl"
+  },
+  {
+    "provision_id": "A103",
+    "provision_long_id": "AIAct_A3.54",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "54",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.54.dl"
+  },
+  {
+    "provision_id": "A104",
+    "provision_long_id": "AIAct_A3.55",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "55",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.55.dl"
+  },
+  {
+    "provision_id": "A105",
+    "provision_long_id": "AIAct_A3.56",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "56",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.56.dl"
+  },
+  {
+    "provision_id": "A106",
+    "provision_long_id": "AIAct_A3.57",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "57",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.57.dl"
+  },
+  {
+    "provision_id": "A107",
+    "provision_long_id": "AIAct_A3.58",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "58",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.58.dl"
+  },
+  {
+    "provision_id": "A108",
+    "provision_long_id": "AIAct_A3.59",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "59",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.59.dl"
+  },
+  {
+    "provision_id": "A109",
+    "provision_long_id": "AIAct_A3.60",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "60",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.60.dl"
+  },
+  {
+    "provision_id": "A110",
+    "provision_long_id": "AIAct_A3.61.a_3.i",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.a_3.i.dl"
+  },
+  {
+    "provision_id": "A111",
+    "provision_long_id": "AIAct_A3.61.a_3.ii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "ii",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.a_3.ii.dl"
+  },
+  {
+    "provision_id": "A112",
+    "provision_long_id": "AIAct_A3.61.a_3.iii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "iii",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.a_3.iii.dl"
+  },
+  {
+    "provision_id": "A113",
+    "provision_long_id": "AIAct_A3.61.a_3",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a_3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.a_3.dl"
+  },
+  {
+    "provision_id": "A114",
+    "provision_long_id": "AIAct_A3.61.b_3",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b_3",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.b_3.dl"
+  },
+  {
+    "provision_id": "A115",
+    "provision_long_id": "AIAct_A3.61",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "61",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.61.dl"
+  },
+  {
+    "provision_id": "A116",
+    "provision_long_id": "AIAct_A3.62",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "62",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.62.dl"
+  },
+  {
+    "provision_id": "A117",
+    "provision_long_id": "AIAct_A3.63",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "63",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.63.dl"
+  },
+  {
+    "provision_id": "A118",
+    "provision_long_id": "AIAct_A3.64",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "64",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.64.dl"
+  },
+  {
+    "provision_id": "A119",
+    "provision_long_id": "AIAct_A3.65",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "65",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.65.dl"
+  },
+  {
+    "provision_id": "A120",
+    "provision_long_id": "AIAct_A3.66",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "66",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.66.dl"
+  },
+  {
+    "provision_id": "A121",
+    "provision_long_id": "AIAct_A3.67",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "67",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.67.dl"
+  },
+  {
+    "provision_id": "A122",
+    "provision_long_id": "AIAct_A3.68",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "68",
+    "scope_tag": "DEFINITION",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A3.68.dl"
+  },
+  {
+    "provision_id": "A123",
+    "provision_long_id": "AIAct_A5",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "5",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.dl"
+  },
+  {
+    "provision_id": "A124",
+    "provision_long_id": "AIAct_A5.1.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.a.dl"
+  },
+  {
+    "provision_id": "A125",
+    "provision_long_id": "AIAct_A5.1.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.b.dl"
+  },
+  {
+    "provision_id": "A126",
+    "provision_long_id": "AIAct_A5.1.c.i",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.c.i.dl"
+  },
+  {
+    "provision_id": "A127",
+    "provision_long_id": "AIAct_A5.1.c.ii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "ii",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.c.ii.dl"
+  },
+  {
+    "provision_id": "A128",
+    "provision_long_id": "AIAct_A5.1.c",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.c.dl"
+  },
+  {
+    "provision_id": "A129",
+    "provision_long_id": "AIAct_A5.1.d",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.d.dl"
+  },
+  {
+    "provision_id": "A130",
+    "provision_long_id": "AIAct_A5.1.e",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.e.dl"
+  },
+  {
+    "provision_id": "A131",
+    "provision_long_id": "AIAct_A5.1.f",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.f.dl"
+  },
+  {
+    "provision_id": "A132",
+    "provision_long_id": "AIAct_A5.1.g",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.g.dl"
+  },
+  {
+    "provision_id": "A133",
+    "provision_long_id": "AIAct_A5.1.h.i",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.h.i.dl"
+  },
+  {
+    "provision_id": "A134",
+    "provision_long_id": "AIAct_A5.1.h.ii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "ii",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.h.ii.dl"
+  },
+  {
+    "provision_id": "A135",
+    "provision_long_id": "AIAct_A5.1.h.iii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "iii",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.h.iii.dl"
+  },
+  {
+    "provision_id": "A136",
+    "provision_long_id": "AIAct_A5.1.h",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "h",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.h.dl"
+  },
+  {
+    "provision_id": "A137",
+    "provision_long_id": "AIAct_A5.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.1.dl"
+  },
+  {
+    "provision_id": "A138",
+    "provision_long_id": "AIAct_A5.2.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.2.a.dl"
+  },
+  {
+    "provision_id": "A139",
+    "provision_long_id": "AIAct_A5.2.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.2.b.dl"
+  },
+  {
+    "provision_id": "A140",
+    "provision_long_id": "AIAct_A5.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.2.dl"
+  },
+  {
+    "provision_id": "A141",
+    "provision_long_id": "AIAct_A5.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.3.dl"
+  },
+  {
+    "provision_id": "A142",
+    "provision_long_id": "AIAct_A5.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.4.dl"
+  },
+  {
+    "provision_id": "A143",
+    "provision_long_id": "AIAct_A5.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.5.dl"
+  },
+  {
+    "provision_id": "A144",
+    "provision_long_id": "AIAct_A5.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.6.dl"
+  },
+  {
+    "provision_id": "A145",
+    "provision_long_id": "AIAct_A5.7",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.7.dl"
+  },
+  {
+    "provision_id": "A146",
+    "provision_long_id": "AIAct_A5.8",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "8",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A5.8.dl"
+  },
+  {
+    "provision_id": "A147",
+    "provision_long_id": "AIAct_A6",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "6",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.dl"
+  },
+  {
+    "provision_id": "A148",
+    "provision_long_id": "AIAct_A6.1.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.1.a.dl"
+  },
+  {
+    "provision_id": "A149",
+    "provision_long_id": "AIAct_A6.1.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.1.b.dl"
+  },
+  {
+    "provision_id": "A150",
+    "provision_long_id": "AIAct_A6.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.1.dl"
+  },
+  {
+    "provision_id": "A151",
+    "provision_long_id": "AIAct_A6.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.2.dl"
+  },
+  {
+    "provision_id": "A152",
+    "provision_long_id": "AIAct_A6.3.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.3.a.dl"
+  },
+  {
+    "provision_id": "A153",
+    "provision_long_id": "AIAct_A6.3.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.3.b.dl"
+  },
+  {
+    "provision_id": "A154",
+    "provision_long_id": "AIAct_A6.3.c",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.3.c.dl"
+  },
+  {
+    "provision_id": "A155",
+    "provision_long_id": "AIAct_A6.3.d",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.3.d.dl"
+  },
+  {
+    "provision_id": "A156",
+    "provision_long_id": "AIAct_A6.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.3.dl"
+  },
+  {
+    "provision_id": "A157",
+    "provision_long_id": "AIAct_A6.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.4.dl"
+  },
+  {
+    "provision_id": "A158",
+    "provision_long_id": "AIAct_A6.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.5.dl"
+  },
+  {
+    "provision_id": "A159",
+    "provision_long_id": "AIAct_A6.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.6.dl"
+  },
+  {
+    "provision_id": "A160",
+    "provision_long_id": "AIAct_A6.7",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.7.dl"
+  },
+  {
+    "provision_id": "A161",
+    "provision_long_id": "AIAct_A6.8",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "8",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A6.8.dl"
+  },
+  {
+    "provision_id": "A162",
+    "provision_long_id": "AIAct_A7",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "7",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.dl"
+  },
+  {
+    "provision_id": "A163",
+    "provision_long_id": "AIAct_A7.1.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.1.a.dl"
+  },
+  {
+    "provision_id": "A164",
+    "provision_long_id": "AIAct_A7.1.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.1.b.dl"
+  },
+  {
+    "provision_id": "A165",
+    "provision_long_id": "AIAct_A7.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.1.dl"
+  },
+  {
+    "provision_id": "A166",
+    "provision_long_id": "AIAct_A7.2.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.a.dl"
+  },
+  {
+    "provision_id": "A167",
+    "provision_long_id": "AIAct_A7.2.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.b.dl"
+  },
+  {
+    "provision_id": "A168",
+    "provision_long_id": "AIAct_A7.2.c",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "c",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.c.dl"
+  },
+  {
+    "provision_id": "A169",
+    "provision_long_id": "AIAct_A7.2.d",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "d",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.d.dl"
+  },
+  {
+    "provision_id": "A170",
+    "provision_long_id": "AIAct_A7.2.e",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "e",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.e.dl"
+  },
+  {
+    "provision_id": "A171",
+    "provision_long_id": "AIAct_A7.2.f",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "f",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.f.dl"
+  },
+  {
+    "provision_id": "A172",
+    "provision_long_id": "AIAct_A7.2.g",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "g",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.g.dl"
+  },
+  {
+    "provision_id": "A173",
+    "provision_long_id": "AIAct_A7.2.h.i",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.h.i.dl"
+  },
+  {
+    "provision_id": "A174",
+    "provision_long_id": "AIAct_A7.2.h",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "h",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.h.dl"
+  },
+  {
+    "provision_id": "A175",
+    "provision_long_id": "AIAct_A7.2.j",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "j",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.j.dl"
+  },
+  {
+    "provision_id": "A176",
+    "provision_long_id": "AIAct_A7.2.k.i",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "i",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.k.i.dl"
+  },
+  {
+    "provision_id": "A177",
+    "provision_long_id": "AIAct_A7.2.k.ii",
+    "regulation": "AI Act",
+    "type": "subpoint",
+    "number": "ii",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.k.ii.dl"
+  },
+  {
+    "provision_id": "A178",
+    "provision_long_id": "AIAct_A7.2.k",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "k",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.k.dl"
+  },
+  {
+    "provision_id": "A179",
+    "provision_long_id": "AIAct_A7.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.2.dl"
+  },
+  {
+    "provision_id": "A180",
+    "provision_long_id": "AIAct_A7.3.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.3.a.dl"
+  },
+  {
+    "provision_id": "A181",
+    "provision_long_id": "AIAct_A7.3.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.3.b.dl"
+  },
+  {
+    "provision_id": "A182",
+    "provision_long_id": "AIAct_A7.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A7.3.dl"
+  },
+  {
+    "provision_id": "A183",
+    "provision_long_id": "AIAct_A50",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "50",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.dl"
+  },
+  {
+    "provision_id": "A184",
+    "provision_long_id": "AIAct_A50.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.1.dl"
+  },
+  {
+    "provision_id": "A185",
+    "provision_long_id": "AIAct_A50.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.2.dl"
+  },
+  {
+    "provision_id": "A186",
+    "provision_long_id": "AIAct_A50.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.3.dl"
+  },
+  {
+    "provision_id": "A187",
+    "provision_long_id": "AIAct_A50.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.4.dl"
+  },
+  {
+    "provision_id": "A188",
+    "provision_long_id": "AIAct_A50.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.5.dl"
+  },
+  {
+    "provision_id": "A189",
+    "provision_long_id": "AIAct_A50.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.6.dl"
+  },
+  {
+    "provision_id": "A190",
+    "provision_long_id": "AIAct_A50.7",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "7",
+    "scope_tag": "UNSURE;MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A50.7.dl"
+  },
+  {
+    "provision_id": "A191",
+    "provision_long_id": "AIAct_A51",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "51",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.dl"
+  },
+  {
+    "provision_id": "A192",
+    "provision_long_id": "AIAct_A51.1.a",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "a",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.1.a.dl"
+  },
+  {
+    "provision_id": "A193",
+    "provision_long_id": "AIAct_A51.1.b",
+    "regulation": "AI Act",
+    "type": "point",
+    "number": "b",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.1.b.dl"
+  },
+  {
+    "provision_id": "A194",
+    "provision_long_id": "AIAct_A51.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.1.dl"
+  },
+  {
+    "provision_id": "A195",
+    "provision_long_id": "AIAct_A51.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.2.dl"
+  },
+  {
+    "provision_id": "A196",
+    "provision_long_id": "AIAct_A51.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "MATERIAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A51.3.dl"
+  },
+  {
+    "provision_id": "A197",
+    "provision_long_id": "AIAct_A52",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "52",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.dl"
+  },
+  {
+    "provision_id": "A198",
+    "provision_long_id": "AIAct_A52.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.1.dl"
+  },
+  {
+    "provision_id": "A199",
+    "provision_long_id": "AIAct_A52.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.2.dl"
+  },
+  {
+    "provision_id": "A200",
+    "provision_long_id": "AIAct_A52.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.3.dl"
+  },
+  {
+    "provision_id": "A201",
+    "provision_long_id": "AIAct_A52.4",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "4",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.4.dl"
+  },
+  {
+    "provision_id": "A202",
+    "provision_long_id": "AIAct_A52.5",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "5",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.5.dl"
+  },
+  {
+    "provision_id": "A203",
+    "provision_long_id": "AIAct_A52.6",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "6",
+    "scope_tag": "UNSURE",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A52.6.dl"
+  },
+  {
+    "provision_id": "A204",
+    "provision_long_id": "AIAct_A111",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "111",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A111.dl"
+  },
+  {
+    "provision_id": "A205",
+    "provision_long_id": "AIAct_A111.1",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "1",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A111.1.dl"
+  },
+  {
+    "provision_id": "A206",
+    "provision_long_id": "AIAct_A111.2",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "2",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A111.2.dl"
+  },
+  {
+    "provision_id": "A207",
+    "provision_long_id": "AIAct_A111.3",
+    "regulation": "AI Act",
+    "type": "paragraph",
+    "number": "3",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A111.3.dl"
+  },
+  {
+    "provision_id": "A208",
+    "provision_long_id": "AIAct_A113",
+    "regulation": "AI Act",
+    "type": "article",
+    "number": "113",
+    "scope_tag": "TEMPORAL",
+    "datalog_fragment_file": "rules/datalog_fragments/AIAct_A113.dl"
+  }
+]

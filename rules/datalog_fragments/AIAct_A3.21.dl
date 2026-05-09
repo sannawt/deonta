@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.21 provision_id=A064
+// AIAct_A3_P21 — 'conformity assessment body'
+conformity_assessment_body(B) :- performs_third_party_assessment(B).
+

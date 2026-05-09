@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.3.b provision_id=A153
+// AIAct_A6_P3_PT_b — improve previously completed human activity
+a6_p3_carveout_condition(X) :- intended_to_improve_previously_completed_human_activity(X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.11 provision_id=G050
+// GDPR_A4_P11 — 'consent'
+consent_given(D, S, P) :- freely_given(D, S), specific(D, S, P), informed(D, S), unambiguous_indication(D, S), clear_affirmative_action(D, S).
+

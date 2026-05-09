@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A3.3 provision_id=A046
+// AIAct_A3_P3 — 'provider'
+provider(A, X) :- develops_ai(A, X), places_on_eu_market(A, X).
+provider(A, X) :- develops_ai(A, X), puts_into_service_in_eu(A, X).
+provider(A, X) :- had_developed_ai(A, X), places_on_eu_market(A, X).
+provider(A, X) :- had_developed_ai(A, X), puts_into_service_in_eu(A, X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.41 provision_id=A084
+// AIAct_A3_P41 — 'remote biometric identification system'
+remote_biometric_identification_system(X) :- ai_system(X), purpose_identify_persons(X), without_active_involvement(X), typically_at_distance(X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.h provision_id=G101
+// GDPR_A23_P1_PT_h — monitoring/inspection/regulatory function
+restriction_objective_lawful('monitoring_inspection_regulatory_function').
+

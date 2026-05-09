@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A5.3 provision_id=A141
+// AIAct_A5_P3 — prior judicial/admin authorisation
+obligation(A, X, 'prior_authorisation_judicial_or_admin') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), ~urgency_justified(X).
+obligation(A, X, 'request_authorisation_within_24h') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), urgency_justified(X).
+obligation(A, X, 'no_solely_automated_adverse_decisions') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public').
+

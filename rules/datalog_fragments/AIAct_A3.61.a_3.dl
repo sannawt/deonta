@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.61.a_3 provision_id=A113
+// AIAct_A3_P61_PT_a — harms collective interests in 2+ MS other than origin MS
+a3_p61_a_basis(I) :- harms_collective_interests_individuals(I), in_at_least_two_ms_other_than(I, ORIGIN_MS), origin_ms_basis(I, ORIGIN_MS).
+

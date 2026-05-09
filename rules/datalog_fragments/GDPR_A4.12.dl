@@ -1,0 +1,8 @@
+// provision_long_id=GDPR_A4.12 provision_id=G051
+// GDPR_A4_P12 — 'personal data breach'
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'destruction').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'loss').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'alteration').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'unauthorised_disclosure').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'unauthorised_access').
+

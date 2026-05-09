@@ -1,0 +1,13 @@
+// provision_long_id=AIAct_A7.2 provision_id=A179
+// AIAct_A7_P2 — chapeau: criteria for assessing A7(1)(b)
+a7_p2_criterion_kind('intended_purpose').
+a7_p2_criterion_kind('extent_of_use').
+a7_p2_criterion_kind('data_nature_amount_special_categories').
+a7_p2_criterion_kind('autonomy_human_override').
+a7_p2_criterion_kind('past_harm_evidence').
+a7_p2_criterion_kind('extent_of_potential_harm').
+a7_p2_criterion_kind('dependence_on_outcome').
+a7_p2_criterion_kind('imbalance_of_power_vulnerability').
+a7_p2_criterion_kind('benefit_magnitude_likelihood').
+a7_p2_criterion_kind('existing_redress_and_prevention').
+

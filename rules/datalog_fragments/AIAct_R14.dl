@@ -1,0 +1,14 @@
+// provision_long_id=AIAct_R14 provision_id=A005
+// AIAct_R14 — RECITAL — reference: Directive 2002/58/EC + AI system definition guidance
+ai_act_without_prejudice_to('directive_2002_58_ec').
+
+// AIAct_R14 — RECITAL — AI system definition (operational triggers from R12 narrative)
+ai_system(X) :- has_feature(X, 'machine_based'), has_capability(X, 'autonomous_operation'), has_capability(X, 'inference_from_input').
+
+// AIAct_R14 — RECITAL — biometric data alignment with GDPR/LED/2018-1725
+biometric_data(X) :- biometric_data_per_gdpr(X).
+biometric_data(X) :- biometric_data_per_le_directive(X).
+biometric_data(X) :- biometric_data_per_2018_1725(X).
+
+recital_principle('ai_act', 'r14', 'definitions_alignment').
+

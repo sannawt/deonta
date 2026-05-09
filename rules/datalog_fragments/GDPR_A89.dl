@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A89 provision_id=G131
+// GDPR_A89 — Research/statistics safeguards, derogations (chapeau)
+gdpr_scope_article('gdpr_a89', 'research_statistics_archiving_derogations').
+

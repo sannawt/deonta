@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.3 provision_id=G031
+// GDPR_A2_P3
+gdpr_excluded(S) :- eu_institution_processing(S).
+

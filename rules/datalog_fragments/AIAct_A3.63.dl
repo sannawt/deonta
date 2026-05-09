@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.63 provision_id=A117
+// AIAct_A3_P63
+gpai_model(X) :- has_feature(X, 'significant_generality'), has_capability(X, 'wide_range_of_tasks').
+

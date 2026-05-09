@@ -1,0 +1,11 @@
+// provision_long_id=GDPR_A23.2 provision_id=G112
+// GDPR_A23_P2 — required content of restriction legislation (chapeau)
+ms_restriction_must_specify(MS, R, 'purposes').
+ms_restriction_must_specify(MS, R, 'data_categories').
+ms_restriction_must_specify(MS, R, 'scope').
+ms_restriction_must_specify(MS, R, 'safeguards').
+ms_restriction_must_specify(MS, R, 'controller_specification').
+ms_restriction_must_specify(MS, R, 'storage_periods').
+ms_restriction_must_specify(MS, R, 'risks_to_rights').
+ms_restriction_must_specify(MS, R, 'right_to_be_informed').
+

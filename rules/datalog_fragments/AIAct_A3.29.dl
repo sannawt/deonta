@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.29 provision_id=A072
+// AIAct_A3_P29 — 'training data'
+training_data(D) :- used_to_fit_learnable_parameters(D, _).
+

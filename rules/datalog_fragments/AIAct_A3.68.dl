@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.68 provision_id=A122
+// AIAct_A3_P68 — 'downstream provider'
+downstream_provider(A, X) :- provider(A, X), integrates_ai_model(X, M).
+

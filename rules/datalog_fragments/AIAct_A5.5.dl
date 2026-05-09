@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A5.5 provision_id=A143
+// AIAct_A5_P5 — MS may authorise RBI within Art 5 limits + notify Commission
+ms_derogation_basis('ai_act', 'a5_p5', 'authorise_rbi_within_a5_limits').
+obligation(MS, _, 'notify_commission_of_a5_p5_rules') :- member_state(MS), ms_provides_a5_p5_rules(MS).
+

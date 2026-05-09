@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A27.3 provision_id=G118
+// GDPR_A27_P3 — representative location: in MS where targeting/monitoring occurs
+obligation(A, S, 'representative_in_relevant_ms') :- obligation(A, S, 'designate_eu_representative'), representative(R, A), established_in_ms_of_targeting(R, S).
+

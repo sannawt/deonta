@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.16 provision_id=A059
+// AIAct_A3_P16 — 'recall of an AI system'
+recall(M, X) :- measure_to_return_or_disable_use(M, X).
+

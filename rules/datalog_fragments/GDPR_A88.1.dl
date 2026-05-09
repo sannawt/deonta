@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A88.1 provision_id=G128
+// GDPR_A88_P1 — MS may provide more specific rules for employment processing
+ms_derogation_basis('gdpr', 'a88_p1', 'employment_context_specific_rules').
+

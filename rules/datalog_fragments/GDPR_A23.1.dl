@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1 provision_id=G103
+// GDPR_A23_P1 — MS law may restrict A12-22, A34, A5 (mirror)
+ms_restriction_basis(MS, S, R) :- ms_law_restricts(MS, S, R), respects_essence_of_rights(MS, S), necessary_proportionate_in_democratic_society(MS, S), restriction_safeguards_objective(MS, R).
+

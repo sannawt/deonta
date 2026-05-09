@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A1.3 provision_id=G023
+// GDPR_A1_P3 — free movement: cannot be restricted on data-protection grounds (positive prohibition)
+ms_must_not_restrict_free_movement_for_dp(MS, S) :- processing(S), concerns(S, X), personal_data(X), member_state(MS).
+

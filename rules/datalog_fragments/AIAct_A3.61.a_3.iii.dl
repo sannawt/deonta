@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.61.a_3.iii provision_id=A112
+// AIAct_A3_P61_PT_a_iii — origin MS = where deployer is established (when deployer infringes)
+origin_ms_basis(I, MS) :- deployer_committed_infringement(I), deployer_established_in(I, MS).
+

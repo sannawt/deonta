@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A50 provision_id=A183
+// AIAct_A50 — Transparency obligations chapeau
+ai_act_scope_article('ai_act_a50', 'transparency_obligations').
+

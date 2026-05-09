@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.20 provision_id=G061
+// GDPR_A4_P20 — 'binding corporate rules'
+bcr(P, G) :- data_protection_policy(P), adhered_by_eu_controller_or_processor(P, A), for_intra_group_transfers(P, G).
+

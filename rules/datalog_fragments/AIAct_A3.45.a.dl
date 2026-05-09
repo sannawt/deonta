@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.45.a provision_id=A088
+// AIAct_A3_P45_PT_a — public authority competent for criminal matters
+a3_p45_a_la(A) :- public_authority(A), competent_for_criminal_matters(A).
+

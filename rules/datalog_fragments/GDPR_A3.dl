@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A3 provision_id=G033
+// GDPR_A3 — Territorial scope (chapeau; rules carried by paragraphs)
+gdpr_scope_article('gdpr_a3', 'territorial_scope').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.60 provision_id=A109
+// AIAct_A3_P60 — 'deep fake'
+deep_fake(C) :- ai_generated_or_manipulated_content(C), resembles_existing_persons_or_events(C), could_appear_authentic(C).
+

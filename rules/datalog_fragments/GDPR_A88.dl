@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A88 provision_id=G127
+// GDPR_A88 — Employment context (chapeau)
+gdpr_scope_article('gdpr_a88', 'employment_context').
+

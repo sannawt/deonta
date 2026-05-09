@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.21 provision_id=G062
+// GDPR_A4_P21 — 'supervisory authority'
+supervisory_authority(SA) :- independent_public_authority(SA), established_by_member_state_per_a51(SA).
+

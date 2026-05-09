@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A99.2 provision_id=G149
+// GDPR_A99_P2
++ application_date('gdpr', 'general', '2018-05-25')
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.3.d provision_id=A155
+// AIAct_A6_P3_PT_d — preparatory task to an Annex III assessment
+a6_p3_carveout_condition(X) :- intended_to_perform_preparatory_task(X), relevant_to_annex_iii_use_case(X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A94.1 provision_id=G143
+// GDPR_A94_P1 — repeal of Directive 95/46/EC effective 2018-05-25
++ directive_repealed('directive_9546', '2018-05-25')
+

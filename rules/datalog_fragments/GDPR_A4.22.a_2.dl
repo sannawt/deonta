@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.22.a_2 provision_id=G063
+// GDPR_A4_P22_PT_a — controller/processor established in MS of SA
+sa_concerned_basis(SA, A, S) :- controller_or_processor(A, S), established_in_ms_of(A, SA).
+

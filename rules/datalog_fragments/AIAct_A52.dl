@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A52 provision_id=A197
+// AIAct_A52 — Procedure (chapeau)
+ai_act_scope_article('ai_act_a52', 'gpai_systemic_risk_designation_procedure').
+

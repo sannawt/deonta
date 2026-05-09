@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.54 provision_id=A103
+// AIAct_A3_P54 — 'sandbox plan'
+sandbox_plan(P) :- agreed_between(P, PROV, CA), describes_sandbox_activities(P).
+

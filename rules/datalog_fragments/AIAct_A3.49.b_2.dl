@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.49.b_2 provision_id=A095
+// AIAct_A3_P49_PT_b — disruption of critical infrastructure
+a3_p49_consequence(I, 'critical_infra_disruption') :- leads_to_serious_irreversible_critical_infra_disruption(I).
+

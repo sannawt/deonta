@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.61.a_3.ii provision_id=A111
+// AIAct_A3_P61_PT_a_ii — origin MS = where provider/AR is located
+origin_ms_basis(I, MS) :- provider_located_in(I, MS).
+origin_ms_basis(I, MS) :- authorised_representative_located_in(I, MS).
+

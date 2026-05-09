@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.1.a provision_id=A163
+// AIAct_A7_P1_PT_a — system in any Annex III area
+a7_p1_condition('a7_p1_a', 'within_annex_iii_area').
+

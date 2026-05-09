@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.23.a_3 provision_id=G067
+// GDPR_A4_P23_PT_a — multiple-MS establishments
+cross_border_basis_a(S) :- controller_or_processor(A, S), multiple_eu_establishments(A), processing_in_context_of_establishment(S, A).
+

@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A90.2 provision_id=G138
+// GDPR_A90_P2 — MS shall notify Commission by 25 May 2018
+obligation(MS, _, 'notify_commission_of_a90_p1_provisions') :- member_state(MS), ms_provides_a90_p1_rules(MS).
++ notification_deadline('gdpr', 'a90_p1', '2018-05-25')
+

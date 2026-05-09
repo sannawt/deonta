@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A50.4 provision_id=A187
+// AIAct_A50_P4 — deployers of deep-fake / public-interest AI text: disclosure
+obligation(D, X, 'disclose_deep_fake_content') :- deployer(D, X), ai_system(X), generates_deep_fake_output(X), ~le_authorised(X).
+obligation(D, X, 'disclose_ai_text_for_public_interest_news') :- deployer(D, X), ai_system(X), generates_text_for_public_interest_news(X), ~human_editorial_review(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_deep_fake_output(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_text_for_public_interest_news(X).
+

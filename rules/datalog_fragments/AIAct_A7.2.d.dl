@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.d provision_id=A169
+// AIAct_A7_P2_PT_d — autonomy, human override
+a7_p2_criterion('autonomy_and_human_override').
+

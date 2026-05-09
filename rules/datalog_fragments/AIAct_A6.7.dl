@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.7 provision_id=A160
+// AIAct_A6_P7 — Commission empowered: delete conditions from A6(3)
+commission_delegated_act_basis('ai_act', 'a6_p7', 'delete_conditions_from_a6_p3').
+

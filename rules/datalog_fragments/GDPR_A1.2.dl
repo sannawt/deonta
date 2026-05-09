@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A1.2 provision_id=G022
+// GDPR_A1_P2 — protects fundamental rights, in particular data protection
+gdpr_protects_fundamental_right(A, 'data_protection') :- natural_person(A).
+

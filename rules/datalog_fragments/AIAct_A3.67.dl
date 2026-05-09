@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.67 provision_id=A121
+// AIAct_A3_P67 — 'floating-point operation'
+floating_point_operation(OP) :- mathematical_operation_on_floats(OP).
+

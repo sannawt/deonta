@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A90 provision_id=G136
+// GDPR_A90 — Obligations of secrecy (chapeau)
+gdpr_scope_article('gdpr_a90', 'professional_secrecy').
+

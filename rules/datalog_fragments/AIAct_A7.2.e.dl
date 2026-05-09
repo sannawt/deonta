@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.e provision_id=A170
+// AIAct_A7_P2_PT_e — past harm evidence
+a7_p2_criterion('past_harm_evidence').
+

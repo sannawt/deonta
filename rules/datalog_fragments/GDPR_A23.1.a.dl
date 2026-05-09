@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.a provision_id=G093
+// GDPR_A23_P1_PT_a — national security
+restriction_objective_lawful('national_security').
+

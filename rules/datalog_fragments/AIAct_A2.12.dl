@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.12 provision_id=A042
+// AIAct_A2_P12
+ai_act_excluded(S) :- free_open_source_ai(S), ~high_risk_ai(S), ~prohibited_practice(S).
+

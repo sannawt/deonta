@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A1.1 provision_id=G021
+// GDPR_A1_P1 — subject matter: rules for processing of personal data + free movement
+gdpr_subject_matter(S) :- processing(S), concerns(S, X), personal_data(X).
+gdpr_subject_matter('free_movement_personal_data').
+

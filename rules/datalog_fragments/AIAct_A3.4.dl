@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.4 provision_id=A047
+// AIAct_A3_P4 — 'deployer'
+deployer(A, X) :- uses_under_authority(A, X), ~purely_personal_household_activity(X).
+

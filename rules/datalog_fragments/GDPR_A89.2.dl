@@ -1,0 +1,8 @@
+// provision_long_id=GDPR_A89.2 provision_id=G133
+// GDPR_A89_P2 — derogations for research/statistics from rights 15,16,18,21
+ms_derogation_basis('gdpr', 'a89_p2', 'research_statistics_rights_derogation').
+right_disapplied(D, S, 'access') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'access'), rights_render_purpose_impossible(S, 'access').
+right_disapplied(D, S, 'rectification') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'rectification'), rights_render_purpose_impossible(S, 'rectification').
+right_disapplied(D, S, 'restriction') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'restriction'), rights_render_purpose_impossible(S, 'restriction').
+right_disapplied(D, S, 'object') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'object'), rights_render_purpose_impossible(S, 'object').
+

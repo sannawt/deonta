@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.f provision_id=A171
+// AIAct_A7_P2_PT_f — extent of potential harm
+a7_p2_criterion('extent_of_potential_harm').
+

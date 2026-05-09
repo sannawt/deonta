@@ -1,0 +1,299 @@
+[
+  {
+    "from node": "Datum",
+    "label": "CONCERNS",
+    "to node": "Actor",
+    "predicate": "concerns/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.1",
+    "description": "Datum is about an Actor (anchor for personal-data classification)."
+  },
+  {
+    "from node": "Datum",
+    "label": "IDENTIFIES",
+    "to node": "Actor",
+    "predicate": "identifies/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.1",
+    "description": "Datum permits identification of the Actor."
+  },
+  {
+    "from node": "Datum",
+    "label": "CATEGORY",
+    "to node": "Category",
+    "predicate": "category/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A9.1",
+    "description": "Datum has a special-category tag."
+  },
+  {
+    "from node": "Actor",
+    "label": "CONTROLLER",
+    "to node": "Scenario",
+    "predicate": "controller/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.7",
+    "description": "Actor determines purposes and means of processing."
+  },
+  {
+    "from node": "Actor",
+    "label": "PROCESSOR",
+    "to node": "Scenario",
+    "predicate": "processor/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.8",
+    "description": "Actor processes on behalf of the controller."
+  },
+  {
+    "from node": "Scenario",
+    "label": "IN_CONTEXT_OF_ESTABLISHMENT",
+    "to node": "Actor",
+    "predicate": "processing_in_context_of_establishment/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A3.1",
+    "description": "Processing in the context of activities of Actor's EU establishment."
+  },
+  {
+    "from node": "Actor",
+    "label": "PROVIDER",
+    "to node": "AISystem",
+    "predicate": "provider/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.3",
+    "description": "Actor provides (develops + places on market / puts into service) the AI system."
+  },
+  {
+    "from node": "Actor",
+    "label": "DEPLOYER",
+    "to node": "AISystem",
+    "predicate": "deployer/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.4",
+    "description": "Actor uses the AI system under its authority."
+  },
+  {
+    "from node": "Actor",
+    "label": "IMPORTER",
+    "to node": "AISystem",
+    "predicate": "importer/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.6",
+    "description": "EU-located actor places third-country AI system on EU market."
+  },
+  {
+    "from node": "Actor",
+    "label": "DISTRIBUTOR",
+    "to node": "AISystem",
+    "predicate": "distributor/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.7",
+    "description": "Actor in supply chain makes AI system available on the market."
+  },
+  {
+    "from node": "Actor",
+    "label": "MANUFACTURER",
+    "to node": "AISystem",
+    "predicate": "manufacturer/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.8",
+    "description": "Product manufacturer placing on market a product with AI system as safety component."
+  },
+  {
+    "from node": "Actor",
+    "label": "AUTH_REPRESENTATIVE",
+    "to node": "AISystem",
+    "predicate": "authorised_representative/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.5",
+    "description": "EU-mandated representative of a non-EU provider."
+  },
+  {
+    "from node": "Actor",
+    "label": "ESTABLISHED_IN",
+    "to node": "Jurisdiction",
+    "predicate": "established_in/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A3.1; AIAct_A2.1.b",
+    "description": "Actor has stable establishment in the jurisdiction."
+  },
+  {
+    "from node": "Actor",
+    "label": "LOCATED_IN",
+    "to node": "Jurisdiction",
+    "predicate": "located_in/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.b",
+    "description": "Actor is physically located in the jurisdiction."
+  },
+  {
+    "from node": "Scenario",
+    "label": "TARGETS_EU_SUBJECTS_OF",
+    "to node": "Actor",
+    "predicate": "data_subjects_in_eu_targeted/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A3.2.a",
+    "description": "Scenario offers goods/services to EU data subjects."
+  },
+  {
+    "from node": "Actor",
+    "label": "MONITORS_EU_BEHAVIOUR",
+    "to node": "Scenario",
+    "predicate": "monitors_behaviour_in_eu/2",
+    "kind": "extensional",
+    "source articles": "GDPR_A3.2.b",
+    "description": "Scenario monitors EU data-subject behaviour."
+  },
+  {
+    "from node": "Actor",
+    "label": "PLACES_ON_EU_MARKET",
+    "to node": "AISystem",
+    "predicate": "places_on_eu_market/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.a",
+    "description": "Actor places AI system on EU market."
+  },
+  {
+    "from node": "Actor",
+    "label": "PUTS_INTO_SERVICE_EU",
+    "to node": "AISystem",
+    "predicate": "puts_into_service_in_eu/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.a",
+    "description": "Actor puts AI system into service in EU."
+  },
+  {
+    "from node": "AISystem",
+    "label": "MADE_AVAILABLE_ON_MARKET",
+    "to node": "Jurisdiction",
+    "predicate": "made_available_on_market/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.d",
+    "description": "AI system made available on the market in the named jurisdiction."
+  },
+  {
+    "from node": "Actor",
+    "label": "PLACES_PRODUCT_ON_EU_MARKET",
+    "to node": "AISystem",
+    "predicate": "places_on_eu_market_with_product/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.e",
+    "description": "Manufacturer places AI-containing product on EU market under their name."
+  },
+  {
+    "from node": "Scenario",
+    "label": "HAS_FEATURE",
+    "to node": "FeatureTag",
+    "predicate": "has_feature/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.1; AIAct_A5; AIAct_A51",
+    "description": "Scenario carries a closed-vocabulary feature tag."
+  },
+  {
+    "from node": "Scenario",
+    "label": "HAS_CAPABILITY",
+    "to node": "FeatureTag",
+    "predicate": "has_capability/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A3.1",
+    "description": "Scenario has a capability tag (anchors Art 3(1) AI-system definition)."
+  },
+  {
+    "from node": "AISystem",
+    "label": "USED_IN",
+    "to node": "Use",
+    "predicate": "used_in/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A6.2",
+    "description": "AI system is used in an Annex III use-case category."
+  },
+  {
+    "from node": "AISystem",
+    "label": "SAFETY_COMPONENT_OF",
+    "to node": "Product",
+    "predicate": "safety_component_of/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A6.1.a",
+    "description": "AI system is a safety component of the product."
+  },
+  {
+    "from node": "Product",
+    "label": "THIRD_PARTY_ASSESSMENT_UNDER",
+    "to node": "Legislation",
+    "predicate": "subject_to_third_party_assessment/2",
+    "kind": "extensional",
+    "source articles": "AIAct_A6.1.b",
+    "description": "Product requires third-party conformity assessment under Annex I legislation."
+  },
+  {
+    "from node": "Actor",
+    "label": "GDPR_TERRITORIAL_LINK",
+    "to node": "Scenario",
+    "predicate": "gdpr_territorial_link/2",
+    "kind": "intensional",
+    "source articles": "GDPR_A3",
+    "description": "Engine-derived: Actor anchors GDPR territorial scope to Scenario."
+  },
+  {
+    "from node": "Actor",
+    "label": "AI_ACT_TERRITORIAL_LINK",
+    "to node": "AISystem",
+    "predicate": "ai_act_territorial_link/2",
+    "kind": "intensional",
+    "source articles": "AIAct_A2.1",
+    "description": "Engine-derived: Actor anchors AI Act territorial scope to AI system."
+  },
+  {
+    "from node": "Applicability",
+    "label": "OF_SCENARIO",
+    "to node": "Scenario",
+    "predicate": "applies/3 spoke",
+    "kind": "intensional",
+    "source articles": "GDPR_A1; AIAct_A1",
+    "description": "Applicability event points at the Scenario it judges."
+  },
+  {
+    "from node": "Applicability",
+    "label": "UNDER_REGULATION",
+    "to node": "Regulation",
+    "predicate": "applies/3 spoke",
+    "kind": "intensional",
+    "source articles": "GDPR_A1; AIAct_A1",
+    "description": "Applicability event points at the Regulation."
+  },
+  {
+    "from node": "Applicability",
+    "label": "VIA_ACTOR",
+    "to node": "Actor",
+    "predicate": "applies_via_actor/4 spoke",
+    "kind": "intensional",
+    "source articles": "GDPR_A1; AIAct_A1",
+    "description": "Applicability event records which Actor anchored territorial scope."
+  },
+  {
+    "from node": "ApplicationDate",
+    "label": "OF_PROVISION",
+    "to node": "Provision",
+    "predicate": "application_date/3 spoke",
+    "kind": "reference",
+    "source articles": "AIAct_A113",
+    "description": "ApplicationDate event points at the Provision it dates."
+  },
+  {
+    "from node": "ApplicationDate",
+    "label": "OF_REGULATION",
+    "to node": "Regulation",
+    "predicate": "application_date/3 spoke",
+    "kind": "reference",
+    "source articles": "AIAct_A113",
+    "description": "ApplicationDate event points at the Regulation."
+  },
+  {
+    "from node": "TransitionalGrace",
+    "label": "UNDER_REGULATION",
+    "to node": "Regulation",
+    "predicate": "transitional_grace/3 spoke",
+    "kind": "reference",
+    "source articles": "AIAct_A111",
+    "description": "TransitionalGrace event points at the Regulation."
+  }
+]

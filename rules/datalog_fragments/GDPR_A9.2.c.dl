@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.c provision_id=G077
+// GDPR_A9_P2_PT_c — vital interests where subject incapable
+art9_lawful(S) :- necessary_to_protect_vital_interests(S), data_subject_incapable_of_consent(S).
+

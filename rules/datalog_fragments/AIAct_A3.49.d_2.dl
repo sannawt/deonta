@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.49.d_2 provision_id=A097
+// AIAct_A3_P49_PT_d — serious harm to property or environment
+a3_p49_consequence(I, 'property_or_environment_harm') :- leads_to_serious_property_or_environment_harm(I).
+

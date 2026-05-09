@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A2.4 provision_id=A034
+// AIAct_A2_P4 — third-country authorities/intl orgs in cooperation frameworks excluded
+ai_act_excluded(S) :- third_country_public_authority(A), uses_ai_system(A, S), in_intl_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+ai_act_excluded(S) :- international_organisation(A), uses_ai_system(A, S), in_intl_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+

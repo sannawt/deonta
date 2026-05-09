@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.c provision_id=A128
+// AIAct_A5_P1_PT_c
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'social_scoring').
+

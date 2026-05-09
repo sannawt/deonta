@@ -1,0 +1,10 @@
+// provision_long_id=GDPR_R31 provision_id=G018
+// GDPR_R31 — RECITAL — public authorities receiving data in inquiry are not 'recipients' (positive label)
+recipient_excluded(A, X) :- public_authority(A), receives_in_general_interest_inquiry(A, X), based_on_law(A).
+
+// GDPR_R31 — RECITAL — disclosure requests: written, reasoned, occasional
+disclosure_request_lawful(R) :- request_in_writing(R), request_reasoned(R), request_occasional(R), ~concerns_entire_filing_system(R).
+
+// GDPR_R31 — RECITAL — narrative aid
+recital_principle('gdpr', 'r31', 'inquiry_receipts_not_recipients').
+

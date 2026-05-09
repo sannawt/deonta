@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.g provision_id=A132
+// AIAct_A5_P1_PT_g
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'biometric_categorisation_special').
+

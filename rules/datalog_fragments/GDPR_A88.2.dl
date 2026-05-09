@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A88.2 provision_id=G129
+// GDPR_A88_P2 — those rules must include suitable safeguards
+ms_a88_rules_required(MS, 'transparency').
+ms_a88_rules_required(MS, 'intra_group_transfers').
+ms_a88_rules_required(MS, 'workplace_monitoring_systems').
+ms_a88_rules_required(MS, 'human_dignity_safeguards').
+

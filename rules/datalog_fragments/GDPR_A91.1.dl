@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A91.1 provision_id=G140
+// GDPR_A91_P1 — pre-existing comprehensive rules may continue if aligned
+church_rules_carryover_valid(MS, RC) :- church_or_religious_association(RC), comprehensive_rules_at_entry_into_force(RC, MS), brought_in_line_with_gdpr(RC).
+

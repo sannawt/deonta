@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.55 provision_id=A104
+// AIAct_A3_P55 — 'AI regulatory sandbox'
+ai_regulatory_sandbox(SBX) :- controlled_framework(SBX), set_up_by_competent_authority(SBX), under_regulatory_supervision(SBX).
+

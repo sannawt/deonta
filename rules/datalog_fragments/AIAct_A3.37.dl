@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A3.37 provision_id=A080
+// AIAct_A3_P37 — 'special categories of personal data' (cross-ref)
+special_category_data(X) :- category_per_gdpr_a9(X).
+special_category_data(X) :- category_per_le_directive_a10(X).
+special_category_data(X) :- category_per_2018_1725_a10_p1(X).
+

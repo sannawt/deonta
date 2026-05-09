@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A2.9 provision_id=A039
+// AIAct_A2_P9 — without prejudice to consumer protection / product safety
+ai_act_without_prejudice_to('consumer_protection_acquis').
+ai_act_without_prejudice_to('product_safety_acquis').
+

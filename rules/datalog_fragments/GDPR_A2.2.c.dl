@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.2.c provision_id=G028
+// GDPR_A2_P2_PT_c
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+

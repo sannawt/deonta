@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A3.1 provision_id=G034
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- controller(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- processor(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+

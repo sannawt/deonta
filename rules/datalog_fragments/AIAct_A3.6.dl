@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.6 provision_id=A049
+// AIAct_A3_P6 — 'importer'
+importer(A, X) :- located_or_established_in_eu(A), places_on_eu_market(A, X), bears_third_country_provider_name(X).
+

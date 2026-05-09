@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.43 provision_id=A086
+// AIAct_A3_P43 — 'post RBI system'
+post_rbi_system(X) :- remote_biometric_identification_system(X), ~realtime_rbi_system(X).
+

@@ -1,0 +1,11 @@
+// provision_long_id=GDPR_R24 provision_id=G011
+// GDPR_R24 — RECITAL — monitoring limb of Art 3(2)(b)
+gdpr_territorial_link(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+
+// GDPR_R24 — RECITAL — monitoring includes online tracking, profiling
+monitors_behaviour_in_eu(A, S) :- online_tracking(A, S), data_subjects_in_eu(S).
+monitors_behaviour_in_eu(A, S) :- profiling_natural_person(A, S), data_subjects_in_eu(S).
+
+// GDPR_R24 — RECITAL — narrative aid
+recital_principle('gdpr', 'r24', 'monitoring_includes_profiling').
+

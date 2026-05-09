@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.7 provision_id=A145
+// AIAct_A5_P7 — Commission publishes aggregated annual reports
+obligation('commission', _, 'publish_annual_aggregated_rbi_reports').
+

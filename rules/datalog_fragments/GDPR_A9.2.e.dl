@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.e provision_id=G079
+// GDPR_A9_P2_PT_e — manifestly made public by data subject
+art9_lawful(S) :- manifestly_made_public_by_subject(S).
+

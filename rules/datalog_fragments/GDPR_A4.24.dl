@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.24 provision_id=G070
+// GDPR_A4_P24 — 'relevant and reasoned objection'
+relevant_reasoned_objection(O) :- objection_to_draft_decision(O), demonstrates_significance_of_risks(O).
+

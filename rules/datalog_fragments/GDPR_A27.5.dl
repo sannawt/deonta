@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A27.5 provision_id=G120
+// GDPR_A27_P5 — designation does not preclude legal action against principal (positive label)
+non_exclusive_liability_of_representative(R, A) :- representative(R, A), controller_or_processor(A, S).
+

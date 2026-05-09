@@ -1,0 +1,21 @@
+// provision_long_id=GDPR_A4.2 provision_id=G041
+// GDPR_A4_P2 — 'processing'
+processing(S) :- operation(S, X), personal_data(X).
+operation_kinds('collection').
+operation_kinds('recording').
+operation_kinds('organisation').
+operation_kinds('structuring').
+operation_kinds('storage').
+operation_kinds('adaptation').
+operation_kinds('alteration').
+operation_kinds('retrieval').
+operation_kinds('consultation').
+operation_kinds('use').
+operation_kinds('disclosure_by_transmission').
+operation_kinds('dissemination').
+operation_kinds('alignment').
+operation_kinds('combination').
+operation_kinds('restriction').
+operation_kinds('erasure').
+operation_kinds('destruction').
+

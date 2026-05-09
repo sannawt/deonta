@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.25 provision_id=A068
+// AIAct_A3_P25 — 'post-market monitoring system'
+post_market_monitoring_system(PMS, P, X) :- provider(P, X), collects_and_reviews_use_experience(PMS, P, X).
+

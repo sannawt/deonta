@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.20 provision_id=A063
+// AIAct_A3_P20 — 'conformity assessment'
+conformity_assessment(CA, X) :- demonstrates_chapter_iii_section2_compliance(CA, X), high_risk_ai(X).
+

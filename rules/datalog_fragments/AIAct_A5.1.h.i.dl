@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.h.i provision_id=A133
+// AIAct_A5_P1_PT_h_i — RBI exception: search for victims/missing persons
+a5_p1_h_exception(X) :- for_victim_or_missing_person_search(X).
+

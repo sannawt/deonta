@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.c provision_id=G095
+// GDPR_A23_P1_PT_c — public security
+restriction_objective_lawful('public_security').
+

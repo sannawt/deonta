@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.15 provision_id=G054
+// GDPR_A4_P15 — 'data concerning health'
+health_data(X) :- personal_data(X), relates_to_health_status(X).
+category(X, 'health') :- health_data(X).
+

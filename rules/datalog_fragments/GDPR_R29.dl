@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_R29 provision_id=G016
+// GDPR_R29 — RECITAL — pseudonymisation incentive: same controller may analyse
+pseudonymisation_within_controller_allowed(A, S) :- controller(A, S), pseudonymisation_applied(S), technical_org_measures_in_place(A, S), additional_info_kept_separately(A, S).
+
+// GDPR_R29 — RECITAL — narrative aid
+recital_principle('gdpr', 'r29', 'pseudonymisation_incentive').
+

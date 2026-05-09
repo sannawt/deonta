@@ -1,0 +1,6 @@
+// provision_long_id=GDPR_A4.9 provision_id=G048
+// GDPR_A4_P9 — 'recipient'
+recipient(A, X) :- disclosed_to(X, A), ~recipient_excluded(A, X).
+public_authority_inquiry_recipient(A, X) :- public_authority(A), receives_in_general_interest_inquiry(A, X).
+recipient_excluded(A, X) :- public_authority_inquiry_recipient(A, X).
+

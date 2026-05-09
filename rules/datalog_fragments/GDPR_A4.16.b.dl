@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.16.b provision_id=G056
+// GDPR_A4_P16_PT_b — processor's main establishment
+main_establishment(A, J) :- processor(A, _), multiple_eu_establishments(A), central_administration_in(A, J).
+main_establishment(A, J) :- processor(A, _), ~central_administration_in(A, _), main_processing_activities_at(A, J).
+

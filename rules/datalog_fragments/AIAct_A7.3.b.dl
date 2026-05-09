@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.3.b provision_id=A181
+// AIAct_A7_P3_PT_b — deletion does not decrease overall protection
+a7_p3_condition('a7_p3_b', 'no_decrease_in_overall_protection').
+

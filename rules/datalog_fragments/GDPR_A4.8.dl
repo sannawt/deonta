@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.8 provision_id=G047
+// GDPR_A4_P8 — 'processor'
+processor(A, S) :- processes_on_behalf_of_controller(A, S, _), processing(S).
+

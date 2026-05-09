@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.22 provision_id=G066
+// GDPR_A4_P22 — 'supervisory authority concerned' chapeau
+supervisory_authority_concerned(SA, A, S) :- supervisory_authority(SA), sa_concerned_basis(SA, A, S).
+

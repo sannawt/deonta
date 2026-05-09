@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.c provision_id=A168
+// AIAct_A7_P2_PT_c — nature/amount of data; special categories
+a7_p2_criterion('data_nature_special_categories').
+

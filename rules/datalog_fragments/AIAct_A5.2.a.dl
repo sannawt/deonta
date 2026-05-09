@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.2.a provision_id=A138
+// AIAct_A5_P2_PT_a — assess seriousness/probability/scale of harm if not used
+a5_p2_factor('seriousness_probability_scale_of_harm_if_not_used').
+

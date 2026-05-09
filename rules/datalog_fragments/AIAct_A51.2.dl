@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A51.2 provision_id=A195
+// AIAct_A51_P2 — presumption: compute > 10^25 FLOPs => high-impact capabilities
+has_feature(X, 'compute_above_10e25') :- gpai_model(X), training_compute_flops(X, F), f_greater_than_10e25(F).
+

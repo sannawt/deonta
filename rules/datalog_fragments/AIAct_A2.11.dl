@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.11 provision_id=A041
+// AIAct_A2_P11 — MS may keep more favourable workers' rules / collective agreements
+ms_derogation_basis('ai_act', 'a2_p11', 'more_favourable_worker_protection').
+

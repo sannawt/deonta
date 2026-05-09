@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.56 provision_id=A105
+// AIAct_A3_P56 — 'AI literacy'
+ai_literacy(P) :- skills_and_knowledge_for_informed_ai_use(P).
+

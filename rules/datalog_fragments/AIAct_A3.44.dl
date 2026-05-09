@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.44 provision_id=A087
+// AIAct_A3_P44 — 'publicly accessible space'
+publicly_accessible_space(SP) :- physical_place(SP), accessible_to_undetermined_persons(SP).
+

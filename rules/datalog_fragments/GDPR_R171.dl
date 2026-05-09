@@ -1,0 +1,13 @@
+// provision_long_id=GDPR_R171 provision_id=G019
+// GDPR_R171 — RECITAL — repeal of Directive 95/46/EC
++ transitional_grace('gdpr', 'directive_9546_repealed', '2018-05-25')
+
+// GDPR_R171 — RECITAL — pre-existing consents preserved if conditions met
+consent_carryover_valid(D, S) :- consent_under_dir_9546(D, S), meets_gdpr_consent_conditions(D, S).
+
+// GDPR_R171 — RECITAL — Commission decisions / SA authorisations remain in force
+legacy_decision_in_force(X) :- decision_under_dir_9546(X), ~amended(X), ~repealed_decision(X).
+
+// GDPR_R171 — RECITAL — narrative aid
+recital_principle('gdpr', 'r171', 'transitional_continuity').
+

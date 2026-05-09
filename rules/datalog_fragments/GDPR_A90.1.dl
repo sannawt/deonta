@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A90.1 provision_id=G137
+// GDPR_A90_P1 — MS may set out powers of SA in relation to secrecy-bound C/P
+ms_derogation_basis('gdpr', 'a90_p1', 'sa_powers_vs_professional_secrecy').
+

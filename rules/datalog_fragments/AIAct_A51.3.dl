@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A51.3 provision_id=A196
+// AIAct_A51_P3 — Commission empowered to amend thresholds
+commission_delegated_act_basis('ai_act', 'a51_p3', 'amend_a51_thresholds_and_benchmarks').
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A11.1 provision_id=G090
+// GDPR_A11_P1 — controller need not maintain identification info merely for compliance
+obligation_disapplied(A, S, 'maintain_identification_info_for_compliance') :- controller(A, S), processing(S), ~purpose_requires_identification(S).
+

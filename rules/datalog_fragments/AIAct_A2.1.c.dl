@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2.1.c provision_id=A026
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- provider(A, S), output_used_in_eu(S).
+
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- deployer(A, S), output_used_in_eu(S).
+

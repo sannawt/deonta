@@ -1,0 +1,15 @@
+// provision_long_id=AIAct_R9 provision_id=A002
+// AIAct_R9 — RECITAL — alignment with New Legislative Framework, without prejudice to other Union law
+ai_act_without_prejudice_to('reg_765_2008').
+ai_act_without_prejudice_to('decision_768_2008').
+ai_act_without_prejudice_to('reg_2019_1020').
+ai_act_without_prejudice_to('data_protection_law').
+ai_act_without_prejudice_to('consumer_protection_law').
+ai_act_without_prejudice_to('product_safety_law').
+ai_act_without_prejudice_to('employment_and_workers_protection_law').
+ai_act_without_prejudice_to('product_liability_directive_85_374').
+ai_act_without_prejudice_to('right_to_strike_collective_action').
+
+// AIAct_R9 — RECITAL — narrative
+recital_principle('ai_act', 'r9', 'cross_regulatory_alignment').
+

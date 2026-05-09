@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.h provision_id=A136
+// AIAct_A5_P1_PT_h
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'realtime_remote_biometric_id_public').
+

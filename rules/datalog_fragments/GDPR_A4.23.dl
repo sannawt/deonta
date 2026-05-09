@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.23 provision_id=G069
+// GDPR_A4_P23 — 'cross-border processing' chapeau
+cross_border_processing(S) :- cross_border_basis_a(S).
+cross_border_processing(S) :- cross_border_basis_b(S).
+

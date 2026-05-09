@@ -1,0 +1,12 @@
+{
+  "profile": "scope_applicability",
+  "facts": [
+    { "predicate": "case", "args": ["s3"] },
+    { "predicate": "regulation", "args": ["gdpr"] },
+    { "predicate": "processing_personal_data", "args": ["s3"] },
+    { "predicate": "territorial_link_eu", "args": ["s3"] },
+    { "predicate": "law_in_force", "args": ["gdpr"] },
+    { "predicate": "exclusion_holds", "args": ["s3", "gdpr"] }
+  ],
+  "expect_verdict": "does_not_apply"
+}

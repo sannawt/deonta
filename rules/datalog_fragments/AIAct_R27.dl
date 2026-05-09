@@ -1,0 +1,12 @@
+// provision_long_id=AIAct_R27 provision_id=A012
+// AIAct_R27 — RECITAL — non-binding ethics principles (HLEG 2019)
+ai_act_ethics_principle('human_agency_and_oversight').
+ai_act_ethics_principle('technical_robustness_and_safety').
+ai_act_ethics_principle('privacy_and_data_governance').
+ai_act_ethics_principle('transparency').
+ai_act_ethics_principle('diversity_non_discrimination_fairness').
+ai_act_ethics_principle('societal_environmental_wellbeing').
+ai_act_ethics_principle('accountability').
+
+recital_principle('ai_act', 'r27', 'non_binding_ethics_principles').
+

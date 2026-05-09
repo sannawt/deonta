@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.4 provision_id=G087
+// GDPR_A9_P4 — Member-State derogation: stricter conditions on genetic/biometric/health
+ms_derogation_basis('gdpr', 'a9_p4', 'genetic_biometric_health_stricter').
+

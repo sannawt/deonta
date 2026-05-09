@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A10 provision_id=G088
+// GDPR_A10
+personal_data(X) :- criminal_offence_data(X).
+

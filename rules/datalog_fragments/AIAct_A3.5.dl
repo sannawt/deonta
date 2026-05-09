@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.5 provision_id=A048
+// AIAct_A3_P5 — 'authorised representative'
+authorised_representative(R, X) :- located_or_established_in_eu(R), has_written_mandate(R, P), provider(P, X).
+

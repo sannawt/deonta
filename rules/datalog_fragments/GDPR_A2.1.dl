@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A2.1 provision_id=G025
+// GDPR_A2_P1_LIMB_1
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), automated_means(x).
+
+// GDPR_A2_P1_LIMB_2
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), filing_system(S).
+

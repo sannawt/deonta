@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.3.a provision_id=A152
+// AIAct_A6_P3_PT_a — narrow procedural task
+a6_p3_carveout_condition(X) :- intended_to_perform_narrow_procedural_task(X).
+

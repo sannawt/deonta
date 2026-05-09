@@ -1,0 +1,372 @@
+[
+  {
+    "prop_id": "P001",
+    "on node": "Actor",
+    "property": "natural_person",
+    "value type": "label",
+    "predicate": "natural_person/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.1",
+    "description": "Actor is a living natural person (label, e.g. :NaturalPerson)."
+  },
+  {
+    "prop_id": "P002",
+    "on node": "Actor",
+    "property": "member_state_law_via_intl_law",
+    "value type": "boolean",
+    "predicate": "member_state_law_via_intl_law/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A3.3",
+    "description": "Actor subject to a Member State's law via public international law."
+  },
+  {
+    "prop_id": "P003",
+    "on node": "Scenario",
+    "property": "processing",
+    "value type": "label",
+    "predicate": "processing/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A4.2",
+    "description": "Scenario is a processing operation (label, e.g. :Processing)."
+  },
+  {
+    "prop_id": "P004",
+    "on node": "Scenario",
+    "property": "automated_means",
+    "value type": "boolean",
+    "predicate": "automated_means/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.1",
+    "description": "Processing carried out by automated means."
+  },
+  {
+    "prop_id": "P005",
+    "on node": "Scenario",
+    "property": "filing_system",
+    "value type": "boolean",
+    "predicate": "filing_system/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.1; GDPR_A4.6",
+    "description": "Non-automated processing forming part of a structured filing system."
+  },
+  {
+    "prop_id": "P006",
+    "on node": "Scenario",
+    "property": "ai_system",
+    "value type": "derived_label",
+    "predicate": "ai_system/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A3.1",
+    "description": "Engine-set sublabel: scenario is an AI system (:AISystem)."
+  },
+  {
+    "prop_id": "P007",
+    "on node": "Scenario",
+    "property": "gpai_model",
+    "value type": "derived_label",
+    "predicate": "gpai_model/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A3.63",
+    "description": "Engine-set sublabel: scenario is a GPAI model (:GPAIModel)."
+  },
+  {
+    "prop_id": "P008",
+    "on node": "Scenario",
+    "property": "gpai_systemic_risk",
+    "value type": "derived_label",
+    "predicate": "gpai_systemic_risk/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A51",
+    "description": "Engine-set: GPAI model with systemic risk."
+  },
+  {
+    "prop_id": "P009",
+    "on node": "Scenario",
+    "property": "prohibited_practice",
+    "value type": "derived_label",
+    "predicate": "prohibited_practice/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A5.1",
+    "description": "Engine-set: AI system uses a prohibited practice."
+  },
+  {
+    "prop_id": "P010",
+    "on node": "Scenario",
+    "property": "high_risk_ai",
+    "value type": "derived_label",
+    "predicate": "high_risk_ai/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A6.1; AIAct_A6.2",
+    "description": "Engine-set: high-risk via Art 6(1) or 6(2)."
+  },
+  {
+    "prop_id": "P011",
+    "on node": "Scenario",
+    "property": "gdpr_material",
+    "value type": "derived_label",
+    "predicate": "gdpr_material/1",
+    "kind": "intensional",
+    "source articles": "GDPR_A2.1",
+    "description": "Engine-set: passes GDPR material-scope test."
+  },
+  {
+    "prop_id": "P012",
+    "on node": "Scenario",
+    "property": "ai_act_material",
+    "value type": "derived_label",
+    "predicate": "ai_act_material/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A1; AIAct_A2.1",
+    "description": "Engine-set: passes AI Act material-scope test."
+  },
+  {
+    "prop_id": "P013",
+    "on node": "Scenario",
+    "property": "gdpr_excluded",
+    "value type": "derived_label",
+    "predicate": "gdpr_excluded/1",
+    "kind": "intensional",
+    "source articles": "GDPR_A2.2; GDPR_A2.3",
+    "description": "Engine-set: a GDPR exclusion limb fired."
+  },
+  {
+    "prop_id": "P014",
+    "on node": "Scenario",
+    "property": "ai_act_excluded",
+    "value type": "derived_label",
+    "predicate": "ai_act_excluded/1",
+    "kind": "intensional",
+    "source articles": "AIAct_A2.3; AIAct_A2.6; AIAct_A2.8; AIAct_A2.10; AIAct_A2.12",
+    "description": "Engine-set: an AI Act exclusion limb fired."
+  },
+  {
+    "prop_id": "P015",
+    "on node": "Scenario",
+    "property": "activity_outside_union_law",
+    "value type": "boolean",
+    "predicate": "activity_outside_union_law/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.2.a",
+    "description": "Scenario falls outside Union law (CFSP etc.)."
+  },
+  {
+    "prop_id": "P016",
+    "on node": "Scenario",
+    "property": "purely_personal_household_activity",
+    "value type": "boolean",
+    "predicate": "purely_personal_household_activity/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.2.c; AIAct_A2.10",
+    "description": "Purely personal or household activity."
+  },
+  {
+    "prop_id": "P017",
+    "on node": "Scenario",
+    "property": "led_law_enforcement_processing",
+    "value type": "boolean",
+    "predicate": "led_law_enforcement_processing/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.2.d",
+    "description": "Law-enforcement processing under Directive 2016/680."
+  },
+  {
+    "prop_id": "P018",
+    "on node": "Scenario",
+    "property": "eu_institution_processing",
+    "value type": "boolean",
+    "predicate": "eu_institution_processing/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A2.3",
+    "description": "Processing by an EU institution/body (Reg 2018/1725 governs)."
+  },
+  {
+    "prop_id": "P019",
+    "on node": "Scenario",
+    "property": "military_or_defence_purpose",
+    "value type": "boolean",
+    "predicate": "military_or_defence_purpose/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.3",
+    "description": "Used exclusively for military/defence purposes."
+  },
+  {
+    "prop_id": "P020",
+    "on node": "Scenario",
+    "property": "national_security_purpose",
+    "value type": "boolean",
+    "predicate": "national_security_purpose/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.3",
+    "description": "Used exclusively for national-security purposes."
+  },
+  {
+    "prop_id": "P021",
+    "on node": "Scenario",
+    "property": "scientific_research_development_only",
+    "value type": "boolean",
+    "predicate": "scientific_research_development_only/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.6",
+    "description": "Scientific R&D only (Art 2(6) carve-out)."
+  },
+  {
+    "prop_id": "P022",
+    "on node": "Scenario",
+    "property": "pre_market_research_testing",
+    "value type": "boolean",
+    "predicate": "pre_market_research_testing/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.8",
+    "description": "Pre-market research/testing/development."
+  },
+  {
+    "prop_id": "P023",
+    "on node": "Scenario",
+    "property": "free_open_source_ai",
+    "value type": "boolean",
+    "predicate": "free_open_source_ai/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.12",
+    "description": "Released under FOSS licence (subject to high-risk/prohibited carve-outs)."
+  },
+  {
+    "prop_id": "P024",
+    "on node": "Scenario",
+    "property": "output_used_in_eu",
+    "value type": "boolean",
+    "predicate": "output_used_in_eu/1",
+    "kind": "extensional",
+    "source articles": "AIAct_A2.1.c",
+    "description": "AI system output is used in the Union."
+  },
+  {
+    "prop_id": "P025",
+    "on node": "Scenario",
+    "property": "eprivacy_lex_specialis",
+    "value type": "boolean",
+    "predicate": "eprivacy_lex_specialis/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A95",
+    "description": "Marker: ePrivacy Directive lex specialis applies (coordination, not exclusion)."
+  },
+  {
+    "prop_id": "P026",
+    "on node": "Datum",
+    "property": "criminal_offence_data",
+    "value type": "boolean",
+    "predicate": "criminal_offence_data/1",
+    "kind": "extensional",
+    "source articles": "GDPR_A10",
+    "description": "Datum relates to criminal convictions/offences."
+  },
+  {
+    "prop_id": "P027",
+    "on node": "Datum",
+    "property": "personal_data",
+    "value type": "derived_label",
+    "predicate": "personal_data/1",
+    "kind": "intensional",
+    "source articles": "GDPR_A4.1; GDPR_A9; GDPR_A10",
+    "description": "Engine-set: datum qualifies as personal data."
+  },
+  {
+    "prop_id": "P028",
+    "on node": "Datum",
+    "property": "special_category_data",
+    "value type": "derived_label",
+    "predicate": "special_category_data/1",
+    "kind": "intensional",
+    "source articles": "GDPR_A9.1",
+    "description": "Engine-set: datum is special-category."
+  },
+  {
+    "prop_id": "P029",
+    "on node": "Applicability",
+    "property": "time",
+    "value type": "Time",
+    "predicate": "applies/3 arg",
+    "kind": "intensional",
+    "source articles": "GDPR_A1; AIAct_A1",
+    "description": "ISO 8601 time at which applicability is judged."
+  },
+  {
+    "prop_id": "P030",
+    "on node": "ApplicationDate",
+    "property": "time",
+    "value type": "Time",
+    "predicate": "application_date/3 arg",
+    "kind": "reference",
+    "source articles": "AIAct_A113",
+    "description": "ISO 8601 staggered application date."
+  },
+  {
+    "prop_id": "P031",
+    "on node": "TransitionalGrace",
+    "property": "time",
+    "value type": "Time",
+    "predicate": "transitional_grace/3 arg",
+    "kind": "reference",
+    "source articles": "AIAct_A111",
+    "description": "ISO 8601 transitional-grace deadline."
+  },
+  {
+    "prop_id": "P032",
+    "on node": "TransitionalGrace",
+    "property": "cohort",
+    "value type": "Provision",
+    "predicate": "transitional_grace/3 arg",
+    "kind": "reference",
+    "source articles": "AIAct_A111",
+    "description": "Cohort tag (e.g. high_risk_predeployed, gpai_predeployed)."
+  },
+  {
+    "prop_id": "P033",
+    "on node": "Regulation",
+    "property": "entry_into_force",
+    "value type": "Time",
+    "predicate": "entry_into_force/2",
+    "kind": "reference",
+    "source articles": "GDPR_A99; AIAct_A113",
+    "description": "ISO 8601 date the regulation entered into force."
+  },
+  {
+    "prop_id": "P034",
+    "on node": "Legislation",
+    "property": "annex_i_legislation",
+    "value type": "label",
+    "predicate": "annex_i_legislation/1",
+    "kind": "reference",
+    "source articles": "AIAct_AnnexI",
+    "description": "Membership: this Legislation tag is listed in Annex I (label, e.g. :AnnexILegislation)."
+  },
+  {
+    "prop_id": "P035",
+    "on node": "Use",
+    "property": "annex_iii_use_case",
+    "value type": "label",
+    "predicate": "annex_iii_use_case/1",
+    "kind": "reference",
+    "source articles": "AIAct_AnnexIII",
+    "description": "Membership: this Use tag is one of the Annex III high-risk categories (label, e.g. :AnnexIIIUseCase)."
+  },
+  {
+    "prop_id": "P036",
+    "on node": "Provision",
+    "property": "applicable_at",
+    "value type": "derived_property",
+    "predicate": "applicable_at/3",
+    "kind": "intensional",
+    "source articles": "AIAct_A113",
+    "description": "Engine-derived (query-time): provision is applicable at a given Time. Function over application_date + Time, not stored."
+  },
+  {
+    "prop_id": "P037",
+    "on node": "Regulation",
+    "property": "in_force",
+    "value type": "derived_property",
+    "predicate": "in_force/2",
+    "kind": "intensional",
+    "source articles": "GDPR_A99; AIAct_A113",
+    "description": "Engine-derived (query-time): regulation is in force at a given Time. Function over entry_into_force + Time, not stored."
+  }
+]

@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A94.2 provision_id=G144
+// GDPR_A94_P2 — references to Dir 95/46/EC construed as references to GDPR
++ reference_construction('directive_9546', 'gdpr')
++ reference_construction('a29_working_party', 'edpb')
+

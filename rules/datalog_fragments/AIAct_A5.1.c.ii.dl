@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.c.ii provision_id=A127
+// AIAct_A5_P1_PT_c_ii — social-scoring effect: unjustified/disproportionate treatment
+has_feature(X, 'social_scoring') :- social_scoring_evaluation(X), unjustified_or_disproportionate_treatment(X).
+

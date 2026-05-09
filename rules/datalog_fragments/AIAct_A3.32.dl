@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.32 provision_id=A075
+// AIAct_A3_P32 — 'testing data'
+testing_data(D) :- independent_evaluation_dataset(D).
+

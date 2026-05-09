@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.6 provision_id=A144
+// AIAct_A5_P6 — annual reports from MSA/DPA to Commission
+obligation(NCA, _, 'annual_report_on_rbi_use_to_commission') :- national_competent_authority(NCA), received_a5_p4_notification(NCA).
+

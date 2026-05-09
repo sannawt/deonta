@@ -1,0 +1,13 @@
+// provision_long_id=GDPR_R22 provision_id=G009
+// GDPR_R22 — RECITAL — territorial: context-of-establishment limb
+gdpr_territorial_link(A, S) :- controller(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_R22 — RECITAL — same for processors
+gdpr_territorial_link(A, S) :- processor(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_R22 — RECITAL — establishment definition: stable arrangements regardless of legal form
+establishment_real(A, J) :- effective_real_activity(A, J), stable_arrangements(A, J).
+
+// GDPR_R22 — RECITAL — narrative aid
+recital_principle('gdpr', 'r22', 'establishment_substance_over_form').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.36 provision_id=A079
+// AIAct_A3_P36 — 'biometric verification'
+biometric_verification(S) :- one_to_one_verification(S), uses_biometric_data(S).
+

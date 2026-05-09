@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_R28 provision_id=G015
+// GDPR_R28 — RECITAL — pseudonymisation reduces risk; not exclusive measure
+risk_mitigated(S) :- pseudonymisation_applied(S).
+
+// GDPR_R28 — RECITAL — narrative aid
+recital_principle('gdpr', 'r28', 'pseudonymisation_non_exclusive').
+

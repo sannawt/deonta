@@ -1,0 +1,11 @@
+// provision_long_id=AIAct_A5.1 provision_id=A137
+// AIAct_A5_P1 — chapeau: prohibitions enumerated by points (a)-(h)
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'subliminal_manipulation').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'exploits_vulnerabilities').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'social_scoring').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'predictive_policing_profiling').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'untargeted_face_db_scraping').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'emotion_inference_workplace_edu').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'biometric_categorisation_special').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'realtime_remote_biometric_id_public'), ~a5_p1_h_exception(X).
+

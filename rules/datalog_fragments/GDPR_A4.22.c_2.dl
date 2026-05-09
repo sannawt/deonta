@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.22.c_2 provision_id=G065
+// GDPR_A4_P22_PT_c — complaint lodged with SA
+sa_concerned_basis(SA, A, S) :- complaint_lodged_with(SA, S), controller_or_processor(A, S).
+

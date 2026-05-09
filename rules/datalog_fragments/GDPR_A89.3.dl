@@ -1,0 +1,11 @@
+// provision_long_id=GDPR_A89.3 provision_id=G134
+// GDPR_A89_P3 — derogations for archiving from rights 15,16,18,19,20,21
+ms_derogation_basis('gdpr', 'a89_p3', 'archiving_rights_derogation').
+right_disapplied(D, S, R) :- data_subject_of(D, S), for_archiving_public_interest(S), art89_safeguards_present(S), ms_derogates_a89_p3(S, R), rights_render_purpose_impossible(S, R), archiving_derogated_right(R).
+archiving_derogated_right('access').
+archiving_derogated_right('rectification').
+archiving_derogated_right('restriction').
+archiving_derogated_right('notification_of_recipients').
+archiving_derogated_right('portability').
+archiving_derogated_right('object').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.49.c_2 provision_id=A096
+// AIAct_A3_P49_PT_c — infringement of fundamental-rights protection law
+a3_p49_consequence(I, 'fundamental_rights_infringement') :- leads_to_fundamental_rights_infringement(I).
+

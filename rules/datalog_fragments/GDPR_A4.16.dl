@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.16 provision_id=G057
+// GDPR_A4_P16 — 'main establishment' chapeau (rules carried by points)
+main_establishment(A, J) :- controller(A, _), central_administration_in(A, J), ~main_decisions_taken_elsewhere(A).
+main_establishment(A, J) :- processor(A, _), central_administration_in(A, J).
+

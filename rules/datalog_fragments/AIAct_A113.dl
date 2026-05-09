@@ -1,0 +1,25 @@
+// provision_long_id=AIAct_A113 provision_id=A208
+// AIAct_A113_chapeau
++ entry_into_force('ai_act', '2024-08-01')
+
+// AIAct_A113_chapeau
++ application_date('ai_act', 'general',                '2026-08-02')
+
+// AIAct_A113_PT_a
++ application_date('ai_act', 'chapter_i_general',     '2025-02-02')
+
+// AIAct_A113_PT_a
++ application_date('ai_act', 'chapter_ii_prohibitions','2025-02-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_v_gpai',         '2025-08-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_vii_governance', '2025-08-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_xii_penalties',  '2025-08-02')
+
+// AIAct_A113_PT_c
++ application_date('ai_act', 'art_6_p1_high_risk_nlf', '2027-08-02')
+

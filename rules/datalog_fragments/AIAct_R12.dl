@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_R12 provision_id=A003
+// AIAct_R12 — RECITAL — reference: Regulation (EU) 2018/1725
+ai_act_without_prejudice_to('reg_2018_1725').
+recital_principle('ai_act', 'r12', 'reference_to_2018_1725').
+

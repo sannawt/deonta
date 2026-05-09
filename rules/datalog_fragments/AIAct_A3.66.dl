@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.66 provision_id=A120
+// AIAct_A3_P66 — 'general-purpose AI system'
+general_purpose_ai_system(X) :- ai_system(X), based_on_gpai_model(X, _), serves_variety_of_purposes(X).
+

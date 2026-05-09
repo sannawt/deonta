@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.f provision_id=G098
+// GDPR_A23_P1_PT_f — judicial independence and proceedings
+restriction_objective_lawful('judicial_independence_and_proceedings').
+

@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_R24 provision_id=A009
+// AIAct_R24 — RECITAL — military/defence/national-security exclusion (mirrors A2(3))
+ai_act_excluded(S) :- military_or_defence_purpose(S).
+ai_act_excluded(S) :- national_security_purpose(S).
+
+// AIAct_R24 — RECITAL — system used for both excluded and non-excluded purposes -> partly in scope
+ai_act_material(S) :- ai_system(S), dual_use_civilian_or_le(S), ~exclusively_military_defence_ns(S).
+
+recital_principle('ai_act', 'r24', 'military_defence_ns_exclusion').
+

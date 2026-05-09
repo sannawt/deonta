@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A6.4 provision_id=A157
+// AIAct_A6_P4 — provider documents non-high-risk assessment, registers
+obligation(P, X, 'document_non_high_risk_assessment_before_market') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+obligation(P, X, 'register_under_a49_p2') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+obligation(P, X, 'provide_assessment_documentation_on_request') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+

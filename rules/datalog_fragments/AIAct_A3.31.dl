@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.31 provision_id=A074
+// AIAct_A3_P31 — 'validation data set'
+validation_data_set(DS) :- validation_data(DS).
+validation_data_set(DS) :- part_of_training_data_set(DS).
+

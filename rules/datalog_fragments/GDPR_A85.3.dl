@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A85.3 provision_id=G124
+// GDPR_A85_P3 — MS shall notify Commission of A85(2) provisions
+obligation(MS, _, 'notify_commission_of_a85_p2_provisions') :- member_state(MS), ms_provides_a85_p2_exemption(MS).
+

@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.61 provision_id=A115
+// AIAct_A3_P61 — 'widespread infringement' chapeau
+widespread_infringement(I) :- a3_p61_a_basis(I).
+widespread_infringement(I) :- a3_p61_b_basis(I).
+

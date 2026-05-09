@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.1.g provision_id=A030
+// AIAct_A2_P1_PT_g — affected persons located in the Union
+affected_person_in_eu(D) :- located_in(D, 'eu'), affected_by_ai_system(D, _).
+

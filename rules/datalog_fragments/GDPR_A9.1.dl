@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.1 provision_id=G074
+// GDPR_A9_P1
+special_category_data(X) :- category(X, 'racial') | category(X, 'ethnic')  | category(X, 'political_opinions') | category(X, 'religious')  | category(X, 'philosophical') | category(X, 'trade_union')  | category(X, 'genetic') | category(X, 'biometric_for_id')  | category(X, 'health') | category(X, 'sex_life') | category(X, 'sexual_orientation').
+

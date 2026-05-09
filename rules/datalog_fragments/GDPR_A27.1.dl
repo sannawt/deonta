@@ -1,0 +1,6 @@
+// provision_long_id=GDPR_A27.1 provision_id=G114
+// GDPR_A27_P1 — designate representative when Art 3(2) applies
+obligation(A, S, 'designate_eu_representative') :- controller_or_processor(A, S), ~established_in(A, 'eu'), gdpr_territorial_link(A, S), art3_p2_applies(S).
+art3_p2_applies(S) :- data_subjects_in_eu_targeted(S, _).
+art3_p2_applies(S) :- monitors_behaviour_in_eu(_, S).
+

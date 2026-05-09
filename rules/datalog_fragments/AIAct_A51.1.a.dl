@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A51.1.a provision_id=A192
+// AIAct_A51_P1_PT_a
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25').
+

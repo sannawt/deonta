@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.5 provision_id=A158
+// AIAct_A6_P5 — Commission to publish guidelines by 2026-02-02
++ commission_deadline('ai_act', 'a6_guidelines_high_risk', '2026-02-02')
+

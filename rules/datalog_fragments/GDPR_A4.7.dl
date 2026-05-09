@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.7 provision_id=G046
+// GDPR_A4_P7 — 'controller'
+controller(A, S) :- determines_purposes_and_means(A, S), processing(S).
+controller(A, S) :- designated_by_law_as_controller(A, S).
+

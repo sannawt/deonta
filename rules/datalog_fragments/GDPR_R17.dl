@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_R17 provision_id=G004
+// GDPR_R17 — RECITAL — EU institutions covered by Reg 45/2001 (now 2018/1725)
+gdpr_excluded(S) :- eu_institution_processing(S).
+
+// GDPR_R17 — RECITAL — narrative aid
+recital_principle('gdpr', 'r17', 'eu_institutions_under_2018_1725').
+

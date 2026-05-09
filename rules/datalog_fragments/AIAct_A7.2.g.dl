@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.g provision_id=A172
+// AIAct_A7_P2_PT_g — dependence on outcome
+a7_p2_criterion('dependence_on_outcome').
+

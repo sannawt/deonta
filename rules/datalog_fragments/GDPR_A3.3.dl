@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A3.3 provision_id=G038
+// GDPR_A3_P3
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+

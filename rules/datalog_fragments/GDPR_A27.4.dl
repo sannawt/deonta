@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A27.4 provision_id=G119
+// GDPR_A27_P4 — representative mandate
+obligation(A, R, 'mandate_representative_for_compliance') :- controller_or_processor(A, _), representative(R, A).
+addressable_for_compliance(R, A) :- representative(R, A), mandated_by(R, A).
+

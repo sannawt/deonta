@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.51 provision_id=A100
+// AIAct_A3_P51 — 'non-personal data'
+non_personal_data(X) :- datum(X), ~personal_data(X).
+

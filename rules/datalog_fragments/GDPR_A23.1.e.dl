@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.e provision_id=G097
+// GDPR_A23_P1_PT_e — important objectives of general public interest
+restriction_objective_lawful('general_public_interest_economic_financial').
+

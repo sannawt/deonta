@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.64 provision_id=A118
+// AIAct_A3_P64 — 'high-impact capabilities'
+high_impact_capabilities(X) :- matches_or_exceeds_most_advanced_gpai_capabilities(X).
+

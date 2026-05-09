@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A6.3 provision_id=A156
+// AIAct_A6_P3 — chapeau of derogation: low-risk Annex III carve-out (positive 'not high-risk' label)
+high_risk_ai_carveout(X) :- ai_system(X), annex_iii_use_case(U), used_in(X, U), a6_p3_carveout_condition(X), ~a6_p3_profiling_override(X).
+a6_p3_profiling_override(X) :- performs_profiling_of_natural_persons(X).
+

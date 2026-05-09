@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.40 provision_id=A083
+// AIAct_A3_P40 — 'biometric categorisation system'
+biometric_categorisation_system(X) :- ai_system(X), assigns_persons_to_categories(X), uses_biometric_data(X), ~ancillary_to_other_service(X).
+

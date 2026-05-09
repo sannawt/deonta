@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.16.a provision_id=G055
+// GDPR_A4_P16_PT_a — controller's main establishment
+main_establishment(A, J) :- controller(A, _), multiple_eu_establishments(A), central_administration_in(A, J), ~main_decisions_taken_elsewhere(A).
+main_establishment(A, J) :- controller(A, _), multiple_eu_establishments(A), main_decisions_taken_at(A, J), implementation_power_at(A, J).
+

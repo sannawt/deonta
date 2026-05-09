@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A3.2.b provision_id=G036
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- processor(A, S), monitors_behaviour_in_eu(A, S).
+

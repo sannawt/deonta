@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A2.3 provision_id=A033
+// AIAct_A2_P3
+ai_act_excluded(S) :- military_or_defence_purpose(S).
+
+// AIAct_A2_P3
+ai_act_excluded(S) :- national_security_purpose(S).
+

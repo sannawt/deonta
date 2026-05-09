@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.g provision_id=G081
+// GDPR_A9_P2_PT_g — substantial public interest, EU/MS law basis
+art9_lawful(S) :- substantial_public_interest_basis(S), proportionate_to_aim(S), specific_safeguards(S).
+

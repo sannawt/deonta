@@ -1,0 +1,13 @@
+// provision_long_id=GDPR_R26 provision_id=G013
+// GDPR_R26 — RECITAL — pseudonymised data still personal data
+personal_data(X) :- pseudonymised_data(X), attributable_with_additional_info(X).
+
+// GDPR_R26 — RECITAL — anonymous information is not personal data (positive label)
+not_personal_data(X) :- anonymous_information(X).
+
+// GDPR_R26 — RECITAL — identifiability test: means reasonably likely to be used
+identifiable(X, A) :- concerns(X, A), natural_person(A), means_reasonably_likely(X, A).
+
+// GDPR_R26 — RECITAL — narrative aid
+recital_principle('gdpr', 'r26', 'reasonably_likely_means_test').
+

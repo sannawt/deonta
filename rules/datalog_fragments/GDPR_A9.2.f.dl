@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A9.2.f provision_id=G080
+// GDPR_A9_P2_PT_f — legal claims / judicial capacity
+art9_lawful(S) :- necessary_for_legal_claims(S).
+art9_lawful(S) :- courts_acting_in_judicial_capacity(S).
+

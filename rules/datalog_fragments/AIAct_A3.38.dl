@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.38 provision_id=A081
+// AIAct_A3_P38 — 'sensitive operational data'
+sensitive_operational_data(D) :- operational_data(D), relates_to_le_activity(D), disclosure_could_jeopardise_proceedings(D).
+

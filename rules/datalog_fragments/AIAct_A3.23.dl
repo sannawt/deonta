@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.23 provision_id=A066
+// AIAct_A3_P23 — 'substantial modification'
+substantial_modification(M, X) :- change_to_ai_system_after_market_or_service(M, X), ~foreseen_in_initial_assessment(M, X), affects_chapter_iii_section2_compliance(M, X).
+substantial_modification(M, X) :- change_to_ai_system_after_market_or_service(M, X), modifies_intended_purpose(M, X).
+

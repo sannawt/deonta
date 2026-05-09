@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.39 provision_id=A082
+// AIAct_A3_P39 — 'emotion recognition system'
+emotion_recognition_system(X) :- ai_system(X), purpose_identify_or_infer_emotions(X), uses_biometric_data(X).
+

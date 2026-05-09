@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.24 provision_id=A067
+// AIAct_A3_P24 — 'CE marking'
+ce_marking(X) :- marking_by_provider(X), indicates_chapter_iii_section2_conformity(X).
+

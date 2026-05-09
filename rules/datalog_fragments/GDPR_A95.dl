@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A95 provision_id=G145
+// GDPR_A95 — Relationship with Directive 2002/58/EC (ePrivacy)
+eprivacy_lex_specialis(S) :- processing(S), in_context_of_publicly_available_e_communications(S), subject_to_dir_2002_58_obligation(S).
+obligation_disapplied(A, S, OBLG) :- controller_or_processor(A, S), eprivacy_lex_specialis(S), same_objective_in_eprivacy(OBLG).
+

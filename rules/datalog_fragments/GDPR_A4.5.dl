@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.5 provision_id=G044
+// GDPR_A4_P5 — 'pseudonymisation'
+pseudonymisation_applied(S) :- processing(S), data_no_longer_directly_attributable(S), additional_info_kept_separately(_, S), technical_org_measures_in_place(_, S).
+

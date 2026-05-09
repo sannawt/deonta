@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A1 provision_id=G020
+// GDPR_applies
+applies(S, T, 'gdpr') :- in_force('gdpr', T), gdpr_territorial_link(A, S), gdpr_material(S), ~gdpr_excluded(S).
+
+// GDPR_applies_with_actor
+applies_via_actor(S, T, 'gdpr', A) :- in_force('gdpr', T), gdpr_territorial_link(A, S), gdpr_material(S), ~gdpr_excluded(S).
+

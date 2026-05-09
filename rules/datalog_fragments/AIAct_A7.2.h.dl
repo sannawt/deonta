@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.h provision_id=A174
+// AIAct_A7_P2_PT_h — imbalance of power / vulnerability
+a7_p2_criterion('imbalance_of_power_or_vulnerability').
+

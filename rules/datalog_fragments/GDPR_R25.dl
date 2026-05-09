@@ -1,0 +1,11 @@
+// provision_long_id=GDPR_R25 provision_id=G012
+// GDPR_R25 — RECITAL — Art 3(3) — MS law via public international law
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+
+// GDPR_R25 — RECITAL — example: diplomatic missions, consular posts
+member_state_law_via_intl_law(A) :- diplomatic_mission(A).
+member_state_law_via_intl_law(A) :- consular_post(A).
+
+// GDPR_R25 — RECITAL — narrative aid
+recital_principle('gdpr', 'r25', 'public_intl_law_anchor').
+

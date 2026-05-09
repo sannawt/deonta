@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2 provision_id=G024
+// GDPR_A2 — Material scope (chapeau; rules carried by paragraphs)
+gdpr_scope_article('gdpr_a2', 'material_scope').
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.e provision_id=A130
+// AIAct_A5_P1_PT_e
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'untargeted_face_db_scraping').
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.3 provision_id=G086
+// GDPR_A9_P3 — professional secrecy condition for point (h)
+art9_p3_secrecy_satisfied(S) :- processed_under_secrecy_obligation(S).
+

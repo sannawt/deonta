@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.28 provision_id=A071
+// AIAct_A3_P28 — 'common specification' per Reg 1025/2012
+common_specification(CS) :- technical_specification_per_reg_1025_2012(CS).
+

@@ -1,0 +1,10 @@
+// provision_long_id=AIAct_R1 provision_id=A001
+// AIAct_R1 — RECITAL — purpose of the Regulation
+ai_act_purpose('uniform_legal_framework_for_ai_in_eu').
+ai_act_purpose('protect_health_safety_fundamental_rights').
+ai_act_purpose('promote_human_centric_trustworthy_ai').
+ai_act_purpose('free_movement_of_ai_goods_and_services').
+
+// AIAct_R1 — RECITAL — narrative
+recital_principle('ai_act', 'r1', 'subject_matter_and_objectives').
+

@@ -1,0 +1,8 @@
+// provision_long_id=AIAct_R21 provision_id=A006
+// AIAct_R21 — RECITAL — providers regardless of EU establishment; deployers established in EU
+ai_act_territorial_link(A, S) :- provider(A, S), places_on_eu_market(A, S).
+ai_act_territorial_link(A, S) :- provider(A, S), puts_into_service_in_eu(A, S).
+ai_act_territorial_link(A, S) :- deployer(A, S), established_in(A, 'eu').
+
+recital_principle('ai_act', 'r21', 'level_playing_field_extraterritorial').
+

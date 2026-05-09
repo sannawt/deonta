@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.j provision_id=G084
+// GDPR_A9_P2_PT_j — archiving / scientific research / statistics (Art 89(1))
+art9_lawful(S) :- for_archiving_research_statistics(S), art89_safeguards_present(S), proportionate_to_aim(S).
+

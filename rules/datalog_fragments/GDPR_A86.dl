@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A86 provision_id=G125
+// GDPR_A86 — Public access to official documents
+disclosure_lawful(A, X) :- public_authority_or_body(A), official_document(X), disclosure_per_eu_or_ms_law(A, X).
+

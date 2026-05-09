@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A5.1.h.iii provision_id=A135
+// AIAct_A5_P1_PT_h_iii — RBI exception: localisation of suspect for Annex II offences
+a5_p1_h_exception(X) :- for_annex_ii_serious_crime_localisation(X), punishable_by_4y_or_more(X).
+

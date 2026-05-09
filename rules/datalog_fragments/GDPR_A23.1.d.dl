@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.d provision_id=G096
+// GDPR_A23_P1_PT_d — criminal offences / penalties / public-security threats
+restriction_objective_lawful('criminal_offences_prevention_investigation_prosecution').
+

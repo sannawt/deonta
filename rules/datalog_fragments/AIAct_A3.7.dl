@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.7 provision_id=A050
+// AIAct_A3_P7 — 'distributor'
+distributor(A, X) :- in_supply_chain(A, X), ~provider(A, X), ~importer(A, X), makes_available_on_eu_market(A, X).
+

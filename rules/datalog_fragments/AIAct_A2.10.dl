@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A2.10 provision_id=A040
+// AIAct_A2_P10
+ai_act_excluded(S) :- purely_personal_household_activity(S).
+

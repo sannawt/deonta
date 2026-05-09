@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.26 provision_id=A069
+// AIAct_A3_P26 — 'market surveillance authority'
+market_surveillance_authority(MSA) :- national_authority(MSA), acts_under_reg_2019_1020(MSA).
+

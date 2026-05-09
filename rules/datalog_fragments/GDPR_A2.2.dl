@@ -1,0 +1,7 @@
+// provision_long_id=GDPR_A2.2 provision_id=G030
+// GDPR_A2_P2 — chapeau for the four exclusion limbs
+gdpr_excluded(S) :- activity_outside_union_law(S).
+gdpr_excluded(S) :- cfsp_activity(S).
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+

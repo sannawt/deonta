@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.3.c provision_id=A154
+// AIAct_A6_P3_PT_c — detect decision-making patterns/deviations w/o replacing human review
+a6_p3_carveout_condition(X) :- intended_to_detect_decision_patterns(X), ~replaces_human_assessment_without_review(X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A85.1 provision_id=G122
+// GDPR_A85_P1 — MS shall reconcile DP with freedom of expression
+obligation(MS, _, 'reconcile_dp_with_expression') :- member_state(MS).
+

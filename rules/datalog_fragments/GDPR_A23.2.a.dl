@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.2.a provision_id=G104
+// GDPR_A23_P2_PT_a — purposes of processing
+restriction_specification_kind('purposes_of_processing').
+

@@ -1,0 +1,46 @@
+// Scope / applicability golden model (Legend: MATERIAL, TERRITORIAL, TEMPORAL, EXCLUSION).
+// ORCHESTRATION in the workbook = rules that combine these; this file is the minimal test harness.
+//
+// law_applies(C, R) <=> material ∧ territorial ∧ temporal ∧ ¬exclusion
+
+.decl case(c:symbol)
+.input case
+
+.decl regulation(r:symbol)
+.input regulation
+
+.decl processing_personal_data(c:symbol)
+.input processing_personal_data
+
+.decl territorial_link_eu(c:symbol)
+.input territorial_link_eu
+
+.decl law_in_force(r:symbol)
+.input law_in_force
+
+.decl exclusion_holds(c:symbol, r:symbol)
+.input exclusion_holds
+
+.decl material_scope_ok(c:symbol, r:symbol)
+.output material_scope_ok
+material_scope_ok(C, R) :- case(C), regulation(R), processing_personal_data(C).
+
+.decl territorial_scope_ok(c:symbol, r:symbol)
+.output territorial_scope_ok
+territorial_scope_ok(C, R) :- case(C), regulation(R), territorial_link_eu(C).
+
+.decl temporal_scope_ok(c:symbol, r:symbol)
+.output temporal_scope_ok
+temporal_scope_ok(C, R) :- case(C), regulation(R), law_in_force(R).
+
+.decl excluded(c:symbol, r:symbol)
+.output excluded
+excluded(C, R) :- case(C), regulation(R), exclusion_holds(C, R).
+
+.decl law_applies(c:symbol, r:symbol)
+.output law_applies
+law_applies(C, R) :-
+  material_scope_ok(C, R),
+  territorial_scope_ok(C, R),
+  temporal_scope_ok(C, R),
+  !excluded(C, R).

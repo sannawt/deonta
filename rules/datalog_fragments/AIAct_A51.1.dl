@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A51.1 provision_id=A194
+// AIAct_A51_P1 — chapeau (rules carried by points)
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25').
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+

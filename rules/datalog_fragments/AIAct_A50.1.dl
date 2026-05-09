@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A50.1 provision_id=A184
+// AIAct_A50_P1 — providers: design AI to inform natural persons of AI interaction
+obligation(P, X, 'inform_persons_of_ai_interaction') :- provider(P, X), ai_system(X), intended_for_direct_interaction(X), ~obvious_to_reasonable_person(X), ~le_authorised_with_safeguards(X).
+transparency_obligation_applies(X) :- ai_system(X), intended_for_direct_interaction(X).
+

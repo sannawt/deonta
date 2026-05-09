@@ -1,0 +1,7 @@
+// provision_long_id=AIAct_A6.1 provision_id=A150
+// AIAct_A6_P1
+high_risk_ai(X) :- ai_system(X), safety_component_of(X, Y), annex_i_legislation(L), subject_to_third_party_assessment(Y, L).
+
+// AIAct_A6_P1_alt
+high_risk_ai(X) :- ai_system(X), annex_i_legislation(L), subject_to_third_party_assessment(X, L).
+

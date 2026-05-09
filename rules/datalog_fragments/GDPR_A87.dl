@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A87 provision_id=G126
+// GDPR_A87 — National identification number
+ms_derogation_basis('gdpr', 'a87', 'national_identification_number_conditions').
+obligation(A, S, 'use_national_id_with_safeguards') :- uses_national_id_or_general_identifier(A, S).
+

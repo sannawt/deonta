@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.11 provision_id=A054
+// AIAct_A3_P11 — 'putting into service'
+putting_into_service(X) :- supply_for_first_use_to_deployer(X).
+putting_into_service(X) :- supply_for_own_use_in_eu(X).
+

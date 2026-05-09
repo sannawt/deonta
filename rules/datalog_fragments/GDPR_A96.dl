@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A96 provision_id=G146
+// GDPR_A96 — Pre-2016-05-24 international agreements remain in force
++ pre_existing_intl_agreement_in_force_anchor('gdpr', '2016-05-24')
+intl_agreement_remains_in_force(AGT) :- concluded_before(AGT, '2016-05-24'), complied_with_pre_gdpr_law(AGT), ~amended(AGT), ~replaced(AGT), ~revoked(AGT).
+

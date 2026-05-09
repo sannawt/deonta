@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.50 provision_id=A099
+// AIAct_A3_P50 — 'personal data' (cross-ref to GDPR A4(1))
+personal_data(X) :- personal_data_per_gdpr(X).
+

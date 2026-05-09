@@ -1,0 +1,11 @@
+// provision_long_id=GDPR_A85.2 provision_id=G123
+// GDPR_A85_P2 — MS provide exemptions for journalism/academic/artistic/literary
+ms_derogation_basis('gdpr', 'a85_p2', 'journalism_academic_artistic_literary_expression').
+ms_derogation_chapter(MS, 'gdpr', 'chapter_ii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_iii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_iv') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_v') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_vi') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_vii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_ix') :- ms_provides_a85_p2_exemption(MS).
+

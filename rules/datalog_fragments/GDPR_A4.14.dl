@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.14 provision_id=G053
+// GDPR_A4_P14 — 'biometric data'
+biometric_data(X) :- personal_data(X), from_specific_technical_processing(X), relates_to_physical_or_behavioural(X).
+category(X, 'biometric_for_id') :- biometric_data(X), for_unique_identification(X).
+

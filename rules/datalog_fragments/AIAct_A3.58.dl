@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.58 provision_id=A107
+// AIAct_A3_P58 — 'subject' (real-world testing)
+subject_of_testing(P, S) :- natural_person(P), participates_in_real_world_testing(P, S).
+

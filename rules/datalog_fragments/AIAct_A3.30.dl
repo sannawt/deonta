@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.30 provision_id=A073
+// AIAct_A3_P30 — 'validation data'
+validation_data(D) :- used_to_evaluate_trained_system(D, _), tunes_non_learnable_parameters(D, _).
+

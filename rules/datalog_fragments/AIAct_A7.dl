@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7 provision_id=A162
+// AIAct_A7 — Amendments to Annex III (chapeau)
+ai_act_scope_article('ai_act_a7', 'amendments_to_annex_iii').
+

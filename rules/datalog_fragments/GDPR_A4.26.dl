@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A4.26 provision_id=G072
+// GDPR_A4_P26 — 'international organisation'
+international_organisation(O) :- governed_by_public_intl_law(O).
+international_organisation(O) :- setup_by_intercountry_agreement(O).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.3 provision_id=G042
+// GDPR_A4_P3 — 'restriction of processing'
+restriction_of_processing(S) :- processing(S), marks_to_limit_future_processing(S).
+

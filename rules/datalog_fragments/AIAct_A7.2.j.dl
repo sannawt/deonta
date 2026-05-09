@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A7.2.j provision_id=A175
+// AIAct_A7_P2_PT_j — magnitude/likelihood of benefit
+a7_p2_criterion('magnitude_and_likelihood_of_benefit').
+

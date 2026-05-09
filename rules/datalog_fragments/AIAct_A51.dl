@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A51 provision_id=A191
+// AIAct_A51 — Classification of GPAI as systemic-risk (chapeau)
+ai_act_scope_article('ai_act_a51', 'gpai_systemic_risk_classification').
+

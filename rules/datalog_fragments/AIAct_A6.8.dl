@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.8 provision_id=A161
+// AIAct_A6_P8 — amendments must not decrease overall protection
+constraint_on_amendment('ai_act', 'a6_p3', 'no_decrease_in_overall_protection').
+

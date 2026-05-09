@@ -1,0 +1,5 @@
+// provision_long_id=GDPR_A27.2.b provision_id=G116
+// GDPR_A27_P2_PT_b — public authority/body exemption
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), public_authority(A).
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), public_body(A).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A1.2.e provision_id=A019
+// AIAct_A1_P2_PT_e — rules for placing on market of GPAI models
+ai_act_subject_matter('gpai_market_rules').
+

@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_R13 provision_id=A004
+// AIAct_R13 — RECITAL — reference: Directive 2016/680
+ai_act_without_prejudice_to('directive_2016_680').
+recital_principle('ai_act', 'r13', 'reference_to_le_directive').
+

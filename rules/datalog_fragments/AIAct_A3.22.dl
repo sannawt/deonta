@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.22 provision_id=A065
+// AIAct_A3_P22 — 'notified body'
+notified_body(B) :- conformity_assessment_body(B), notified_per_aiact_or_other_harmonisation_law(B).
+

@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.49.a_2 provision_id=A094
+// AIAct_A3_P49_PT_a — death or serious harm to health
+a3_p49_consequence(I, 'death_or_serious_health_harm') :- leads_to_death(I).
+a3_p49_consequence(I, 'death_or_serious_health_harm') :- leads_to_serious_health_harm(I).
+

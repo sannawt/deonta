@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.34 provision_id=A077
+// AIAct_A3_P34 — 'biometric data' (AI Act variant)
+biometric_data(X) :- personal_data(X), from_specific_technical_processing(X), relates_to_physical_or_behavioural(X).
+

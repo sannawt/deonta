@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A111 provision_id=A204
+// AIAct_A111 — Pre-deployed systems: transitional grace (chapeau)
+ai_act_scope_article('ai_act_a111', 'pre_deployed_transitional').
+

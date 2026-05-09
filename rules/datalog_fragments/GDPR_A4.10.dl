@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A4.10 provision_id=G049
+// GDPR_A4_P10 — 'third party'
+third_party(A, S) :- actor(A), processing(S), ~data_subject_of(A, S), ~controller(A, S), ~processor(A, S), ~under_direct_authority(A, S).
+

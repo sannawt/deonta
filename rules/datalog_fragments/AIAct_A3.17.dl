@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.17 provision_id=A060
+// AIAct_A3_P17 — 'withdrawal of an AI system'
+withdrawal(M, X) :- measure_to_prevent_market_availability(M, X).
+

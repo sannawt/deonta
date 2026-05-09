@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9 provision_id=G073
+// GDPR_A9_implies_A4_P1
+personal_data(X) :- special_category_data(X).
+

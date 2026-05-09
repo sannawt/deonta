@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.10 provision_id=A053
+// AIAct_A3_P10 — 'making available on the market' = supply for distribution/use
+making_available_on_market(X) :- supply_for_distribution_or_use_eu(X), in_commercial_activity(X).
+

@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A9.2.h.i provision_id=G082
+// GDPR_A9_P2_PT_h_i — public health (cross-border threats, quality/safety)
+art9_lawful(S) :- necessary_for_public_health(S), eu_or_ms_law_basis(S), specific_safeguards(S).
+

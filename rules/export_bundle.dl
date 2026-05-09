@@ -1,0 +1,2823 @@
+// Auto-generated predicate declarations (all arguments: symbol).
+// Edit the workbook and re-run scripts/export_rules_xlsx.py
+
+.decl a27_p2_exempt(v0: symbol, v1: symbol)
+.decl a3_p45_a_la(v0: symbol)
+.decl a3_p45_b_la(v0: symbol)
+.decl a3_p49_consequence(v0: symbol, v1: symbol)
+.decl a3_p61_a_basis(v0: symbol)
+.decl a3_p61_b_basis(v0: symbol)
+.decl a50_transparency_obligation(v0: symbol)
+.decl a57_or_a60_conditions_satisfied(v0: symbol)
+.decl a5_p1_h_exception(v0: symbol)
+.decl a5_p2_factor(v0: symbol)
+.decl a6_p3_carveout_condition(v0: symbol)
+.decl a6_p3_profiling_override(v0: symbol)
+.decl a7_p1_condition(v0: symbol, v1: symbol)
+.decl a7_p2_criterion(v0: symbol)
+.decl a7_p2_criterion_kind(v0: symbol)
+.decl a7_p2_criterion_subkind(v0: symbol, v1: symbol)
+.decl a7_p3_condition(v0: symbol, v1: symbol)
+.decl ability_to_achieve_intended_purpose(v0: symbol)
+.decl accessible_per_specific_criteria(v0: symbol)
+.decl accessible_to_undetermined_persons(v0: symbol)
+.decl act_or_omission_took_place_in(v0: symbol, v1: symbol)
+.decl activity_outside_union_law(v0: symbol)
+.decl actor(v0: symbol)
+.decl acts_under_reg_2019_1020(v0: symbol)
+.decl additional_info_kept_separately(v0: symbol, v1: symbol)
+.decl addressable_for_compliance(v0: symbol, v1: symbol)
+.decl adequate_safeguards_for_fundamental_rights(v0: symbol)
+.decl adhered_by_eu_controller_or_processor(v0: symbol, v1: symbol)
+.decl affected_by_ai_system(v0: symbol, v1: symbol)
+.decl affected_person_in_eu(v0: symbol)
+.decl affects_chapter_iii_section2_compliance(v0: symbol, v1: symbol)
+.decl affects_personal_data(v0: symbol)
+.decl agreed_between(v0: symbol, v1: symbol, v2: symbol)
+.decl ai_act_applies_pre_deployed(v0: symbol)
+.decl ai_act_carve_out(v0: symbol)
+.decl ai_act_ethics_principle(v0: symbol)
+.decl ai_act_excluded(v0: symbol)
+.decl ai_act_in_scope_role(v0: symbol)
+.decl ai_act_material(v0: symbol)
+.decl ai_act_purpose(v0: symbol)
+.decl ai_act_rd_carveout_lifted(v0: symbol)
+.decl ai_act_risk_tier(v0: symbol, v1: symbol)
+.decl ai_act_scope_article(v0: symbol, v1: symbol)
+.decl ai_act_subject_matter(v0: symbol)
+.decl ai_act_subject_matter_kind(v0: symbol)
+.decl ai_act_territorial_link(v0: symbol, v1: symbol)
+.decl ai_act_without_prejudice_to(v0: symbol)
+.decl ai_generated_or_manipulated_content(v0: symbol)
+.decl ai_literacy(v0: symbol)
+.decl ai_office(v0: symbol)
+.decl ai_regulatory_sandbox(v0: symbol)
+.decl ai_system(v0: symbol)
+.decl amended(v0: symbol)
+.decl ancillary_to_other_service(v0: symbol)
+.decl annex_i_legislation(v0: symbol)
+.decl annex_iii_use_case(v0: symbol)
+.decl anonymous_information(v0: symbol)
+.decl applicable_at(v0: symbol, v1: symbol, v2: symbol)
+.decl application_date(v0: symbol, v1: symbol, v2: symbol)
+.decl applies(v0: symbol, v1: symbol, v2: symbol)
+.decl applies_via_actor(v0: symbol, v1: symbol, v2: symbol, v3: symbol)
+.decl appropriate_safeguards_present(v0: symbol)
+.decl archiving_derogated_right(v0: symbol)
+.decl art3_p2_applies(v0: symbol)
+.decl art89_safeguards_present(v0: symbol)
+.decl art9_lawful(v0: symbol)
+.decl art9_p3_secrecy_satisfied(v0: symbol)
+.decl art9_prohibition(v0: symbol)
+.decl art9_prohibition_lifted(v0: symbol)
+.decl assigns_persons_to_categories(v0: symbol)
+.decl assistive_editing_only(v0: symbol)
+.decl attributable_with_additional_info(v0: symbol)
+.decl authorised_by_law_or_collective_agreement(v0: symbol)
+.decl authorised_representative(v0: symbol, v1: symbol)
+.decl authorised_representative_located_in(v0: symbol, v1: symbol)
+.decl automated_means(v0: symbol)
+.decl automated_recognition(v0: symbol)
+.decl based_on_gpai_model(v0: symbol, v1: symbol)
+.decl based_on_law(v0: symbol)
+.decl basis_for_output(v0: symbol, v1: symbol)
+.decl basis_in_eu_or_ms_law_or_contract(v0: symbol)
+.decl bcr(v0: symbol, v1: symbol)
+.decl bears_third_country_provider_name(v0: symbol)
+.decl biometric_categorisation_system(v0: symbol)
+.decl biometric_data(v0: symbol)
+.decl biometric_data_per_2018_1725(v0: symbol)
+.decl biometric_data_per_gdpr(v0: symbol)
+.decl biometric_data_per_le_directive(v0: symbol)
+.decl biometric_identification(v0: symbol)
+.decl biometric_verification(v0: symbol)
+.decl breach_kind(v0: symbol, v1: symbol)
+.decl brought_in_line_with_gdpr(v0: symbol)
+.decl by_actor(v0: symbol, v1: symbol)
+.decl by_court_or_judicial_authority(v0: symbol)
+.decl cannot_identify_subject(v0: symbol, v1: symbol, v2: symbol)
+.decl carried_out_by_le_authority(v0: symbol)
+.decl carried_out_on_behalf_of_le(v0: symbol)
+.decl category(v0: symbol, v1: symbol)
+.decl category_per_2018_1725_a10_p1(v0: symbol)
+.decl category_per_gdpr_a9(v0: symbol)
+.decl category_per_le_directive_a10(v0: symbol)
+.decl ce_marking(v0: symbol)
+.decl central_administration_in(v0: symbol, v1: symbol)
+.decl cfsp_activity(v0: symbol)
+.decl change_to_ai_system_after_market_or_service(v0: symbol, v1: symbol)
+.decl church_or_religious_association(v0: symbol)
+.decl church_rules_carryover_valid(v0: symbol, v1: symbol)
+.decl clear_affirmative_action(v0: symbol, v1: symbol)
+.decl collects_and_reviews_use_experience(v0: symbol, v1: symbol, v2: symbol)
+.decl combined_with_unique_identifiers(v0: symbol, v1: symbol)
+.decl commission_deadline(v0: symbol, v1: symbol, v2: symbol)
+.decl commission_delegated_act_basis(v0: symbol, v1: symbol, v2: symbol)
+.decl commission_function(v0: symbol)
+.decl commission_implementing_act_basis(v0: symbol, v1: symbol, v2: symbol)
+.decl commission_power(v0: symbol, v1: symbol, v2: symbol)
+.decl common_specification(v0: symbol)
+.decl compare_to_database(v0: symbol)
+.decl competent_for_criminal_matters(v0: symbol)
+.decl complaint_lodged_with(v0: symbol, v1: symbol)
+.decl complied_with_pre_gdpr_law(v0: symbol)
+.decl component_of(v0: symbol, v1: symbol)
+.decl comprehensive_rules_at_entry_into_force(v0: symbol, v1: symbol)
+.decl concerns(v0: symbol, v1: symbol)
+.decl concerns_entire_filing_system(v0: symbol)
+.decl concluded_before(v0: symbol, v1: symbol)
+.decl concurrent(v0: symbol)
+.decl conformity_assessment(v0: symbol, v1: symbol)
+.decl conformity_assessment_body(v0: symbol)
+.decl consent_carryover_valid(v0: symbol, v1: symbol)
+.decl consent_given(v0: symbol, v1: symbol, v2: symbol)
+.decl consent_under_dir_9546(v0: symbol, v1: symbol)
+.decl consistent_with_intended_purpose(v0: symbol, v1: symbol)
+.decl constraint_on_amendment(v0: symbol, v1: symbol, v2: symbol)
+.decl consular_post(v0: symbol)
+.decl contains_factor(v0: symbol, v1: symbol, v2: symbol)
+.decl contains_identifier(v0: symbol, v1: symbol, v2: symbol)
+.decl controlled_framework(v0: symbol)
+.decl controlled_undertaking(v0: symbol, v1: symbol)
+.decl controller(v0: symbol, v1: symbol)
+.decl controller_or_processor(v0: symbol, v1: symbol)
+.decl controlling_undertaking(v0: symbol, v1: symbol)
+.decl could_appear_authentic(v0: symbol)
+.decl court_in_judicial_capacity(v0: symbol, v1: symbol)
+.decl courts_acting_in_judicial_capacity(v0: symbol)
+.decl covered_by(v0: symbol, v1: symbol)
+.decl criminal_offence_data(v0: symbol)
+.decl critical_infrastructure(v0: symbol)
+.decl critical_infrastructure_per_dir_2022_2557(v0: symbol)
+.decl cross_border_basis_a(v0: symbol)
+.decl cross_border_basis_b(v0: symbol)
+.decl cross_border_processing(v0: symbol)
+.decl data_minimisation_respected(v0: symbol)
+.decl data_no_longer_directly_attributable(v0: symbol)
+.decl data_protection_policy(v0: symbol)
+.decl data_subject_incapable_of_consent(v0: symbol)
+.decl data_subject_of(v0: symbol, v1: symbol)
+.decl data_subjects_in_eu(v0: symbol)
+.decl data_subjects_in_eu_targeted(v0: symbol, v1: symbol)
+.decl data_subjects_in_eu_targeted_excluded(v0: symbol, v1: symbol)
+.decl data_subjects_in_ms_of(v0: symbol)
+.decl datum(v0: symbol)
+.decl deceased_personal_data(v0: symbol)
+.decl decision_under_dir_9546(v0: symbol)
+.decl deep_fake(v0: symbol)
+.decl demonstrates_chapter_iii_section2_compliance(v0: symbol, v1: symbol)
+.decl demonstrates_significance_of_risks(v0: symbol)
+.decl deployer(v0: symbol, v1: symbol)
+.decl deployer_committed_infringement(v0: symbol)
+.decl deployer_established_in(v0: symbol, v1: symbol)
+.decl derogation_applies(v0: symbol, v1: symbol)
+.decl derogation_blocked(v0: symbol, v1: symbol)
+.decl describes_objectives_methodology_scope(v0: symbol)
+.decl describes_sandbox_activities(v0: symbol)
+.decl designated_by(v0: symbol, v1: symbol)
+.decl designated_by_law_as_controller(v0: symbol, v1: symbol)
+.decl determines_purposes_and_means(v0: symbol, v1: symbol)
+.decl detrimental_treatment_in_unrelated_context(v0: symbol)
+.decl develops_ai(v0: symbol, v1: symbol)
+.decl diplomatic_mission(v0: symbol)
+.decl directive_repealed(v0: symbol, v1: symbol)
+.decl disclosed_to(v0: symbol, v1: symbol)
+.decl discloses_outside_without_consent(v0: symbol)
+.decl disclosure_could_jeopardise_proceedings(v0: symbol)
+.decl disclosure_lawful(v0: symbol, v1: symbol)
+.decl disclosure_per_eu_or_ms_law(v0: symbol, v1: symbol)
+.decl disclosure_request_lawful(v0: symbol)
+.decl distributor(v0: symbol, v1: symbol)
+.decl document(v0: symbol)
+.decl downstream_provider(v0: symbol, v1: symbol)
+.decl dual_purpose(v0: symbol, v1: symbol, v2: symbol)
+.decl dual_use_civilian_or_le(v0: symbol)
+.decl effective_real_activity(v0: symbol, v1: symbol)
+.decl emotion_recognition_system(v0: symbol)
+.decl engaged_in_economic_activity(v0: symbol)
+.decl enterprise(v0: symbol)
+.decl entrusted_by_ms_law_for_criminal_matters(v0: symbol)
+.decl entry_into_force(v0: symbol, v1: symbol)
+.decl eprivacy_lex_specialis(v0: symbol)
+.decl established_by_member_state_per_a51(v0: symbol)
+.decl established_in(v0: symbol, v1: symbol)
+.decl established_in_ms_of(v0: symbol, v1: symbol)
+.decl established_in_ms_of_targeting(v0: symbol, v1: symbol)
+.decl establishment_real(v0: symbol, v1: symbol)
+.decl eu_institution_acting_as_deployer(v0: symbol)
+.decl eu_institution_acting_as_provider(v0: symbol)
+.decl eu_institution_processing(v0: symbol)
+.decl eu_or_ms_law_basis(v0: symbol)
+.decl evaluates_personal_aspects(v0: symbol, v1: symbol)
+.decl event(v0: symbol)
+.decl exclusive_liability_of_representative(v0: symbol, v1: symbol)
+.decl exclusively_military_defence_ns(v0: symbol)
+.decl explicit_consent_given(v0: symbol, v1: symbol, v2: symbol)
+.decl f_greater_than_10e25(v0: symbol)
+.decl failure_endangers_health_safety(v0: symbol)
+.decl filing_system(v0: symbol)
+.decl filing_system_excluded(v0: symbol)
+.decl first_making_available_on_eu_market(v0: symbol)
+.decl floating_point_operation(v0: symbol)
+.decl for_annex_ii_serious_crime_localisation(v0: symbol)
+.decl for_archiving_public_interest(v0: symbol)
+.decl for_archiving_research_statistics(v0: symbol)
+.decl for_imminent_threat_to_life(v0: symbol)
+.decl for_intended_purpose(v0: symbol)
+.decl for_intra_group_transfers(v0: symbol, v1: symbol)
+.decl for_prevention_or_investigation_or_prosecution(v0: symbol)
+.decl for_purpose(v0: symbol, v1: symbol)
+.decl for_research_or_statistics(v0: symbol)
+.decl for_terrorist_attack_prevention(v0: symbol)
+.decl for_unique_identification(v0: symbol)
+.decl for_victim_or_missing_person_search(v0: symbol)
+.decl foreseeable_human_or_system_behaviour(v0: symbol)
+.decl foreseen_in_initial_assessment(v0: symbol, v1: symbol)
+.decl free_open_source_ai(v0: symbol)
+.decl freely_given(v0: symbol, v1: symbol)
+.decl from_specific_technical_processing(v0: symbol)
+.decl fulfils_safety_function(v0: symbol, v1: symbol)
+.decl gdpr_excluded(v0: symbol)
+.decl gdpr_material(v0: symbol)
+.decl gdpr_protects(v0: symbol)
+.decl gdpr_protects_fundamental_right(v0: symbol, v1: symbol)
+.decl gdpr_scope_article(v0: symbol, v1: symbol)
+.decl gdpr_subject_matter(v0: symbol)
+.decl gdpr_territorial_link(v0: symbol, v1: symbol)
+.decl general_purpose_ai_system(v0: symbol)
+.decl generates_deep_fake_output(v0: symbol)
+.decl generates_synthetic_content(v0: symbol)
+.decl generates_text_for_public_interest_news(v0: symbol)
+.decl genetic_data(v0: symbol)
+.decl governed_by_public_intl_law(v0: symbol)
+.decl gpai_model(v0: symbol)
+.decl gpai_systemic_risk(v0: symbol)
+.decl group_of_undertakings(v0: symbol)
+.decl had_developed_ai(v0: symbol, v1: symbol)
+.decl harmonised_standard(v0: symbol)
+.decl harmonised_standard_per_reg_1025_2012(v0: symbol)
+.decl harms_collective_interests_individuals(v0: symbol)
+.decl has_capability(v0: symbol, v1: symbol)
+.decl has_common_features(v0: symbol)
+.decl has_feature(v0: symbol, v1: symbol)
+.decl has_written_mandate(v0: symbol, v1: symbol)
+.decl health_data(v0: symbol)
+.decl high_impact_capabilities(v0: symbol)
+.decl high_risk_ai(v0: symbol)
+.decl high_risk_ai_basis_a(v0: symbol, v1: symbol, v2: symbol)
+.decl high_risk_ai_basis_b(v0: symbol, v1: symbol, v2: symbol)
+.decl high_risk_ai_carveout(v0: symbol)
+.decl human_editorial_review(v0: symbol)
+.decl identifiable(v0: symbol, v1: symbol)
+.decl identifies(v0: symbol, v1: symbol)
+.decl implementation_power_at(v0: symbol, v1: symbol)
+.decl importer(v0: symbol, v1: symbol)
+.decl in_at_least_two_ms_other_than(v0: symbol, v1: symbol)
+.decl in_commercial_activity(v0: symbol)
+.decl in_context_of_publicly_available_e_communications(v0: symbol)
+.decl in_force(v0: symbol, v1: symbol)
+.decl in_intl_cooperation_framework(v0: symbol)
+.decl in_publicly_accessible_space(v0: symbol)
+.decl in_supply_chain(v0: symbol, v1: symbol)
+.decl incident_of_ai_system(v0: symbol)
+.decl independent_evaluation_dataset(v0: symbol)
+.decl independent_public_authority(v0: symbol)
+.decl indicates_chapter_iii_section2_conformity(v0: symbol)
+.decl information_society_service(v0: symbol)
+.decl informed(v0: symbol, v1: symbol)
+.decl informed_about_relevant_aspects(v0: symbol, v1: symbol)
+.decl informed_consent_testing(v0: symbol, v1: symbol)
+.decl informs_intended_purpose(v0: symbol, v1: symbol)
+.decl input_data(v0: symbol, v1: symbol)
+.decl instructions_for_use(v0: symbol, v1: symbol)
+.decl integrated_in_annex_i_legislation(v0: symbol)
+.decl integrates_ai_model(v0: symbol, v1: symbol)
+.decl intended_for_direct_interaction(v0: symbol)
+.decl intended_purpose(v0: symbol, v1: symbol)
+.decl intended_to_detect_decision_patterns(v0: symbol)
+.decl intended_to_improve_previously_completed_human_activity(v0: symbol)
+.decl intended_to_perform_narrow_procedural_task(v0: symbol)
+.decl intended_to_perform_preparatory_task(v0: symbol)
+.decl intermediary_liability_safe_harbour(v0: symbol)
+.decl intermediary_service_provider(v0: symbol)
+.decl international_organisation(v0: symbol)
+.decl intl_agreement_remains_in_force(v0: symbol)
+.decl is_product(v0: symbol)
+.decl large_scale_criminal_data(v0: symbol)
+.decl large_scale_special_data(v0: symbol)
+.decl law_enforcement_authority(v0: symbol)
+.decl le_authorised(v0: symbol)
+.decl le_authorised_with_safeguards(v0: symbol)
+.decl le_permitted_with_safeguards(v0: symbol)
+.decl leads_to_death(v0: symbol)
+.decl leads_to_fundamental_rights_infringement(v0: symbol)
+.decl leads_to_serious_health_harm(v0: symbol)
+.decl leads_to_serious_irreversible_critical_infra_disruption(v0: symbol)
+.decl leads_to_serious_property_or_environment_harm(v0: symbol)
+.decl led_law_enforcement_activity(v0: symbol)
+.decl led_law_enforcement_processing(v0: symbol)
+.decl legacy_decision_in_force(v0: symbol)
+.decl legal_person_data(v0: symbol)
+.decl legitimate_activity_of_nonprofit(v0: symbol)
+.decl likely_to_risk_rights(v0: symbol)
+.decl limited_scope_aiact(v0: symbol, v1: symbol)
+.decl located_in(v0: symbol, v1: symbol)
+.decl located_or_established_in_eu(v0: symbol)
+.decl made_available_on_market(v0: symbol, v1: symbol)
+.decl main_decisions_taken_at(v0: symbol, v1: symbol)
+.decl main_decisions_taken_elsewhere(v0: symbol)
+.decl main_establishment(v0: symbol, v1: symbol)
+.decl main_processing_activities_at(v0: symbol, v1: symbol)
+.decl makes_available_on_eu_market(v0: symbol, v1: symbol)
+.decl making_available_on_market(v0: symbol)
+.decl mandated_by(v0: symbol, v1: symbol)
+.decl manifestly_made_public_by_subject(v0: symbol)
+.decl manufacturer(v0: symbol, v1: symbol)
+.decl market_surveillance_authority(v0: symbol)
+.decl marking_by_provider(v0: symbol)
+.decl marks_to_limit_future_processing(v0: symbol)
+.decl matches_or_exceeds_most_advanced_gpai_capabilities(v0: symbol)
+.decl mathematical_operation_on_floats(v0: symbol)
+.decl means_reasonably_likely(v0: symbol, v1: symbol)
+.decl measure_to_prevent_market_availability(v0: symbol, v1: symbol)
+.decl measure_to_return_or_disable_use(v0: symbol, v1: symbol)
+.decl meets_gdpr_consent_conditions(v0: symbol, v1: symbol)
+.decl member_state(v0: symbol)
+.decl member_state_law_via_intl_law(v0: symbol)
+.decl mere_website_accessibility(v0: symbol, v1: symbol)
+.decl military_or_defence_purpose(v0: symbol)
+.decl modifies_intended_purpose(v0: symbol, v1: symbol)
+.decl monitors_behaviour_in_eu(v0: symbol, v1: symbol)
+.decl ms_a88_rules_required(v0: symbol, v1: symbol)
+.decl ms_derogates_a89_p2(v0: symbol, v1: symbol)
+.decl ms_derogates_a89_p3(v0: symbol, v1: symbol)
+.decl ms_derogation_basis(v0: symbol, v1: symbol, v2: symbol)
+.decl ms_derogation_chapter(v0: symbol, v1: symbol, v2: symbol)
+.decl ms_law_prohibits_consent_lift(v0: symbol)
+.decl ms_law_restricts(v0: symbol, v1: symbol, v2: symbol)
+.decl ms_must_not_restrict_free_movement_for_dp(v0: symbol, v1: symbol)
+.decl ms_provides_a5_p5_rules(v0: symbol)
+.decl ms_provides_a85_p2_exemption(v0: symbol)
+.decl ms_provides_a88_p1_rules(v0: symbol)
+.decl ms_provides_a90_p1_rules(v0: symbol)
+.decl ms_restriction_basis(v0: symbol, v1: symbol, v2: symbol)
+.decl ms_restriction_must_specify(v0: symbol, v1: symbol, v2: symbol)
+.decl multiple_eu_establishments(v0: symbol)
+.decl national_authority(v0: symbol)
+.decl national_competent_authority(v0: symbol)
+.decl national_security_purpose(v0: symbol)
+.decl natural_person(v0: symbol)
+.decl necessary_for_employment_social_security(v0: symbol)
+.decl necessary_for_health_or_social_care(v0: symbol)
+.decl necessary_for_legal_claims(v0: symbol)
+.decl necessary_for_public_health(v0: symbol)
+.decl necessary_proportionate_in_democratic_society(v0: symbol, v1: symbol)
+.decl necessary_to_protect_vital_interests(v0: symbol)
+.decl negative_effects_on_health_safety_security_rights(v0: symbol)
+.decl non_exclusive_liability_of_representative(v0: symbol, v1: symbol)
+.decl non_personal_data(v0: symbol)
+.decl not_personal_data(v0: symbol)
+.decl notification_deadline(v0: symbol, v1: symbol, v2: symbol)
+.decl notified_body(v0: symbol)
+.decl notified_per_aiact_or_other_harmonisation_law(v0: symbol)
+.decl notifying_authority(v0: symbol)
+.decl objection_to_draft_decision(v0: symbol)
+.decl obligation(v0: symbol, v1: symbol, v2: symbol)
+.decl obligation_disapplied(v0: symbol, v1: symbol, v2: symbol)
+.decl obvious_to_reasonable_person(v0: symbol)
+.decl official_document(v0: symbol)
+.decl one_to_one_verification(v0: symbol)
+.decl online_identifier(v0: symbol)
+.decl online_identifier_kinds(v0: symbol)
+.decl online_tracking(v0: symbol, v1: symbol)
+.decl operation(v0: symbol, v1: symbol)
+.decl operation_kinds(v0: symbol)
+.decl operational_data(v0: symbol)
+.decl operator(v0: symbol, v1: symbol)
+.decl origin_ms_basis(v0: symbol, v1: symbol)
+.decl output_used_in_eu(v0: symbol)
+.decl outside_lab_or_simulated(v0: symbol)
+.decl part_of_training_data_set(v0: symbol)
+.decl participates_in_real_world_testing(v0: symbol, v1: symbol)
+.decl performance(v0: symbol)
+.decl performs_profiling_of_natural_persons(v0: symbol)
+.decl performs_third_party_assessment(v0: symbol)
+.decl personal_data(v0: symbol)
+.decl personal_data_breach(v0: symbol)
+.decl personal_data_per_gdpr(v0: symbol)
+.decl physical_place(v0: symbol)
+.decl placed_on_market(v0: symbol, v1: symbol)
+.decl placed_on_market_before(v0: symbol, v1: symbol)
+.decl places_on_eu_market(v0: symbol, v1: symbol)
+.decl places_on_eu_market_with_product(v0: symbol, v1: symbol)
+.decl placing_on_eu_market(v0: symbol)
+.decl placing_on_market(v0: symbol)
+.decl possible_to_inform(v0: symbol, v1: symbol)
+.decl post_market_monitoring_system(v0: symbol, v1: symbol, v2: symbol)
+.decl post_rbi_system(v0: symbol)
+.decl pre_existing_intl_agreement_in_force_anchor(v0: symbol, v1: symbol)
+.decl pre_market_research_testing(v0: symbol)
+.decl probability_of_harm(v0: symbol, v1: symbol)
+.decl processed_under_secrecy_obligation(v0: symbol)
+.decl processes_on_behalf_of_controller(v0: symbol, v1: symbol, v2: symbol)
+.decl processing(v0: symbol)
+.decl processing_in_context_of_establishment(v0: symbol, v1: symbol)
+.decl processing_occasional(v0: symbol)
+.decl processor(v0: symbol, v1: symbol)
+.decl profiling(v0: symbol)
+.decl profiling_natural_person(v0: symbol, v1: symbol)
+.decl profiling_per_gdpr_a4_p4(v0: symbol)
+.decl prohibited_practice(v0: symbol)
+.decl proportionate_to_aim(v0: symbol)
+.decl provided_to_or_acquired_by(v0: symbol, v1: symbol)
+.decl provider(v0: symbol, v1: symbol)
+.decl provider_located_in(v0: symbol, v1: symbol)
+.decl provider_right(v0: symbol, v1: symbol, v2: symbol)
+.decl provider_supplied(v0: symbol, v1: symbol)
+.decl provides_means_for_personal_processing(v0: symbol)
+.decl pseudonymisation_applied(v0: symbol)
+.decl pseudonymisation_within_controller_allowed(v0: symbol, v1: symbol)
+.decl pseudonymised_data(v0: symbol)
+.decl public_authority(v0: symbol)
+.decl public_authority_inquiry_recipient(v0: symbol, v1: symbol)
+.decl public_authority_or_body(v0: symbol)
+.decl public_body(v0: symbol)
+.decl publicly_accessible_space(v0: symbol)
+.decl punishable_by_4y_or_more(v0: symbol)
+.decl purely_personal_household_activity(v0: symbol)
+.decl purpose_establish_identity(v0: symbol)
+.decl purpose_identify_or_infer_emotions(v0: symbol)
+.decl purpose_identify_persons(v0: symbol)
+.decl purpose_requires_identification(v0: symbol)
+.decl purposes_fulfillable_without_identification(v0: symbol)
+.decl put_into_service(v0: symbol, v1: symbol)
+.decl puts_into_service_in_eu(v0: symbol, v1: symbol)
+.decl putting_into_service(v0: symbol)
+.decl rbi_use_authorised(v0: symbol)
+.decl real_world_testing_plan(v0: symbol)
+.decl realtime_rbi_system(v0: symbol)
+.decl reasonably_foreseeable_misuse(v0: symbol, v1: symbol)
+.decl rebuttal_rejected_by_commission(v0: symbol)
+.decl recall(v0: symbol, v1: symbol)
+.decl received_a5_p4_notification(v0: symbol)
+.decl receives_in_general_interest_inquiry(v0: symbol, v1: symbol)
+.decl recipient(v0: symbol, v1: symbol)
+.decl recipient_excluded(v0: symbol, v1: symbol)
+.decl recital_principle(v0: symbol, v1: symbol, v2: symbol)
+.decl reference_construction(v0: symbol, v1: symbol)
+.decl references_to_eu_customers(v0: symbol)
+.decl related_to_annex_i_section_b(v0: symbol)
+.decl relates_to_genetic_characteristics(v0: symbol)
+.decl relates_to_health_status(v0: symbol)
+.decl relates_to_le_activity(v0: symbol)
+.decl relates_to_members_or_close(v0: symbol)
+.decl relates_to_physical_or_behavioural(v0: symbol)
+.decl relevant_reasoned_objection(v0: symbol)
+.decl relevant_to_annex_iii_use_case(v0: symbol)
+.decl remote_biometric_identification_system(v0: symbol)
+.decl repealed_decision(v0: symbol)
+.decl replaced(v0: symbol)
+.decl replaces_human_assessment_without_review(v0: symbol)
+.decl representative(v0: symbol, v1: symbol)
+.decl represents_for_compliance(v0: symbol, v1: symbol)
+.decl request_in_writing(v0: symbol)
+.decl request_occasional(v0: symbol)
+.decl request_reasoned(v0: symbol)
+.decl resembles_existing_persons_or_events(v0: symbol)
+.decl respects_essence_of_rights(v0: symbol, v1: symbol)
+.decl responsible_for_cab_assessment_designation_notification(v0: symbol)
+.decl restrict_free_movement_for_dp(v0: symbol, v1: symbol)
+.decl restriction_objective_lawful(v0: symbol)
+.decl restriction_of_processing(v0: symbol)
+.decl restriction_safeguards_objective(v0: symbol, v1: symbol)
+.decl restriction_specification_kind(v0: symbol)
+.decl revoked(v0: symbol)
+.decl right(v0: symbol, v1: symbol, v2: symbol)
+.decl right_disapplied(v0: symbol, v1: symbol, v2: symbol)
+.decl rights_render_purpose_impossible(v0: symbol, v1: symbol)
+.decl risk(v0: symbol)
+.decl risk_mitigated(v0: symbol)
+.decl sa_concerned_basis(v0: symbol, v1: symbol, v2: symbol)
+.decl safety_component(v0: symbol, v1: symbol)
+.decl safety_component_of(v0: symbol, v1: symbol)
+.decl same_objective_in_eprivacy(v0: symbol)
+.decl same_operator_in_at_least_three_ms(v0: symbol)
+.decl sandbox_plan(v0: symbol)
+.decl scientific_research_development_only(v0: symbol)
+.decl security_breach(v0: symbol)
+.decl sensitive_operational_data(v0: symbol)
+.decl serious_incident(v0: symbol)
+.decl serves_variety_of_purposes(v0: symbol)
+.decl service_per_dir_2015_1535(v0: symbol)
+.decl set_up_by_competent_authority(v0: symbol)
+.decl setup_by_intercountry_agreement(v0: symbol)
+.decl severity_of_harm(v0: symbol, v1: symbol)
+.decl significant_changes_after(v0: symbol, v1: symbol)
+.decl significant_eu_market_impact(v0: symbol)
+.decl skills_and_knowledge_for_informed_ai_use(v0: symbol)
+.decl social_scoring_evaluation(v0: symbol)
+.decl special_category_data(v0: symbol)
+.decl specific(v0: symbol, v1: symbol, v2: symbol)
+.decl specific_safeguards(v0: symbol)
+.decl specific_to_high_impact_gpai_capabilities(v0: symbol)
+.decl specified_in_instructions(v0: symbol, v1: symbol)
+.decl specified_in_promotional_or_sales_materials(v0: symbol, v1: symbol)
+.decl specified_in_technical_documentation(v0: symbol, v1: symbol)
+.decl stable_arrangements(v0: symbol, v1: symbol)
+.decl structured_personal_data_set(v0: symbol)
+.decl subject_of_testing(v0: symbol, v1: symbol)
+.decl subject_provided_additional_info(v0: symbol, v1: symbol)
+.decl subject_to_dir_2002_58_obligation(v0: symbol)
+.decl subject_to_third_party_assessment(v0: symbol, v1: symbol)
+.decl substantial_modification(v0: symbol, v1: symbol)
+.decl substantial_public_interest_basis(v0: symbol)
+.decl substantially_affected(v0: symbol, v1: symbol)
+.decl substantially_affects_subjects_in_multiple_ms(v0: symbol)
+.decl supervisory_authority(v0: symbol)
+.decl supervisory_authority_concerned(v0: symbol, v1: symbol, v2: symbol)
+.decl supervisory_competence_excluded(v0: symbol, v1: symbol)
+.decl supply_for_distribution_or_use_eu(v0: symbol)
+.decl supply_for_first_use_to_deployer(v0: symbol)
+.decl supply_for_own_use_in_eu(v0: symbol)
+.decl systemic_risk(v0: symbol)
+.decl targeting_indicia(v0: symbol, v1: symbol)
+.decl technical_org_measures_in_place(v0: symbol, v1: symbol)
+.decl technical_specification_per_reg_1025_2012(v0: symbol)
+.decl temporary_testing(v0: symbol)
+.decl testing_data(v0: symbol)
+.decl testing_in_real_world(v0: symbol)
+.decl third_country_authority_in_cooperation_framework(v0: symbol)
+.decl third_country_public_authority(v0: symbol)
+.decl third_party(v0: symbol, v1: symbol)
+.decl training_compute_flops(v0: symbol, v1: symbol)
+.decl training_data(v0: symbol)
+.decl transitional_grace(v0: symbol, v1: symbol, v2: symbol)
+.decl transparency_obligation_applies(v0: symbol)
+.decl tunes_non_learnable_parameters(v0: symbol, v1: symbol)
+.decl typically_at_distance(v0: symbol)
+.decl unambiguous(v0: symbol, v1: symbol)
+.decl unambiguous_indication(v0: symbol, v1: symbol)
+.decl under_direct_authority(v0: symbol, v1: symbol)
+.decl under_regulatory_supervision(v0: symbol)
+.decl unjustified_or_disproportionate_treatment(v0: symbol)
+.decl unstructured_file_set(v0: symbol)
+.decl urgency_justified(v0: symbol)
+.decl use_of(v0: symbol, v1: symbol)
+.decl use_of_eu_currency(v0: symbol)
+.decl use_of_eu_language(v0: symbol)
+.decl used_in(v0: symbol, v1: symbol)
+.decl used_to_evaluate_trained_system(v0: symbol, v1: symbol)
+.decl used_to_fit_learnable_parameters(v0: symbol, v1: symbol)
+.decl uses_ai_system(v0: symbol, v1: symbol)
+.decl uses_biometric_data(v0: symbol)
+.decl uses_national_id_or_general_identifier(v0: symbol, v1: symbol)
+.decl uses_under_authority(v0: symbol, v1: symbol)
+.decl validation_data(v0: symbol)
+.decl validation_data_set(v0: symbol)
+.decl voluntary(v0: symbol, v1: symbol)
+.decl widespread_infringement(v0: symbol)
+.decl with_own_name_or_trademark(v0: symbol, v1: symbol)
+.decl withdrawal(v0: symbol, v1: symbol)
+.decl without_active_involvement(v0: symbol)
+.decl without_significant_delay(v0: symbol)
+
+// ---- rules (same as datalog_rules_exported.dl) ----
+
+// Merged Datalog rules exported from Articles + Rules (normalized for Soufflé).
+// Source: /Users/sannawong-toropainen/Desktop/ComplianceCalculatorRules.xlsx
+
+// ---- GDPR_R14 (GDPR) ----
+// GDPR_R14 — RECITAL — material scope: natural persons only
+gdpr_protects(A) :- natural_person(A).
+
+// GDPR_R14 — RECITAL — exclusion of legal-person data (positive 'not_personal_data' label)
+not_personal_data(X) :- legal_person_data(X).
+
+// GDPR_R14 — RECITAL — narrative aid
+recital_principle('gdpr', 'r14', 'protects_natural_persons_only').
+
+
+// ---- GDPR_R15 (GDPR) ----
+// GDPR_R15 — RECITAL — technological neutrality (drives material scope of A2.1)
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), automated_means(S).
+
+// GDPR_R15 — RECITAL — manual processing within filing system also covered
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), filing_system(S).
+
+// GDPR_R15 — RECITAL — unstructured files marked outside filing-system test
+filing_system_excluded(S) :- unstructured_file_set(S).
+
+// GDPR_R15 — RECITAL — narrative aid
+recital_principle('gdpr', 'r15', 'technologically_neutral').
+
+
+// ---- GDPR_R16 (GDPR) ----
+// GDPR_R16 — RECITAL — exclusion: outside Union law / national security
+gdpr_excluded(S) :- activity_outside_union_law(S).
+
+// GDPR_R16 — RECITAL — exclusion: CFSP (Title V Ch.2 TEU)
+gdpr_excluded(S) :- cfsp_activity(S).
+
+// GDPR_R16 — RECITAL — narrative aid
+recital_principle('gdpr', 'r16', 'no_application_outside_union_law').
+
+
+// ---- GDPR_R17 (GDPR) ----
+// GDPR_R17 — RECITAL — EU institutions covered by Reg 45/2001 (now 2018/1725)
+gdpr_excluded(S) :- eu_institution_processing(S).
+
+// GDPR_R17 — RECITAL — narrative aid
+recital_principle('gdpr', 'r17', 'eu_institutions_under_2018_1725').
+
+
+// ---- GDPR_R18 (GDPR) ----
+// GDPR_R18 — RECITAL — purely personal/household activity excluded
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+
+// GDPR_R18 — RECITAL — narrative: still applies to controllers/processors providing means
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), provides_means_for_personal_processing(S).
+
+// GDPR_R18 — RECITAL — narrative aid
+recital_principle('gdpr', 'r18', 'household_exception_narrow').
+
+
+// ---- GDPR_R19 (GDPR) ----
+// GDPR_R19 — RECITAL — law-enforcement processing covered by Dir 2016/680
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+
+// GDPR_R19 — RECITAL — Member States may impose more specific rules within scope
+ms_derogation_basis('gdpr', 'r19', 'specific_provisions_for_competent_authorities').
+
+// GDPR_R19 — RECITAL — narrative aid
+recital_principle('gdpr', 'r19', 'le_directive_lex_specialis').
+
+
+// ---- GDPR_R20 (GDPR) ----
+// GDPR_R20 — RECITAL — applies to courts/judicial authorities
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), by_court_or_judicial_authority(S).
+
+// GDPR_R20 — RECITAL — supervisory authority does not cover judicial processing in judicial capacity
+supervisory_competence_excluded(SA, S) :- supervisory_authority(SA), court_in_judicial_capacity(C, S).
+
+// GDPR_R20 — RECITAL — narrative aid
+recital_principle('gdpr', 'r20', 'judicial_independence_safeguard').
+
+
+// ---- GDPR_R21 (GDPR) ----
+// GDPR_R21 — RECITAL — without prejudice to e-Commerce Directive 2000/31/EC
+intermediary_liability_safe_harbour(S) :- intermediary_service_provider(A), processing(S), by_actor(S, A).
+
+// GDPR_R21 — RECITAL — narrative aid
+recital_principle('gdpr', 'r21', 'without_prejudice_to_2000_31_ec').
+
+
+// ---- GDPR_R22 (GDPR) ----
+// GDPR_R22 — RECITAL — territorial: context-of-establishment limb
+gdpr_territorial_link(A, S) :- controller(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_R22 — RECITAL — same for processors
+gdpr_territorial_link(A, S) :- processor(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_R22 — RECITAL — establishment definition: stable arrangements regardless of legal form
+establishment_real(A, J) :- effective_real_activity(A, J), stable_arrangements(A, J).
+
+// GDPR_R22 — RECITAL — narrative aid
+recital_principle('gdpr', 'r22', 'establishment_substance_over_form').
+
+
+// ---- GDPR_R23 (GDPR) ----
+// GDPR_R23 — RECITAL — targeting limb of Art 3(2)(a)
+gdpr_territorial_link(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_R23 — RECITAL — same for processors
+gdpr_territorial_link(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_R23 — RECITAL — accessibility alone insufficient (positive flag)
+data_subjects_in_eu_targeted_excluded(S, A) :- mere_website_accessibility(S, A), ~targeting_indicia(S, A).
+
+// GDPR_R23 — RECITAL — targeting indicia (language/currency/customer references)
+targeting_indicia(S, A) :- controller_or_processor(A, S), use_of_eu_language(S).
+targeting_indicia(S, A) :- controller_or_processor(A, S), use_of_eu_currency(S).
+targeting_indicia(S, A) :- controller_or_processor(A, S), references_to_eu_customers(S).
+
+// GDPR_R23 — RECITAL — narrative aid
+recital_principle('gdpr', 'r23', 'targeting_test_factors').
+
+
+// ---- GDPR_R24 (GDPR) ----
+// GDPR_R24 — RECITAL — monitoring limb of Art 3(2)(b)
+gdpr_territorial_link(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+
+// GDPR_R24 — RECITAL — monitoring includes online tracking, profiling
+monitors_behaviour_in_eu(A, S) :- online_tracking(A, S), data_subjects_in_eu(S).
+monitors_behaviour_in_eu(A, S) :- profiling_natural_person(A, S), data_subjects_in_eu(S).
+
+// GDPR_R24 — RECITAL — narrative aid
+recital_principle('gdpr', 'r24', 'monitoring_includes_profiling').
+
+
+// ---- GDPR_R25 (GDPR) ----
+// GDPR_R25 — RECITAL — Art 3(3) — MS law via public international law
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+
+// GDPR_R25 — RECITAL — example: diplomatic missions, consular posts
+member_state_law_via_intl_law(A) :- diplomatic_mission(A).
+member_state_law_via_intl_law(A) :- consular_post(A).
+
+// GDPR_R25 — RECITAL — narrative aid
+recital_principle('gdpr', 'r25', 'public_intl_law_anchor').
+
+
+// ---- GDPR_R26 (GDPR) ----
+// GDPR_R26 — RECITAL — pseudonymised data still personal data
+personal_data(X) :- pseudonymised_data(X), attributable_with_additional_info(X).
+
+// GDPR_R26 — RECITAL — anonymous information is not personal data (positive label)
+not_personal_data(X) :- anonymous_information(X).
+
+// GDPR_R26 — RECITAL — identifiability test: means reasonably likely to be used
+identifiable(X, A) :- concerns(X, A), natural_person(A), means_reasonably_likely(X, A).
+
+// GDPR_R26 — RECITAL — narrative aid
+recital_principle('gdpr', 'r26', 'reasonably_likely_means_test').
+
+
+// ---- GDPR_R27 (GDPR) ----
+// GDPR_R27 — RECITAL — exclusion: deceased persons (positive label)
+not_personal_data(X) :- deceased_personal_data(X).
+
+// GDPR_R27 — RECITAL — Member States may regulate deceased-person data
+ms_derogation_basis('gdpr', 'r27', 'deceased_persons_data').
+
+// GDPR_R27 — RECITAL — narrative aid
+recital_principle('gdpr', 'r27', 'deceased_data_excluded').
+
+
+// ---- GDPR_R28 (GDPR) ----
+// GDPR_R28 — RECITAL — pseudonymisation reduces risk; not exclusive measure
+risk_mitigated(S) :- pseudonymisation_applied(S).
+
+// GDPR_R28 — RECITAL — narrative aid
+recital_principle('gdpr', 'r28', 'pseudonymisation_non_exclusive').
+
+
+// ---- GDPR_R29 (GDPR) ----
+// GDPR_R29 — RECITAL — pseudonymisation incentive: same controller may analyse
+pseudonymisation_within_controller_allowed(A, S) :- controller(A, S), pseudonymisation_applied(S), technical_org_measures_in_place(A, S), additional_info_kept_separately(A, S).
+
+// GDPR_R29 — RECITAL — narrative aid
+recital_principle('gdpr', 'r29', 'pseudonymisation_incentive').
+
+
+// ---- GDPR_R30 (GDPR) ----
+// GDPR_R30 — RECITAL — online identifiers may identify natural persons
+identifiable(X, A) :- online_identifier(X), combined_with_unique_identifiers(X, A).
+online_identifier_kinds('ip_address').
+online_identifier_kinds('cookie_id').
+online_identifier_kinds('rfid_tag').
+
+// GDPR_R30 — RECITAL — narrative aid
+recital_principle('gdpr', 'r30', 'online_identifiers_within_personal_data').
+
+
+// ---- GDPR_R31 (GDPR) ----
+// GDPR_R31 — RECITAL — public authorities receiving data in inquiry are not 'recipients' (positive label)
+recipient_excluded(A, X) :- public_authority(A), receives_in_general_interest_inquiry(A, X), based_on_law(A).
+
+// GDPR_R31 — RECITAL — disclosure requests: written, reasoned, occasional
+disclosure_request_lawful(R) :- request_in_writing(R), request_reasoned(R), request_occasional(R), ~concerns_entire_filing_system(R).
+
+// GDPR_R31 — RECITAL — narrative aid
+recital_principle('gdpr', 'r31', 'inquiry_receipts_not_recipients').
+
+
+// ---- GDPR_R171 (GDPR) ----
+// GDPR_R171 — RECITAL — repeal of Directive 95/46/EC
++ transitional_grace('gdpr', 'directive_9546_repealed', '2018-05-25')
+
+// GDPR_R171 — RECITAL — pre-existing consents preserved if conditions met
+consent_carryover_valid(D, S) :- consent_under_dir_9546(D, S), meets_gdpr_consent_conditions(D, S).
+
+// GDPR_R171 — RECITAL — Commission decisions / SA authorisations remain in force
+legacy_decision_in_force(X) :- decision_under_dir_9546(X), ~amended(X), ~repealed_decision(X).
+
+// GDPR_R171 — RECITAL — narrative aid
+recital_principle('gdpr', 'r171', 'transitional_continuity').
+
+
+// ---- GDPR_A1 (GDPR) ----
+// GDPR_applies
+applies(S, T, 'gdpr') :- in_force('gdpr', T), gdpr_territorial_link(A, S), gdpr_material(S), ~gdpr_excluded(S).
+
+// GDPR_applies_with_actor
+applies_via_actor(S, T, 'gdpr', A) :- in_force('gdpr', T), gdpr_territorial_link(A, S), gdpr_material(S), ~gdpr_excluded(S).
+
+
+// ---- GDPR_A1.1 (GDPR) ----
+// GDPR_A1_P1 — subject matter: rules for processing of personal data + free movement
+gdpr_subject_matter(S) :- processing(S), concerns(S, X), personal_data(X).
+gdpr_subject_matter('free_movement_personal_data').
+
+
+// ---- GDPR_A1.2 (GDPR) ----
+// GDPR_A1_P2 — protects fundamental rights, in particular data protection
+gdpr_protects_fundamental_right(A, 'data_protection') :- natural_person(A).
+
+
+// ---- GDPR_A1.3 (GDPR) ----
+// GDPR_A1_P3 — free movement: cannot be restricted on data-protection grounds (positive prohibition)
+ms_must_not_restrict_free_movement_for_dp(MS, S) :- processing(S), concerns(S, X), personal_data(X), member_state(MS).
+
+
+// ---- GDPR_A2 (GDPR) ----
+// GDPR_A2 — Material scope (chapeau; rules carried by paragraphs)
+gdpr_scope_article('gdpr_a2', 'material_scope').
+
+
+// ---- GDPR_A2.1 (GDPR) ----
+// GDPR_A2_P1_LIMB_1
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), automated_means(x).
+
+// GDPR_A2_P1_LIMB_2
+gdpr_material(S) :- processing(S), concerns(S, X), personal_data(X), filing_system(S).
+
+
+// ---- GDPR_A2.2.a (GDPR) ----
+// GDPR_A2_P2_PT_a
+gdpr_excluded(S) :- activity_outside_union_law(S).
+
+
+// ---- GDPR_A2.2.b (GDPR) ----
+// GDPR_A2_P2_PT_b — CFSP activities (Chapter 2 of Title V TEU)
+gdpr_excluded(S) :- cfsp_activity(S).
+
+
+// ---- GDPR_A2.2.c (GDPR) ----
+// GDPR_A2_P2_PT_c
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+
+
+// ---- GDPR_A2.2.d (GDPR) ----
+// GDPR_A2_P2_PT_d
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+
+
+// ---- GDPR_A2.2 (GDPR) ----
+// GDPR_A2_P2 — chapeau for the four exclusion limbs
+gdpr_excluded(S) :- activity_outside_union_law(S).
+gdpr_excluded(S) :- cfsp_activity(S).
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+
+
+// ---- GDPR_A2.3 (GDPR) ----
+// GDPR_A2_P3
+gdpr_excluded(S) :- eu_institution_processing(S).
+
+
+// ---- GDPR_A2.4 (GDPR) ----
+// GDPR_A2_P4 — without prejudice to Directive 2000/31/EC (e-commerce)
+intermediary_liability_safe_harbour(S) :- intermediary_service_provider(A), by_actor(S, A), processing(S).
+
+
+// ---- GDPR_A3 (GDPR) ----
+// GDPR_A3 — Territorial scope (chapeau; rules carried by paragraphs)
+gdpr_scope_article('gdpr_a3', 'territorial_scope').
+
+
+// ---- GDPR_A3.1 (GDPR) ----
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- controller(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- processor(A, S), established_in(A, 'eu'), processing_in_context_of_establishment(S, A).
+
+
+// ---- GDPR_A3.2.a (GDPR) ----
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+
+
+// ---- GDPR_A3.2.b (GDPR) ----
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- processor(A, S), monitors_behaviour_in_eu(A, S).
+
+
+// ---- GDPR_A3.2 (GDPR) ----
+// GDPR_A3_P2 — chapeau: extra-EU controllers/processors targeting EU subjects
+gdpr_territorial_link(A, S) :- controller(A, S), ~established_in(A, 'eu'), data_subjects_in_eu_targeted(S, A).
+gdpr_territorial_link(A, S) :- processor(A, S), ~established_in(A, 'eu'), data_subjects_in_eu_targeted(S, A).
+gdpr_territorial_link(A, S) :- controller(A, S), ~established_in(A, 'eu'), monitors_behaviour_in_eu(A, S).
+gdpr_territorial_link(A, S) :- processor(A, S), ~established_in(A, 'eu'), monitors_behaviour_in_eu(A, S).
+
+
+// ---- GDPR_A3.3 (GDPR) ----
+// GDPR_A3_P3
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+
+
+// ---- GDPR_A4 (GDPR) ----
+// GDPR_A4_P1_PT1
+personal_data(X) :- concerns(X, A), natural_person(A), identifies(X, A).
+
+
+// ---- GDPR_A4.1 (GDPR) ----
+// GDPR_A4_P1 — 'personal data'
+personal_data(X) :- concerns(X, A), natural_person(A), identifies(X, A).
+personal_data(X) :- concerns(X, A), natural_person(A), identifiable(X, A).
+identifies(X, A) :- contains_identifier(X, 'name', A).
+identifies(X, A) :- contains_identifier(X, 'id_number', A).
+identifies(X, A) :- contains_identifier(X, 'location_data', A).
+identifies(X, A) :- contains_identifier(X, 'online_identifier', A).
+identifiable(X, A) :- contains_factor(X, 'physical', A) | contains_factor(X, 'physiological', A) | contains_factor(X, 'genetic', A) | contains_factor(X, 'mental', A) | contains_factor(X, 'economic', A) | contains_factor(X, 'cultural', A) | contains_factor(X, 'social', A).
+
+
+// ---- GDPR_A4.2 (GDPR) ----
+// GDPR_A4_P2 — 'processing'
+processing(S) :- operation(S, X), personal_data(X).
+operation_kinds('collection').
+operation_kinds('recording').
+operation_kinds('organisation').
+operation_kinds('structuring').
+operation_kinds('storage').
+operation_kinds('adaptation').
+operation_kinds('alteration').
+operation_kinds('retrieval').
+operation_kinds('consultation').
+operation_kinds('use').
+operation_kinds('disclosure_by_transmission').
+operation_kinds('dissemination').
+operation_kinds('alignment').
+operation_kinds('combination').
+operation_kinds('restriction').
+operation_kinds('erasure').
+operation_kinds('destruction').
+
+
+// ---- GDPR_A4.3 (GDPR) ----
+// GDPR_A4_P3 — 'restriction of processing'
+restriction_of_processing(S) :- processing(S), marks_to_limit_future_processing(S).
+
+
+// ---- GDPR_A4.4 (GDPR) ----
+// GDPR_A4_P4 — 'profiling'
+profiling(S) :- processing(S), automated_means(S), evaluates_personal_aspects(S, A), natural_person(A).
+
+
+// ---- GDPR_A4.5 (GDPR) ----
+// GDPR_A4_P5 — 'pseudonymisation'
+pseudonymisation_applied(S) :- processing(S), data_no_longer_directly_attributable(S), additional_info_kept_separately(_, S), technical_org_measures_in_place(_, S).
+
+
+// ---- GDPR_A4.6 (GDPR) ----
+// GDPR_A4_P6 — 'filing system'
+filing_system(S) :- structured_personal_data_set(S), accessible_per_specific_criteria(S).
+
+
+// ---- GDPR_A4.7 (GDPR) ----
+// GDPR_A4_P7 — 'controller'
+controller(A, S) :- determines_purposes_and_means(A, S), processing(S).
+controller(A, S) :- designated_by_law_as_controller(A, S).
+
+
+// ---- GDPR_A4.8 (GDPR) ----
+// GDPR_A4_P8 — 'processor'
+processor(A, S) :- processes_on_behalf_of_controller(A, S, _), processing(S).
+
+
+// ---- GDPR_A4.9 (GDPR) ----
+// GDPR_A4_P9 — 'recipient'
+recipient(A, X) :- disclosed_to(X, A), ~recipient_excluded(A, X).
+public_authority_inquiry_recipient(A, X) :- public_authority(A), receives_in_general_interest_inquiry(A, X).
+recipient_excluded(A, X) :- public_authority_inquiry_recipient(A, X).
+
+
+// ---- GDPR_A4.10 (GDPR) ----
+// GDPR_A4_P10 — 'third party'
+third_party(A, S) :- actor(A), processing(S), ~data_subject_of(A, S), ~controller(A, S), ~processor(A, S), ~under_direct_authority(A, S).
+
+
+// ---- GDPR_A4.11 (GDPR) ----
+// GDPR_A4_P11 — 'consent'
+consent_given(D, S, P) :- freely_given(D, S), specific(D, S, P), informed(D, S), unambiguous_indication(D, S), clear_affirmative_action(D, S).
+
+
+// ---- GDPR_A4.12 (GDPR) ----
+// GDPR_A4_P12 — 'personal data breach'
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'destruction').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'loss').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'alteration').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'unauthorised_disclosure').
+personal_data_breach(B) :- security_breach(B), affects_personal_data(B), breach_kind(B, 'unauthorised_access').
+
+
+// ---- GDPR_A4.13 (GDPR) ----
+// GDPR_A4_P13 — 'genetic data'
+genetic_data(X) :- personal_data(X), relates_to_genetic_characteristics(X).
+category(X, 'genetic') :- genetic_data(X).
+
+
+// ---- GDPR_A4.14 (GDPR) ----
+// GDPR_A4_P14 — 'biometric data'
+biometric_data(X) :- personal_data(X), from_specific_technical_processing(X), relates_to_physical_or_behavioural(X).
+category(X, 'biometric_for_id') :- biometric_data(X), for_unique_identification(X).
+
+
+// ---- GDPR_A4.15 (GDPR) ----
+// GDPR_A4_P15 — 'data concerning health'
+health_data(X) :- personal_data(X), relates_to_health_status(X).
+category(X, 'health') :- health_data(X).
+
+
+// ---- GDPR_A4.16.a (GDPR) ----
+// GDPR_A4_P16_PT_a — controller's main establishment
+main_establishment(A, J) :- controller(A, _), multiple_eu_establishments(A), central_administration_in(A, J), ~main_decisions_taken_elsewhere(A).
+main_establishment(A, J) :- controller(A, _), multiple_eu_establishments(A), main_decisions_taken_at(A, J), implementation_power_at(A, J).
+
+
+// ---- GDPR_A4.16.b (GDPR) ----
+// GDPR_A4_P16_PT_b — processor's main establishment
+main_establishment(A, J) :- processor(A, _), multiple_eu_establishments(A), central_administration_in(A, J).
+main_establishment(A, J) :- processor(A, _), ~central_administration_in(A, _), main_processing_activities_at(A, J).
+
+
+// ---- GDPR_A4.16 (GDPR) ----
+// GDPR_A4_P16 — 'main establishment' chapeau (rules carried by points)
+main_establishment(A, J) :- controller(A, _), central_administration_in(A, J), ~main_decisions_taken_elsewhere(A).
+main_establishment(A, J) :- processor(A, _), central_administration_in(A, J).
+
+
+// ---- GDPR_A4.17 (GDPR) ----
+// GDPR_A4_P17 — 'representative'
+representative(R, A) :- established_in(R, 'eu'), designated_by(A, R), represents_for_compliance(R, A).
+
+
+// ---- GDPR_A4.18 (GDPR) ----
+// GDPR_A4_P18 — 'enterprise'
+enterprise(A) :- engaged_in_economic_activity(A).
+
+
+// ---- GDPR_A4.19 (GDPR) ----
+// GDPR_A4_P19 — 'group of undertakings'
+group_of_undertakings(G) :- controlling_undertaking(G, U_top), controlled_undertaking(G, U_sub).
+
+
+// ---- GDPR_A4.20 (GDPR) ----
+// GDPR_A4_P20 — 'binding corporate rules'
+bcr(P, G) :- data_protection_policy(P), adhered_by_eu_controller_or_processor(P, A), for_intra_group_transfers(P, G).
+
+
+// ---- GDPR_A4.21 (GDPR) ----
+// GDPR_A4_P21 — 'supervisory authority'
+supervisory_authority(SA) :- independent_public_authority(SA), established_by_member_state_per_a51(SA).
+
+
+// ---- GDPR_A4.22.a_2 (GDPR) ----
+// GDPR_A4_P22_PT_a — controller/processor established in MS of SA
+sa_concerned_basis(SA, A, S) :- controller_or_processor(A, S), established_in_ms_of(A, SA).
+
+
+// ---- GDPR_A4.22.b_2 (GDPR) ----
+// GDPR_A4_P22_PT_b — data subjects in MS of SA substantially affected
+sa_concerned_basis(SA, A, S) :- controller_or_processor(A, S), data_subjects_in_ms_of(SA), substantially_affected(S, SA).
+
+
+// ---- GDPR_A4.22.c_2 (GDPR) ----
+// GDPR_A4_P22_PT_c — complaint lodged with SA
+sa_concerned_basis(SA, A, S) :- complaint_lodged_with(SA, S), controller_or_processor(A, S).
+
+
+// ---- GDPR_A4.22 (GDPR) ----
+// GDPR_A4_P22 — 'supervisory authority concerned' chapeau
+supervisory_authority_concerned(SA, A, S) :- supervisory_authority(SA), sa_concerned_basis(SA, A, S).
+
+
+// ---- GDPR_A4.23.a_3 (GDPR) ----
+// GDPR_A4_P23_PT_a — multiple-MS establishments
+cross_border_basis_a(S) :- controller_or_processor(A, S), multiple_eu_establishments(A), processing_in_context_of_establishment(S, A).
+
+
+// ---- GDPR_A4.23.b_3 (GDPR) ----
+// GDPR_A4_P23_PT_b — single establishment but cross-MS impact
+cross_border_basis_b(S) :- controller_or_processor(A, S), processing_in_context_of_establishment(S, A), substantially_affects_subjects_in_multiple_ms(S).
+
+
+// ---- GDPR_A4.23 (GDPR) ----
+// GDPR_A4_P23 — 'cross-border processing' chapeau
+cross_border_processing(S) :- cross_border_basis_a(S).
+cross_border_processing(S) :- cross_border_basis_b(S).
+
+
+// ---- GDPR_A4.24 (GDPR) ----
+// GDPR_A4_P24 — 'relevant and reasoned objection'
+relevant_reasoned_objection(O) :- objection_to_draft_decision(O), demonstrates_significance_of_risks(O).
+
+
+// ---- GDPR_A4.25 (GDPR) ----
+// GDPR_A4_P25 — 'information society service'
+information_society_service(SVC) :- service_per_dir_2015_1535(SVC).
+
+
+// ---- GDPR_A4.26 (GDPR) ----
+// GDPR_A4_P26 — 'international organisation'
+international_organisation(O) :- governed_by_public_intl_law(O).
+international_organisation(O) :- setup_by_intercountry_agreement(O).
+
+
+// ---- GDPR_A9 (GDPR) ----
+// GDPR_A9_implies_A4_P1
+personal_data(X) :- special_category_data(X).
+
+
+// ---- GDPR_A9.1 (GDPR) ----
+// GDPR_A9_P1
+special_category_data(X) :- category(X, 'racial') | category(X, 'ethnic')  | category(X, 'political_opinions') | category(X, 'religious')  | category(X, 'philosophical') | category(X, 'trade_union')  | category(X, 'genetic') | category(X, 'biometric_for_id')  | category(X, 'health') | category(X, 'sex_life') | category(X, 'sexual_orientation').
+
+
+// ---- GDPR_A9.2.a (GDPR) ----
+// GDPR_A9_P2_PT_a — explicit consent
+art9_lawful(S) :- explicit_consent_given(D, S, _), ~ms_law_prohibits_consent_lift(S).
+
+
+// ---- GDPR_A9.2.b (GDPR) ----
+// GDPR_A9_P2_PT_b — employment / social security obligations
+art9_lawful(S) :- necessary_for_employment_social_security(S), authorised_by_law_or_collective_agreement(S), appropriate_safeguards_present(S).
+
+
+// ---- GDPR_A9.2.c (GDPR) ----
+// GDPR_A9_P2_PT_c — vital interests where subject incapable
+art9_lawful(S) :- necessary_to_protect_vital_interests(S), data_subject_incapable_of_consent(S).
+
+
+// ---- GDPR_A9.2.d (GDPR) ----
+// GDPR_A9_P2_PT_d — not-for-profit body legitimate activities
+art9_lawful(S) :- legitimate_activity_of_nonprofit(S), relates_to_members_or_close(S), ~discloses_outside_without_consent(S), appropriate_safeguards_present(S).
+
+
+// ---- GDPR_A9.2.e (GDPR) ----
+// GDPR_A9_P2_PT_e — manifestly made public by data subject
+art9_lawful(S) :- manifestly_made_public_by_subject(S).
+
+
+// ---- GDPR_A9.2.f (GDPR) ----
+// GDPR_A9_P2_PT_f — legal claims / judicial capacity
+art9_lawful(S) :- necessary_for_legal_claims(S).
+art9_lawful(S) :- courts_acting_in_judicial_capacity(S).
+
+
+// ---- GDPR_A9.2.g (GDPR) ----
+// GDPR_A9_P2_PT_g — substantial public interest, EU/MS law basis
+art9_lawful(S) :- substantial_public_interest_basis(S), proportionate_to_aim(S), specific_safeguards(S).
+
+
+// ---- GDPR_A9.2.h.i (GDPR) ----
+// GDPR_A9_P2_PT_h_i — public health (cross-border threats, quality/safety)
+art9_lawful(S) :- necessary_for_public_health(S), eu_or_ms_law_basis(S), specific_safeguards(S).
+
+
+// ---- GDPR_A9.2.h (GDPR) ----
+// GDPR_A9_P2_PT_h — preventive/occupational medicine, health/social care
+art9_lawful(S) :- necessary_for_health_or_social_care(S), basis_in_eu_or_ms_law_or_contract(S), art9_p3_secrecy_satisfied(S).
+
+
+// ---- GDPR_A9.2.j (GDPR) ----
+// GDPR_A9_P2_PT_j — archiving / scientific research / statistics (Art 89(1))
+art9_lawful(S) :- for_archiving_research_statistics(S), art89_safeguards_present(S), proportionate_to_aim(S).
+
+
+// ---- GDPR_A9.2 (GDPR) ----
+// GDPR_A9_P2 — derogations chapeau (positive 'lifted' label)
+art9_prohibition_lifted(S) :- art9_lawful(S).
+
+
+// ---- GDPR_A9.3 (GDPR) ----
+// GDPR_A9_P3 — professional secrecy condition for point (h)
+art9_p3_secrecy_satisfied(S) :- processed_under_secrecy_obligation(S).
+
+
+// ---- GDPR_A9.4 (GDPR) ----
+// GDPR_A9_P4 — Member-State derogation: stricter conditions on genetic/biometric/health
+ms_derogation_basis('gdpr', 'a9_p4', 'genetic_biometric_health_stricter').
+
+
+// ---- GDPR_A10 (GDPR) ----
+// GDPR_A10
+personal_data(X) :- criminal_offence_data(X).
+
+
+// ---- GDPR_A11 (GDPR) ----
+// GDPR_A11 — chapeau (rules carried by paragraphs)
+gdpr_scope_article('gdpr_a11', 'processing_without_identification').
+
+
+// ---- GDPR_A11.1 (GDPR) ----
+// GDPR_A11_P1 — controller need not maintain identification info merely for compliance
+obligation_disapplied(A, S, 'maintain_identification_info_for_compliance') :- controller(A, S), processing(S), ~purpose_requires_identification(S).
+
+
+// ---- GDPR_A11.2 (GDPR) ----
+// GDPR_A11_P2 — Articles 15-20 disapplied where controller cannot identify
+right_disapplied(D, S, 'access') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'rectification') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'erasure') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'restriction') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+right_disapplied(D, S, 'portability') :- controller(A, S), cannot_identify_subject(A, S, D), ~subject_provided_additional_info(D, S).
+
+obligation(A, S, 'inform_subject_of_inability_to_identify') :- controller(A, S), cannot_identify_subject(A, S, D), possible_to_inform(A, S).
+
+
+// ---- GDPR_A23 (GDPR) ----
+// GDPR_A23 — Restrictions chapeau
+gdpr_scope_article('gdpr_a23', 'restrictions_member_state_law').
+
+
+// ---- GDPR_A23.1.a (GDPR) ----
+// GDPR_A23_P1_PT_a — national security
+restriction_objective_lawful('national_security').
+
+
+// ---- GDPR_A23.1.b (GDPR) ----
+// GDPR_A23_P1_PT_b — defence
+restriction_objective_lawful('defence').
+
+
+// ---- GDPR_A23.1.c (GDPR) ----
+// GDPR_A23_P1_PT_c — public security
+restriction_objective_lawful('public_security').
+
+
+// ---- GDPR_A23.1.d (GDPR) ----
+// GDPR_A23_P1_PT_d — criminal offences / penalties / public-security threats
+restriction_objective_lawful('criminal_offences_prevention_investigation_prosecution').
+
+
+// ---- GDPR_A23.1.e (GDPR) ----
+// GDPR_A23_P1_PT_e — important objectives of general public interest
+restriction_objective_lawful('general_public_interest_economic_financial').
+
+
+// ---- GDPR_A23.1.f (GDPR) ----
+// GDPR_A23_P1_PT_f — judicial independence and proceedings
+restriction_objective_lawful('judicial_independence_and_proceedings').
+
+
+// ---- GDPR_A23.1.g (GDPR) ----
+// GDPR_A23_P1_PT_g — breaches of ethics for regulated professions
+restriction_objective_lawful('regulated_profession_ethics').
+
+
+// ---- GDPR_A23.1.h.i (GDPR) ----
+// GDPR_A23_P1_PT_h_i — protection of data subject and rights/freedoms of others
+restriction_objective_lawful('protection_of_subject_or_others').
+
+
+// ---- GDPR_A23.1.h (GDPR) ----
+// GDPR_A23_P1_PT_h — monitoring/inspection/regulatory function
+restriction_objective_lawful('monitoring_inspection_regulatory_function').
+
+
+// ---- GDPR_A23.1.j (GDPR) ----
+// GDPR_A23_P1_PT_j — civil law claims enforcement
+restriction_objective_lawful('civil_law_claims_enforcement').
+
+
+// ---- GDPR_A23.1 (GDPR) ----
+// GDPR_A23_P1 — MS law may restrict A12-22, A34, A5 (mirror)
+ms_restriction_basis(MS, S, R) :- ms_law_restricts(MS, S, R), respects_essence_of_rights(MS, S), necessary_proportionate_in_democratic_society(MS, S), restriction_safeguards_objective(MS, R).
+
+
+// ---- GDPR_A23.2.a (GDPR) ----
+// GDPR_A23_P2_PT_a — purposes of processing
+restriction_specification_kind('purposes_of_processing').
+
+
+// ---- GDPR_A23.2.b (GDPR) ----
+// GDPR_A23_P2_PT_b — categories of personal data
+restriction_specification_kind('categories_of_personal_data').
+
+
+// ---- GDPR_A23.2.c (GDPR) ----
+// GDPR_A23_P2_PT_c — scope of restrictions
+restriction_specification_kind('scope_of_restrictions').
+
+
+// ---- GDPR_A23.2.d (GDPR) ----
+// GDPR_A23_P2_PT_d — safeguards against abuse
+restriction_specification_kind('safeguards_against_abuse').
+
+
+// ---- GDPR_A23.2.e (GDPR) ----
+// GDPR_A23_P2_PT_e — specification of controller(s)
+restriction_specification_kind('controller_specification').
+
+
+// ---- GDPR_A23.2.f (GDPR) ----
+// GDPR_A23_P2_PT_f — storage periods
+restriction_specification_kind('storage_periods').
+
+
+// ---- GDPR_A23.2.g (GDPR) ----
+// GDPR_A23_P2_PT_g — risks to rights/freedoms
+restriction_specification_kind('risks_to_rights_and_freedoms').
+
+
+// ---- GDPR_A23.2.h (GDPR) ----
+// GDPR_A23_P2_PT_h — right of subject to be informed of restriction
+restriction_specification_kind('subject_right_to_be_informed').
+
+
+// ---- GDPR_A23.2 (GDPR) ----
+// GDPR_A23_P2 — required content of restriction legislation (chapeau)
+ms_restriction_must_specify(MS, R, 'purposes').
+ms_restriction_must_specify(MS, R, 'data_categories').
+ms_restriction_must_specify(MS, R, 'scope').
+ms_restriction_must_specify(MS, R, 'safeguards').
+ms_restriction_must_specify(MS, R, 'controller_specification').
+ms_restriction_must_specify(MS, R, 'storage_periods').
+ms_restriction_must_specify(MS, R, 'risks_to_rights').
+ms_restriction_must_specify(MS, R, 'right_to_be_informed').
+
+
+// ---- GDPR_A27 (GDPR) ----
+// GDPR_A27 — Representatives of non-EU controllers/processors (chapeau)
+gdpr_scope_article('gdpr_a27', 'non_eu_representative').
+
+
+// ---- GDPR_A27.1 (GDPR) ----
+// GDPR_A27_P1 — designate representative when Art 3(2) applies
+obligation(A, S, 'designate_eu_representative') :- controller_or_processor(A, S), ~established_in(A, 'eu'), gdpr_territorial_link(A, S), art3_p2_applies(S).
+art3_p2_applies(S) :- data_subjects_in_eu_targeted(S, _).
+art3_p2_applies(S) :- monitors_behaviour_in_eu(_, S).
+
+
+// ---- GDPR_A27.2.a (GDPR) ----
+// GDPR_A27_P2_PT_a — occasional, low-risk processing exemption
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), processing_occasional(S), ~large_scale_special_data(S), ~large_scale_criminal_data(S), ~likely_to_risk_rights(S).
+
+
+// ---- GDPR_A27.2.b (GDPR) ----
+// GDPR_A27_P2_PT_b — public authority/body exemption
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), public_authority(A).
+a27_p2_exempt(A, S) :- controller_or_processor(A, S), public_body(A).
+
+
+// ---- GDPR_A27.2 (GDPR) ----
+// GDPR_A27_P2 — exemption chapeau
+obligation_disapplied(A, S, 'designate_eu_representative') :- a27_p2_exempt(A, S).
+
+
+// ---- GDPR_A27.3 (GDPR) ----
+// GDPR_A27_P3 — representative location: in MS where targeting/monitoring occurs
+obligation(A, S, 'representative_in_relevant_ms') :- obligation(A, S, 'designate_eu_representative'), representative(R, A), established_in_ms_of_targeting(R, S).
+
+
+// ---- GDPR_A27.4 (GDPR) ----
+// GDPR_A27_P4 — representative mandate
+obligation(A, R, 'mandate_representative_for_compliance') :- controller_or_processor(A, _), representative(R, A).
+addressable_for_compliance(R, A) :- representative(R, A), mandated_by(R, A).
+
+
+// ---- GDPR_A27.5 (GDPR) ----
+// GDPR_A27_P5 — designation does not preclude legal action against principal (positive label)
+non_exclusive_liability_of_representative(R, A) :- representative(R, A), controller_or_processor(A, S).
+
+
+// ---- GDPR_A85 (GDPR) ----
+// GDPR_A85 — Processing, freedom of expression (chapeau)
+gdpr_scope_article('gdpr_a85', 'reconcile_with_freedom_of_expression').
+
+
+// ---- GDPR_A85.1 (GDPR) ----
+// GDPR_A85_P1 — MS shall reconcile DP with freedom of expression
+obligation(MS, _, 'reconcile_dp_with_expression') :- member_state(MS).
+
+
+// ---- GDPR_A85.2 (GDPR) ----
+// GDPR_A85_P2 — MS provide exemptions for journalism/academic/artistic/literary
+ms_derogation_basis('gdpr', 'a85_p2', 'journalism_academic_artistic_literary_expression').
+ms_derogation_chapter(MS, 'gdpr', 'chapter_ii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_iii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_iv') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_v') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_vi') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_vii') :- ms_provides_a85_p2_exemption(MS).
+ms_derogation_chapter(MS, 'gdpr', 'chapter_ix') :- ms_provides_a85_p2_exemption(MS).
+
+
+// ---- GDPR_A85.3 (GDPR) ----
+// GDPR_A85_P3 — MS shall notify Commission of A85(2) provisions
+obligation(MS, _, 'notify_commission_of_a85_p2_provisions') :- member_state(MS), ms_provides_a85_p2_exemption(MS).
+
+
+// ---- GDPR_A86 (GDPR) ----
+// GDPR_A86 — Public access to official documents
+disclosure_lawful(A, X) :- public_authority_or_body(A), official_document(X), disclosure_per_eu_or_ms_law(A, X).
+
+
+// ---- GDPR_A87 (GDPR) ----
+// GDPR_A87 — National identification number
+ms_derogation_basis('gdpr', 'a87', 'national_identification_number_conditions').
+obligation(A, S, 'use_national_id_with_safeguards') :- uses_national_id_or_general_identifier(A, S).
+
+
+// ---- GDPR_A88 (GDPR) ----
+// GDPR_A88 — Employment context (chapeau)
+gdpr_scope_article('gdpr_a88', 'employment_context').
+
+
+// ---- GDPR_A88.1 (GDPR) ----
+// GDPR_A88_P1 — MS may provide more specific rules for employment processing
+ms_derogation_basis('gdpr', 'a88_p1', 'employment_context_specific_rules').
+
+
+// ---- GDPR_A88.2 (GDPR) ----
+// GDPR_A88_P2 — those rules must include suitable safeguards
+ms_a88_rules_required(MS, 'transparency').
+ms_a88_rules_required(MS, 'intra_group_transfers').
+ms_a88_rules_required(MS, 'workplace_monitoring_systems').
+ms_a88_rules_required(MS, 'human_dignity_safeguards').
+
+
+// ---- GDPR_A88.3 (GDPR) ----
+// GDPR_A88_P3 — MS shall notify Commission by 25 May 2018
+obligation(MS, _, 'notify_commission_of_a88_p1_provisions') :- member_state(MS), ms_provides_a88_p1_rules(MS).
++ notification_deadline('gdpr', 'a88_p1', '2018-05-25')
+
+
+// ---- GDPR_A89 (GDPR) ----
+// GDPR_A89 — Research/statistics safeguards, derogations (chapeau)
+gdpr_scope_article('gdpr_a89', 'research_statistics_archiving_derogations').
+
+
+// ---- GDPR_A89.1 (GDPR) ----
+// GDPR_A89_P1 — appropriate safeguards required
+art89_safeguards_present(S) :- for_archiving_research_statistics(S), technical_org_measures_in_place(_, S), data_minimisation_respected(S).
+art89_safeguards_present(S) :- for_archiving_research_statistics(S), pseudonymisation_applied(S).
+obligation(A, S, 'fulfil_purposes_without_identification_if_possible') :- controller(A, S), for_archiving_research_statistics(S), purposes_fulfillable_without_identification(S).
+
+
+// ---- GDPR_A89.2 (GDPR) ----
+// GDPR_A89_P2 — derogations for research/statistics from rights 15,16,18,21
+ms_derogation_basis('gdpr', 'a89_p2', 'research_statistics_rights_derogation').
+right_disapplied(D, S, 'access') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'access'), rights_render_purpose_impossible(S, 'access').
+right_disapplied(D, S, 'rectification') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'rectification'), rights_render_purpose_impossible(S, 'rectification').
+right_disapplied(D, S, 'restriction') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'restriction'), rights_render_purpose_impossible(S, 'restriction').
+right_disapplied(D, S, 'object') :- data_subject_of(D, S), for_research_or_statistics(S), art89_safeguards_present(S), ms_derogates_a89_p2(S, 'object'), rights_render_purpose_impossible(S, 'object').
+
+
+// ---- GDPR_A89.3 (GDPR) ----
+// GDPR_A89_P3 — derogations for archiving from rights 15,16,18,19,20,21
+ms_derogation_basis('gdpr', 'a89_p3', 'archiving_rights_derogation').
+right_disapplied(D, S, R) :- data_subject_of(D, S), for_archiving_public_interest(S), art89_safeguards_present(S), ms_derogates_a89_p3(S, R), rights_render_purpose_impossible(S, R), archiving_derogated_right(R).
+archiving_derogated_right('access').
+archiving_derogated_right('rectification').
+archiving_derogated_right('restriction').
+archiving_derogated_right('notification_of_recipients').
+archiving_derogated_right('portability').
+archiving_derogated_right('object').
+
+
+// ---- GDPR_A89.4 (GDPR) ----
+// GDPR_A89_P4 — derogations apply only to the relevant purposes when joint
+derogation_blocked(S, R) :- dual_purpose(S, P_research, P_other), archiving_derogated_right(R), ~for_purpose(R, P_research).
+
+
+// ---- GDPR_A90 (GDPR) ----
+// GDPR_A90 — Obligations of secrecy (chapeau)
+gdpr_scope_article('gdpr_a90', 'professional_secrecy').
+
+
+// ---- GDPR_A90.1 (GDPR) ----
+// GDPR_A90_P1 — MS may set out powers of SA in relation to secrecy-bound C/P
+ms_derogation_basis('gdpr', 'a90_p1', 'sa_powers_vs_professional_secrecy').
+
+
+// ---- GDPR_A90.2 (GDPR) ----
+// GDPR_A90_P2 — MS shall notify Commission by 25 May 2018
+obligation(MS, _, 'notify_commission_of_a90_p1_provisions') :- member_state(MS), ms_provides_a90_p1_rules(MS).
++ notification_deadline('gdpr', 'a90_p1', '2018-05-25')
+
+
+// ---- GDPR_A91 (GDPR) ----
+// GDPR_A91 — Churches and religious associations (chapeau)
+gdpr_scope_article('gdpr_a91', 'churches_religious_associations').
+
+
+// ---- GDPR_A91.1 (GDPR) ----
+// GDPR_A91_P1 — pre-existing comprehensive rules may continue if aligned
+church_rules_carryover_valid(MS, RC) :- church_or_religious_association(RC), comprehensive_rules_at_entry_into_force(RC, MS), brought_in_line_with_gdpr(RC).
+
+
+// ---- GDPR_A91.2 (GDPR) ----
+// GDPR_A91_P2 — those associations subject to independent SA supervision
+obligation(RC, _, 'subject_to_independent_sa_supervision') :- church_rules_carryover_valid(_, RC).
+
+
+// ---- GDPR_A94 (GDPR) ----
+// GDPR_A94
++ transitional_grace('gdpr', 'directive_9546_repealed', '2018-05-25')
+
+
+// ---- GDPR_A94.1 (GDPR) ----
+// GDPR_A94_P1 — repeal of Directive 95/46/EC effective 2018-05-25
++ directive_repealed('directive_9546', '2018-05-25')
+
+
+// ---- GDPR_A94.2 (GDPR) ----
+// GDPR_A94_P2 — references to Dir 95/46/EC construed as references to GDPR
++ reference_construction('directive_9546', 'gdpr')
++ reference_construction('a29_working_party', 'edpb')
+
+
+// ---- GDPR_A95 (GDPR) ----
+// GDPR_A95 — Relationship with Directive 2002/58/EC (ePrivacy)
+eprivacy_lex_specialis(S) :- processing(S), in_context_of_publicly_available_e_communications(S), subject_to_dir_2002_58_obligation(S).
+obligation_disapplied(A, S, OBLG) :- controller_or_processor(A, S), eprivacy_lex_specialis(S), same_objective_in_eprivacy(OBLG).
+
+
+// ---- GDPR_A96 (GDPR) ----
+// GDPR_A96 — Pre-2016-05-24 international agreements remain in force
++ pre_existing_intl_agreement_in_force_anchor('gdpr', '2016-05-24')
+intl_agreement_remains_in_force(AGT) :- concluded_before(AGT, '2016-05-24'), complied_with_pre_gdpr_law(AGT), ~amended(AGT), ~replaced(AGT), ~revoked(AGT).
+
+
+// ---- GDPR_A99 (GDPR) ----
+// GDPR_A99 — Entry into force and application (chapeau)
+gdpr_scope_article('gdpr_a99', 'entry_into_force_and_application').
+
+
+// ---- GDPR_A99.1 (GDPR) ----
+// GDPR_A99_P1
++ entry_into_force('gdpr', '2016-05-24')
+
+
+// ---- GDPR_A99.2 (GDPR) ----
+// GDPR_A99_P2
++ application_date('gdpr', 'general', '2018-05-25')
+
+
+// ---- AIAct_R1 (AI Act) ----
+// AIAct_R1 — RECITAL — purpose of the Regulation
+ai_act_purpose('uniform_legal_framework_for_ai_in_eu').
+ai_act_purpose('protect_health_safety_fundamental_rights').
+ai_act_purpose('promote_human_centric_trustworthy_ai').
+ai_act_purpose('free_movement_of_ai_goods_and_services').
+
+// AIAct_R1 — RECITAL — narrative
+recital_principle('ai_act', 'r1', 'subject_matter_and_objectives').
+
+
+// ---- AIAct_R9 (AI Act) ----
+// AIAct_R9 — RECITAL — alignment with New Legislative Framework, without prejudice to other Union law
+ai_act_without_prejudice_to('reg_765_2008').
+ai_act_without_prejudice_to('decision_768_2008').
+ai_act_without_prejudice_to('reg_2019_1020').
+ai_act_without_prejudice_to('data_protection_law').
+ai_act_without_prejudice_to('consumer_protection_law').
+ai_act_without_prejudice_to('product_safety_law').
+ai_act_without_prejudice_to('employment_and_workers_protection_law').
+ai_act_without_prejudice_to('product_liability_directive_85_374').
+ai_act_without_prejudice_to('right_to_strike_collective_action').
+
+// AIAct_R9 — RECITAL — narrative
+recital_principle('ai_act', 'r9', 'cross_regulatory_alignment').
+
+
+// ---- AIAct_R12 (AI Act) ----
+// AIAct_R12 — RECITAL — reference: Regulation (EU) 2018/1725
+ai_act_without_prejudice_to('reg_2018_1725').
+recital_principle('ai_act', 'r12', 'reference_to_2018_1725').
+
+
+// ---- AIAct_R13 (AI Act) ----
+// AIAct_R13 — RECITAL — reference: Directive 2016/680
+ai_act_without_prejudice_to('directive_2016_680').
+recital_principle('ai_act', 'r13', 'reference_to_le_directive').
+
+
+// ---- AIAct_R14 (AI Act) ----
+// AIAct_R14 — RECITAL — reference: Directive 2002/58/EC + AI system definition guidance
+ai_act_without_prejudice_to('directive_2002_58_ec').
+
+// AIAct_R14 — RECITAL — AI system definition (operational triggers from R12 narrative)
+ai_system(X) :- has_feature(X, 'machine_based'), has_capability(X, 'autonomous_operation'), has_capability(X, 'inference_from_input').
+
+// AIAct_R14 — RECITAL — biometric data alignment with GDPR/LED/2018-1725
+biometric_data(X) :- biometric_data_per_gdpr(X).
+biometric_data(X) :- biometric_data_per_le_directive(X).
+biometric_data(X) :- biometric_data_per_2018_1725(X).
+
+recital_principle('ai_act', 'r14', 'definitions_alignment').
+
+
+// ---- AIAct_R21 (AI Act) ----
+// AIAct_R21 — RECITAL — providers regardless of EU establishment; deployers established in EU
+ai_act_territorial_link(A, S) :- provider(A, S), places_on_eu_market(A, S).
+ai_act_territorial_link(A, S) :- provider(A, S), puts_into_service_in_eu(A, S).
+ai_act_territorial_link(A, S) :- deployer(A, S), established_in(A, 'eu').
+
+recital_principle('ai_act', 'r21', 'level_playing_field_extraterritorial').
+
+
+// ---- AIAct_R22 (AI Act) ----
+// AIAct_R22 — RECITAL — output-used-in-EU limb
+ai_act_territorial_link(A, S) :- provider(A, S), ~established_in(A, 'eu'), output_used_in_eu(S).
+ai_act_territorial_link(A, S) :- deployer(A, S), ~established_in(A, 'eu'), output_used_in_eu(S).
+
+// AIAct_R22 — RECITAL — narrow exclusion: third-country authorities under cooperation agreements with adequate safeguards
+ai_act_excluded(S) :- third_country_authority_in_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+
+recital_principle('ai_act', 'r22', 'output_used_in_eu_anti_circumvention').
+
+
+// ---- AIAct_R23 (AI Act) ----
+// AIAct_R23 — RECITAL — Union institutions covered when acting as provider/deployer
+ai_act_material(S) :- eu_institution_acting_as_provider(S).
+ai_act_material(S) :- eu_institution_acting_as_deployer(S).
+
+recital_principle('ai_act', 'r23', 'eu_institutions_covered_as_operators').
+
+
+// ---- AIAct_R24 (AI Act) ----
+// AIAct_R24 — RECITAL — military/defence/national-security exclusion (mirrors A2(3))
+ai_act_excluded(S) :- military_or_defence_purpose(S).
+ai_act_excluded(S) :- national_security_purpose(S).
+
+// AIAct_R24 — RECITAL — system used for both excluded and non-excluded purposes -> partly in scope
+ai_act_material(S) :- ai_system(S), dual_use_civilian_or_le(S), ~exclusively_military_defence_ns(S).
+
+recital_principle('ai_act', 'r24', 'military_defence_ns_exclusion').
+
+
+// ---- AIAct_R25 (AI Act) ----
+// AIAct_R25 — RECITAL — scientific R, D-only exclusion + pre-market testing exclusion
+ai_act_excluded(S) :- scientific_research_development_only(S).
+ai_act_excluded(S) :- pre_market_research_testing(S).
+
+// AIAct_R25 — RECITAL — once placed on market or put into service, falls back into scope (positive flag)
+ai_act_rd_carveout_lifted(S) :- placed_on_market(_, S).
+ai_act_rd_carveout_lifted(S) :- put_into_service(_, S).
+
+recital_principle('ai_act', 'r25', 'rd_exclusion_with_carveouts').
+
+
+// ---- AIAct_R26 (AI Act) ----
+// AIAct_R26 — RECITAL — risk-based approach
+ai_act_risk_tier(S, 'prohibited') :- prohibited_practice(S).
+ai_act_risk_tier(S, 'high_risk') :- high_risk_ai(S).
+ai_act_risk_tier(S, 'transparency_only') :- transparency_obligation_applies(S), ~high_risk_ai(S), ~prohibited_practice(S).
+ai_act_risk_tier(S, 'minimal_or_none') :- ai_system(S), ~prohibited_practice(S), ~high_risk_ai(S), ~transparency_obligation_applies(S).
+
+recital_principle('ai_act', 'r26', 'risk_based_approach').
+
+
+// ---- AIAct_R27 (AI Act) ----
+// AIAct_R27 — RECITAL — non-binding ethics principles (HLEG 2019)
+ai_act_ethics_principle('human_agency_and_oversight').
+ai_act_ethics_principle('technical_robustness_and_safety').
+ai_act_ethics_principle('privacy_and_data_governance').
+ai_act_ethics_principle('transparency').
+ai_act_ethics_principle('diversity_non_discrimination_fairness').
+ai_act_ethics_principle('societal_environmental_wellbeing').
+ai_act_ethics_principle('accountability').
+
+recital_principle('ai_act', 'r27', 'non_binding_ethics_principles').
+
+
+// ---- AIAct_A1 (AI Act) ----
+// AIAct_applies
+applies(S, T, 'ai_act') :- in_force('ai_act', T), ai_act_territorial_link(A, S), ai_act_material(S), ~ai_act_excluded(S).
+
+// AIAct_applies_with_actor
+applies_via_actor(S, T, 'ai_act', A) :- in_force('ai_act', T), ai_act_territorial_link(A, S), ai_act_material(S), ~ai_act_excluded(S).
+
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+
+
+// ---- AIAct_A1.1 (AI Act) ----
+// AIAct_A1_P1 — purpose
+ai_act_purpose('improve_internal_market_functioning').
+ai_act_purpose('uphold_health_safety_fundamental_rights_in_eu').
+ai_act_purpose('support_innovation').
+
+
+// ---- AIAct_A1.2.a (AI Act) ----
+// AIAct_A1_P2_PT_a — placing on market / putting into service / use of AI systems
+ai_act_subject_matter('harmonised_rules_placement_use').
+
+
+// ---- AIAct_A1.2.b (AI Act) ----
+// AIAct_A1_P2_PT_b — prohibitions of certain AI practices
+ai_act_subject_matter('prohibitions').
+
+
+// ---- AIAct_A1.2.c (AI Act) ----
+// AIAct_A1_P2_PT_c — high-risk requirements, operator obligations
+ai_act_subject_matter('high_risk_requirements_and_obligations').
+
+
+// ---- AIAct_A1.2.d (AI Act) ----
+// AIAct_A1_P2_PT_d — transparency rules for certain AI systems
+ai_act_subject_matter('transparency_rules').
+
+
+// ---- AIAct_A1.2.e (AI Act) ----
+// AIAct_A1_P2_PT_e — rules for placing on market of GPAI models
+ai_act_subject_matter('gpai_market_rules').
+
+
+// ---- AIAct_A1.2.f (AI Act) ----
+// AIAct_A1_P2_PT_f — market monitoring/surveillance/governance/enforcement
+ai_act_subject_matter('market_monitoring_governance_enforcement').
+
+
+// ---- AIAct_A1.2.g (AI Act) ----
+// AIAct_A1_P2_PT_g — innovation support, focus on SMEs/start-ups
+ai_act_subject_matter('innovation_support_smes').
+
+
+// ---- AIAct_A1.2 (AI Act) ----
+// AIAct_A1_P2 — chapeau (rules carried by points)
+ai_act_subject_matter_kind('harmonised_rules').
+ai_act_subject_matter_kind('prohibitions').
+ai_act_subject_matter_kind('high_risk_requirements').
+ai_act_subject_matter_kind('transparency_rules').
+ai_act_subject_matter_kind('gpai_rules').
+ai_act_subject_matter_kind('governance_enforcement').
+ai_act_subject_matter_kind('innovation_support').
+
+
+// ---- AIAct_A2 (AI Act) ----
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+
+
+// ---- AIAct_A2.1.a (AI Act) ----
+// AIAct_A2_P1_PT_a
+ai_act_territorial_link(A, S) :- provider(A, S), places_on_eu_market(A, S).
+
+// AIAct_A2_P1_PT_a
+ai_act_territorial_link(A, S) :- provider(A, S), puts_into_service_in_eu(A, S).
+
+
+// ---- AIAct_A2.1.b (AI Act) ----
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), established_in(A, 'eu').
+
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), located_in(A, 'eu').
+
+
+// ---- AIAct_A2.1.c (AI Act) ----
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- provider(A, S), output_used_in_eu(S).
+
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- deployer(A, S), output_used_in_eu(S).
+
+
+// ---- AIAct_A2.1.d (AI Act) ----
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- importer(A, S), places_on_eu_market(A, S).
+
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- distributor(A, S), made_available_on_market(S, 'eu').
+
+
+// ---- AIAct_A2.1.e (AI Act) ----
+// AIAct_A2_P1_PT_e — product manufacturer placing on market or putting into service
+ai_act_territorial_link(A, S) :- manufacturer(A, S), places_on_eu_market_with_product(A, S).
+ai_act_territorial_link(A, S) :- manufacturer(A, S), puts_into_service_in_eu(A, S), with_own_name_or_trademark(A, S).
+
+
+// ---- AIAct_A2.1.f (AI Act) ----
+// AIAct_A2_P1_PT_f — non-EU providers' authorised representatives in scope
+ai_act_territorial_link(A, S) :- authorised_representative(A, S), provider(P, S), ~established_in(P, 'eu').
+
+
+// ---- AIAct_A2.1.g (AI Act) ----
+// AIAct_A2_P1_PT_g — affected persons located in the Union
+affected_person_in_eu(D) :- located_in(D, 'eu'), affected_by_ai_system(D, _).
+
+
+// ---- AIAct_A2.1 (AI Act) ----
+// AIAct_A2_P1 — chapeau: scope of application carried by points (a)-(g)
+ai_act_in_scope_role('provider').
+ai_act_in_scope_role('deployer').
+ai_act_in_scope_role('importer').
+ai_act_in_scope_role('distributor').
+ai_act_in_scope_role('manufacturer').
+ai_act_in_scope_role('authorised_representative').
+ai_act_in_scope_role('affected_person').
+
+
+// ---- AIAct_A2.2 (AI Act) ----
+// AIAct_A2_P2 — high-risk AI in Annex I Section B products: only Art 6(1), 102-109, 112 apply (and 57 if integrated)
+limited_scope_aiact(S, 'art_6_1') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'arts_102_109') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'art_112') :- high_risk_ai(S), related_to_annex_i_section_b(S).
+limited_scope_aiact(S, 'art_57') :- high_risk_ai(S), related_to_annex_i_section_b(S), integrated_in_annex_i_legislation(S).
+
+
+// ---- AIAct_A2.3 (AI Act) ----
+// AIAct_A2_P3
+ai_act_excluded(S) :- military_or_defence_purpose(S).
+
+// AIAct_A2_P3
+ai_act_excluded(S) :- national_security_purpose(S).
+
+
+// ---- AIAct_A2.4 (AI Act) ----
+// AIAct_A2_P4 — third-country authorities/intl orgs in cooperation frameworks excluded
+ai_act_excluded(S) :- third_country_public_authority(A), uses_ai_system(A, S), in_intl_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+ai_act_excluded(S) :- international_organisation(A), uses_ai_system(A, S), in_intl_cooperation_framework(S), adequate_safeguards_for_fundamental_rights(S).
+
+
+// ---- AIAct_A2.5 (AI Act) ----
+// AIAct_A2_P5 — without prejudice to DSA (Reg 2022/2065) intermediary liability
+ai_act_without_prejudice_to('reg_2022_2065_dsa_intermediary_liability').
+
+
+// ---- AIAct_A2.6 (AI Act) ----
+// AIAct_A2_P6
+ai_act_excluded(S) :- scientific_research_development_only(S).
+
+
+// ---- AIAct_A2.7 (AI Act) ----
+// AIAct_A2_P7 — DP/privacy/e-comm law continues to apply
+ai_act_without_prejudice_to('reg_2016_679_gdpr').
+ai_act_without_prejudice_to('reg_2018_1725').
+ai_act_without_prejudice_to('directive_2002_58_ec').
+ai_act_without_prejudice_to('directive_2016_680').
+// with carve-outs for Art 10(5) and Art 59 of the AI Act itself
+ai_act_carve_out('a10_p5').
+ai_act_carve_out('a59').
+
+
+// ---- AIAct_A2.8 (AI Act) ----
+// AIAct_A2_P8
+ai_act_excluded(S) :- pre_market_research_testing(S).
+
+
+// ---- AIAct_A2.9 (AI Act) ----
+// AIAct_A2_P9 — without prejudice to consumer protection / product safety
+ai_act_without_prejudice_to('consumer_protection_acquis').
+ai_act_without_prejudice_to('product_safety_acquis').
+
+
+// ---- AIAct_A2.10 (AI Act) ----
+// AIAct_A2_P10
+ai_act_excluded(S) :- purely_personal_household_activity(S).
+
+
+// ---- AIAct_A2.11 (AI Act) ----
+// AIAct_A2_P11 — MS may keep more favourable workers' rules / collective agreements
+ms_derogation_basis('ai_act', 'a2_p11', 'more_favourable_worker_protection').
+
+
+// ---- AIAct_A2.12 (AI Act) ----
+// AIAct_A2_P12
+ai_act_excluded(S) :- free_open_source_ai(S), ~high_risk_ai(S), ~prohibited_practice(S).
+
+
+// ---- AIAct_A3 (AI Act) ----
+// AIAct_A3 — Definitions chapeau
+ai_act_scope_article('ai_act_a3', 'definitions').
+
+
+// ---- AIAct_A3.1 (AI Act) ----
+// AIAct_A3_P1
+ai_system(X) :- has_feature(X, 'machine_based'), has_capability(X, 'autonomous_operation'), has_capability(X, 'inference_from_input').
+
+
+// ---- AIAct_A3.2 (AI Act) ----
+// AIAct_A3_P2 — 'risk' = probability × severity of harm
+risk(R) :- probability_of_harm(R, P), severity_of_harm(R, V).
+
+
+// ---- AIAct_A3.3 (AI Act) ----
+// AIAct_A3_P3 — 'provider'
+provider(A, X) :- develops_ai(A, X), places_on_eu_market(A, X).
+provider(A, X) :- develops_ai(A, X), puts_into_service_in_eu(A, X).
+provider(A, X) :- had_developed_ai(A, X), places_on_eu_market(A, X).
+provider(A, X) :- had_developed_ai(A, X), puts_into_service_in_eu(A, X).
+
+
+// ---- AIAct_A3.4 (AI Act) ----
+// AIAct_A3_P4 — 'deployer'
+deployer(A, X) :- uses_under_authority(A, X), ~purely_personal_household_activity(X).
+
+
+// ---- AIAct_A3.5 (AI Act) ----
+// AIAct_A3_P5 — 'authorised representative'
+authorised_representative(R, X) :- located_or_established_in_eu(R), has_written_mandate(R, P), provider(P, X).
+
+
+// ---- AIAct_A3.6 (AI Act) ----
+// AIAct_A3_P6 — 'importer'
+importer(A, X) :- located_or_established_in_eu(A), places_on_eu_market(A, X), bears_third_country_provider_name(X).
+
+
+// ---- AIAct_A3.7 (AI Act) ----
+// AIAct_A3_P7 — 'distributor'
+distributor(A, X) :- in_supply_chain(A, X), ~provider(A, X), ~importer(A, X), makes_available_on_eu_market(A, X).
+
+
+// ---- AIAct_A3.8 (AI Act) ----
+// AIAct_A3_P8 — 'operator'
+operator(A, X) :- provider(A, X).
+operator(A, X) :- manufacturer(A, X).
+operator(A, X) :- deployer(A, X).
+operator(A, X) :- authorised_representative(A, X).
+operator(A, X) :- importer(A, X).
+operator(A, X) :- distributor(A, X).
+
+
+// ---- AIAct_A3.9 (AI Act) ----
+// AIAct_A3_P9 — 'placing on the market' = first making available on EU market
+placing_on_eu_market(X) :- first_making_available_on_eu_market(X).
+
+
+// ---- AIAct_A3.10 (AI Act) ----
+// AIAct_A3_P10 — 'making available on the market' = supply for distribution/use
+making_available_on_market(X) :- supply_for_distribution_or_use_eu(X), in_commercial_activity(X).
+
+
+// ---- AIAct_A3.11 (AI Act) ----
+// AIAct_A3_P11 — 'putting into service'
+putting_into_service(X) :- supply_for_first_use_to_deployer(X).
+putting_into_service(X) :- supply_for_own_use_in_eu(X).
+
+
+// ---- AIAct_A3.12 (AI Act) ----
+// AIAct_A3_P12 — 'intended purpose'
+intended_purpose(X, P) :- specified_in_instructions(X, P).
+intended_purpose(X, P) :- specified_in_promotional_or_sales_materials(X, P).
+intended_purpose(X, P) :- specified_in_technical_documentation(X, P).
+
+
+// ---- AIAct_A3.13 (AI Act) ----
+// AIAct_A3_P13 — 'reasonably foreseeable misuse'
+reasonably_foreseeable_misuse(X, U) :- use_of(X, U), ~consistent_with_intended_purpose(X, U), foreseeable_human_or_system_behaviour(U).
+
+
+// ---- AIAct_A3.14 (AI Act) ----
+// AIAct_A3_P14 — 'safety component'
+safety_component(C, X) :- component_of(C, X), fulfils_safety_function(C, X).
+safety_component(C, X) :- component_of(C, X), failure_endangers_health_safety(C).
+
+
+// ---- AIAct_A3.15 (AI Act) ----
+// AIAct_A3_P15 — 'instructions for use'
+instructions_for_use(I, X) :- provider_supplied(I, X), informs_intended_purpose(I, X).
+
+
+// ---- AIAct_A3.16 (AI Act) ----
+// AIAct_A3_P16 — 'recall of an AI system'
+recall(M, X) :- measure_to_return_or_disable_use(M, X).
+
+
+// ---- AIAct_A3.17 (AI Act) ----
+// AIAct_A3_P17 — 'withdrawal of an AI system'
+withdrawal(M, X) :- measure_to_prevent_market_availability(M, X).
+
+
+// ---- AIAct_A3.18 (AI Act) ----
+// AIAct_A3_P18 — 'performance'
+performance(X) :- ability_to_achieve_intended_purpose(X).
+
+
+// ---- AIAct_A3.19 (AI Act) ----
+// AIAct_A3_P19 — 'notifying authority'
+notifying_authority(NA) :- national_authority(NA), responsible_for_cab_assessment_designation_notification(NA).
+
+
+// ---- AIAct_A3.20 (AI Act) ----
+// AIAct_A3_P20 — 'conformity assessment'
+conformity_assessment(CA, X) :- demonstrates_chapter_iii_section2_compliance(CA, X), high_risk_ai(X).
+
+
+// ---- AIAct_A3.21 (AI Act) ----
+// AIAct_A3_P21 — 'conformity assessment body'
+conformity_assessment_body(B) :- performs_third_party_assessment(B).
+
+
+// ---- AIAct_A3.22 (AI Act) ----
+// AIAct_A3_P22 — 'notified body'
+notified_body(B) :- conformity_assessment_body(B), notified_per_aiact_or_other_harmonisation_law(B).
+
+
+// ---- AIAct_A3.23 (AI Act) ----
+// AIAct_A3_P23 — 'substantial modification'
+substantial_modification(M, X) :- change_to_ai_system_after_market_or_service(M, X), ~foreseen_in_initial_assessment(M, X), affects_chapter_iii_section2_compliance(M, X).
+substantial_modification(M, X) :- change_to_ai_system_after_market_or_service(M, X), modifies_intended_purpose(M, X).
+
+
+// ---- AIAct_A3.24 (AI Act) ----
+// AIAct_A3_P24 — 'CE marking'
+ce_marking(X) :- marking_by_provider(X), indicates_chapter_iii_section2_conformity(X).
+
+
+// ---- AIAct_A3.25 (AI Act) ----
+// AIAct_A3_P25 — 'post-market monitoring system'
+post_market_monitoring_system(PMS, P, X) :- provider(P, X), collects_and_reviews_use_experience(PMS, P, X).
+
+
+// ---- AIAct_A3.26 (AI Act) ----
+// AIAct_A3_P26 — 'market surveillance authority'
+market_surveillance_authority(MSA) :- national_authority(MSA), acts_under_reg_2019_1020(MSA).
+
+
+// ---- AIAct_A3.27 (AI Act) ----
+// AIAct_A3_P27 — 'harmonised standard' per Art 2(1)(c) of Reg 1025/2012
+harmonised_standard(STD) :- harmonised_standard_per_reg_1025_2012(STD).
+
+
+// ---- AIAct_A3.28 (AI Act) ----
+// AIAct_A3_P28 — 'common specification' per Reg 1025/2012
+common_specification(CS) :- technical_specification_per_reg_1025_2012(CS).
+
+
+// ---- AIAct_A3.29 (AI Act) ----
+// AIAct_A3_P29 — 'training data'
+training_data(D) :- used_to_fit_learnable_parameters(D, _).
+
+
+// ---- AIAct_A3.30 (AI Act) ----
+// AIAct_A3_P30 — 'validation data'
+validation_data(D) :- used_to_evaluate_trained_system(D, _), tunes_non_learnable_parameters(D, _).
+
+
+// ---- AIAct_A3.31 (AI Act) ----
+// AIAct_A3_P31 — 'validation data set'
+validation_data_set(DS) :- validation_data(DS).
+validation_data_set(DS) :- part_of_training_data_set(DS).
+
+
+// ---- AIAct_A3.32 (AI Act) ----
+// AIAct_A3_P32 — 'testing data'
+testing_data(D) :- independent_evaluation_dataset(D).
+
+
+// ---- AIAct_A3.33 (AI Act) ----
+// AIAct_A3_P33 — 'input data'
+input_data(D, X) :- provided_to_or_acquired_by(D, X), basis_for_output(D, X).
+
+
+// ---- AIAct_A3.34 (AI Act) ----
+// AIAct_A3_P34 — 'biometric data' (AI Act variant)
+biometric_data(X) :- personal_data(X), from_specific_technical_processing(X), relates_to_physical_or_behavioural(X).
+
+
+// ---- AIAct_A3.35 (AI Act) ----
+// AIAct_A3_P35 — 'biometric identification'
+biometric_identification(S) :- automated_recognition(S), purpose_establish_identity(S), compare_to_database(S).
+
+
+// ---- AIAct_A3.36 (AI Act) ----
+// AIAct_A3_P36 — 'biometric verification'
+biometric_verification(S) :- one_to_one_verification(S), uses_biometric_data(S).
+
+
+// ---- AIAct_A3.37 (AI Act) ----
+// AIAct_A3_P37 — 'special categories of personal data' (cross-ref)
+special_category_data(X) :- category_per_gdpr_a9(X).
+special_category_data(X) :- category_per_le_directive_a10(X).
+special_category_data(X) :- category_per_2018_1725_a10_p1(X).
+
+
+// ---- AIAct_A3.38 (AI Act) ----
+// AIAct_A3_P38 — 'sensitive operational data'
+sensitive_operational_data(D) :- operational_data(D), relates_to_le_activity(D), disclosure_could_jeopardise_proceedings(D).
+
+
+// ---- AIAct_A3.39 (AI Act) ----
+// AIAct_A3_P39 — 'emotion recognition system'
+emotion_recognition_system(X) :- ai_system(X), purpose_identify_or_infer_emotions(X), uses_biometric_data(X).
+
+
+// ---- AIAct_A3.40 (AI Act) ----
+// AIAct_A3_P40 — 'biometric categorisation system'
+biometric_categorisation_system(X) :- ai_system(X), assigns_persons_to_categories(X), uses_biometric_data(X), ~ancillary_to_other_service(X).
+
+
+// ---- AIAct_A3.41 (AI Act) ----
+// AIAct_A3_P41 — 'remote biometric identification system'
+remote_biometric_identification_system(X) :- ai_system(X), purpose_identify_persons(X), without_active_involvement(X), typically_at_distance(X).
+
+
+// ---- AIAct_A3.42 (AI Act) ----
+// AIAct_A3_P42 — 'real-time RBI system'
+realtime_rbi_system(X) :- remote_biometric_identification_system(X), without_significant_delay(X).
+has_feature(X, 'realtime_remote_biometric_id_public') :- realtime_rbi_system(X), in_publicly_accessible_space(X).
+
+
+// ---- AIAct_A3.43 (AI Act) ----
+// AIAct_A3_P43 — 'post RBI system'
+post_rbi_system(X) :- remote_biometric_identification_system(X), ~realtime_rbi_system(X).
+
+
+// ---- AIAct_A3.44 (AI Act) ----
+// AIAct_A3_P44 — 'publicly accessible space'
+publicly_accessible_space(SP) :- physical_place(SP), accessible_to_undetermined_persons(SP).
+
+
+// ---- AIAct_A3.45.a (AI Act) ----
+// AIAct_A3_P45_PT_a — public authority competent for criminal matters
+a3_p45_a_la(A) :- public_authority(A), competent_for_criminal_matters(A).
+
+
+// ---- AIAct_A3.45.b (AI Act) ----
+// AIAct_A3_P45_PT_b — body entrusted by MS law for criminal matters
+a3_p45_b_la(A) :- entrusted_by_ms_law_for_criminal_matters(A).
+
+
+// ---- AIAct_A3.45 (AI Act) ----
+// AIAct_A3_P45 — 'law enforcement authority' chapeau
+law_enforcement_authority(A) :- a3_p45_a_la(A).
+law_enforcement_authority(A) :- a3_p45_b_la(A).
+
+
+// ---- AIAct_A3.46 (AI Act) ----
+// AIAct_A3_P46 — 'law enforcement'
+led_law_enforcement_activity(S) :- carried_out_by_le_authority(S) | carried_out_on_behalf_of_le(S).
+led_law_enforcement_activity(S) :- for_prevention_or_investigation_or_prosecution(S).
+
+
+// ---- AIAct_A3.47 (AI Act) ----
+// AIAct_A3_P47 — 'AI Office' = Commission function
+ai_office(AO) :- commission_function(AO).
++ reference_construction('ai_office', 'commission')
+
+
+// ---- AIAct_A3.48 (AI Act) ----
+// AIAct_A3_P48 — 'national competent authority'
+national_competent_authority(NCA) :- notifying_authority(NCA).
+national_competent_authority(NCA) :- market_surveillance_authority(NCA).
++ reference_construction('national_competent_authority_for_eu_institutions', 'edps')
+
+
+// ---- AIAct_A3.49.a_2 (AI Act) ----
+// AIAct_A3_P49_PT_a — death or serious harm to health
+a3_p49_consequence(I, 'death_or_serious_health_harm') :- leads_to_death(I).
+a3_p49_consequence(I, 'death_or_serious_health_harm') :- leads_to_serious_health_harm(I).
+
+
+// ---- AIAct_A3.49.b_2 (AI Act) ----
+// AIAct_A3_P49_PT_b — disruption of critical infrastructure
+a3_p49_consequence(I, 'critical_infra_disruption') :- leads_to_serious_irreversible_critical_infra_disruption(I).
+
+
+// ---- AIAct_A3.49.c_2 (AI Act) ----
+// AIAct_A3_P49_PT_c — infringement of fundamental-rights protection law
+a3_p49_consequence(I, 'fundamental_rights_infringement') :- leads_to_fundamental_rights_infringement(I).
+
+
+// ---- AIAct_A3.49.d_2 (AI Act) ----
+// AIAct_A3_P49_PT_d — serious harm to property or environment
+a3_p49_consequence(I, 'property_or_environment_harm') :- leads_to_serious_property_or_environment_harm(I).
+
+
+// ---- AIAct_A3.49 (AI Act) ----
+// AIAct_A3_P49 — 'serious incident' chapeau
+serious_incident(I) :- incident_of_ai_system(I), a3_p49_consequence(I, _).
+
+
+// ---- AIAct_A3.50 (AI Act) ----
+// AIAct_A3_P50 — 'personal data' (cross-ref to GDPR A4(1))
+personal_data(X) :- personal_data_per_gdpr(X).
+
+
+// ---- AIAct_A3.51 (AI Act) ----
+// AIAct_A3_P51 — 'non-personal data'
+non_personal_data(X) :- datum(X), ~personal_data(X).
+
+
+// ---- AIAct_A3.52 (AI Act) ----
+// AIAct_A3_P52 — 'profiling' (cross-ref)
+profiling(S) :- profiling_per_gdpr_a4_p4(S).
+
+
+// ---- AIAct_A3.53 (AI Act) ----
+// AIAct_A3_P53 — 'real-world testing plan'
+real_world_testing_plan(P) :- document(P), describes_objectives_methodology_scope(P).
+
+
+// ---- AIAct_A3.54 (AI Act) ----
+// AIAct_A3_P54 — 'sandbox plan'
+sandbox_plan(P) :- agreed_between(P, PROV, CA), describes_sandbox_activities(P).
+
+
+// ---- AIAct_A3.55 (AI Act) ----
+// AIAct_A3_P55 — 'AI regulatory sandbox'
+ai_regulatory_sandbox(SBX) :- controlled_framework(SBX), set_up_by_competent_authority(SBX), under_regulatory_supervision(SBX).
+
+
+// ---- AIAct_A3.56 (AI Act) ----
+// AIAct_A3_P56 — 'AI literacy'
+ai_literacy(P) :- skills_and_knowledge_for_informed_ai_use(P).
+
+
+// ---- AIAct_A3.57 (AI Act) ----
+// AIAct_A3_P57 — 'testing in real-world conditions'
+testing_in_real_world(S) :- temporary_testing(S), for_intended_purpose(S), outside_lab_or_simulated(S), ~placing_on_market(S), ~putting_into_service(S), a57_or_a60_conditions_satisfied(S).
+
+
+// ---- AIAct_A3.58 (AI Act) ----
+// AIAct_A3_P58 — 'subject' (real-world testing)
+subject_of_testing(P, S) :- natural_person(P), participates_in_real_world_testing(P, S).
+
+
+// ---- AIAct_A3.59 (AI Act) ----
+// AIAct_A3_P59 — 'informed consent' (testing)
+informed_consent_testing(P, S) :- freely_given(P, S), specific(P, S, _), unambiguous(P, S), voluntary(P, S), informed_about_relevant_aspects(P, S).
+
+
+// ---- AIAct_A3.60 (AI Act) ----
+// AIAct_A3_P60 — 'deep fake'
+deep_fake(C) :- ai_generated_or_manipulated_content(C), resembles_existing_persons_or_events(C), could_appear_authentic(C).
+
+
+// ---- AIAct_A3.61.a_3.i (AI Act) ----
+// AIAct_A3_P61_PT_a_i — origin MS = where act/omission took place
+origin_ms_basis(I, MS) :- act_or_omission_took_place_in(I, MS).
+
+
+// ---- AIAct_A3.61.a_3.ii (AI Act) ----
+// AIAct_A3_P61_PT_a_ii — origin MS = where provider/AR is located
+origin_ms_basis(I, MS) :- provider_located_in(I, MS).
+origin_ms_basis(I, MS) :- authorised_representative_located_in(I, MS).
+
+
+// ---- AIAct_A3.61.a_3.iii (AI Act) ----
+// AIAct_A3_P61_PT_a_iii — origin MS = where deployer is established (when deployer infringes)
+origin_ms_basis(I, MS) :- deployer_committed_infringement(I), deployer_established_in(I, MS).
+
+
+// ---- AIAct_A3.61.a_3 (AI Act) ----
+// AIAct_A3_P61_PT_a — harms collective interests in 2+ MS other than origin MS
+a3_p61_a_basis(I) :- harms_collective_interests_individuals(I), in_at_least_two_ms_other_than(I, ORIGIN_MS), origin_ms_basis(I, ORIGIN_MS).
+
+
+// ---- AIAct_A3.61.b_3 (AI Act) ----
+// AIAct_A3_P61_PT_b — common-features same-operator concurrent infringement in 3+ MS
+a3_p61_b_basis(I) :- harms_collective_interests_individuals(I), has_common_features(I), same_operator_in_at_least_three_ms(I), concurrent(I).
+
+
+// ---- AIAct_A3.61 (AI Act) ----
+// AIAct_A3_P61 — 'widespread infringement' chapeau
+widespread_infringement(I) :- a3_p61_a_basis(I).
+widespread_infringement(I) :- a3_p61_b_basis(I).
+
+
+// ---- AIAct_A3.62 (AI Act) ----
+// AIAct_A3_P62 — 'critical infrastructure' (cross-ref)
+critical_infrastructure(CI) :- critical_infrastructure_per_dir_2022_2557(CI).
+
+
+// ---- AIAct_A3.63 (AI Act) ----
+// AIAct_A3_P63
+gpai_model(X) :- has_feature(X, 'significant_generality'), has_capability(X, 'wide_range_of_tasks').
+
+
+// ---- AIAct_A3.64 (AI Act) ----
+// AIAct_A3_P64 — 'high-impact capabilities'
+high_impact_capabilities(X) :- matches_or_exceeds_most_advanced_gpai_capabilities(X).
+
+
+// ---- AIAct_A3.65 (AI Act) ----
+// AIAct_A3_P65 — 'systemic risk'
+systemic_risk(R) :- specific_to_high_impact_gpai_capabilities(R), significant_eu_market_impact(R).
+systemic_risk(R) :- specific_to_high_impact_gpai_capabilities(R), negative_effects_on_health_safety_security_rights(R).
+
+
+// ---- AIAct_A3.66 (AI Act) ----
+// AIAct_A3_P66 — 'general-purpose AI system'
+general_purpose_ai_system(X) :- ai_system(X), based_on_gpai_model(X, _), serves_variety_of_purposes(X).
+
+
+// ---- AIAct_A3.67 (AI Act) ----
+// AIAct_A3_P67 — 'floating-point operation'
+floating_point_operation(OP) :- mathematical_operation_on_floats(OP).
+
+
+// ---- AIAct_A3.68 (AI Act) ----
+// AIAct_A3_P68 — 'downstream provider'
+downstream_provider(A, X) :- provider(A, X), integrates_ai_model(X, M).
+
+
+// ---- AIAct_A5 (AI Act) ----
+// AIAct_A5 — Prohibited AI practices (chapeau)
+ai_act_scope_article('ai_act_a5', 'prohibited_practices').
+
+
+// ---- AIAct_A5.1.a (AI Act) ----
+// AIAct_A5_P1_PT_a
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'subliminal_manipulation').
+
+
+// ---- AIAct_A5.1.b (AI Act) ----
+// AIAct_A5_P1_PT_b
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'exploits_vulnerabilities').
+
+
+// ---- AIAct_A5.1.c.i (AI Act) ----
+// AIAct_A5_P1_PT_c_i — social-scoring effect: detrimental treatment in unrelated contexts
+has_feature(X, 'social_scoring') :- social_scoring_evaluation(X), detrimental_treatment_in_unrelated_context(X).
+
+
+// ---- AIAct_A5.1.c.ii (AI Act) ----
+// AIAct_A5_P1_PT_c_ii — social-scoring effect: unjustified/disproportionate treatment
+has_feature(X, 'social_scoring') :- social_scoring_evaluation(X), unjustified_or_disproportionate_treatment(X).
+
+
+// ---- AIAct_A5.1.c (AI Act) ----
+// AIAct_A5_P1_PT_c
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'social_scoring').
+
+
+// ---- AIAct_A5.1.d (AI Act) ----
+// AIAct_A5_P1_PT_d
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'predictive_policing_profiling').
+
+
+// ---- AIAct_A5.1.e (AI Act) ----
+// AIAct_A5_P1_PT_e
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'untargeted_face_db_scraping').
+
+
+// ---- AIAct_A5.1.f (AI Act) ----
+// AIAct_A5_P1_PT_f
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'emotion_inference_workplace_edu').
+
+
+// ---- AIAct_A5.1.g (AI Act) ----
+// AIAct_A5_P1_PT_g
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'biometric_categorisation_special').
+
+
+// ---- AIAct_A5.1.h.i (AI Act) ----
+// AIAct_A5_P1_PT_h_i — RBI exception: search for victims/missing persons
+a5_p1_h_exception(X) :- for_victim_or_missing_person_search(X).
+
+
+// ---- AIAct_A5.1.h.ii (AI Act) ----
+// AIAct_A5_P1_PT_h_ii — RBI exception: imminent threat / terrorist attack prevention
+a5_p1_h_exception(X) :- for_imminent_threat_to_life(X).
+a5_p1_h_exception(X) :- for_terrorist_attack_prevention(X).
+
+
+// ---- AIAct_A5.1.h.iii (AI Act) ----
+// AIAct_A5_P1_PT_h_iii — RBI exception: localisation of suspect for Annex II offences
+a5_p1_h_exception(X) :- for_annex_ii_serious_crime_localisation(X), punishable_by_4y_or_more(X).
+
+
+// ---- AIAct_A5.1.h (AI Act) ----
+// AIAct_A5_P1_PT_h
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'realtime_remote_biometric_id_public').
+
+
+// ---- AIAct_A5.1 (AI Act) ----
+// AIAct_A5_P1 — chapeau: prohibitions enumerated by points (a)-(h)
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'subliminal_manipulation').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'exploits_vulnerabilities').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'social_scoring').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'predictive_policing_profiling').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'untargeted_face_db_scraping').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'emotion_inference_workplace_edu').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'biometric_categorisation_special').
+prohibited_practice(X) :- ai_system(X), has_feature(X, 'realtime_remote_biometric_id_public'), ~a5_p1_h_exception(X).
+
+
+// ---- AIAct_A5.2.a (AI Act) ----
+// AIAct_A5_P2_PT_a — assess seriousness/probability/scale of harm if not used
+a5_p2_factor('seriousness_probability_scale_of_harm_if_not_used').
+
+
+// ---- AIAct_A5.2.b (AI Act) ----
+// AIAct_A5_P2_PT_b — assess consequences for rights and freedoms
+a5_p2_factor('consequences_for_rights_and_freedoms').
+
+
+// ---- AIAct_A5.2 (AI Act) ----
+// AIAct_A5_P2 — RBI in publicly accessible spaces: deployment criteria
+obligation(A, X, 'a5_p2_deployment_criteria') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), a5_p1_h_exception(X).
+
+
+// ---- AIAct_A5.3 (AI Act) ----
+// AIAct_A5_P3 — prior judicial/admin authorisation
+obligation(A, X, 'prior_authorisation_judicial_or_admin') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), ~urgency_justified(X).
+obligation(A, X, 'request_authorisation_within_24h') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), urgency_justified(X).
+obligation(A, X, 'no_solely_automated_adverse_decisions') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public').
+
+
+// ---- AIAct_A5.4 (AI Act) ----
+// AIAct_A5_P4 — notify market-surveillance and DPA
+obligation(A, X, 'notify_msa_and_dpa_of_rbi_use') :- deployer(A, X), has_feature(X, 'realtime_remote_biometric_id_public'), rbi_use_authorised(X).
+
+
+// ---- AIAct_A5.5 (AI Act) ----
+// AIAct_A5_P5 — MS may authorise RBI within Art 5 limits + notify Commission
+ms_derogation_basis('ai_act', 'a5_p5', 'authorise_rbi_within_a5_limits').
+obligation(MS, _, 'notify_commission_of_a5_p5_rules') :- member_state(MS), ms_provides_a5_p5_rules(MS).
+
+
+// ---- AIAct_A5.6 (AI Act) ----
+// AIAct_A5_P6 — annual reports from MSA/DPA to Commission
+obligation(NCA, _, 'annual_report_on_rbi_use_to_commission') :- national_competent_authority(NCA), received_a5_p4_notification(NCA).
+
+
+// ---- AIAct_A5.7 (AI Act) ----
+// AIAct_A5_P7 — Commission publishes aggregated annual reports
+obligation('commission', _, 'publish_annual_aggregated_rbi_reports').
+
+
+// ---- AIAct_A5.8 (AI Act) ----
+// AIAct_A5_P8 — without prejudice to other Union law prohibitions
+ai_act_without_prejudice_to('other_union_prohibitions_on_ai_practices').
+
+
+// ---- AIAct_A6 (AI Act) ----
+// AIAct_A6 — Classification rules for high-risk AI (chapeau)
+ai_act_scope_article('ai_act_a6', 'classification_high_risk').
+
+
+// ---- AIAct_A6.1.a (AI Act) ----
+// AIAct_A6_P1_PT_a — safety component or product covered by Annex I
+high_risk_ai_basis_a(X, Y, L) :- ai_system(X), safety_component_of(X, Y), annex_i_legislation(L).
+high_risk_ai_basis_a(X, X, L) :- ai_system(X), is_product(X), annex_i_legislation(L), covered_by(X, L).
+
+
+// ---- AIAct_A6.1.b (AI Act) ----
+// AIAct_A6_P1_PT_b — third-party assessment required
+high_risk_ai_basis_b(X, Y, L) :- ai_system(X), safety_component_of(X, Y), subject_to_third_party_assessment(Y, L).
+high_risk_ai_basis_b(X, X, L) :- ai_system(X), is_product(X), subject_to_third_party_assessment(X, L).
+
+
+// ---- AIAct_A6.1 (AI Act) ----
+// AIAct_A6_P1
+high_risk_ai(X) :- ai_system(X), safety_component_of(X, Y), annex_i_legislation(L), subject_to_third_party_assessment(Y, L).
+
+// AIAct_A6_P1_alt
+high_risk_ai(X) :- ai_system(X), annex_i_legislation(L), subject_to_third_party_assessment(X, L).
+
+
+// ---- AIAct_A6.2 (AI Act) ----
+// AIAct_A6_P2
+high_risk_ai(X) :- ai_system(X), used_in(X, U), annex_iii_use_case(U).
+
+
+// ---- AIAct_A6.3.a (AI Act) ----
+// AIAct_A6_P3_PT_a — narrow procedural task
+a6_p3_carveout_condition(X) :- intended_to_perform_narrow_procedural_task(X).
+
+
+// ---- AIAct_A6.3.b (AI Act) ----
+// AIAct_A6_P3_PT_b — improve previously completed human activity
+a6_p3_carveout_condition(X) :- intended_to_improve_previously_completed_human_activity(X).
+
+
+// ---- AIAct_A6.3.c (AI Act) ----
+// AIAct_A6_P3_PT_c — detect decision-making patterns/deviations w/o replacing human review
+a6_p3_carveout_condition(X) :- intended_to_detect_decision_patterns(X), ~replaces_human_assessment_without_review(X).
+
+
+// ---- AIAct_A6.3.d (AI Act) ----
+// AIAct_A6_P3_PT_d — preparatory task to an Annex III assessment
+a6_p3_carveout_condition(X) :- intended_to_perform_preparatory_task(X), relevant_to_annex_iii_use_case(X).
+
+
+// ---- AIAct_A6.3 (AI Act) ----
+// AIAct_A6_P3 — chapeau of derogation: low-risk Annex III carve-out (positive 'not high-risk' label)
+high_risk_ai_carveout(X) :- ai_system(X), annex_iii_use_case(U), used_in(X, U), a6_p3_carveout_condition(X), ~a6_p3_profiling_override(X).
+a6_p3_profiling_override(X) :- performs_profiling_of_natural_persons(X).
+
+
+// ---- AIAct_A6.4 (AI Act) ----
+// AIAct_A6_P4 — provider documents non-high-risk assessment, registers
+obligation(P, X, 'document_non_high_risk_assessment_before_market') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+obligation(P, X, 'register_under_a49_p2') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+obligation(P, X, 'provide_assessment_documentation_on_request') :- provider(P, X), ai_system(X), annex_iii_use_case(U), used_in(X, U), ~high_risk_ai(X).
+
+
+// ---- AIAct_A6.5 (AI Act) ----
+// AIAct_A6_P5 — Commission to publish guidelines by 2026-02-02
++ commission_deadline('ai_act', 'a6_guidelines_high_risk', '2026-02-02')
+
+
+// ---- AIAct_A6.6 (AI Act) ----
+// AIAct_A6_P6 — Commission empowered: add conditions to A6(3)
+commission_delegated_act_basis('ai_act', 'a6_p6', 'add_conditions_to_a6_p3').
+
+
+// ---- AIAct_A6.7 (AI Act) ----
+// AIAct_A6_P7 — Commission empowered: delete conditions from A6(3)
+commission_delegated_act_basis('ai_act', 'a6_p7', 'delete_conditions_from_a6_p3').
+
+
+// ---- AIAct_A6.8 (AI Act) ----
+// AIAct_A6_P8 — amendments must not decrease overall protection
+constraint_on_amendment('ai_act', 'a6_p3', 'no_decrease_in_overall_protection').
+
+
+// ---- AIAct_A7 (AI Act) ----
+// AIAct_A7 — Amendments to Annex III (chapeau)
+ai_act_scope_article('ai_act_a7', 'amendments_to_annex_iii').
+
+
+// ---- AIAct_A7.1.a (AI Act) ----
+// AIAct_A7_P1_PT_a — system in any Annex III area
+a7_p1_condition('a7_p1_a', 'within_annex_iii_area').
+
+
+// ---- AIAct_A7.1.b (AI Act) ----
+// AIAct_A7_P1_PT_b — system poses equivalent or greater risk
+a7_p1_condition('a7_p1_b', 'risk_equivalent_or_greater_than_existing_annex_iii').
+
+
+// ---- AIAct_A7.1 (AI Act) ----
+// AIAct_A7_P1 — Commission empowered to amend Annex III when both conditions met
+commission_delegated_act_basis('ai_act', 'a7_p1', 'add_or_modify_annex_iii_use_cases').
+
+
+// ---- AIAct_A7.2.a (AI Act) ----
+// AIAct_A7_P2_PT_a — intended purpose
+a7_p2_criterion('intended_purpose').
+
+
+// ---- AIAct_A7.2.b (AI Act) ----
+// AIAct_A7_P2_PT_b — extent of use
+a7_p2_criterion('extent_of_use').
+
+
+// ---- AIAct_A7.2.c (AI Act) ----
+// AIAct_A7_P2_PT_c — nature/amount of data; special categories
+a7_p2_criterion('data_nature_special_categories').
+
+
+// ---- AIAct_A7.2.d (AI Act) ----
+// AIAct_A7_P2_PT_d — autonomy, human override
+a7_p2_criterion('autonomy_and_human_override').
+
+
+// ---- AIAct_A7.2.e (AI Act) ----
+// AIAct_A7_P2_PT_e — past harm evidence
+a7_p2_criterion('past_harm_evidence').
+
+
+// ---- AIAct_A7.2.f (AI Act) ----
+// AIAct_A7_P2_PT_f — extent of potential harm
+a7_p2_criterion('extent_of_potential_harm').
+
+
+// ---- AIAct_A7.2.g (AI Act) ----
+// AIAct_A7_P2_PT_g — dependence on outcome
+a7_p2_criterion('dependence_on_outcome').
+
+
+// ---- AIAct_A7.2.h.i (AI Act) ----
+// AIAct_A7_P2_PT_h_i — corrigibility/reversibility of outcome
+a7_p2_criterion('corrigibility_or_reversibility').
+
+
+// ---- AIAct_A7.2.h (AI Act) ----
+// AIAct_A7_P2_PT_h — imbalance of power / vulnerability
+a7_p2_criterion('imbalance_of_power_or_vulnerability').
+
+
+// ---- AIAct_A7.2.j (AI Act) ----
+// AIAct_A7_P2_PT_j — magnitude/likelihood of benefit
+a7_p2_criterion('magnitude_and_likelihood_of_benefit').
+
+
+// ---- AIAct_A7.2.k.i (AI Act) ----
+// AIAct_A7_P2_PT_k_i — effective measures of redress
+a7_p2_criterion_subkind('a7_p2_k', 'effective_redress_measures').
+
+
+// ---- AIAct_A7.2.k.ii (AI Act) ----
+// AIAct_A7_P2_PT_k_ii — effective measures to prevent/minimise risk
+a7_p2_criterion_subkind('a7_p2_k', 'effective_risk_prevention_measures').
+
+
+// ---- AIAct_A7.2.k (AI Act) ----
+// AIAct_A7_P2_PT_k — existing Union law remedies
+a7_p2_criterion('existing_union_law_redress_and_prevention').
+
+
+// ---- AIAct_A7.2 (AI Act) ----
+// AIAct_A7_P2 — chapeau: criteria for assessing A7(1)(b)
+a7_p2_criterion_kind('intended_purpose').
+a7_p2_criterion_kind('extent_of_use').
+a7_p2_criterion_kind('data_nature_amount_special_categories').
+a7_p2_criterion_kind('autonomy_human_override').
+a7_p2_criterion_kind('past_harm_evidence').
+a7_p2_criterion_kind('extent_of_potential_harm').
+a7_p2_criterion_kind('dependence_on_outcome').
+a7_p2_criterion_kind('imbalance_of_power_vulnerability').
+a7_p2_criterion_kind('benefit_magnitude_likelihood').
+a7_p2_criterion_kind('existing_redress_and_prevention').
+
+
+// ---- AIAct_A7.3.a (AI Act) ----
+// AIAct_A7_P3_PT_a — no significant risks
+a7_p3_condition('a7_p3_a', 'no_significant_risks_to_health_safety_rights').
+
+
+// ---- AIAct_A7.3.b (AI Act) ----
+// AIAct_A7_P3_PT_b — deletion does not decrease overall protection
+a7_p3_condition('a7_p3_b', 'no_decrease_in_overall_protection').
+
+
+// ---- AIAct_A7.3 (AI Act) ----
+// AIAct_A7_P3 — Commission empowered to remove from Annex III when both met
+commission_delegated_act_basis('ai_act', 'a7_p3', 'remove_from_annex_iii').
+
+
+// ---- AIAct_A50 (AI Act) ----
+// AIAct_A50 — Transparency obligations chapeau
+ai_act_scope_article('ai_act_a50', 'transparency_obligations').
+
+
+// ---- AIAct_A50.1 (AI Act) ----
+// AIAct_A50_P1 — providers: design AI to inform natural persons of AI interaction
+obligation(P, X, 'inform_persons_of_ai_interaction') :- provider(P, X), ai_system(X), intended_for_direct_interaction(X), ~obvious_to_reasonable_person(X), ~le_authorised_with_safeguards(X).
+transparency_obligation_applies(X) :- ai_system(X), intended_for_direct_interaction(X).
+
+
+// ---- AIAct_A50.2 (AI Act) ----
+// AIAct_A50_P2 — providers of synthetic-content AI: machine-readable marking
+obligation(P, X, 'mark_synthetic_outputs_machine_readable') :- provider(P, X), ai_system(X), generates_synthetic_content(X), ~assistive_editing_only(X), ~le_authorised_with_safeguards(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_synthetic_content(X).
+
+
+// ---- AIAct_A50.3 (AI Act) ----
+// AIAct_A50_P3 — deployers of emotion/biometric-categorisation: inform persons, comply with DP law
+obligation(D, X, 'inform_natural_persons_of_emotion_or_categorisation') :- deployer(D, X), emotion_recognition_system(X), ~le_permitted_with_safeguards(X).
+obligation(D, X, 'inform_natural_persons_of_emotion_or_categorisation') :- deployer(D, X), biometric_categorisation_system(X), ~le_permitted_with_safeguards(X).
+obligation(D, X, 'comply_with_dp_law') :- deployer(D, X), emotion_recognition_system(X).
+obligation(D, X, 'comply_with_dp_law') :- deployer(D, X), biometric_categorisation_system(X).
+transparency_obligation_applies(X) :- emotion_recognition_system(X).
+transparency_obligation_applies(X) :- biometric_categorisation_system(X).
+
+
+// ---- AIAct_A50.4 (AI Act) ----
+// AIAct_A50_P4 — deployers of deep-fake / public-interest AI text: disclosure
+obligation(D, X, 'disclose_deep_fake_content') :- deployer(D, X), ai_system(X), generates_deep_fake_output(X), ~le_authorised(X).
+obligation(D, X, 'disclose_ai_text_for_public_interest_news') :- deployer(D, X), ai_system(X), generates_text_for_public_interest_news(X), ~human_editorial_review(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_deep_fake_output(X).
+transparency_obligation_applies(X) :- ai_system(X), generates_text_for_public_interest_news(X).
+
+
+// ---- AIAct_A50.5 (AI Act) ----
+// AIAct_A50_P5 — information must be clear, distinguishable, accessible, at first interaction
+obligation(A, X, 'inform_at_first_interaction_clearly_and_accessibly') :- obligation(A, X, OBLG), a50_transparency_obligation(OBLG).
+a50_transparency_obligation('inform_persons_of_ai_interaction').
+a50_transparency_obligation('mark_synthetic_outputs_machine_readable').
+a50_transparency_obligation('inform_natural_persons_of_emotion_or_categorisation').
+a50_transparency_obligation('disclose_deep_fake_content').
+a50_transparency_obligation('disclose_ai_text_for_public_interest_news').
+
+
+// ---- AIAct_A50.6 (AI Act) ----
+// AIAct_A50_P6 — without prejudice to Chapter III, other transparency law
+ai_act_without_prejudice_to('chapter_iii_high_risk_obligations').
+ai_act_without_prejudice_to('other_union_or_national_transparency_law').
+
+
+// ---- AIAct_A50.7 (AI Act) ----
+// AIAct_A50_P7 — AI Office to facilitate codes of practice on labelling
+obligation(AO, _, 'facilitate_codes_of_practice_for_labelling') :- ai_office(AO).
+commission_implementing_act_basis('ai_act', 'a50_p7', 'approve_or_specify_labelling_rules').
+
+
+// ---- AIAct_A51 (AI Act) ----
+// AIAct_A51 — Classification of GPAI as systemic-risk (chapeau)
+ai_act_scope_article('ai_act_a51', 'gpai_systemic_risk_classification').
+
+
+// ---- AIAct_A51.1.a (AI Act) ----
+// AIAct_A51_P1_PT_a
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25').
+
+
+// ---- AIAct_A51.1.b (AI Act) ----
+// AIAct_A51_P1_PT_b
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+
+
+// ---- AIAct_A51.1 (AI Act) ----
+// AIAct_A51_P1 — chapeau (rules carried by points)
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25').
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+
+
+// ---- AIAct_A51.2 (AI Act) ----
+// AIAct_A51_P2 — presumption: compute > 10^25 FLOPs => high-impact capabilities
+has_feature(X, 'compute_above_10e25') :- gpai_model(X), training_compute_flops(X, F), f_greater_than_10e25(F).
+
+
+// ---- AIAct_A51.3 (AI Act) ----
+// AIAct_A51_P3 — Commission empowered to amend thresholds
+commission_delegated_act_basis('ai_act', 'a51_p3', 'amend_a51_thresholds_and_benchmarks').
+
+
+// ---- AIAct_A52 (AI Act) ----
+// AIAct_A52 — Procedure (chapeau)
+ai_act_scope_article('ai_act_a52', 'gpai_systemic_risk_designation_procedure').
+
+
+// ---- AIAct_A52.1 (AI Act) ----
+// AIAct_A52_P1 — provider notifies Commission within 2 weeks
+obligation(P, X, 'notify_commission_within_2_weeks') :- provider(P, X), gpai_model(X), has_feature(X, 'compute_above_10e25').
+// Commission may designate sua sponte
+commission_power('ai_act', 'a52_p1', 'designate_systemic_risk_sua_sponte').
+
+
+// ---- AIAct_A52.2 (AI Act) ----
+// AIAct_A52_P2 — provider may rebut presumption with substantiated arguments
+provider_right(P, X, 'rebut_systemic_risk_presumption') :- provider(P, X), gpai_model(X), has_feature(X, 'compute_above_10e25').
+
+
+// ---- AIAct_A52.3 (AI Act) ----
+// AIAct_A52_P3 — Commission may reject rebuttal -> systemic-risk classification confirmed
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'compute_above_10e25'), rebuttal_rejected_by_commission(X).
+
+
+// ---- AIAct_A52.4 (AI Act) ----
+// AIAct_A52_P4 — Commission may designate sua sponte using Annex XIII
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, 'commission_designated').
+commission_delegated_act_basis('ai_act', 'a52_p4', 'amend_annex_xiii_criteria').
+
+
+// ---- AIAct_A52.5 (AI Act) ----
+// AIAct_A52_P5 — provider may request reassessment after 6 months
+provider_right(P, X, 'request_reassessment_after_6_months') :- provider(P, X), gpai_systemic_risk(X).
+
+
+// ---- AIAct_A52.6 (AI Act) ----
+// AIAct_A52_P6 — Commission publishes, maintains list
+obligation('commission', _, 'publish_gpai_systemic_risk_list').
+
+
+// ---- AIAct_A111 (AI Act) ----
+// AIAct_A111 — Pre-deployed systems: transitional grace (chapeau)
+ai_act_scope_article('ai_act_a111', 'pre_deployed_transitional').
+
+
+// ---- AIAct_A111.1 (AI Act) ----
+// AIAct_A111_P1
++ transitional_grace('ai_act', 'high_risk_predeployed', '2026-08-02')
+
+
+// ---- AIAct_A111.2 (AI Act) ----
+// AIAct_A111_P2 — high-risk pre-deployed (other than A111(1)): apply only if significant changes after 2026-08-02
+ai_act_applies_pre_deployed(S) :- high_risk_ai(S), placed_on_market_before(S, '2026-08-02'), significant_changes_after(S, '2026-08-02').
+
+// public-authority deployers: full compliance by 2030-08-02
++ application_date('ai_act', 'high_risk_predeployed_public_authority', '2030-08-02')
+
+
+// ---- AIAct_A111.3 (AI Act) ----
+// AIAct_A111_P3
++ transitional_grace('ai_act', 'gpai_predeployed',      '2027-08-02')
+
+
+// ---- AIAct_A113 (AI Act) ----
+// AIAct_A113_chapeau
++ entry_into_force('ai_act', '2024-08-01')
+
+// AIAct_A113_chapeau
++ application_date('ai_act', 'general',                '2026-08-02')
+
+// AIAct_A113_PT_a
++ application_date('ai_act', 'chapter_i_general',     '2025-02-02')
+
+// AIAct_A113_PT_a
++ application_date('ai_act', 'chapter_ii_prohibitions','2025-02-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_v_gpai',         '2025-08-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_vii_governance', '2025-08-02')
+
+// AIAct_A113_PT_b
++ application_date('ai_act', 'chapter_xii_penalties',  '2025-08-02')
+
+// AIAct_A113_PT_c
++ application_date('ai_act', 'art_6_p1_high_risk_nlf', '2027-08-02')
+

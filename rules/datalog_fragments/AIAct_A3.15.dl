@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.15 provision_id=A058
+// AIAct_A3_P15 — 'instructions for use'
+instructions_for_use(I, X) :- provider_supplied(I, X), informs_intended_purpose(I, X).
+

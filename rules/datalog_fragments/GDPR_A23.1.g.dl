@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A23.1.g provision_id=G099
+// GDPR_A23_P1_PT_g — breaches of ethics for regulated professions
+restriction_objective_lawful('regulated_profession_ethics').
+

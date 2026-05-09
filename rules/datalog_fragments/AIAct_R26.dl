@@ -1,0 +1,9 @@
+// provision_long_id=AIAct_R26 provision_id=A011
+// AIAct_R26 — RECITAL — risk-based approach
+ai_act_risk_tier(S, 'prohibited') :- prohibited_practice(S).
+ai_act_risk_tier(S, 'high_risk') :- high_risk_ai(S).
+ai_act_risk_tier(S, 'transparency_only') :- transparency_obligation_applies(S), ~high_risk_ai(S), ~prohibited_practice(S).
+ai_act_risk_tier(S, 'minimal_or_none') :- ai_system(S), ~prohibited_practice(S), ~high_risk_ai(S), ~transparency_obligation_applies(S).
+
+recital_principle('ai_act', 'r26', 'risk_based_approach').
+

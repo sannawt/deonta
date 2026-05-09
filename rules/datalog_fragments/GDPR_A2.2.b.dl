@@ -1,0 +1,4 @@
+// provision_long_id=GDPR_A2.2.b provision_id=G027
+// GDPR_A2_P2_PT_b — CFSP activities (Chapter 2 of Title V TEU)
+gdpr_excluded(S) :- cfsp_activity(S).
+

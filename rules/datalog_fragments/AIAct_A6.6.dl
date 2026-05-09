@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A6.6 provision_id=A159
+// AIAct_A6_P6 — Commission empowered: add conditions to A6(3)
+commission_delegated_act_basis('ai_act', 'a6_p6', 'add_conditions_to_a6_p3').
+

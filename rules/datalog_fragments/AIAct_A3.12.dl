@@ -1,0 +1,6 @@
+// provision_long_id=AIAct_A3.12 provision_id=A055
+// AIAct_A3_P12 — 'intended purpose'
+intended_purpose(X, P) :- specified_in_instructions(X, P).
+intended_purpose(X, P) :- specified_in_promotional_or_sales_materials(X, P).
+intended_purpose(X, P) :- specified_in_technical_documentation(X, P).
+

@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.35 provision_id=A078
+// AIAct_A3_P35 — 'biometric identification'
+biometric_identification(S) :- automated_recognition(S), purpose_establish_identity(S), compare_to_database(S).
+

@@ -1,0 +1,9 @@
+// provision_long_id=AIAct_A50.3 provision_id=A186
+// AIAct_A50_P3 — deployers of emotion/biometric-categorisation: inform persons, comply with DP law
+obligation(D, X, 'inform_natural_persons_of_emotion_or_categorisation') :- deployer(D, X), emotion_recognition_system(X), ~le_permitted_with_safeguards(X).
+obligation(D, X, 'inform_natural_persons_of_emotion_or_categorisation') :- deployer(D, X), biometric_categorisation_system(X), ~le_permitted_with_safeguards(X).
+obligation(D, X, 'comply_with_dp_law') :- deployer(D, X), emotion_recognition_system(X).
+obligation(D, X, 'comply_with_dp_law') :- deployer(D, X), biometric_categorisation_system(X).
+transparency_obligation_applies(X) :- emotion_recognition_system(X).
+transparency_obligation_applies(X) :- biometric_categorisation_system(X).
+

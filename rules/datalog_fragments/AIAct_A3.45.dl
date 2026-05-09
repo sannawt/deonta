@@ -1,0 +1,5 @@
+// provision_long_id=AIAct_A3.45 provision_id=A090
+// AIAct_A3_P45 — 'law enforcement authority' chapeau
+law_enforcement_authority(A) :- a3_p45_a_la(A).
+law_enforcement_authority(A) :- a3_p45_b_la(A).
+

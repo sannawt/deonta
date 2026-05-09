@@ -1,0 +1,4 @@
+// provision_long_id=AIAct_A3.19 provision_id=A062
+// AIAct_A3_P19 — 'notifying authority'
+notifying_authority(NA) :- national_authority(NA), responsible_for_cab_assessment_designation_notification(NA).
+
