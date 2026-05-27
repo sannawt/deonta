@@ -2,6 +2,29 @@
 
 EU regulatory scope and applicability (GDPR, EU AI Act) with a symbolic engine, local legal graph, and optional LLM summaries.
 
+## Give anyone a public link
+
+### Today (from your Mac, ~1 minute)
+
+Works on **public Wi‑Fi** — the tunnel goes *out* to the internet; you do not open router ports.
+
+```bash
+make run          # terminal 1 — leave running
+make share        # terminal 2 — copy the https://….trycloudflare.com URL
+```
+
+One-time install: `brew install cloudflared`
+
+Send that **https** link to anyone. It stops when you close terminal 2 or shut down `make run`.
+
+### Always on (no laptop needed)
+
+Deploy once on **[Render](https://render.com)** (free tier): Dashboard → **New** → **Blueprint** → repo `sannawt/compliance_calculator` → add `OPENAI_API_KEY` → use the `*.onrender.com` URL.
+
+Step-by-step: [DEPLOY.md](DEPLOY.md)
+
+---
+
 ## Run locally (your machine)
 
 ```bash
