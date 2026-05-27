@@ -11,7 +11,8 @@ Your workbook separates provisions by **`scope_tag`** (see `schemas/legend.json`
 
 ## What the repo does today
 
-- **`rules/golden/scope_applicability.dl`** — minimal **orchestration** used in tests and `POST /api/reason` with `profile: "scope_applicability"`:  
+- **Default engine:** **`logic/py_scope_engine.py`** — same Horn logic as the golden Soufflé file, evaluated in **pure Python** (no `brew`, no Soufflé binary). Optional: set `REASON_USE_SOUFFLE=1` and install Soufflé to run **`rules/golden/scope_applicability.dl`** instead.
+- **`rules/golden/scope_applicability.dl`** — Soufflé reference for the same orchestration:  
   `law_applies(C,R)` iff material ∧ territorial ∧ temporal ∧ ¬`exclusion_holds(C,R)`.
 - **`tests/fixtures/scope/*.json`** — canned cases: EU processing + in-force law, missing territorial link, exclusion blocks.
 - **`schemas/articles_rules.json`** — each real rule row has `scope_tag`; future work is to **compile** rows into Soufflé (or generate facts) **per tag**, then merge into one orchestration program instead of this toy.

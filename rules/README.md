@@ -31,7 +31,7 @@ You may need `.input` directives and fact files for extensional predicates befor
 
 ## API applicability run
 
-`POST /api/reason` (default `profile: "scope_applicability"`) validates facts for **scope testing** (material / territorial / temporal / exclusion → `law_applies`), runs Neo4j from an optional `question`, then Soufflé on **`golden/scope_applicability.dl`**. See **`SCOPE_TESTING.md`**. Use `legacy_gdpr_r14` or `full_schema` profiles only for the old recital demo + `required_facts.json` validation. Install Soufflé for engine output.
+`POST /api/reason` (default `profile: "scope_applicability"`) validates facts for **scope testing** (material / territorial / temporal / exclusion → `law_applies`), runs Neo4j from an optional `question`, then runs the same logic in **`logic/py_scope_engine.py`** (pure Python Datalog). Optional: `REASON_USE_SOUFFLE=1` + Soufflé to execute **`golden/scope_applicability.dl`** instead. See **`SCOPE_TESTING.md`**. `legacy_gdpr_r14` / `full_schema` still use Soufflé when available for the small recital program.
 
 ```bash
 make export-rules   # refresh schemas from Excel (optional)

@@ -1,0 +1,3407 @@
+// Auto-generated universal corpus declarations.
+.decl accessible_according_to_specific_criteria(v0: symbol)
+.decl activity_outside_union_law(v0: symbol)
+.decl additional_information_kept_separately(v0: symbol)
+.decl adequate_fundamental_rights_safeguards(v0: symbol)
+.decl affected_person(v0: symbol, v1: symbol)
+.decl affirmative_action(v0: symbol, v1: symbol)
+.decl ai_act_complementary_to_existing_union_law(v0: symbol)
+.decl ai_act_excluded(v0: symbol)
+.decl ai_act_exclusion_applies_regardless_entity_type(v0: symbol)
+.decl ai_act_material(v0: symbol)
+.decl ai_act_not_excluded_by_defence_or_security_reentry(v0: symbol)
+.decl ai_act_protected_interest(v0: symbol)
+.decl ai_act_territorial_link(v0: symbol, v1: symbol)
+.decl ai_generated_or_manipulated_content(v0: symbol)
+.decl ai_regulatory_sandbox_rules_available(v0: symbol)
+.decl ai_system(v0: symbol)
+.decl ai_system_definition_should_align_with_international_work(v0: symbol)
+.decl ai_system_lifecycle_activity(v0: symbol)
+.decl ai_system_or_model(v0: symbol)
+.decl analyses_or_predicts_attitudes(v0: symbol, v1: symbol)
+.decl analyses_or_predicts_behaviour(v0: symbol, v1: symbol)
+.decl analyses_or_predicts_preferences(v0: symbol, v1: symbol)
+.decl annex_i_legislation(v0: symbol)
+.decl annex_iii_use_case(v0: symbol)
+.decl anonymised_data(v0: symbol)
+.decl anonymous_information(v0: symbol)
+.decl applicable_at(v0: symbol, v1: symbol, v2: symbol)
+.decl application_date(v0: symbol, v1: symbol, v2: symbol)
+.decl applies(v0: symbol, v1: symbol, v2: symbol)
+.decl applies_via_actor(v0: symbol, v1: symbol, v2: symbol, v3: symbol)
+.decl article_header(v0: symbol, v1: symbol)
+.decl authorised_persons_indicated(v0: symbol)
+.decl authorised_representative(v0: symbol, v1: symbol)
+.decl automated_decision_making_rights_unaffected(v0: symbol, v1: symbol)
+.decl automated_individual_decision_making(v0: symbol)
+.decl automated_means(v0: symbol)
+.decl automated_processing(v0: symbol)
+.decl available_technology_relevant(v0: symbol)
+.decl based_on_gpai_model(v0: symbol)
+.decl behaviour_takes_place_in_eu(v0: symbol)
+.decl biometric_categorisation_lawful_filtering_exception(v0: symbol)
+.decl biometric_categorisation_system(v0: symbol)
+.decl biometric_data(v0: symbol)
+.decl biometric_processing_for_unique_identification(v0: symbol)
+.decl branch_in_union(v0: symbol)
+.decl capabilities_match_or_exceed_advanced_gpai_models(v0: symbol)
+.decl capable_of_variety_of_purposes(v0: symbol)
+.decl category(v0: symbol, v1: symbol)
+.decl circumvention_risk_scope(v0: symbol)
+.decl combined_with_unique_identifier(v0: symbol)
+.decl common_foreign_security_policy_activity(v0: symbol)
+.decl competent_authority(v0: symbol)
+.decl competent_authority_other_purpose_processing(v0: symbol)
+.decl concerns(v0: symbol, v1: symbol)
+.decl concerns_entire_filing_system(v0: symbol)
+.decl consent_meets_gdpr_conditions(v0: symbol)
+.decl consent_renewal_not_required(v0: symbol)
+.decl consent_under_directive_95_46(v0: symbol)
+.decl controller(v0: symbol, v1: symbol)
+.decl cookie_identifier(v0: symbol)
+.decl court_or_judicial_authority(v0: symbol)
+.decl criminal_offence_data(v0: symbol)
+.decl data_protection_measure(v0: symbol, v1: symbol)
+.decl data_subject_no_longer_identifiable(v0: symbol)
+.decl data_subject_right(v0: symbol, v1: symbol)
+.decl data_subject_rights_unaffected_by_ai_act(v0: symbol, v1: symbol)
+.decl data_subjects_in_eu_targeted(v0: symbol, v1: symbol)
+.decl deceased_person(v0: symbol)
+.decl deceased_person_data(v0: symbol)
+.decl deep_fake(v0: symbol)
+.decl deep_fake_disclosure_exempt(v0: symbol)
+.decl deep_fake_generation_or_manipulation(v0: symbol)
+.decl defined_term(v0: symbol, v1: symbol)
+.decl definition_matches(v0: symbol, v1: symbol)
+.decl definition_source(v0: symbol, v1: symbol)
+.decl deployer(v0: symbol, v1: symbol)
+.decl design_considers_non_binding_ethical_principles(v0: symbol)
+.decl designated_in_writing_by(v0: symbol, v1: symbol)
+.decl detection_criminal_offences(v0: symbol)
+.decl detects_decision_patterns_or_deviations(v0: symbol)
+.decl determines_purposes_and_means(v0: symbol, v1: symbol)
+.decl development_of_ai_system(v0: symbol)
+.decl develops_ai_system(v0: symbol, v1: symbol)
+.decl device_application_tool_protocol_identifier(v0: symbol)
+.decl diplomatic_mission_or_consular_post(v0: symbol)
+.decl disclosed_to(v0: symbol, v1: symbol)
+.decl disclosure_request(v0: symbol)
+.decl disclosure_request_no_filing_system_interconnection(v0: symbol)
+.decl disclosure_request_not_entire_filing_system(v0: symbol)
+.decl distributor(v0: symbol, v1: symbol)
+.decl effective_pseudonymisation(v0: symbol, v1: symbol)
+.decl effective_real_activity(v0: symbol)
+.decl effective_union_protection_interest(v0: symbol)
+.decl email_address_accessible_in_eu(v0: symbol, v1: symbol)
+.decl emotion_inference_medical_or_safety_exception(v0: symbol)
+.decl emotion_recognition_system(v0: symbol)
+.decl employment_social_security_law_basis(v0: symbol)
+.decl entry_into_force(v0: symbol, v1: symbol)
+.decl envisages_offering_to_eu_data_subjects(v0: symbol, v1: symbol)
+.decl eprivacy_lex_specialis(v0: symbol)
+.decl established_in(v0: symbol, v1: symbol)
+.decl establishment_in_union(v0: symbol)
+.decl eu_institution_body_office_agency(v0: symbol)
+.decl eu_institution_data_protection_regime(v0: symbol)
+.decl eu_institution_processing(v0: symbol)
+.decl eu_language_or_currency_with_ordering(v0: symbol, v1: symbol)
+.decl execution_criminal_penalties(v0: symbol)
+.decl existing_union_law_right_or_remedy(v0: symbol, v1: symbol)
+.decl existing_union_law_rights_remedies_unaffected(v0: symbol, v1: symbol)
+.decl explicit_consent_special_category(v0: symbol)
+.decl explicitly_authorised_by_ai_act(v0: symbol)
+.decl falsely_appears_authentic_or_truthful(v0: symbol)
+.decl file_set(v0: symbol)
+.decl filing_system(v0: symbol)
+.decl free_movement_information_society_services_supported(v0: symbol)
+.decl free_open_source_ai(v0: symbol)
+.decl freely_given_consent(v0: symbol, v1: symbol)
+.decl gdpr_applies_to_judicial_authority_processing(v0: symbol)
+.decl gdpr_applies_to_processing(v0: symbol)
+.decl gdpr_art3_2_applies(v0: symbol, v1: symbol)
+.decl gdpr_art9_exception(v0: symbol)
+.decl gdpr_excluded(v0: symbol)
+.decl gdpr_material(v0: symbol)
+.decl gdpr_material_exclusion_reason(v0: symbol, v1: symbol)
+.decl gdpr_personal_data_exclusion_reason(v0: symbol, v1: symbol)
+.decl gdpr_potentially_applies_to_competent_authority_other_purpose(v0: symbol)
+.decl gdpr_principles_do_not_apply(v0: symbol)
+.decl gdpr_protected_person(v0: symbol)
+.decl gdpr_protection_independent_of_nationality_or_residence(v0: symbol)
+.decl gdpr_representative_obligation_exempt(v0: symbol, v1: symbol)
+.decl gdpr_territorial_link(v0: symbol, v1: symbol)
+.decl general_analysis_allowed_within_same_controller(v0: symbol)
+.decl general_interest_inquiry(v0: symbol)
+.decl general_purpose_ai_system(v0: symbol)
+.decl generated_text_public_interest(v0: symbol)
+.decl generates_synthetic_content(v0: symbol)
+.decl genetic_data(v0: symbol)
+.decl governed_by(v0: symbol, v1: symbol)
+.decl gpai_high_impact_capability(v0: symbol)
+.decl gpai_model(v0: symbol)
+.decl gpai_systemic_risk(v0: symbol)
+.decl has_ai_system_developed(v0: symbol, v1: symbol)
+.decl has_capability(v0: symbol, v1: symbol)
+.decl has_feature(v0: symbol, v1: symbol)
+.decl health_data(v0: symbol)
+.decl healthcare_socialcare_law_or_contract(v0: symbol)
+.decl high_impact_capabilities(v0: symbol)
+.decl high_risk_ai(v0: symbol)
+.decl high_risk_ai_harmonised_rules_apply(v0: symbol)
+.decl high_risk_ai_requirement_trigger(v0: symbol)
+.decl high_risk_ai_use_case(v0: symbol)
+.decl human_review_or_editorial_control(v0: symbol)
+.decl identifiability_factor(v0: symbol, v1: symbol)
+.decl identifiable_person(v0: symbol, v1: symbol)
+.decl identification_costs_relevant(v0: symbol)
+.decl identification_not_required_for_purposes(v0: symbol)
+.decl identification_time_relevant(v0: symbol)
+.decl identified_person(v0: symbol, v1: symbol)
+.decl identifies(v0: symbol, v1: symbol)
+.decl importer(v0: symbol, v1: symbol)
+.decl improves_previous_human_activity_result(v0: symbol)
+.decl in_force(v0: symbol, v1: symbol)
+.decl information(v0: symbol)
+.decl information_society_service(v0: symbol)
+.decl informed_consent(v0: symbol, v1: symbol)
+.decl informing_data_subject_possible(v0: symbol)
+.decl insufficient_targeting_factor(v0: symbol, v1: symbol, v2: symbol)
+.decl intended_to_form_part_of_filing_system(v0: symbol)
+.decl intended_to_interact_directly_with_natural_persons(v0: symbol)
+.decl interaction_obviously_ai(v0: symbol)
+.decl intermediary_liability_rules_unaffected(v0: symbol)
+.decl intermediary_service_provider(v0: symbol, v1: symbol)
+.decl internet_protocol_address(v0: symbol)
+.decl interpretive_support(v0: symbol, v1: symbol)
+.decl investigation_criminal_offences(v0: symbol)
+.decl judicial_authority_processing(v0: symbol)
+.decl judicial_capacity(v0: symbol)
+.decl judicial_capacity_processing(v0: symbol)
+.decl judicial_system_supervision_possible(v0: symbol)
+.decl large_scale_criminal_offence_processing(v0: symbol)
+.decl large_scale_special_category_processing(v0: symbol)
+.decl law_authorises_criminal_data_processing(v0: symbol)
+.decl law_enforcement_data_protection_regime(v0: symbol)
+.decl law_enforcement_judicial_cooperation_agreement(v0: symbol)
+.decl law_enforcement_purpose(v0: symbol)
+.decl leads_to_filing_system_interconnection(v0: symbol)
+.decl led_law_enforcement_processing(v0: symbol)
+.decl legal_claims_or_judicial_capacity(v0: symbol)
+.decl legal_effect_clause(v0: symbol, v1: symbol)
+.decl legal_form_not_determining_for_establishment(v0: symbol)
+.decl legal_obligation_disclosure(v0: symbol)
+.decl legal_person(v0: symbol)
+.decl legal_person_contact_details(v0: symbol)
+.decl legal_person_data(v0: symbol)
+.decl legislative_restriction_measure(v0: symbol, v1: symbol)
+.decl located_in(v0: symbol, v1: symbol)
+.decl made_available_on_market(v0: symbol, v1: symbol)
+.decl makes_available_on_union_market(v0: symbol, v1: symbol)
+.decl manifestly_public_by_data_subject(v0: symbol)
+.decl manual_processing(v0: symbol)
+.decl manufacturer(v0: symbol, v1: symbol)
+.decl may_restrict_gdpr_right_or_obligation(v0: symbol, v1: symbol)
+.decl member_state_ai_restriction_preempted(v0: symbol)
+.decl member_state_cfsp_activity(v0: symbol)
+.decl member_state_chapter_2_title_v_teu_activity(v0: symbol)
+.decl member_state_discretion(v0: symbol, v1: symbol)
+.decl member_state_law_via_intl_law(v0: symbol)
+.decl member_state_may_provide_deceased_person_rules(v0: symbol)
+.decl member_state_specific_gdpr_provisions_allowed(v0: symbol)
+.decl mentions_eu_customers_or_users(v0: symbol, v1: symbol)
+.decl military_or_defence_developed(v0: symbol)
+.decl military_or_defence_purpose(v0: symbol)
+.decl monitors_behaviour_in_eu(v0: symbol, v1: symbol)
+.decl narrow_procedural_task(v0: symbol)
+.decl national_security_activity(v0: symbol)
+.decl national_security_developed(v0: symbol)
+.decl national_security_purpose(v0: symbol)
+.decl natural_person(v0: symbol)
+.decl necessary_and_proportionate_restriction(v0: symbol)
+.decl necessary_for_particular_inquiry(v0: symbol)
+.decl no_additional_obligations(v0: symbol, v1: symbol, v2: symbol)
+.decl no_obligation(v0: symbol, v1: symbol, v2: symbol)
+.decl no_significant_risk_to_health_safety_fundamental_rights(v0: symbol)
+.decl non_binding_ethical_principle(v0: symbol)
+.decl non_led_task(v0: symbol)
+.decl non_military_civilian_use(v0: symbol)
+.decl non_security_civilian_use(v0: symbol)
+.decl nonprofit_legitimate_activity_safeguards(v0: symbol)
+.decl not_high_risk_ai(v0: symbol)
+.decl not_high_risk_derogation_factor(v0: symbol, v1: symbol)
+.decl not_in_position_to_identify_data_subject(v0: symbol)
+.decl obligation(v0: symbol, v1: symbol, v2: symbol)
+.decl occasional_processing(v0: symbol)
+.decl occasional_request(v0: symbol)
+.decl offering_goods_or_services_to_eu_data_subjects(v0: symbol, v1: symbol)
+.decl official_authority_control(v0: symbol)
+.decl official_mission(v0: symbol, v1: symbol)
+.decl online_identifier(v0: symbol)
+.decl operator(v0: symbol, v1: symbol)
+.decl output_used_in_eu(v0: symbol)
+.decl payment_not_required_for_offering_goods_services(v0: symbol)
+.decl performs_processing(v0: symbol, v1: symbol)
+.decl permission(v0: symbol, v1: symbol, v2: symbol)
+.decl person_affected_by_ai_system(v0: symbol, v1: symbol)
+.decl personal_data(v0: symbol)
+.decl personal_data_affected(v0: symbol)
+.decl personal_data_breach(v0: symbol)
+.decl personal_data_disclosed_to(v0: symbol, v1: symbol)
+.decl personal_data_no_longer_attributable_without_additional_information(v0: symbol)
+.decl personal_non_professional_activity_of_deployer(v0: symbol, v1: symbol)
+.decl personal_or_household_context(v0: symbol)
+.decl places_on_eu_market(v0: symbol, v1: symbol)
+.decl places_on_eu_market_with_product(v0: symbol, v1: symbol)
+.decl places_on_market(v0: symbol, v1: symbol)
+.decl places_on_market_under_own_name(v0: symbol, v1: symbol)
+.decl placing_on_market(v0: symbol)
+.decl potential_recipient(v0: symbol, v1: symbol)
+.decl pre_market_research_testing(v0: symbol)
+.decl predictive_policing_supporting_human_assessment_exception(v0: symbol)
+.decl preparatory_assessment_task(v0: symbol)
+.decl prevention_criminal_offences(v0: symbol)
+.decl prevention_of_threats_to_public_security(v0: symbol)
+.decl private_body_processing(v0: symbol)
+.decl processes_on_behalf_of_controller(v0: symbol, v1: symbol)
+.decl processing(v0: symbol)
+.decl processing_already_under_way_on(v0: symbol, v1: symbol)
+.decl processing_concerns(v0: symbol, v1: symbol)
+.decl processing_in_context_of_establishment(v0: symbol, v1: symbol)
+.decl processing_location_irrelevant_for_article_3_1(v0: symbol)
+.decl processing_must_conform_by(v0: symbol, v1: symbol)
+.decl processing_operation(v0: symbol)
+.decl processor(v0: symbol, v1: symbol)
+.decl product_manufacturer(v0: symbol, v1: symbol)
+.decl professional_or_commercial_activity(v0: symbol)
+.decl profile_created(v0: symbol, v1: symbol)
+.decl profiling(v0: symbol)
+.decl profiling_of_natural_persons(v0: symbol)
+.decl profiling_trace(v0: symbol, v1: symbol)
+.decl profiling_used_for_decisions(v0: symbol, v1: symbol)
+.decl profiling_used_to_analyse_or_predict(v0: symbol, v1: symbol)
+.decl prohibited_practice(v0: symbol)
+.decl prohibited_social_scoring_harm_type(v0: symbol)
+.decl prohibition(v0: symbol, v1: symbol, v2: symbol)
+.decl prosecution_criminal_offences(v0: symbol)
+.decl provider(v0: symbol, v1: symbol)
+.decl provider_claims_not_high_risk(v0: symbol, v1: symbol)
+.decl provider_scope_irrespective_of_establishment(v0: symbol, v1: symbol)
+.decl provision_trigger(v0: symbol, v1: symbol, v2: symbol)
+.decl pseudonymisation(v0: symbol)
+.decl pseudonymisation_applied(v0: symbol, v1: symbol)
+.decl pseudonymisation_measure(v0: symbol, v1: symbol)
+.decl pseudonymised_data(v0: symbol)
+.decl public_authority(v0: symbol)
+.decl public_authority_body(v0: symbol)
+.decl public_authority_particular_inquiry(v0: symbol, v1: symbol)
+.decl public_authority_particular_inquiry_exception(v0: symbol, v1: symbol)
+.decl public_authority_processing_must_follow_applicable_data_protection_rules(v0: symbol)
+.decl public_health_interest_law_basis(v0: symbol)
+.decl purely_personal_household_activity(v0: symbol)
+.decl puts_into_service(v0: symbol, v1: symbol)
+.decl puts_into_service_in_eu(v0: symbol, v1: symbol)
+.decl putting_into_service(v0: symbol)
+.decl radio_frequency_identification_tag(v0: symbol)
+.decl rbi_exception_ground(v0: symbol, v1: symbol)
+.decl rbi_law_enforcement_exception(v0: symbol)
+.decl real_world_testing_rules_available(v0: symbol)
+.decl reasonably_likely_means_to_identify(v0: symbol, v1: symbol)
+.decl reasoned_request(v0: symbol)
+.decl recipient(v0: symbol, v1: symbol)
+.decl recital(v0: symbol, v1: symbol)
+.decl recital_supports(v0: symbol, v1: symbol)
+.decl recital_supports_rule(v0: symbol, v1: symbol)
+.decl reference_instrument(v0: symbol, v1: symbol)
+.decl references_construed_as(v0: symbol, v1: symbol)
+.decl regulation_excluded(v0: symbol, v1: symbol)
+.decl regulation_material(v0: symbol, v1: symbol)
+.decl regulation_territorial_link(v0: symbol, v1: symbol, v2: symbol)
+.decl reidentifiable_with_additional_information(v0: symbol, v1: symbol)
+.decl reidentification_safeguard(v0: symbol, v1: symbol)
+.decl relates_to_identifiable_natural_person(v0: symbol)
+.decl relevant_operator_obligation_trigger(v0: symbol, v1: symbol)
+.decl repealed_on(v0: symbol, v1: symbol)
+.decl replaced_by(v0: symbol, v1: symbol)
+.decl representative(v0: symbol, v1: symbol)
+.decl represents_member_state(v0: symbol)
+.decl research_archiving_statistics_law_basis(v0: symbol)
+.decl research_testing_development_before_market_or_service(v0: symbol)
+.decl resembles_existing_subject(v0: symbol)
+.decl restriction_context_example(v0: symbol, v1: symbol)
+.decl restriction_safeguard_basis(v0: symbol, v1: symbol)
+.decl reveals_health_status(v0: symbol)
+.decl risk_based_rule_intensity(v0: symbol, v1: symbol)
+.decl risk_reduction_measure(v0: symbol, v1: symbol)
+.decl safeguarding_against_threats_to_public_security(v0: symbol)
+.decl safeguards_criminal_offence_detection(v0: symbol)
+.decl safeguards_criminal_offence_investigation(v0: symbol)
+.decl safeguards_criminal_offence_prevention(v0: symbol)
+.decl safeguards_criminal_offence_prosecution(v0: symbol)
+.decl safeguards_execution_criminal_penalties(v0: symbol)
+.decl safeguards_public_security(v0: symbol)
+.decl safeguards_specific_important_interest(v0: symbol)
+.decl safety_component_of(v0: symbol, v1: symbol)
+.decl same_controller_analysis(v0: symbol)
+.decl scientific_research_development_only(v0: symbol)
+.decl security_breach(v0: symbol)
+.decl server_received_information(v0: symbol)
+.decl significant_union_market_impact_or_negative_effects(v0: symbol)
+.decl sole_purpose_scientific_research_development(v0: symbol)
+.decl source_provision(v0: symbol, v1: symbol)
+.decl source_scope_tag(v0: symbol, v1: symbol)
+.decl source_text_kind(v0: symbol, v1: symbol)
+.decl special_category_data(v0: symbol)
+.decl specific_consent(v0: symbol, v1: symbol)
+.decl stable_arrangements(v0: symbol)
+.decl structured_by_specific_criteria(v0: symbol)
+.decl structured_personal_data_set(v0: symbol)
+.decl subject_to_third_party_assessment(v0: symbol, v1: symbol)
+.decl subsidiary_in_union(v0: symbol)
+.decl substantial_public_interest_law_basis(v0: symbol)
+.decl supervisory_authority_competence_excluded(v0: symbol)
+.decl supply_chain_actor(v0: symbol, v1: symbol)
+.decl supports_data_protection_obligations(v0: symbol, v1: symbol)
+.decl systemic_risk(v0: symbol)
+.decl targeting_factor(v0: symbol, v1: symbol, v2: symbol)
+.decl technical_organisational_measures(v0: symbol)
+.decl technological_developments_relevant(v0: symbol)
+.decl technology_neutral_scope(v0: symbol, v1: symbol)
+.decl third_country_language_used(v0: symbol, v1: symbol)
+.decl third_country_output_scope(v0: symbol)
+.decl third_country_provider_name_or_trademark(v0: symbol)
+.decl third_country_public_authority_or_international_organisation(v0: symbol)
+.decl tracks_natural_persons_on_internet(v0: symbol, v1: symbol)
+.decl transitional_grace(v0: symbol, v1: symbol, v2: symbol)
+.decl transparency_obligation_trigger(v0: symbol)
+.decl transparency_relevant_ai_system(v0: symbol)
+.decl trustworthy_human_centric_ai_design_support(v0: symbol)
+.decl unacceptable_risk_ai(v0: symbol)
+.decl unambiguous_consent(v0: symbol, v1: symbol)
+.decl unlikely_risk_to_rights_freedoms(v0: symbol)
+.decl unstructured_file_set(v0: symbol)
+.decl use_of_ai_system(v0: symbol)
+.decl used_in(v0: symbol, v1: symbol)
+.decl uses_ai_system_under_authority(v0: symbol, v1: symbol)
+.decl uses_personal_data_to_evaluate_personal_aspects(v0: symbol)
+.decl valid_consent(v0: symbol, v1: symbol)
+.decl validity_continues(v0: symbol, v1: symbol)
+.decl vital_interests_incapable(v0: symbol)
+.decl website_accessible_in_eu(v0: symbol, v1: symbol)
+.decl within_union_law(v0: symbol)
+.decl without_prejudice(v0: symbol, v1: symbol)
+.decl written_mandate_from_provider(v0: symbol, v1: symbol)
+.decl written_reasoned_occasional_request(v0: symbol)
+.decl written_request(v0: symbol)
+
+.input activity_outside_union_law
+.input additional_information_kept_separately
+.input adequate_fundamental_rights_safeguards
+.input affected_person
+.input ai_system_or_model
+.input analyses_or_predicts_attitudes
+.input analyses_or_predicts_behaviour
+.input analyses_or_predicts_preferences
+.input anonymised_data
+.input authorised_persons_indicated
+.input authorised_representative
+.input automated_individual_decision_making
+.input automated_means
+.input available_technology_relevant
+.input behaviour_takes_place_in_eu
+.input biometric_categorisation_lawful_filtering_exception
+.input biometric_categorisation_system
+.input branch_in_union
+.input category
+.input combined_with_unique_identifier
+.input common_foreign_security_policy_activity
+.input competent_authority
+.input concerns
+.input concerns_entire_filing_system
+.input consent_meets_gdpr_conditions
+.input consent_under_directive_95_46
+.input controller
+.input cookie_identifier
+.input court_or_judicial_authority
+.input criminal_offence_data
+.input data_subject_no_longer_identifiable
+.input data_subject_right
+.input data_subjects_in_eu_targeted
+.input deceased_person
+.input deep_fake_disclosure_exempt
+.input deep_fake_generation_or_manipulation
+.input deployer
+.input design_considers_non_binding_ethical_principles
+.input detection_criminal_offences
+.input development_of_ai_system
+.input diplomatic_mission_or_consular_post
+.input disclosed_to
+.input disclosure_request
+.input distributor
+.input effective_real_activity
+.input email_address_accessible_in_eu
+.input emotion_inference_medical_or_safety_exception
+.input emotion_recognition_system
+.input employment_social_security_law_basis
+.input envisages_offering_to_eu_data_subjects
+.input eprivacy_lex_specialis
+.input established_in
+.input eu_institution_body_office_agency
+.input eu_institution_processing
+.input eu_language_or_currency_with_ordering
+.input execution_criminal_penalties
+.input existing_union_law_right_or_remedy
+.input explicit_consent_special_category
+.input explicitly_authorised_by_ai_act
+.input file_set
+.input filing_system
+.input free_open_source_ai
+.input gdpr_applies_to_processing
+.input general_interest_inquiry
+.input generated_text_public_interest
+.input generates_synthetic_content
+.input has_capability
+.input has_feature
+.input healthcare_socialcare_law_or_contract
+.input high_risk_ai_use_case
+.input human_review_or_editorial_control
+.input identification_costs_relevant
+.input identification_not_required_for_purposes
+.input identification_time_relevant
+.input identified_person
+.input identifies
+.input importer
+.input information
+.input information_society_service
+.input informing_data_subject_possible
+.input intended_to_form_part_of_filing_system
+.input intended_to_interact_directly_with_natural_persons
+.input interaction_obviously_ai
+.input intermediary_service_provider
+.input internet_protocol_address
+.input investigation_criminal_offences
+.input judicial_capacity
+.input large_scale_criminal_offence_processing
+.input large_scale_special_category_processing
+.input law_authorises_criminal_data_processing
+.input law_enforcement_judicial_cooperation_agreement
+.input leads_to_filing_system_interconnection
+.input led_law_enforcement_processing
+.input legal_claims_or_judicial_capacity
+.input legal_obligation_disclosure
+.input legal_person
+.input legal_person_contact_details
+.input legislative_restriction_measure
+.input located_in
+.input made_available_on_market
+.input manifestly_public_by_data_subject
+.input manual_processing
+.input manufacturer
+.input member_state_cfsp_activity
+.input member_state_chapter_2_title_v_teu_activity
+.input member_state_law_via_intl_law
+.input mentions_eu_customers_or_users
+.input military_or_defence_developed
+.input military_or_defence_purpose
+.input monitors_behaviour_in_eu
+.input national_security_activity
+.input national_security_developed
+.input national_security_purpose
+.input natural_person
+.input necessary_and_proportionate_restriction
+.input necessary_for_particular_inquiry
+.input non_led_task
+.input non_military_civilian_use
+.input non_security_civilian_use
+.input nonprofit_legitimate_activity_safeguards
+.input not_in_position_to_identify_data_subject
+.input occasional_processing
+.input occasional_request
+.input official_authority_control
+.input official_mission
+.input operator
+.input output_used_in_eu
+.input performs_processing
+.input person_affected_by_ai_system
+.input personal_or_household_context
+.input places_on_eu_market
+.input places_on_eu_market_with_product
+.input placing_on_market
+.input pre_market_research_testing
+.input predictive_policing_supporting_human_assessment_exception
+.input prevention_criminal_offences
+.input prevention_of_threats_to_public_security
+.input private_body_processing
+.input processing
+.input processing_already_under_way_on
+.input processing_concerns
+.input processing_in_context_of_establishment
+.input processor
+.input professional_or_commercial_activity
+.input profiling_used_for_decisions
+.input prosecution_criminal_offences
+.input provider
+.input provider_claims_not_high_risk
+.input provision_trigger
+.input pseudonymisation_applied
+.input pseudonymisation_measure
+.input pseudonymised_data
+.input public_authority
+.input public_authority_body
+.input public_health_interest_law_basis
+.input purely_personal_household_activity
+.input puts_into_service_in_eu
+.input putting_into_service
+.input radio_frequency_identification_tag
+.input rbi_exception_ground
+.input rbi_law_enforcement_exception
+.input reasonably_likely_means_to_identify
+.input reasoned_request
+.input reidentifiable_with_additional_information
+.input relates_to_identifiable_natural_person
+.input represents_member_state
+.input research_archiving_statistics_law_basis
+.input research_testing_development_before_market_or_service
+.input safeguarding_against_threats_to_public_security
+.input safeguards_criminal_offence_detection
+.input safeguards_criminal_offence_investigation
+.input safeguards_criminal_offence_prevention
+.input safeguards_criminal_offence_prosecution
+.input safeguards_execution_criminal_penalties
+.input safeguards_public_security
+.input safety_component_of
+.input same_controller_analysis
+.input scientific_research_development_only
+.input server_received_information
+.input sole_purpose_scientific_research_development
+.input stable_arrangements
+.input structured_by_specific_criteria
+.input subject_to_third_party_assessment
+.input subsidiary_in_union
+.input substantial_public_interest_law_basis
+.input technical_organisational_measures
+.input technological_developments_relevant
+.input third_country_language_used
+.input third_country_public_authority_or_international_organisation
+.input tracks_natural_persons_on_internet
+.input transparency_relevant_ai_system
+.input unacceptable_risk_ai
+.input use_of_ai_system
+.input used_in
+.input vital_interests_incapable
+.input website_accessible_in_eu
+.input within_union_law
+.input written_request
+
+.output accessible_according_to_specific_criteria
+.output affirmative_action
+.output ai_act_complementary_to_existing_union_law
+.output ai_act_excluded
+.output ai_act_exclusion_applies_regardless_entity_type
+.output ai_act_material
+.output ai_act_not_excluded_by_defence_or_security_reentry
+.output ai_act_protected_interest
+.output ai_act_territorial_link
+.output ai_generated_or_manipulated_content
+.output ai_regulatory_sandbox_rules_available
+.output ai_system
+.output ai_system_definition_should_align_with_international_work
+.output ai_system_lifecycle_activity
+.output annex_i_legislation
+.output annex_iii_use_case
+.output anonymous_information
+.output applicable_at
+.output application_date
+.output applies
+.output applies_via_actor
+.output article_header
+.output automated_decision_making_rights_unaffected
+.output automated_processing
+.output based_on_gpai_model
+.output biometric_data
+.output biometric_processing_for_unique_identification
+.output capabilities_match_or_exceed_advanced_gpai_models
+.output capable_of_variety_of_purposes
+.output circumvention_risk_scope
+.output competent_authority_other_purpose_processing
+.output consent_renewal_not_required
+.output data_protection_measure
+.output data_subject_rights_unaffected_by_ai_act
+.output deceased_person_data
+.output deep_fake
+.output defined_term
+.output definition_matches
+.output definition_source
+.output designated_in_writing_by
+.output detects_decision_patterns_or_deviations
+.output determines_purposes_and_means
+.output develops_ai_system
+.output device_application_tool_protocol_identifier
+.output disclosure_request_no_filing_system_interconnection
+.output disclosure_request_not_entire_filing_system
+.output effective_pseudonymisation
+.output effective_union_protection_interest
+.output entry_into_force
+.output establishment_in_union
+.output eu_institution_data_protection_regime
+.output existing_union_law_rights_remedies_unaffected
+.output falsely_appears_authentic_or_truthful
+.output free_movement_information_society_services_supported
+.output freely_given_consent
+.output gdpr_applies_to_judicial_authority_processing
+.output gdpr_art3_2_applies
+.output gdpr_art9_exception
+.output gdpr_excluded
+.output gdpr_material
+.output gdpr_material_exclusion_reason
+.output gdpr_personal_data_exclusion_reason
+.output gdpr_potentially_applies_to_competent_authority_other_purpose
+.output gdpr_principles_do_not_apply
+.output gdpr_protected_person
+.output gdpr_protection_independent_of_nationality_or_residence
+.output gdpr_representative_obligation_exempt
+.output gdpr_territorial_link
+.output general_analysis_allowed_within_same_controller
+.output general_purpose_ai_system
+.output genetic_data
+.output governed_by
+.output gpai_high_impact_capability
+.output gpai_model
+.output gpai_systemic_risk
+.output has_ai_system_developed
+.output health_data
+.output high_impact_capabilities
+.output high_risk_ai
+.output high_risk_ai_harmonised_rules_apply
+.output high_risk_ai_requirement_trigger
+.output identifiability_factor
+.output identifiable_person
+.output improves_previous_human_activity_result
+.output in_force
+.output informed_consent
+.output insufficient_targeting_factor
+.output intermediary_liability_rules_unaffected
+.output interpretive_support
+.output judicial_authority_processing
+.output judicial_capacity_processing
+.output judicial_system_supervision_possible
+.output law_enforcement_data_protection_regime
+.output law_enforcement_purpose
+.output legal_effect_clause
+.output legal_form_not_determining_for_establishment
+.output legal_person_data
+.output makes_available_on_union_market
+.output may_restrict_gdpr_right_or_obligation
+.output member_state_ai_restriction_preempted
+.output member_state_discretion
+.output member_state_may_provide_deceased_person_rules
+.output member_state_specific_gdpr_provisions_allowed
+.output narrow_procedural_task
+.output no_additional_obligations
+.output no_obligation
+.output no_significant_risk_to_health_safety_fundamental_rights
+.output non_binding_ethical_principle
+.output not_high_risk_ai
+.output not_high_risk_derogation_factor
+.output obligation
+.output offering_goods_or_services_to_eu_data_subjects
+.output online_identifier
+.output payment_not_required_for_offering_goods_services
+.output permission
+.output personal_data
+.output personal_data_affected
+.output personal_data_breach
+.output personal_data_disclosed_to
+.output personal_data_no_longer_attributable_without_additional_information
+.output personal_non_professional_activity_of_deployer
+.output places_on_market
+.output places_on_market_under_own_name
+.output potential_recipient
+.output preparatory_assessment_task
+.output processes_on_behalf_of_controller
+.output processing_location_irrelevant_for_article_3_1
+.output processing_must_conform_by
+.output processing_operation
+.output product_manufacturer
+.output profile_created
+.output profiling
+.output profiling_of_natural_persons
+.output profiling_trace
+.output profiling_used_to_analyse_or_predict
+.output prohibited_practice
+.output prohibited_social_scoring_harm_type
+.output prohibition
+.output provider_scope_irrespective_of_establishment
+.output pseudonymisation
+.output public_authority_particular_inquiry
+.output public_authority_particular_inquiry_exception
+.output public_authority_processing_must_follow_applicable_data_protection_rules
+.output puts_into_service
+.output real_world_testing_rules_available
+.output recipient
+.output recital
+.output recital_supports
+.output recital_supports_rule
+.output reference_instrument
+.output references_construed_as
+.output regulation_excluded
+.output regulation_material
+.output regulation_territorial_link
+.output reidentification_safeguard
+.output relevant_operator_obligation_trigger
+.output repealed_on
+.output replaced_by
+.output representative
+.output resembles_existing_subject
+.output restriction_context_example
+.output restriction_safeguard_basis
+.output reveals_health_status
+.output risk_based_rule_intensity
+.output risk_reduction_measure
+.output safeguards_specific_important_interest
+.output security_breach
+.output significant_union_market_impact_or_negative_effects
+.output source_provision
+.output source_scope_tag
+.output source_text_kind
+.output special_category_data
+.output specific_consent
+.output structured_personal_data_set
+.output supervisory_authority_competence_excluded
+.output supply_chain_actor
+.output supports_data_protection_obligations
+.output systemic_risk
+.output targeting_factor
+.output technology_neutral_scope
+.output third_country_output_scope
+.output third_country_provider_name_or_trademark
+.output transitional_grace
+.output transparency_obligation_trigger
+.output trustworthy_human_centric_ai_design_support
+.output unambiguous_consent
+.output unlikely_risk_to_rights_freedoms
+.output unstructured_file_set
+.output uses_ai_system_under_authority
+.output uses_personal_data_to_evaluate_personal_aspects
+.output valid_consent
+.output validity_continues
+.output without_prejudice
+.output written_mandate_from_provider
+.output written_reasoned_occasional_request
+
+// RECITAL_DERIVED_GDPR_R14
+source_provision("GDPR_R14", "gdpr").
+source_text_kind("GDPR_R14", "recital").
+source_scope_tag("GDPR_R14", "material").
+recital("GDPR_R14", "gdpr").
+recital_supports_rule("GDPR_R14", "GDPR_A1").
+recital_supports_rule("GDPR_R14", "GDPR_A4_P1").
+interpretive_support("GDPR_R14", "natural_person_protection").
+interpretive_support("GDPR_R14", "legal_person_data_excluded").
+gdpr_protected_person(A) :- natural_person(A).
+gdpr_protection_independent_of_nationality_or_residence(A) :- natural_person(A).
+legal_person_data(D) :- concerns(D, A), legal_person(A).
+gdpr_personal_data_exclusion_reason(D, "legal_person_data") :- legal_person_data(D).
+gdpr_personal_data_exclusion_reason(D, "legal_person_contact_details") :- legal_person_contact_details(D).
+// RECITAL_DERIVED_GDPR_R15
+source_provision("GDPR_R15", "gdpr").
+source_text_kind("GDPR_R15", "recital").
+source_scope_tag("GDPR_R15", "material").
+recital("GDPR_R15", "gdpr").
+recital_supports_rule("GDPR_R15", "GDPR_A2_P1").
+interpretive_support("GDPR_R15", "technology_neutral_material_scope").
+interpretive_support("GDPR_R15", "unstructured_files_out_of_scope").
+technology_neutral_scope("gdpr", "processing_of_personal_data").
+gdpr_material(S) :- processing(S), processing_concerns(S, D), personal_data(D), automated_means(S).
+gdpr_material(S) :- processing(S), processing_concerns(S, D), personal_data(D), manual_processing(S), filing_system(S).
+gdpr_material(S) :- processing(S), processing_concerns(S, D), personal_data(D), manual_processing(S), intended_to_form_part_of_filing_system(S).
+unstructured_file_set(S) :- file_set(S),!structured_by_specific_criteria(S).
+gdpr_material_exclusion_reason(S, "unstructured_file_set") :- unstructured_file_set(S).
+// RECITAL_DERIVED_GDPR_R16
+source_provision("GDPR_R16", "gdpr").
+source_text_kind("GDPR_R16", "recital").
+source_scope_tag("GDPR_R16", "exclusion").
+recital("GDPR_R16", "gdpr").
+recital_supports_rule("GDPR_R16", "GDPR_A2_P2_PT_a").
+recital_supports_rule("GDPR_R16", "GDPR_A2_P2_PT_b").
+interpretive_support("GDPR_R16", "outside_union_law").
+interpretive_support("GDPR_R16", "national_security").
+interpretive_support("GDPR_R16", "common_foreign_security_policy").
+activity_outside_union_law(S) :- national_security_activity(S).
+activity_outside_union_law(S) :- common_foreign_security_policy_activity(S).
+gdpr_excluded(S) :- activity_outside_union_law(S).
+gdpr_excluded(S) :- member_state_chapter_2_title_v_teu_activity(S).
+// RECITAL_DERIVED_GDPR_R17
+source_provision("GDPR_R17", "gdpr").
+source_text_kind("GDPR_R17", "recital").
+source_scope_tag("GDPR_R17", "exclusion").
+source_scope_tag("GDPR_R17", "material").
+recital("GDPR_R17", "gdpr").
+recital_supports_rule("GDPR_R17", "GDPR_A2_P3").
+interpretive_support("GDPR_R17", "eu_institutions_processing_lex_specialis").
+eu_institution_processing(S) :- processing(S), performs_processing(A, S), eu_institution_body_office_agency(A).
+governed_by(S, "regulation_2018_1725") :- eu_institution_processing(S).
+gdpr_excluded(S) :- eu_institution_processing(S).
+// RECITAL_DERIVED_GDPR_R18
+source_provision("GDPR_R18", "gdpr").
+source_text_kind("GDPR_R18", "recital").
+source_scope_tag("GDPR_R18", "exclusion").
+recital("GDPR_R18", "gdpr").
+recital_supports_rule("GDPR_R18", "GDPR_A2_P2_PT_c").
+interpretive_support("GDPR_R18", "purely_personal_household_exclusion").
+interpretive_support("GDPR_R18", "no_professional_or_commercial_connection").
+purely_personal_household_activity(S) :- processing(S), performs_processing(A, S), natural_person(A), personal_or_household_context(S),!professional_or_commercial_activity(S).
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+// RECITAL_DERIVED_GDPR_R19
+source_provision("GDPR_R19", "gdpr").
+source_text_kind("GDPR_R19", "recital").
+source_scope_tag("GDPR_R19", "exclusion").
+recital("GDPR_R19", "gdpr").
+recital_supports_rule("GDPR_R19", "GDPR_A2_P2_PT_d").
+recital_supports_rule("GDPR_R19", "GDPR_A23").
+interpretive_support("GDPR_R19", "law_enforcement_directive_2016_680").
+interpretive_support("GDPR_R19", "competent_authority_other_purposes").
+interpretive_support("GDPR_R19", "member_state_restrictions").
+law_enforcement_purpose(S) :- prevention_criminal_offences(S).
+law_enforcement_purpose(S) :- investigation_criminal_offences(S).
+law_enforcement_purpose(S) :- detection_criminal_offences(S).
+law_enforcement_purpose(S) :- prosecution_criminal_offences(S).
+law_enforcement_purpose(S) :- execution_criminal_penalties(S).
+law_enforcement_purpose(S) :- safeguarding_against_threats_to_public_security(S).
+law_enforcement_purpose(S) :- prevention_of_threats_to_public_security(S).
+led_law_enforcement_processing(S) :- processing(S), performs_processing(A, S), competent_authority(A), law_enforcement_purpose(S).
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+governed_by(S, "directive_2016_680") :- led_law_enforcement_processing(S).
+competent_authority_other_purpose_processing(S) :- processing(S), performs_processing(A, S), competent_authority(A), within_union_law(S), non_led_task(S).
+gdpr_potentially_applies_to_competent_authority_other_purpose(S) :- competent_authority_other_purpose_processing(S).
+member_state_specific_gdpr_provisions_allowed(S) :- competent_authority_other_purpose_processing(S).
+may_restrict_gdpr_right_or_obligation(S, R) :- private_body_processing(S), gdpr_applies_to_processing(S), legislative_restriction_measure(S, R), necessary_and_proportionate_restriction(S), safeguards_specific_important_interest(S).
+safeguards_specific_important_interest(S) :- safeguards_public_security(S).
+safeguards_specific_important_interest(S) :- safeguards_criminal_offence_prevention(S).
+safeguards_specific_important_interest(S) :- safeguards_criminal_offence_investigation(S).
+safeguards_specific_important_interest(S) :- safeguards_criminal_offence_detection(S).
+safeguards_specific_important_interest(S) :- safeguards_criminal_offence_prosecution(S).
+safeguards_specific_important_interest(S) :- safeguards_execution_criminal_penalties(S).
+restriction_context_example("GDPR_R19", "anti_money_laundering").
+restriction_context_example("GDPR_R19", "forensic_laboratories").
+// RECITAL_DERIVED_GDPR_R20
+source_provision("GDPR_R20", "gdpr").
+source_text_kind("GDPR_R20", "recital").
+source_scope_tag("GDPR_R20", "material").
+recital("GDPR_R20", "gdpr").
+recital_supports_rule("GDPR_R20", "GDPR_A55_P3").
+interpretive_support("GDPR_R20", "judicial_capacity_supervision_exclusion").
+judicial_authority_processing(S) :- processing(S), performs_processing(A, S), court_or_judicial_authority(A).
+judicial_capacity_processing(S) :- judicial_authority_processing(S), judicial_capacity(S).
+supervisory_authority_competence_excluded(S) :- judicial_capacity_processing(S).
+judicial_system_supervision_possible(S) :- judicial_capacity_processing(S).
+gdpr_applies_to_judicial_authority_processing(S) :- judicial_authority_processing(S), gdpr_material(S).
+// RECITAL_DERIVED_GDPR_R21
+source_provision("GDPR_R21", "gdpr").
+source_text_kind("GDPR_R21", "recital").
+source_scope_tag("GDPR_R21", "material").
+recital("GDPR_R21", "gdpr").
+recital_supports_rule("GDPR_R21", "GDPR_A2_P4").
+interpretive_support("GDPR_R21", "ecommerce_directive_without_prejudice").
+without_prejudice("GDPR_R21", "directive_2000_31_ec_liability_rules").
+intermediary_liability_rules_unaffected(S) :- information_society_service(S), intermediary_service_provider(A, S).
+free_movement_information_society_services_supported(S) :- information_society_service(S).
+// RECITAL_DERIVED_GDPR_R22
+source_provision("GDPR_R22", "gdpr").
+source_text_kind("GDPR_R22", "recital").
+source_scope_tag("GDPR_R22", "territorial").
+recital("GDPR_R22", "gdpr").
+recital_supports_rule("GDPR_R22", "GDPR_A3_P1").
+interpretive_support("GDPR_R22", "establishment_context").
+interpretive_support("GDPR_R22", "processing_location_irrelevant").
+establishment_in_union(A) :- established_in(A, "eu"), effective_real_activity(A), stable_arrangements(A).
+establishment_in_union(A) :- branch_in_union(A), effective_real_activity(A), stable_arrangements(A).
+establishment_in_union(A) :- subsidiary_in_union(A), effective_real_activity(A), stable_arrangements(A).
+legal_form_not_determining_for_establishment(A) :- establishment_in_union(A).
+gdpr_territorial_link(A, S) :- controller(A, S), establishment_in_union(A), processing_in_context_of_establishment(S, A).
+gdpr_territorial_link(A, S) :- processor(A, S), establishment_in_union(A), processing_in_context_of_establishment(S, A).
+processing_location_irrelevant_for_article_3_1(S) :- processing_in_context_of_establishment(S, A), establishment_in_union(A).
+// RECITAL_DERIVED_GDPR_R23
+source_provision("GDPR_R23", "gdpr").
+source_text_kind("GDPR_R23", "recital").
+source_scope_tag("GDPR_R23", "territorial").
+recital("GDPR_R23", "gdpr").
+recital_supports_rule("GDPR_R23", "GDPR_A3_P2_PT_a").
+interpretive_support("GDPR_R23", "offering_goods_services_to_eu_data_subjects").
+interpretive_support("GDPR_R23", "targeting_factors").
+data_subjects_in_eu_targeted(S, A) :- offering_goods_or_services_to_eu_data_subjects(A, S).
+offering_goods_or_services_to_eu_data_subjects(A, S) :- envisages_offering_to_eu_data_subjects(A, S).
+offering_goods_or_services_to_eu_data_subjects(A, S) :- eu_language_or_currency_with_ordering(A, S).
+offering_goods_or_services_to_eu_data_subjects(A, S) :- mentions_eu_customers_or_users(A, S).
+targeting_factor(A, S, "eu_language_or_currency_with_ordering") :- eu_language_or_currency_with_ordering(A, S).
+targeting_factor(A, S, "mentions_eu_customers_or_users") :- mentions_eu_customers_or_users(A, S).
+insufficient_targeting_factor(A, S, "website_accessible_in_eu") :- website_accessible_in_eu(A, S).
+insufficient_targeting_factor(A, S, "email_address_accessible_in_eu") :- email_address_accessible_in_eu(A, S).
+insufficient_targeting_factor(A, S, "third_country_language_used") :- third_country_language_used(A, S).
+payment_not_required_for_offering_goods_services(S) :- offering_goods_or_services_to_eu_data_subjects(A, S).
+// RECITAL_DERIVED_GDPR_R24
+source_provision("GDPR_R24", "gdpr").
+source_text_kind("GDPR_R24", "recital").
+source_scope_tag("GDPR_R24", "territorial").
+recital("GDPR_R24", "gdpr").
+recital_supports_rule("GDPR_R24", "GDPR_A3_P2_PT_b").
+interpretive_support("GDPR_R24", "monitoring_behaviour_in_eu").
+interpretive_support("GDPR_R24", "tracking_and_profiling").
+monitors_behaviour_in_eu(A, S) :- tracks_natural_persons_on_internet(A, S), behaviour_takes_place_in_eu(S).
+monitors_behaviour_in_eu(A, S) :- tracks_natural_persons_on_internet(A, S), profiling_used_for_decisions(A, S), behaviour_takes_place_in_eu(S).
+monitors_behaviour_in_eu(A, S) :- tracks_natural_persons_on_internet(A, S), profiling_used_to_analyse_or_predict(A, S), behaviour_takes_place_in_eu(S).
+profiling_used_to_analyse_or_predict(A, S) :- analyses_or_predicts_preferences(A, S).
+profiling_used_to_analyse_or_predict(A, S) :- analyses_or_predicts_behaviour(A, S).
+profiling_used_to_analyse_or_predict(A, S) :- analyses_or_predicts_attitudes(A, S).
+// RECITAL_DERIVED_GDPR_R25
+source_provision("GDPR_R25", "gdpr").
+source_text_kind("GDPR_R25", "recital").
+source_scope_tag("GDPR_R25", "territorial").
+recital("GDPR_R25", "gdpr").
+recital_supports_rule("GDPR_R25", "GDPR_A3_P3").
+interpretive_support("GDPR_R25", "member_state_law_public_international_law").
+member_state_law_via_intl_law(A) :- controller(A, S), diplomatic_mission_or_consular_post(A), represents_member_state(A).
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+// RECITAL_DERIVED_GDPR_R26
+source_provision("GDPR_R26", "gdpr").
+source_text_kind("GDPR_R26", "recital").
+source_scope_tag("GDPR_R26", "definition").
+recital("GDPR_R26", "gdpr").
+recital_supports_rule("GDPR_R26", "GDPR_A4_P1").
+interpretive_support("GDPR_R26", "identifiability").
+interpretive_support("GDPR_R26", "pseudonymised_data_personal_data").
+interpretive_support("GDPR_R26", "anonymous_information_out_of_scope").
+personal_data(D) :- concerns(D, A), natural_person(A), identified_person(A, D).
+personal_data(D) :- concerns(D, A), natural_person(A), identifiable_person(A, D).
+identifiable_person(A, D) :- concerns(D, A), reasonably_likely_means_to_identify(D, A).
+personal_data(D) :- pseudonymised_data(D), reidentifiable_with_additional_information(D, A), natural_person(A).
+anonymous_information(D) :- information(D),!relates_to_identifiable_natural_person(D).
+anonymous_information(D) :- anonymised_data(D), data_subject_no_longer_identifiable(D).
+gdpr_principles_do_not_apply(D) :- anonymous_information(D).
+identifiability_factor(D, "costs_of_identification") :- identification_costs_relevant(D).
+identifiability_factor(D, "time_required_for_identification") :- identification_time_relevant(D).
+identifiability_factor(D, "available_technology") :- available_technology_relevant(D).
+identifiability_factor(D, "technological_developments") :- technological_developments_relevant(D).
+// RECITAL_DERIVED_GDPR_R27
+source_provision("GDPR_R27", "gdpr").
+source_text_kind("GDPR_R27", "recital").
+source_scope_tag("GDPR_R27", "exclusion").
+recital("GDPR_R27", "gdpr").
+recital_supports_rule("GDPR_R27", "GDPR_A4_P1").
+interpretive_support("GDPR_R27", "deceased_person_data_out_of_scope").
+interpretive_support("GDPR_R27", "member_state_deceased_person_rules").
+deceased_person_data(D) :- concerns(D, A), deceased_person(A).
+gdpr_personal_data_exclusion_reason(D, "deceased_person_data") :- deceased_person_data(D).
+member_state_may_provide_deceased_person_rules(D) :- deceased_person_data(D).
+// RECITAL_DERIVED_GDPR_R28
+source_provision("GDPR_R28", "gdpr").
+source_text_kind("GDPR_R28", "recital").
+source_scope_tag("GDPR_R28", "definition").
+recital("GDPR_R28", "gdpr").
+recital_supports_rule("GDPR_R28", "GDPR_A4_P5").
+recital_supports_rule("GDPR_R28", "GDPR_A25").
+recital_supports_rule("GDPR_R28", "GDPR_A32").
+interpretive_support("GDPR_R28", "pseudonymisation_risk_reduction").
+data_protection_measure(M, S) :- pseudonymisation_measure(M, S).
+risk_reduction_measure(M, S) :- pseudonymisation_measure(M, S).
+supports_data_protection_obligations(A, S) :- controller(A, S), pseudonymisation_measure(M, S).
+supports_data_protection_obligations(A, S) :- processor(A, S), pseudonymisation_measure(M, S).
+// RECITAL_DERIVED_GDPR_R29
+source_provision("GDPR_R29", "gdpr").
+source_text_kind("GDPR_R29", "recital").
+source_scope_tag("GDPR_R29", "definition").
+recital("GDPR_R29", "gdpr").
+recital_supports_rule("GDPR_R29", "GDPR_A4_P5").
+recital_supports_rule("GDPR_R29", "GDPR_A25").
+interpretive_support("GDPR_R29", "pseudonymisation_conditions").
+effective_pseudonymisation(S, D) :- pseudonymisation_applied(S, D), additional_information_kept_separately(D), technical_organisational_measures(S), authorised_persons_indicated(S).
+general_analysis_allowed_within_same_controller(S) :- effective_pseudonymisation(S, D), same_controller_analysis(S).
+reidentification_safeguard(S, D) :- additional_information_kept_separately(D), technical_organisational_measures(S).
+// RECITAL_DERIVED_GDPR_R30
+source_provision("GDPR_R30", "gdpr").
+source_text_kind("GDPR_R30", "recital").
+source_scope_tag("GDPR_R30", "definition").
+recital("GDPR_R30", "gdpr").
+recital_supports_rule("GDPR_R30", "GDPR_A4_P1").
+recital_supports_rule("GDPR_R30", "GDPR_A4_P4").
+interpretive_support("GDPR_R30", "online_identifiers").
+interpretive_support("GDPR_R30", "profiling_traces").
+online_identifier(D) :- internet_protocol_address(D).
+online_identifier(D) :- cookie_identifier(D).
+online_identifier(D) :- radio_frequency_identification_tag(D).
+device_application_tool_protocol_identifier(D) :- online_identifier(D).
+identifiable_person(A, D) :- online_identifier(D), concerns(D, A), natural_person(A), combined_with_unique_identifier(D).
+profiling_trace(D, A) :- online_identifier(D), concerns(D, A), natural_person(A), server_received_information(D).
+profile_created(A, S) :- profiling_trace(D, A), processing_concerns(S, D).
+// RECITAL_DERIVED_GDPR_R31
+source_provision("GDPR_R31", "gdpr").
+source_text_kind("GDPR_R31", "recital").
+source_scope_tag("GDPR_R31", "definition").
+recital("GDPR_R31", "gdpr").
+recital_supports_rule("GDPR_R31", "GDPR_A4_P9").
+interpretive_support("GDPR_R31", "recipient_exception_public_authorities").
+potential_recipient(A, S) :- disclosed_to(A, S).
+recipient(A, S) :- potential_recipient(A, S),!public_authority_particular_inquiry_exception(A, S).
+public_authority_particular_inquiry_exception(A, S) :- public_authority(A), disclosed_to(A, S), legal_obligation_disclosure(S), official_mission(A, S), necessary_for_particular_inquiry(S), general_interest_inquiry(S).
+written_reasoned_occasional_request(S) :- written_request(S), reasoned_request(S), occasional_request(S).
+disclosure_request_not_entire_filing_system(S) :- disclosure_request(S),!concerns_entire_filing_system(S).
+disclosure_request_no_filing_system_interconnection(S) :- disclosure_request(S),!leads_to_filing_system_interconnection(S).
+public_authority_processing_must_follow_applicable_data_protection_rules(S) :- public_authority_particular_inquiry_exception(A, S).
+// RECITAL_DERIVED_GDPR_R171
+source_provision("GDPR_R171", "gdpr").
+source_text_kind("GDPR_R171", "recital").
+source_scope_tag("GDPR_R171", "temporal").
+recital("GDPR_R171", "gdpr").
+recital_supports_rule("GDPR_R171", "GDPR_A94").
+recital_supports_rule("GDPR_R171", "GDPR_A95").
+recital_supports_rule("GDPR_R171", "GDPR_A96").
+interpretive_support("GDPR_R171", "directive_95_46_repeal").
+interpretive_support("GDPR_R171", "transitional_conformity").
+repealed_on("directive_95_46_ec", "2018-05-25").
+replaced_by("directive_95_46_ec", "gdpr").
+processing_must_conform_by(S, "2018-05-25") :- processing_already_under_way_on(S, "2016-05-24").
+consent_renewal_not_required(S) :- consent_under_directive_95_46(S), consent_meets_gdpr_conditions(S).
+validity_continues("commission_decision_under_directive_95_46", "until_amended_replaced_or_repealed").
+validity_continues("supervisory_authority_authorisation_under_directive_95_46", "until_amended_replaced_or_repealed").
+// GDPR_applies
+// GDPR_applies_with_actor
+// GENERATED_COVERAGE_GDPR_A1_1
+source_provision("GDPR_A1.1", "gdpr").
+source_text_kind("GDPR_A1.1", "paragraph").
+source_scope_tag("GDPR_A1.1", "material").
+gdpr_material(S) :- provision_trigger("GDPR_A1.1", A, S).
+// GENERATED_COVERAGE_GDPR_A1_2
+source_provision("GDPR_A1.2", "gdpr").
+source_text_kind("GDPR_A1.2", "paragraph").
+source_scope_tag("GDPR_A1.2", "material").
+legal_effect_clause("GDPR_A1.2", "material").
+// GENERATED_COVERAGE_GDPR_A1_3
+source_provision("GDPR_A1.3", "gdpr").
+source_text_kind("GDPR_A1.3", "paragraph").
+source_scope_tag("GDPR_A1.3", "material").
+obligation(A, X, "GDPR_A1.3") :- provision_trigger("GDPR_A1.3", A, X).
+// GENERATED_COVERAGE_GDPR_A2
+source_provision("GDPR_A2", "gdpr").
+source_text_kind("GDPR_A2", "article").
+source_scope_tag("GDPR_A2", "material").
+source_scope_tag("GDPR_A2", "exclusion").
+article_header("GDPR_A2", "gdpr").
+// GDPR_A2_P1_LIMB_1
+gdpr_material(S) :- processing(S), processing_concerns(S, D), personal_data(D), automated_means(S).
+// GDPR_A2_P1_LIMB_2
+gdpr_material(S) :- processing(S), processing_concerns(S, D), personal_data(D), filing_system(S).
+// GDPR_A2_P2_PT_a
+gdpr_excluded(S) :- activity_outside_union_law(S).
+// GENERATED_COVERAGE_GDPR_A2_2_B
+source_provision("GDPR_A2.2.b", "gdpr").
+source_text_kind("GDPR_A2.2.b", "point").
+source_scope_tag("GDPR_A2.2.b", "material").
+source_scope_tag("GDPR_A2.2.b", "exclusion").
+// GDPR_A2_P2_PT_b
+gdpr_excluded(S) :- member_state_cfsp_activity(S).
+gdpr_material(S) :- provision_trigger("GDPR_A2.2.b", A, S).
+// GDPR_A2_P2_PT_c
+gdpr_excluded(S) :- purely_personal_household_activity(S).
+// GDPR_A2_P2_PT_d
+gdpr_excluded(S) :- led_law_enforcement_processing(S).
+// GENERATED_COVERAGE_GDPR_A2_2
+source_provision("GDPR_A2.2", "gdpr").
+source_text_kind("GDPR_A2.2", "paragraph").
+source_scope_tag("GDPR_A2.2", "material").
+source_scope_tag("GDPR_A2.2", "exclusion").
+gdpr_excluded(S) :- provision_trigger("GDPR_A2.2", A, S).
+// GDPR_A2_P3
+gdpr_excluded(S) :- eu_institution_processing(S).
+// GENERATED_COVERAGE_GDPR_A2_4
+source_provision("GDPR_A2.4", "gdpr").
+source_text_kind("GDPR_A2.4", "paragraph").
+source_scope_tag("GDPR_A2.4", "material").
+source_scope_tag("GDPR_A2.4", "exclusion").
+gdpr_material(S) :- provision_trigger("GDPR_A2.4", A, S).
+obligation(A, X, "GDPR_A2.4") :- provision_trigger("GDPR_A2.4", A, X).
+without_prejudice("GDPR_A2.4", "external_or_more_specific_law").
+// GENERATED_COVERAGE_GDPR_A3
+source_provision("GDPR_A3", "gdpr").
+source_text_kind("GDPR_A3", "article").
+source_scope_tag("GDPR_A3", "territorial").
+article_header("GDPR_A3", "gdpr").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A3", A, S).
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- controller(A, S), established_in(A, "eu"), processing_in_context_of_establishment(S, A).
+// GDPR_A3_P1
+gdpr_territorial_link(A, S) :- processor(A, S), established_in(A, "eu"), processing_in_context_of_establishment(S, A).
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+// GDPR_A3_P2_PT_a
+gdpr_territorial_link(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+// GDPR_A3_P2_PT_b
+gdpr_territorial_link(A, S) :- processor(A, S), monitors_behaviour_in_eu(A, S).
+// GENERATED_COVERAGE_GDPR_A3_2
+source_provision("GDPR_A3.2", "gdpr").
+source_text_kind("GDPR_A3.2", "paragraph").
+source_scope_tag("GDPR_A3.2", "territorial").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A3.2", A, S).
+// GDPR_A3_P3
+gdpr_territorial_link(A, S) :- controller(A, S), member_state_law_via_intl_law(A).
+// GDPR_A4_P1_PT1
+personal_data(X) :- concerns(X, A), natural_person(A), identifies(X, A).
+// GENERATED_COVERAGE_GDPR_A4_1
+source_provision("GDPR_A4.1", "gdpr").
+source_text_kind("GDPR_A4.1", "paragraph").
+source_scope_tag("GDPR_A4.1", "definition").
+// GDPR_A4_P1_definition_personal_data
+personal_data(D) :- concerns(D, A), natural_person(A), identifies(D, A).
+defined_term("GDPR_A4.1", "personal_data").
+definition_source("personal_data", "GDPR_A4.1").
+definition_matches("personal_data", X) :- provision_trigger("GDPR_A4.1", A, X).
+// GENERATED_COVERAGE_GDPR_A4_2
+source_provision("GDPR_A4.2", "gdpr").
+source_text_kind("GDPR_A4.2", "paragraph").
+source_scope_tag("GDPR_A4.2", "definition").
+// GDPR_A4_P2_definition_processing
+processing(S) :- processing_operation(S).
+defined_term("GDPR_A4.2", "processing").
+definition_source("processing", "GDPR_A4.2").
+definition_matches("processing", X) :- provision_trigger("GDPR_A4.2", A, X).
+// GENERATED_COVERAGE_GDPR_A4_3
+source_provision("GDPR_A4.3", "gdpr").
+source_text_kind("GDPR_A4.3", "paragraph").
+source_scope_tag("GDPR_A4.3", "definition").
+defined_term("GDPR_A4.3", "restriction_of_processing").
+definition_source("restriction_of_processing", "GDPR_A4.3").
+definition_matches("restriction_of_processing", X) :- provision_trigger("GDPR_A4.3", A, X).
+// GENERATED_COVERAGE_GDPR_A4_4
+source_provision("GDPR_A4.4", "gdpr").
+source_text_kind("GDPR_A4.4", "paragraph").
+source_scope_tag("GDPR_A4.4", "definition").
+// GDPR_A4_P4_definition_profiling
+profiling(S) :- automated_processing(S), uses_personal_data_to_evaluate_personal_aspects(S).
+defined_term("GDPR_A4.4", "profiling").
+definition_source("profiling", "GDPR_A4.4").
+definition_matches("profiling", X) :- provision_trigger("GDPR_A4.4", A, X).
+// GENERATED_COVERAGE_GDPR_A4_5
+source_provision("GDPR_A4.5", "gdpr").
+source_text_kind("GDPR_A4.5", "paragraph").
+source_scope_tag("GDPR_A4.5", "definition").
+// GDPR_A4_P5_definition_pseudonymisation
+pseudonymisation(S) :- personal_data_no_longer_attributable_without_additional_information(S), additional_information_kept_separately(S), technical_organisational_measures(S).
+defined_term("GDPR_A4.5", "pseudonymisation").
+definition_source("pseudonymisation", "GDPR_A4.5").
+definition_matches("pseudonymisation", X) :- provision_trigger("GDPR_A4.5", A, X).
+// GENERATED_COVERAGE_GDPR_A4_6
+source_provision("GDPR_A4.6", "gdpr").
+source_text_kind("GDPR_A4.6", "paragraph").
+source_scope_tag("GDPR_A4.6", "definition").
+// GDPR_A4_P6_definition_filing_system
+filing_system(S) :- structured_personal_data_set(S), accessible_according_to_specific_criteria(S).
+defined_term("GDPR_A4.6", "filing_system").
+definition_source("filing_system", "GDPR_A4.6").
+definition_matches("filing_system", X) :- provision_trigger("GDPR_A4.6", A, X).
+// GENERATED_COVERAGE_GDPR_A4_7
+source_provision("GDPR_A4.7", "gdpr").
+source_text_kind("GDPR_A4.7", "paragraph").
+source_scope_tag("GDPR_A4.7", "definition").
+// GDPR_A4_P7_definition_controller
+controller(A, S) :- determines_purposes_and_means(A, S).
+defined_term("GDPR_A4.7", "controller").
+definition_source("controller", "GDPR_A4.7").
+definition_matches("controller", X) :- provision_trigger("GDPR_A4.7", A, X).
+permission(A, X, "GDPR_A4.7") :- provision_trigger("GDPR_A4.7", A, X).
+// GENERATED_COVERAGE_GDPR_A4_8
+source_provision("GDPR_A4.8", "gdpr").
+source_text_kind("GDPR_A4.8", "paragraph").
+source_scope_tag("GDPR_A4.8", "definition").
+// GDPR_A4_P8_definition_processor
+processor(A, S) :- processes_on_behalf_of_controller(A, S).
+defined_term("GDPR_A4.8", "processor").
+definition_source("processor", "GDPR_A4.8").
+definition_matches("processor", X) :- provision_trigger("GDPR_A4.8", A, X).
+// GENERATED_COVERAGE_GDPR_A4_9
+source_provision("GDPR_A4.9", "gdpr").
+source_text_kind("GDPR_A4.9", "paragraph").
+source_scope_tag("GDPR_A4.9", "definition").
+// GDPR_A4_P9_definition_recipient
+recipient(A, S) :- personal_data_disclosed_to(A, S),!public_authority_particular_inquiry(A, S).
+defined_term("GDPR_A4.9", "recipient").
+definition_source("recipient", "GDPR_A4.9").
+definition_matches("recipient", X) :- provision_trigger("GDPR_A4.9", A, X).
+obligation(A, X, "GDPR_A4.9") :- provision_trigger("GDPR_A4.9", A, X).
+permission(A, X, "GDPR_A4.9") :- provision_trigger("GDPR_A4.9", A, X).
+// GENERATED_COVERAGE_GDPR_A4_10
+source_provision("GDPR_A4.10", "gdpr").
+source_text_kind("GDPR_A4.10", "paragraph").
+source_scope_tag("GDPR_A4.10", "definition").
+defined_term("GDPR_A4.10", "third_party").
+definition_source("third_party", "GDPR_A4.10").
+definition_matches("third_party", X) :- provision_trigger("GDPR_A4.10", A, X).
+// GENERATED_COVERAGE_GDPR_A4_11
+source_provision("GDPR_A4.11", "gdpr").
+source_text_kind("GDPR_A4.11", "paragraph").
+source_scope_tag("GDPR_A4.11", "definition").
+// GDPR_A4_P11_definition_consent
+valid_consent(A, S) :- freely_given_consent(A, S), specific_consent(A, S), informed_consent(A, S), unambiguous_consent(A, S), affirmative_action(A, S).
+legal_effect_clause("GDPR_A4.11", "definition").
+// GENERATED_COVERAGE_GDPR_A4_12
+source_provision("GDPR_A4.12", "gdpr").
+source_text_kind("GDPR_A4.12", "paragraph").
+source_scope_tag("GDPR_A4.12", "definition").
+// GDPR_A4_P12_definition_personal_data_breach
+personal_data_breach(S) :- security_breach(S), personal_data_affected(S).
+defined_term("GDPR_A4.12", "personal_data_breach").
+definition_source("personal_data_breach", "GDPR_A4.12").
+definition_matches("personal_data_breach", X) :- provision_trigger("GDPR_A4.12", A, X).
+// GENERATED_COVERAGE_GDPR_A4_13
+source_provision("GDPR_A4.13", "gdpr").
+source_text_kind("GDPR_A4.13", "paragraph").
+source_scope_tag("GDPR_A4.13", "definition").
+// GDPR_A4_P13_definition_genetic_data
+genetic_data(D) :- personal_data(D), category(D, "genetic").
+defined_term("GDPR_A4.13", "genetic_data").
+definition_source("genetic_data", "GDPR_A4.13").
+definition_matches("genetic_data", X) :- provision_trigger("GDPR_A4.13", A, X).
+// GENERATED_COVERAGE_GDPR_A4_14
+source_provision("GDPR_A4.14", "gdpr").
+source_text_kind("GDPR_A4.14", "paragraph").
+source_scope_tag("GDPR_A4.14", "definition").
+// GDPR_A4_P14_definition_biometric_data
+biometric_data(D) :- personal_data(D), biometric_processing_for_unique_identification(D).
+defined_term("GDPR_A4.14", "biometric_data").
+definition_source("biometric_data", "GDPR_A4.14").
+definition_matches("biometric_data", X) :- provision_trigger("GDPR_A4.14", A, X).
+// GENERATED_COVERAGE_GDPR_A4_15
+source_provision("GDPR_A4.15", "gdpr").
+source_text_kind("GDPR_A4.15", "paragraph").
+source_scope_tag("GDPR_A4.15", "definition").
+// GDPR_A4_P15_definition_health_data
+health_data(D) :- personal_data(D), reveals_health_status(D).
+defined_term("GDPR_A4.15", "data_concerning_health").
+definition_source("health_data", "GDPR_A4.15").
+definition_matches("health_data", X) :- provision_trigger("GDPR_A4.15", A, X).
+// GENERATED_COVERAGE_GDPR_A4_16_A
+source_provision("GDPR_A4.16.a", "gdpr").
+source_text_kind("GDPR_A4.16.a", "point").
+source_scope_tag("GDPR_A4.16.a", "definition").
+legal_effect_clause("GDPR_A4.16.a", "definition").
+// GENERATED_COVERAGE_GDPR_A4_16_B
+source_provision("GDPR_A4.16.b", "gdpr").
+source_text_kind("GDPR_A4.16.b", "point").
+source_scope_tag("GDPR_A4.16.b", "definition").
+legal_effect_clause("GDPR_A4.16.b", "definition").
+// GENERATED_COVERAGE_GDPR_A4_16
+source_provision("GDPR_A4.16", "gdpr").
+source_text_kind("GDPR_A4.16", "paragraph").
+source_scope_tag("GDPR_A4.16", "definition").
+defined_term("GDPR_A4.16", "main_establishment").
+definition_source("main_establishment", "GDPR_A4.16").
+definition_matches("main_establishment", X) :- provision_trigger("GDPR_A4.16", A, X).
+// GENERATED_COVERAGE_GDPR_A4_17
+source_provision("GDPR_A4.17", "gdpr").
+source_text_kind("GDPR_A4.17", "paragraph").
+source_scope_tag("GDPR_A4.17", "definition").
+// GDPR_A4_P17_definition_representative
+representative(R, A) :- established_in(R, "eu"), designated_in_writing_by(R, A).
+defined_term("GDPR_A4.17", "representative").
+definition_source("representative", "GDPR_A4.17").
+definition_matches("representative", X) :- provision_trigger("GDPR_A4.17", A, X).
+// GENERATED_COVERAGE_GDPR_A4_18
+source_provision("GDPR_A4.18", "gdpr").
+source_text_kind("GDPR_A4.18", "paragraph").
+source_scope_tag("GDPR_A4.18", "definition").
+defined_term("GDPR_A4.18", "enterprise").
+definition_source("enterprise", "GDPR_A4.18").
+definition_matches("enterprise", X) :- provision_trigger("GDPR_A4.18", A, X).
+// GENERATED_COVERAGE_GDPR_A4_19
+source_provision("GDPR_A4.19", "gdpr").
+source_text_kind("GDPR_A4.19", "paragraph").
+source_scope_tag("GDPR_A4.19", "definition").
+defined_term("GDPR_A4.19", "group_of_undertakings").
+definition_source("group_of_undertakings", "GDPR_A4.19").
+definition_matches("group_of_undertakings", X) :- provision_trigger("GDPR_A4.19", A, X).
+// GENERATED_COVERAGE_GDPR_A4_20
+source_provision("GDPR_A4.20", "gdpr").
+source_text_kind("GDPR_A4.20", "paragraph").
+source_scope_tag("GDPR_A4.20", "definition").
+defined_term("GDPR_A4.20", "binding_corporate_rules").
+definition_source("binding_corporate_rules", "GDPR_A4.20").
+definition_matches("binding_corporate_rules", X) :- provision_trigger("GDPR_A4.20", A, X).
+// GENERATED_COVERAGE_GDPR_A4_21
+source_provision("GDPR_A4.21", "gdpr").
+source_text_kind("GDPR_A4.21", "paragraph").
+source_scope_tag("GDPR_A4.21", "definition").
+defined_term("GDPR_A4.21", "supervisory_authority").
+definition_source("supervisory_authority", "GDPR_A4.21").
+definition_matches("supervisory_authority", X) :- provision_trigger("GDPR_A4.21", A, X).
+// GENERATED_COVERAGE_GDPR_A4_22_A_2
+source_provision("GDPR_A4.22.a_2", "gdpr").
+source_text_kind("GDPR_A4.22.a_2", "point").
+source_scope_tag("GDPR_A4.22.a_2", "definition").
+legal_effect_clause("GDPR_A4.22.a_2", "definition").
+// GENERATED_COVERAGE_GDPR_A4_22_B_2
+source_provision("GDPR_A4.22.b_2", "gdpr").
+source_text_kind("GDPR_A4.22.b_2", "point").
+source_scope_tag("GDPR_A4.22.b_2", "definition").
+legal_effect_clause("GDPR_A4.22.b_2", "definition").
+// GENERATED_COVERAGE_GDPR_A4_22_C_2
+source_provision("GDPR_A4.22.c_2", "gdpr").
+source_text_kind("GDPR_A4.22.c_2", "point").
+source_scope_tag("GDPR_A4.22.c_2", "definition").
+legal_effect_clause("GDPR_A4.22.c_2", "definition").
+// GENERATED_COVERAGE_GDPR_A4_22
+source_provision("GDPR_A4.22", "gdpr").
+source_text_kind("GDPR_A4.22", "paragraph").
+source_scope_tag("GDPR_A4.22", "definition").
+defined_term("GDPR_A4.22", "supervisory_authority_concerned").
+definition_source("supervisory_authority_concerned", "GDPR_A4.22").
+definition_matches("supervisory_authority_concerned", X) :- provision_trigger("GDPR_A4.22", A, X).
+// GENERATED_COVERAGE_GDPR_A4_23_A_3
+source_provision("GDPR_A4.23.a_3", "gdpr").
+source_text_kind("GDPR_A4.23.a_3", "point").
+source_scope_tag("GDPR_A4.23.a_3", "definition").
+legal_effect_clause("GDPR_A4.23.a_3", "definition").
+// GENERATED_COVERAGE_GDPR_A4_23_B_3
+source_provision("GDPR_A4.23.b_3", "gdpr").
+source_text_kind("GDPR_A4.23.b_3", "point").
+source_scope_tag("GDPR_A4.23.b_3", "definition").
+legal_effect_clause("GDPR_A4.23.b_3", "definition").
+// GENERATED_COVERAGE_GDPR_A4_23
+source_provision("GDPR_A4.23", "gdpr").
+source_text_kind("GDPR_A4.23", "paragraph").
+source_scope_tag("GDPR_A4.23", "definition").
+defined_term("GDPR_A4.23", "cross_border_processing").
+definition_source("cross_border_processing", "GDPR_A4.23").
+definition_matches("cross_border_processing", X) :- provision_trigger("GDPR_A4.23", A, X).
+// GENERATED_COVERAGE_GDPR_A4_24
+source_provision("GDPR_A4.24", "gdpr").
+source_text_kind("GDPR_A4.24", "paragraph").
+source_scope_tag("GDPR_A4.24", "definition").
+defined_term("GDPR_A4.24", "relevant_and_reasoned_objection").
+definition_source("relevant_and_reasoned_objection", "GDPR_A4.24").
+definition_matches("relevant_and_reasoned_objection", X) :- provision_trigger("GDPR_A4.24", A, X).
+// GENERATED_COVERAGE_GDPR_A4_25
+source_provision("GDPR_A4.25", "gdpr").
+source_text_kind("GDPR_A4.25", "paragraph").
+source_scope_tag("GDPR_A4.25", "definition").
+defined_term("GDPR_A4.25", "information_society_service").
+definition_source("information_society_service", "GDPR_A4.25").
+definition_matches("information_society_service", X) :- provision_trigger("GDPR_A4.25", A, X).
+// GENERATED_COVERAGE_GDPR_A4_26
+source_provision("GDPR_A4.26", "gdpr").
+source_text_kind("GDPR_A4.26", "paragraph").
+source_scope_tag("GDPR_A4.26", "definition").
+defined_term("GDPR_A4.26", "international_organisation").
+definition_source("international_organisation", "GDPR_A4.26").
+definition_matches("international_organisation", X) :- provision_trigger("GDPR_A4.26", A, X).
+// GDPR_A9_implies_A4_P1
+personal_data(X) :- special_category_data(X).
+// GDPR_A9_P1_racial
+special_category_data(D) :- category(D, "racial").
+// GDPR_A9_P1_ethnic
+special_category_data(D) :- category(D, "ethnic").
+// GDPR_A9_P1_political_opinions
+special_category_data(D) :- category(D, "political_opinions").
+// GDPR_A9_P1_religious
+special_category_data(D) :- category(D, "religious").
+// GDPR_A9_P1_philosophical
+special_category_data(D) :- category(D, "philosophical").
+// GDPR_A9_P1_trade_union
+special_category_data(D) :- category(D, "trade_union").
+// GDPR_A9_P1_genetic
+special_category_data(D) :- category(D, "genetic").
+// GDPR_A9_P1_biometric_for_id
+special_category_data(D) :- category(D, "biometric_for_id").
+// GDPR_A9_P1_health
+special_category_data(D) :- category(D, "health").
+// GDPR_A9_P1_sex_life
+special_category_data(D) :- category(D, "sex_life").
+// GDPR_A9_P1_sexual_orientation
+special_category_data(D) :- category(D, "sexual_orientation").
+// GENERATED_COVERAGE_GDPR_A9_2_A
+source_provision("GDPR_A9.2.a", "gdpr").
+source_text_kind("GDPR_A9.2.a", "point").
+source_scope_tag("GDPR_A9.2.a", "material").
+source_scope_tag("GDPR_A9.2.a", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_a_exception
+gdpr_art9_exception(S) :- explicit_consent_special_category(S).
+permission(A, X, "GDPR_A9.2.a") :- provision_trigger("GDPR_A9.2.a", A, X).
+// GENERATED_COVERAGE_GDPR_A9_2_B
+source_provision("GDPR_A9.2.b", "gdpr").
+source_text_kind("GDPR_A9.2.b", "point").
+source_scope_tag("GDPR_A9.2.b", "material").
+source_scope_tag("GDPR_A9.2.b", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_b_exception
+gdpr_art9_exception(S) :- employment_social_security_law_basis(S).
+legal_effect_clause("GDPR_A9.2.b", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_C
+source_provision("GDPR_A9.2.c", "gdpr").
+source_text_kind("GDPR_A9.2.c", "point").
+source_scope_tag("GDPR_A9.2.c", "material").
+source_scope_tag("GDPR_A9.2.c", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_c_exception
+gdpr_art9_exception(S) :- vital_interests_incapable(S).
+legal_effect_clause("GDPR_A9.2.c", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_D
+source_provision("GDPR_A9.2.d", "gdpr").
+source_text_kind("GDPR_A9.2.d", "point").
+source_scope_tag("GDPR_A9.2.d", "material").
+source_scope_tag("GDPR_A9.2.d", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_d_exception
+gdpr_art9_exception(S) :- nonprofit_legitimate_activity_safeguards(S).
+legal_effect_clause("GDPR_A9.2.d", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_E
+source_provision("GDPR_A9.2.e", "gdpr").
+source_text_kind("GDPR_A9.2.e", "point").
+source_scope_tag("GDPR_A9.2.e", "material").
+source_scope_tag("GDPR_A9.2.e", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_e_exception
+gdpr_art9_exception(S) :- manifestly_public_by_data_subject(S).
+legal_effect_clause("GDPR_A9.2.e", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_F
+source_provision("GDPR_A9.2.f", "gdpr").
+source_text_kind("GDPR_A9.2.f", "point").
+source_scope_tag("GDPR_A9.2.f", "material").
+source_scope_tag("GDPR_A9.2.f", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_f_exception
+gdpr_art9_exception(S) :- legal_claims_or_judicial_capacity(S).
+legal_effect_clause("GDPR_A9.2.f", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_G
+source_provision("GDPR_A9.2.g", "gdpr").
+source_text_kind("GDPR_A9.2.g", "point").
+source_scope_tag("GDPR_A9.2.g", "material").
+source_scope_tag("GDPR_A9.2.g", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_g_exception
+gdpr_art9_exception(S) :- substantial_public_interest_law_basis(S).
+obligation(A, X, "GDPR_A9.2.g") :- provision_trigger("GDPR_A9.2.g", A, X).
+// GENERATED_COVERAGE_GDPR_A9_2_H_I
+source_provision("GDPR_A9.2.h.i", "gdpr").
+source_text_kind("GDPR_A9.2.h.i", "subpoint").
+source_scope_tag("GDPR_A9.2.h.i", "material").
+source_scope_tag("GDPR_A9.2.h.i", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_i_exception
+gdpr_art9_exception(S) :- public_health_interest_law_basis(S).
+legal_effect_clause("GDPR_A9.2.h.i", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_H
+source_provision("GDPR_A9.2.h", "gdpr").
+source_text_kind("GDPR_A9.2.h", "point").
+source_scope_tag("GDPR_A9.2.h", "material").
+source_scope_tag("GDPR_A9.2.h", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_h_exception
+gdpr_art9_exception(S) :- healthcare_socialcare_law_or_contract(S).
+legal_effect_clause("GDPR_A9.2.h", "material").
+// GENERATED_COVERAGE_GDPR_A9_2_J
+source_provision("GDPR_A9.2.j", "gdpr").
+source_text_kind("GDPR_A9.2.j", "point").
+source_scope_tag("GDPR_A9.2.j", "material").
+source_scope_tag("GDPR_A9.2.j", "definition").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A9_2_j_exception
+gdpr_art9_exception(S) :- research_archiving_statistics_law_basis(S).
+obligation(A, X, "GDPR_A9.2.j") :- provision_trigger("GDPR_A9.2.j", A, X).
+// GENERATED_COVERAGE_GDPR_A9_2
+source_provision("GDPR_A9.2", "gdpr").
+source_text_kind("GDPR_A9.2", "paragraph").
+source_scope_tag("GDPR_A9.2", "material").
+source_scope_tag("GDPR_A9.2", "definition").
+gdpr_material(S) :- provision_trigger("GDPR_A9.2", A, S).
+obligation(A, X, "GDPR_A9.2") :- provision_trigger("GDPR_A9.2", A, X).
+// GENERATED_COVERAGE_GDPR_A9_3
+source_provision("GDPR_A9.3", "gdpr").
+source_text_kind("GDPR_A9.3", "paragraph").
+source_scope_tag("GDPR_A9.3", "material").
+source_scope_tag("GDPR_A9.3", "definition").
+gdpr_material(S) :- provision_trigger("GDPR_A9.3", A, S).
+permission(A, X, "GDPR_A9.3") :- provision_trigger("GDPR_A9.3", A, X).
+// GENERATED_COVERAGE_GDPR_A9_4
+source_provision("GDPR_A9.4", "gdpr").
+source_text_kind("GDPR_A9.4", "paragraph").
+source_scope_tag("GDPR_A9.4", "material").
+source_scope_tag("GDPR_A9.4", "definition").
+permission(A, X, "GDPR_A9.4") :- provision_trigger("GDPR_A9.4", A, X).
+// GDPR_A10
+personal_data(X) :- criminal_offence_data(X).
+// GENERATED_COVERAGE_GDPR_A11
+source_provision("GDPR_A11", "gdpr").
+source_text_kind("GDPR_A11", "article").
+source_scope_tag("GDPR_A11", "material").
+source_scope_tag("GDPR_A11", "definition").
+article_header("GDPR_A11", "gdpr").
+// GENERATED_COVERAGE_GDPR_A11_1
+source_provision("GDPR_A11.1", "gdpr").
+source_text_kind("GDPR_A11.1", "paragraph").
+source_scope_tag("GDPR_A11.1", "material").
+source_scope_tag("GDPR_A11.1", "definition").
+source_scope_tag("GDPR_A11.1", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A11_P1_NO_EXTRA_IDENTIFICATION
+no_obligation(A, S, "GDPR_A11.1_maintain_acquire_or_process_additional_identification_info") :- applies_via_actor(S, T, "gdpr", A), controller(A, S), identification_not_required_for_purposes(S).
+obligation(A, X, "GDPR_A11.1") :- provision_trigger("GDPR_A11.1", A, X).
+// GENERATED_COVERAGE_GDPR_A11_2
+source_provision("GDPR_A11.2", "gdpr").
+source_text_kind("GDPR_A11.2", "paragraph").
+source_scope_tag("GDPR_A11.2", "material").
+source_scope_tag("GDPR_A11.2", "definition").
+source_scope_tag("GDPR_A11.2", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A11_P2_INFORM_CANNOT_IDENTIFY
+obligation(A, S, "GDPR_A11.2_inform_data_subject_cannot_identify_if_possible") :- applies_via_actor(S, T, "gdpr", A), controller(A, S), not_in_position_to_identify_data_subject(S), informing_data_subject_possible(S).
+obligation(A, X, "GDPR_A11.2") :- provision_trigger("GDPR_A11.2", A, X).
+// GENERATED_COVERAGE_GDPR_A23
+source_provision("GDPR_A23", "gdpr").
+source_text_kind("GDPR_A23", "article").
+source_scope_tag("GDPR_A23", "exception").
+article_header("GDPR_A23", "gdpr").
+// GENERATED_COVERAGE_GDPR_A23_1_A
+source_provision("GDPR_A23.1.a", "gdpr").
+source_text_kind("GDPR_A23.1.a", "point").
+source_scope_tag("GDPR_A23.1.a", "exception").
+restriction_safeguard_basis("GDPR_A23.1.a", "national_security").
+legal_effect_clause("GDPR_A23.1.a", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_B
+source_provision("GDPR_A23.1.b", "gdpr").
+source_text_kind("GDPR_A23.1.b", "point").
+source_scope_tag("GDPR_A23.1.b", "exception").
+restriction_safeguard_basis("GDPR_A23.1.b", "defence").
+legal_effect_clause("GDPR_A23.1.b", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_C
+source_provision("GDPR_A23.1.c", "gdpr").
+source_text_kind("GDPR_A23.1.c", "point").
+source_scope_tag("GDPR_A23.1.c", "exception").
+restriction_safeguard_basis("GDPR_A23.1.c", "public_security").
+legal_effect_clause("GDPR_A23.1.c", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_D
+source_provision("GDPR_A23.1.d", "gdpr").
+source_text_kind("GDPR_A23.1.d", "point").
+source_scope_tag("GDPR_A23.1.d", "exception").
+restriction_safeguard_basis("GDPR_A23.1.d", "the_prevention_investigation_detection_or_prosecution_of_criminal_offences_or_th").
+legal_effect_clause("GDPR_A23.1.d", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_E
+source_provision("GDPR_A23.1.e", "gdpr").
+source_text_kind("GDPR_A23.1.e", "point").
+source_scope_tag("GDPR_A23.1.e", "exception").
+restriction_safeguard_basis("GDPR_A23.1.e", "other_important_objectives_of_general_public_interest_of_the_union_or_of_a_membe").
+legal_effect_clause("GDPR_A23.1.e", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_F
+source_provision("GDPR_A23.1.f", "gdpr").
+source_text_kind("GDPR_A23.1.f", "point").
+source_scope_tag("GDPR_A23.1.f", "exception").
+restriction_safeguard_basis("GDPR_A23.1.f", "the_protection_of_judicial_independence_and_judicial_proceedings").
+legal_effect_clause("GDPR_A23.1.f", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_G
+source_provision("GDPR_A23.1.g", "gdpr").
+source_text_kind("GDPR_A23.1.g", "point").
+source_scope_tag("GDPR_A23.1.g", "exception").
+restriction_safeguard_basis("GDPR_A23.1.g", "the_prevention_investigation_detection_and_prosecution_of_breaches_of_ethics_for").
+legal_effect_clause("GDPR_A23.1.g", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_H_I
+source_provision("GDPR_A23.1.h.i", "gdpr").
+source_text_kind("GDPR_A23.1.h.i", "subpoint").
+source_scope_tag("GDPR_A23.1.h.i", "exception").
+restriction_safeguard_basis("GDPR_A23.1.h.i", "the_protection_of_the_data_subject_or_the_rights_and_freedoms_of_others").
+legal_effect_clause("GDPR_A23.1.h.i", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_H
+source_provision("GDPR_A23.1.h", "gdpr").
+source_text_kind("GDPR_A23.1.h", "point").
+source_scope_tag("GDPR_A23.1.h", "exception").
+restriction_safeguard_basis("GDPR_A23.1.h", "a_monitoring_inspection_or_regulatory_function_connected_even_occasionally_to_th").
+legal_effect_clause("GDPR_A23.1.h", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1_J
+source_provision("GDPR_A23.1.j", "gdpr").
+source_text_kind("GDPR_A23.1.j", "point").
+source_scope_tag("GDPR_A23.1.j", "exception").
+restriction_safeguard_basis("GDPR_A23.1.j", "the_enforcement_of_civil_law_claims").
+legal_effect_clause("GDPR_A23.1.j", "exception").
+// GENERATED_COVERAGE_GDPR_A23_1
+source_provision("GDPR_A23.1", "gdpr").
+source_text_kind("GDPR_A23.1", "paragraph").
+source_scope_tag("GDPR_A23.1", "exception").
+// GDPR_A23_P1_restriction_permission
+permission(A, S, "GDPR_A23.1_restrict_rights_and_obligations") :- legislative_restriction_measure(S), necessary_and_proportionate_restriction(S), controller(A, S).
+permission(A, X, "GDPR_A23.1") :- provision_trigger("GDPR_A23.1", A, X).
+// GENERATED_COVERAGE_GDPR_A23_2_A
+source_provision("GDPR_A23.2.a", "gdpr").
+source_text_kind("GDPR_A23.2.a", "point").
+source_scope_tag("GDPR_A23.2.a", "exception").
+legal_effect_clause("GDPR_A23.2.a", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_B
+source_provision("GDPR_A23.2.b", "gdpr").
+source_text_kind("GDPR_A23.2.b", "point").
+source_scope_tag("GDPR_A23.2.b", "exception").
+legal_effect_clause("GDPR_A23.2.b", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_C
+source_provision("GDPR_A23.2.c", "gdpr").
+source_text_kind("GDPR_A23.2.c", "point").
+source_scope_tag("GDPR_A23.2.c", "exception").
+legal_effect_clause("GDPR_A23.2.c", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_D
+source_provision("GDPR_A23.2.d", "gdpr").
+source_text_kind("GDPR_A23.2.d", "point").
+source_scope_tag("GDPR_A23.2.d", "exception").
+legal_effect_clause("GDPR_A23.2.d", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_E
+source_provision("GDPR_A23.2.e", "gdpr").
+source_text_kind("GDPR_A23.2.e", "point").
+source_scope_tag("GDPR_A23.2.e", "exception").
+legal_effect_clause("GDPR_A23.2.e", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_F
+source_provision("GDPR_A23.2.f", "gdpr").
+source_text_kind("GDPR_A23.2.f", "point").
+source_scope_tag("GDPR_A23.2.f", "exception").
+legal_effect_clause("GDPR_A23.2.f", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_G
+source_provision("GDPR_A23.2.g", "gdpr").
+source_text_kind("GDPR_A23.2.g", "point").
+source_scope_tag("GDPR_A23.2.g", "exception").
+legal_effect_clause("GDPR_A23.2.g", "exception").
+// GENERATED_COVERAGE_GDPR_A23_2_H
+source_provision("GDPR_A23.2.h", "gdpr").
+source_text_kind("GDPR_A23.2.h", "point").
+source_scope_tag("GDPR_A23.2.h", "exception").
+permission(A, X, "GDPR_A23.2.h") :- provision_trigger("GDPR_A23.2.h", A, X).
+// GENERATED_COVERAGE_GDPR_A23_2
+source_provision("GDPR_A23.2", "gdpr").
+source_text_kind("GDPR_A23.2", "paragraph").
+source_scope_tag("GDPR_A23.2", "exception").
+obligation(A, X, "GDPR_A23.2") :- provision_trigger("GDPR_A23.2", A, X).
+// GENERATED_COVERAGE_GDPR_A27
+source_provision("GDPR_A27", "gdpr").
+source_text_kind("GDPR_A27", "article").
+source_scope_tag("GDPR_A27", "unsure").
+source_scope_tag("GDPR_A27", "territorial").
+article_header("GDPR_A27", "gdpr").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27", A, S).
+// GENERATED_COVERAGE_GDPR_A27_1
+source_provision("GDPR_A27.1", "gdpr").
+source_text_kind("GDPR_A27.1", "paragraph").
+source_scope_tag("GDPR_A27.1", "unsure").
+source_scope_tag("GDPR_A27.1", "territorial").
+source_scope_tag("GDPR_A27.1", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A27_P1_DESIGNATE_REPRESENTATIVE
+obligation(A, S, "GDPR_A27.1_designate_representative_in_union") :- applies_via_actor(S, T, "gdpr", A), gdpr_art3_2_applies(A, S),!gdpr_representative_obligation_exempt(A, S).
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.1", A, S).
+obligation(A, X, "GDPR_A27.1") :- provision_trigger("GDPR_A27.1", A, X).
+// GENERATED_COVERAGE_GDPR_A27_2_A
+source_provision("GDPR_A27.2.a", "gdpr").
+source_text_kind("GDPR_A27.2.a", "point").
+source_scope_tag("GDPR_A27.2.a", "unsure").
+source_scope_tag("GDPR_A27.2.a", "territorial").
+// GDPR_A27_P2_a_exemption_condition
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), occasional_processing(S),!large_scale_special_category_processing(S),!large_scale_criminal_offence_processing(S), unlikely_risk_to_rights_freedoms(S).
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.2.a", A, S).
+// GENERATED_COVERAGE_GDPR_A27_2_B
+source_provision("GDPR_A27.2.b", "gdpr").
+source_text_kind("GDPR_A27.2.b", "point").
+source_scope_tag("GDPR_A27.2.b", "unsure").
+source_scope_tag("GDPR_A27.2.b", "territorial").
+// GDPR_A27_P2_b_exemption_condition
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), public_authority_body(A).
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.2.b", A, S).
+// GENERATED_COVERAGE_GDPR_A27_2
+source_provision("GDPR_A27.2", "gdpr").
+source_text_kind("GDPR_A27.2", "paragraph").
+source_scope_tag("GDPR_A27.2", "unsure").
+source_scope_tag("GDPR_A27.2", "territorial").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A27_P2_EXEMPT_OCCASIONAL
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), occasional_processing(S),!large_scale_special_category_processing(S),!large_scale_criminal_offence_processing(S).
+// GDPR_A27_P2_EXEMPT_PUBLIC_AUTHORITY
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), public_authority_body(A).
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.2", A, S).
+obligation(A, X, "GDPR_A27.2") :- provision_trigger("GDPR_A27.2", A, X).
+// GENERATED_COVERAGE_GDPR_A27_3
+source_provision("GDPR_A27.3", "gdpr").
+source_text_kind("GDPR_A27.3", "paragraph").
+source_scope_tag("GDPR_A27.3", "unsure").
+source_scope_tag("GDPR_A27.3", "territorial").
+source_scope_tag("GDPR_A27.3", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A27_P3_REP_ESTABLISHED_WHERE_DATA_SUBJECTS_ARE
+obligation(A, S, "GDPR_A27.3_representative_established_where_data_subjects_are") :- obligation(A, S, "GDPR_A27.1_designate_representative_in_union").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.3", A, S).
+obligation(A, X, "GDPR_A27.3") :- provision_trigger("GDPR_A27.3", A, X).
+// GENERATED_COVERAGE_GDPR_A27_4
+source_provision("GDPR_A27.4", "gdpr").
+source_text_kind("GDPR_A27.4", "paragraph").
+source_scope_tag("GDPR_A27.4", "unsure").
+source_scope_tag("GDPR_A27.4", "territorial").
+source_scope_tag("GDPR_A27.4", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// GDPR_A27_P4_MANDATE_REPRESENTATIVE
+obligation(A, S, "GDPR_A27.4_mandate_representative_for_authorities_and_data_subjects") :- obligation(A, S, "GDPR_A27.1_designate_representative_in_union").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.4", A, S).
+obligation(A, X, "GDPR_A27.4") :- provision_trigger("GDPR_A27.4", A, X).
+// GENERATED_COVERAGE_GDPR_A27_5
+source_provision("GDPR_A27.5", "gdpr").
+source_text_kind("GDPR_A27.5", "paragraph").
+source_scope_tag("GDPR_A27.5", "unsure").
+source_scope_tag("GDPR_A27.5", "territorial").
+gdpr_territorial_link(A, S) :- provision_trigger("GDPR_A27.5", A, S).
+obligation(A, X, "GDPR_A27.5") :- provision_trigger("GDPR_A27.5", A, X).
+without_prejudice("GDPR_A27.5", "external_or_more_specific_law").
+// GENERATED_COVERAGE_GDPR_A85
+source_provision("GDPR_A85", "gdpr").
+source_text_kind("GDPR_A85", "article").
+source_scope_tag("GDPR_A85", "exception").
+article_header("GDPR_A85", "gdpr").
+// GENERATED_COVERAGE_GDPR_A85_1
+source_provision("GDPR_A85.1", "gdpr").
+source_text_kind("GDPR_A85.1", "paragraph").
+source_scope_tag("GDPR_A85.1", "exception").
+obligation(A, X, "GDPR_A85.1") :- provision_trigger("GDPR_A85.1", A, X).
+// GENERATED_COVERAGE_GDPR_A85_2
+source_provision("GDPR_A85.2", "gdpr").
+source_text_kind("GDPR_A85.2", "paragraph").
+source_scope_tag("GDPR_A85.2", "exception").
+obligation(A, X, "GDPR_A85.2") :- provision_trigger("GDPR_A85.2", A, X).
+// GENERATED_COVERAGE_GDPR_A85_3
+source_provision("GDPR_A85.3", "gdpr").
+source_text_kind("GDPR_A85.3", "paragraph").
+source_scope_tag("GDPR_A85.3", "exception").
+obligation(A, X, "GDPR_A85.3") :- provision_trigger("GDPR_A85.3", A, X).
+// GENERATED_COVERAGE_GDPR_A86
+source_provision("GDPR_A86", "gdpr").
+source_text_kind("GDPR_A86", "article").
+source_scope_tag("GDPR_A86", "exception").
+permission(A, X, "GDPR_A86") :- provision_trigger("GDPR_A86", A, X).
+// GENERATED_COVERAGE_GDPR_A87
+source_provision("GDPR_A87", "gdpr").
+source_text_kind("GDPR_A87", "article").
+source_scope_tag("GDPR_A87", "exception").
+obligation(A, X, "GDPR_A87") :- provision_trigger("GDPR_A87", A, X).
+permission(A, X, "GDPR_A87") :- provision_trigger("GDPR_A87", A, X).
+// GENERATED_COVERAGE_GDPR_A88
+source_provision("GDPR_A88", "gdpr").
+source_text_kind("GDPR_A88", "article").
+source_scope_tag("GDPR_A88", "exception").
+article_header("GDPR_A88", "gdpr").
+// GENERATED_COVERAGE_GDPR_A88_1
+source_provision("GDPR_A88.1", "gdpr").
+source_text_kind("GDPR_A88.1", "paragraph").
+source_scope_tag("GDPR_A88.1", "exception").
+permission(A, X, "GDPR_A88.1") :- provision_trigger("GDPR_A88.1", A, X).
+// GENERATED_COVERAGE_GDPR_A88_2
+source_provision("GDPR_A88.2", "gdpr").
+source_text_kind("GDPR_A88.2", "paragraph").
+source_scope_tag("GDPR_A88.2", "exception").
+obligation(A, X, "GDPR_A88.2") :- provision_trigger("GDPR_A88.2", A, X).
+// GENERATED_COVERAGE_GDPR_A88_3
+source_provision("GDPR_A88.3", "gdpr").
+source_text_kind("GDPR_A88.3", "paragraph").
+source_scope_tag("GDPR_A88.3", "exception").
+obligation(A, X, "GDPR_A88.3") :- provision_trigger("GDPR_A88.3", A, X).
+permission(A, X, "GDPR_A88.3") :- provision_trigger("GDPR_A88.3", A, X).
+// GENERATED_COVERAGE_GDPR_A89
+source_provision("GDPR_A89", "gdpr").
+source_text_kind("GDPR_A89", "article").
+source_scope_tag("GDPR_A89", "exception").
+legal_effect_clause("GDPR_A89", "exception").
+// GENERATED_COVERAGE_GDPR_A89_1
+source_provision("GDPR_A89.1", "gdpr").
+source_text_kind("GDPR_A89.1", "paragraph").
+source_scope_tag("GDPR_A89.1", "exception").
+obligation(A, X, "GDPR_A89.1") :- provision_trigger("GDPR_A89.1", A, X).
+permission(A, X, "GDPR_A89.1") :- provision_trigger("GDPR_A89.1", A, X).
+// GENERATED_COVERAGE_GDPR_A89_2
+source_provision("GDPR_A89.2", "gdpr").
+source_text_kind("GDPR_A89.2", "paragraph").
+source_scope_tag("GDPR_A89.2", "exception").
+permission(A, X, "GDPR_A89.2") :- provision_trigger("GDPR_A89.2", A, X).
+// GENERATED_COVERAGE_GDPR_A89_3
+source_provision("GDPR_A89.3", "gdpr").
+source_text_kind("GDPR_A89.3", "paragraph").
+source_scope_tag("GDPR_A89.3", "exception").
+permission(A, X, "GDPR_A89.3") :- provision_trigger("GDPR_A89.3", A, X).
+// GENERATED_COVERAGE_GDPR_A89_4
+source_provision("GDPR_A89.4", "gdpr").
+source_text_kind("GDPR_A89.4", "paragraph").
+source_scope_tag("GDPR_A89.4", "exception").
+obligation(A, X, "GDPR_A89.4") :- provision_trigger("GDPR_A89.4", A, X).
+// GENERATED_COVERAGE_GDPR_A90
+source_provision("GDPR_A90", "gdpr").
+source_text_kind("GDPR_A90", "article").
+source_scope_tag("GDPR_A90", "exception").
+article_header("GDPR_A90", "gdpr").
+// GENERATED_COVERAGE_GDPR_A90_1
+source_provision("GDPR_A90.1", "gdpr").
+source_text_kind("GDPR_A90.1", "paragraph").
+source_scope_tag("GDPR_A90.1", "exception").
+obligation(A, X, "GDPR_A90.1") :- provision_trigger("GDPR_A90.1", A, X).
+permission(A, X, "GDPR_A90.1") :- provision_trigger("GDPR_A90.1", A, X).
+// GENERATED_COVERAGE_GDPR_A90_2
+source_provision("GDPR_A90.2", "gdpr").
+source_text_kind("GDPR_A90.2", "paragraph").
+source_scope_tag("GDPR_A90.2", "exception").
+obligation(A, X, "GDPR_A90.2") :- provision_trigger("GDPR_A90.2", A, X).
+permission(A, X, "GDPR_A90.2") :- provision_trigger("GDPR_A90.2", A, X).
+// GENERATED_COVERAGE_GDPR_A91
+source_provision("GDPR_A91", "gdpr").
+source_text_kind("GDPR_A91", "article").
+source_scope_tag("GDPR_A91", "exception").
+article_header("GDPR_A91", "gdpr").
+// GENERATED_COVERAGE_GDPR_A91_1
+source_provision("GDPR_A91.1", "gdpr").
+source_text_kind("GDPR_A91.1", "paragraph").
+source_scope_tag("GDPR_A91.1", "exception").
+permission(A, X, "GDPR_A91.1") :- provision_trigger("GDPR_A91.1", A, X).
+// GENERATED_COVERAGE_GDPR_A91_2
+source_provision("GDPR_A91.2", "gdpr").
+source_text_kind("GDPR_A91.2", "paragraph").
+source_scope_tag("GDPR_A91.2", "exception").
+obligation(A, X, "GDPR_A91.2") :- provision_trigger("GDPR_A91.2", A, X).
+permission(A, X, "GDPR_A91.2") :- provision_trigger("GDPR_A91.2", A, X).
+// GDPR_A94
+transitional_grace("gdpr", "directive_9546_repealed", "2018-05-25").
+// GENERATED_COVERAGE_GDPR_A94_1
+source_provision("GDPR_A94.1", "gdpr").
+source_text_kind("GDPR_A94.1", "paragraph").
+source_scope_tag("GDPR_A94.1", "temporal").
+repealed_on("directive_95_46_ec", "2018-05-25").
+permission(A, X, "GDPR_A94.1") :- provision_trigger("GDPR_A94.1", A, X).
+// GENERATED_COVERAGE_GDPR_A94_2
+source_provision("GDPR_A94.2", "gdpr").
+source_text_kind("GDPR_A94.2", "paragraph").
+source_scope_tag("GDPR_A94.2", "temporal").
+references_construed_as("directive_95_46_ec", "gdpr").
+references_construed_as("article_29_working_party", "european_data_protection_board").
+obligation(A, X, "GDPR_A94.2") :- provision_trigger("GDPR_A94.2", A, X).
+// GENERATED_COVERAGE_GDPR_A95
+source_provision("GDPR_A95", "gdpr").
+source_text_kind("GDPR_A95", "article").
+source_scope_tag("GDPR_A95", "material").
+// GDPR_A95_eprivacy_no_additional_obligations
+no_additional_obligations(A, S, "GDPR_A95") :- eprivacy_lex_specialis(S), provision_trigger("GDPR_A95", A, S).
+obligation(A, X, "GDPR_A95") :- provision_trigger("GDPR_A95", A, X).
+// GENERATED_COVERAGE_GDPR_A96
+source_provision("GDPR_A96", "gdpr").
+source_text_kind("GDPR_A96", "article").
+source_scope_tag("GDPR_A96", "temporal").
+validity_continues("pre_2016_05_24_international_transfer_agreements", "until_amended_replaced_or_revoked").
+obligation(A, X, "GDPR_A96") :- provision_trigger("GDPR_A96", A, X).
+permission(A, X, "GDPR_A96") :- provision_trigger("GDPR_A96", A, X).
+// GENERATED_COVERAGE_GDPR_A99
+source_provision("GDPR_A99", "gdpr").
+source_text_kind("GDPR_A99", "article").
+source_scope_tag("GDPR_A99", "temporal").
+article_header("GDPR_A99", "gdpr").
+// GDPR_A99_P1
+entry_into_force("gdpr", "2016-05-24").
+// GDPR_A99_P2
+application_date("gdpr", "general", "2018-05-25").
+// RECITAL_DERIVED_AIAct_R1
+source_provision("AIAct_R1", "ai_act").
+source_text_kind("AIAct_R1", "recital").
+source_scope_tag("AIAct_R1", "material").
+recital("AIAct_R1", "ai_act").
+recital_supports_rule("AIAct_R1", "AIAct_A1").
+interpretive_support("AIAct_R1", "ai_act_purpose").
+interpretive_support("AIAct_R1", "ai_lifecycle_scope").
+interpretive_support("AIAct_R1", "internal_market_and_fundamental_rights").
+ai_act_material(X) :- ai_system(X), ai_system_lifecycle_activity(X).
+ai_system_lifecycle_activity(X) :- development_of_ai_system(X).
+ai_system_lifecycle_activity(X) :- placing_on_market(X).
+ai_system_lifecycle_activity(X) :- putting_into_service(X).
+ai_system_lifecycle_activity(X) :- use_of_ai_system(X).
+ai_act_protected_interest("health").
+ai_act_protected_interest("safety").
+ai_act_protected_interest("fundamental_rights").
+ai_act_protected_interest("democracy").
+ai_act_protected_interest("rule_of_law").
+ai_act_protected_interest("environmental_protection").
+member_state_ai_restriction_preempted(X) :- ai_act_material(X),!explicitly_authorised_by_ai_act(X).
+// RECITAL_DERIVED_AIAct_R9
+source_provision("AIAct_R9", "ai_act").
+source_text_kind("AIAct_R9", "recital").
+source_scope_tag("AIAct_R9", "material").
+recital("AIAct_R9", "ai_act").
+recital_supports_rule("AIAct_R9", "AIAct_A6").
+recital_supports_rule("AIAct_R9", "AIAct_A8").
+interpretive_support("AIAct_R9", "high_risk_ai_harmonised_rules").
+interpretive_support("AIAct_R9", "without_prejudice_existing_union_law").
+high_risk_ai_harmonised_rules_apply(X) :- high_risk_ai(X).
+ai_act_complementary_to_existing_union_law(X) :- ai_system(X).
+without_prejudice("AIAct_R9", "data_protection_law").
+without_prejudice("AIAct_R9", "consumer_protection_law").
+without_prejudice("AIAct_R9", "fundamental_rights_law").
+without_prejudice("AIAct_R9", "employment_and_worker_protection_law").
+without_prejudice("AIAct_R9", "product_safety_law").
+existing_union_law_rights_remedies_unaffected(P, X) :- person_affected_by_ai_system(P, X), existing_union_law_right_or_remedy(P, X).
+// RECITAL_DERIVED_AIAct_R12
+source_provision("AIAct_R12", "ai_act").
+source_text_kind("AIAct_R12", "recital").
+source_scope_tag("AIAct_R12", "material").
+recital("AIAct_R12", "ai_act").
+interpretive_support("AIAct_R12", "regulation_2018_1725_reference").
+reference_instrument("AIAct_R12", "regulation_2018_1725").
+eu_institution_data_protection_regime("regulation_2018_1725").
+// RECITAL_DERIVED_AIAct_R13
+source_provision("AIAct_R13", "ai_act").
+source_text_kind("AIAct_R13", "recital").
+source_scope_tag("AIAct_R13", "material").
+recital("AIAct_R13", "ai_act").
+interpretive_support("AIAct_R13", "directive_2016_680_reference").
+reference_instrument("AIAct_R13", "directive_2016_680").
+law_enforcement_data_protection_regime("directive_2016_680").
+// RECITAL_DERIVED_AIAct_R14
+source_provision("AIAct_R14", "ai_act").
+source_text_kind("AIAct_R14", "recital").
+source_scope_tag("AIAct_R14", "material").
+recital("AIAct_R14", "ai_act").
+interpretive_support("AIAct_R14", "eprivacy_and_data_protection_without_prejudice").
+interpretive_support("AIAct_R14", "ai_system_definition_alignment").
+reference_instrument("AIAct_R14", "directive_2002_58_ec").
+without_prejudice("AIAct_R14", "union_data_protection_privacy_law").
+data_subject_rights_unaffected_by_ai_act(P, X) :- person_affected_by_ai_system(P, X), data_subject_right(P, X).
+automated_decision_making_rights_unaffected(P, X) :- person_affected_by_ai_system(P, X), automated_individual_decision_making(X).
+ai_system_definition_should_align_with_international_work(X) :- ai_system(X).
+// RECITAL_DERIVED_AIAct_R21
+source_provision("AIAct_R21", "ai_act").
+source_text_kind("AIAct_R21", "recital").
+source_scope_tag("AIAct_R21", "territorial").
+recital("AIAct_R21", "ai_act").
+recital_supports_rule("AIAct_R21", "AIAct_A2_P1_PT_a").
+recital_supports_rule("AIAct_R21", "AIAct_A2_P1_PT_b").
+interpretive_support("AIAct_R21", "provider_scope_irrespective_establishment").
+interpretive_support("AIAct_R21", "deployer_union_scope").
+provider_scope_irrespective_of_establishment(A, X) :- provider(A, X), ai_act_territorial_link(A, X).
+ai_act_territorial_link(A, X) :- deployer(A, X), established_in(A, "eu").
+ai_act_territorial_link(A, X) :- deployer(A, X), located_in(A, "eu").
+effective_union_protection_interest(X) :- ai_act_territorial_link(A, X).
+// RECITAL_DERIVED_AIAct_R22
+source_provision("AIAct_R22", "ai_act").
+source_text_kind("AIAct_R22", "recital").
+source_scope_tag("AIAct_R22", "territorial").
+recital("AIAct_R22", "ai_act").
+recital_supports_rule("AIAct_R22", "AIAct_A2_P1_PT_c").
+recital_supports_rule("AIAct_R22", "AIAct_A2_P1_PT_g").
+recital_supports_rule("AIAct_R22", "AIAct_A2_P4").
+interpretive_support("AIAct_R22", "output_used_in_union").
+interpretive_support("AIAct_R22", "third_country_operator_scope").
+interpretive_support("AIAct_R22", "international_cooperation_exception").
+ai_act_territorial_link(A, X) :- provider(A, X), established_in(A, "third_country"), output_used_in_eu(X).
+ai_act_territorial_link(A, X) :- deployer(A, X), established_in(A, "third_country"), output_used_in_eu(X).
+third_country_output_scope(X) :- output_used_in_eu(X), ai_system(X).
+circumvention_risk_scope(X) :- third_country_output_scope(X).
+ai_act_excluded(X) :- third_country_public_authority_or_international_organisation(X), law_enforcement_judicial_cooperation_agreement(X), adequate_fundamental_rights_safeguards(X).
+// RECITAL_DERIVED_AIAct_R23
+source_provision("AIAct_R23", "ai_act").
+source_text_kind("AIAct_R23", "recital").
+source_scope_tag("AIAct_R23", "material").
+recital("AIAct_R23", "ai_act").
+recital_supports_rule("AIAct_R23", "AIAct_A2_P1").
+interpretive_support("AIAct_R23", "union_institutions_as_provider_or_deployer").
+ai_act_material(X) :- ai_system(X), eu_institution_body_office_agency(A), provider(A, X).
+ai_act_material(X) :- ai_system(X), eu_institution_body_office_agency(A), deployer(A, X).
+ai_act_territorial_link(A, X) :- eu_institution_body_office_agency(A), provider(A, X).
+ai_act_territorial_link(A, X) :- eu_institution_body_office_agency(A), deployer(A, X).
+// RECITAL_DERIVED_AIAct_R24
+source_provision("AIAct_R24", "ai_act").
+source_text_kind("AIAct_R24", "recital").
+source_scope_tag("AIAct_R24", "exclusion").
+recital("AIAct_R24", "ai_act").
+recital_supports_rule("AIAct_R24", "AIAct_A2_P3").
+interpretive_support("AIAct_R24", "military_defence_national_security_exclusion").
+interpretive_support("AIAct_R24", "non_exclusive_civilian_reentry").
+ai_act_excluded(X) :- military_or_defence_purpose(X).
+ai_act_excluded(X) :- national_security_purpose(X).
+ai_act_exclusion_applies_regardless_entity_type(X) :- ai_act_excluded(X), military_or_defence_purpose(X).
+ai_act_exclusion_applies_regardless_entity_type(X) :- ai_act_excluded(X), national_security_purpose(X).
+ai_act_not_excluded_by_defence_or_security_reentry(X) :- military_or_defence_developed(X), non_military_civilian_use(X).
+ai_act_not_excluded_by_defence_or_security_reentry(X) :- national_security_developed(X), non_security_civilian_use(X).
+ai_act_material(X) :- ai_system(X), ai_act_not_excluded_by_defence_or_security_reentry(X).
+// RECITAL_DERIVED_AIAct_R25
+source_provision("AIAct_R25", "ai_act").
+source_text_kind("AIAct_R25", "recital").
+source_scope_tag("AIAct_R25", "exclusion").
+recital("AIAct_R25", "ai_act").
+recital_supports_rule("AIAct_R25", "AIAct_A2_P6").
+recital_supports_rule("AIAct_R25", "AIAct_A2_P8").
+interpretive_support("AIAct_R25", "scientific_research_development_exclusion").
+interpretive_support("AIAct_R25", "pre_market_testing_exclusion").
+interpretive_support("AIAct_R25", "market_reentry").
+ai_act_excluded(X) :- scientific_research_development_only(X).
+ai_act_excluded(X) :- pre_market_research_testing(X).
+scientific_research_development_only(X) :- ai_system_or_model(X), sole_purpose_scientific_research_development(X).
+pre_market_research_testing(X) :- ai_system_or_model(X), research_testing_development_before_market_or_service(X).
+ai_act_material(X) :- ai_system(X), placing_on_market(X).
+ai_act_material(X) :- ai_system(X), putting_into_service(X).
+ai_regulatory_sandbox_rules_available(X) :- research_testing_development_before_market_or_service(X).
+real_world_testing_rules_available(X) :- research_testing_development_before_market_or_service(X).
+// RECITAL_DERIVED_AIAct_R26
+source_provision("AIAct_R26", "ai_act").
+source_text_kind("AIAct_R26", "recital").
+source_scope_tag("AIAct_R26", "material").
+recital("AIAct_R26", "ai_act").
+recital_supports_rule("AIAct_R26", "AIAct_A5").
+recital_supports_rule("AIAct_R26", "AIAct_A6").
+recital_supports_rule("AIAct_R26", "AIAct_A8").
+recital_supports_rule("AIAct_R26", "AIAct_A50").
+interpretive_support("AIAct_R26", "risk_based_approach").
+interpretive_support("AIAct_R26", "unacceptable_high_risk_transparency").
+prohibited_practice(X) :- unacceptable_risk_ai(X).
+high_risk_ai(X) :- high_risk_ai_use_case(X).
+high_risk_ai_requirement_trigger(X) :- high_risk_ai(X).
+relevant_operator_obligation_trigger(A, X) :- high_risk_ai(X), operator(A, X).
+transparency_obligation_trigger(X) :- transparency_relevant_ai_system(X).
+risk_based_rule_intensity(X, "unacceptable") :- unacceptable_risk_ai(X).
+risk_based_rule_intensity(X, "high") :- high_risk_ai(X).
+risk_based_rule_intensity(X, "transparency") :- transparency_relevant_ai_system(X).
+// RECITAL_DERIVED_AIAct_R27
+source_provision("AIAct_R27", "ai_act").
+source_text_kind("AIAct_R27", "recital").
+source_scope_tag("AIAct_R27", "material").
+recital("AIAct_R27", "ai_act").
+interpretive_support("AIAct_R27", "trustworthy_ai_ethics_guidelines").
+interpretive_support("AIAct_R27", "non_binding_ethical_principles").
+non_binding_ethical_principle("human_agency_and_oversight").
+non_binding_ethical_principle("technical_robustness_and_safety").
+non_binding_ethical_principle("privacy_and_data_governance").
+non_binding_ethical_principle("transparency").
+non_binding_ethical_principle("diversity_non_discrimination_and_fairness").
+non_binding_ethical_principle("societal_and_environmental_wellbeing").
+non_binding_ethical_principle("accountability").
+trustworthy_human_centric_ai_design_support(X) :- ai_system(X), design_considers_non_binding_ethical_principles(X).
+// AIAct_applies
+// AIAct_applies_with_actor
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+// GENERATED_COVERAGE_AIACT_A1_1
+source_provision("AIAct_A1.1", "ai_act").
+source_text_kind("AIAct_A1.1", "paragraph").
+source_scope_tag("AIAct_A1.1", "material").
+legal_effect_clause("AIAct_A1.1", "material").
+// GENERATED_COVERAGE_AIACT_A1_2_A
+source_provision("AIAct_A1.2.a", "ai_act").
+source_text_kind("AIAct_A1.2.a", "point").
+source_scope_tag("AIAct_A1.2.a", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2.a", A, S).
+// GENERATED_COVERAGE_AIACT_A1_2_B
+source_provision("AIAct_A1.2.b", "ai_act").
+source_text_kind("AIAct_A1.2.b", "point").
+source_scope_tag("AIAct_A1.2.b", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2.b", A, S).
+// GENERATED_COVERAGE_AIACT_A1_2_C
+source_provision("AIAct_A1.2.c", "ai_act").
+source_text_kind("AIAct_A1.2.c", "point").
+source_scope_tag("AIAct_A1.2.c", "material").
+legal_effect_clause("AIAct_A1.2.c", "material").
+// GENERATED_COVERAGE_AIACT_A1_2_D
+source_provision("AIAct_A1.2.d", "ai_act").
+source_text_kind("AIAct_A1.2.d", "point").
+source_scope_tag("AIAct_A1.2.d", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2.d", A, S).
+// GENERATED_COVERAGE_AIACT_A1_2_E
+source_provision("AIAct_A1.2.e", "ai_act").
+source_text_kind("AIAct_A1.2.e", "point").
+source_scope_tag("AIAct_A1.2.e", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2.e", A, S).
+// GENERATED_COVERAGE_AIACT_A1_2_F
+source_provision("AIAct_A1.2.f", "ai_act").
+source_text_kind("AIAct_A1.2.f", "point").
+source_scope_tag("AIAct_A1.2.f", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2.f", A, S).
+// GENERATED_COVERAGE_AIACT_A1_2_G
+source_provision("AIAct_A1.2.g", "ai_act").
+source_text_kind("AIAct_A1.2.g", "point").
+source_scope_tag("AIAct_A1.2.g", "material").
+legal_effect_clause("AIAct_A1.2.g", "material").
+// GENERATED_COVERAGE_AIACT_A1_2
+source_provision("AIAct_A1.2", "ai_act").
+source_text_kind("AIAct_A1.2", "paragraph").
+source_scope_tag("AIAct_A1.2", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A1.2", A, S).
+// AIAct_A1_A2_AI_system_limb
+ai_act_material(S) :- ai_system(S).
+// AIAct_A1_A2_GPAI_limb
+ai_act_material(S) :- gpai_model(S).
+// AIAct_A2_P1_PT_a
+ai_act_territorial_link(A, S) :- provider(A, S), places_on_eu_market(A, S).
+// AIAct_A2_P1_PT_a
+ai_act_territorial_link(A, S) :- provider(A, S), puts_into_service_in_eu(A, S).
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), established_in(A, "eu").
+// AIAct_A2_P1_PT_b
+ai_act_territorial_link(A, S) :- deployer(A, S), located_in(A, "eu").
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- provider(A, S), output_used_in_eu(S).
+// AIAct_A2_P1_PT_c
+ai_act_territorial_link(A, S) :- deployer(A, S), output_used_in_eu(S).
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- importer(A, S), places_on_eu_market(A, S).
+// AIAct_A2_P1_PT_d
+ai_act_territorial_link(A, S) :- distributor(A, S), made_available_on_market(S, "eu").
+// GENERATED_COVERAGE_AIACT_A2_1_E
+source_provision("AIAct_A2.1.e", "ai_act").
+source_text_kind("AIAct_A2.1.e", "point").
+source_scope_tag("AIAct_A2.1.e", "material").
+source_scope_tag("AIAct_A2.1.e", "territorial").
+source_scope_tag("AIAct_A2.1.e", "exclusion").
+// AIAct_A2_P1_PT_e
+ai_act_territorial_link(A, X) :- manufacturer(A, X), places_on_eu_market_with_product(A, X).
+ai_act_territorial_link(A, X) :- manufacturer(A, X), puts_into_service_in_eu(A, X).
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.1.e", A, S).
+// GENERATED_COVERAGE_AIACT_A2_1_F
+source_provision("AIAct_A2.1.f", "ai_act").
+source_text_kind("AIAct_A2.1.f", "point").
+source_scope_tag("AIAct_A2.1.f", "material").
+source_scope_tag("AIAct_A2.1.f", "territorial").
+source_scope_tag("AIAct_A2.1.f", "exclusion").
+// AIAct_A2_P1_PT_f
+ai_act_territorial_link(A, X) :- authorised_representative(A, X), established_in(A, "eu").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.1.f", A, S).
+// GENERATED_COVERAGE_AIACT_A2_1_G
+source_provision("AIAct_A2.1.g", "ai_act").
+source_text_kind("AIAct_A2.1.g", "point").
+source_scope_tag("AIAct_A2.1.g", "material").
+source_scope_tag("AIAct_A2.1.g", "territorial").
+source_scope_tag("AIAct_A2.1.g", "exclusion").
+// AIAct_A2_P1_PT_g
+ai_act_territorial_link(A, X) :- affected_person(A, X), located_in(A, "eu").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.1.g", A, S).
+// GENERATED_COVERAGE_AIACT_A2_1
+source_provision("AIAct_A2.1", "ai_act").
+source_text_kind("AIAct_A2.1", "paragraph").
+source_scope_tag("AIAct_A2.1", "material").
+source_scope_tag("AIAct_A2.1", "territorial").
+source_scope_tag("AIAct_A2.1", "exclusion").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.1", A, S).
+ai_act_material(S) :- provision_trigger("AIAct_A2.1", A, S).
+// GENERATED_COVERAGE_AIACT_A2_2
+source_provision("AIAct_A2.2", "ai_act").
+source_text_kind("AIAct_A2.2", "paragraph").
+source_scope_tag("AIAct_A2.2", "material").
+source_scope_tag("AIAct_A2.2", "territorial").
+source_scope_tag("AIAct_A2.2", "exclusion").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.2", A, S).
+ai_act_material(S) :- provision_trigger("AIAct_A2.2", A, S).
+// AIAct_A2_P3
+ai_act_excluded(S) :- military_or_defence_purpose(S).
+// AIAct_A2_P3
+ai_act_excluded(S) :- national_security_purpose(S).
+// GENERATED_COVERAGE_AIACT_A2_4
+source_provision("AIAct_A2.4", "ai_act").
+source_text_kind("AIAct_A2.4", "paragraph").
+source_scope_tag("AIAct_A2.4", "material").
+source_scope_tag("AIAct_A2.4", "territorial").
+source_scope_tag("AIAct_A2.4", "exclusion").
+// AIAct_A2_P4_third_country_public_authority_exclusion
+ai_act_excluded(S) :- third_country_public_authority_or_international_organisation(S), law_enforcement_judicial_cooperation_agreement(S), adequate_fundamental_rights_safeguards(S).
+ai_act_excluded(S) :- provision_trigger("AIAct_A2.4", A, S).
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.4", A, S).
+ai_act_material(S) :- provision_trigger("AIAct_A2.4", A, S).
+// GENERATED_COVERAGE_AIACT_A2_5
+source_provision("AIAct_A2.5", "ai_act").
+source_text_kind("AIAct_A2.5", "paragraph").
+source_scope_tag("AIAct_A2.5", "material").
+source_scope_tag("AIAct_A2.5", "territorial").
+source_scope_tag("AIAct_A2.5", "exclusion").
+without_prejudice("AIAct_A2.5", "this_regulation_shall_not_affect_the_application_of_the_provisions_on_the_liabil").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.5", A, S).
+obligation(A, X, "AIAct_A2.5") :- provision_trigger("AIAct_A2.5", A, X).
+without_prejudice("AIAct_A2.5", "external_or_more_specific_law").
+// AIAct_A2_P6
+ai_act_excluded(S) :- scientific_research_development_only(S).
+// GENERATED_COVERAGE_AIACT_A2_7
+source_provision("AIAct_A2.7", "ai_act").
+source_text_kind("AIAct_A2.7", "paragraph").
+source_scope_tag("AIAct_A2.7", "material").
+source_scope_tag("AIAct_A2.7", "territorial").
+source_scope_tag("AIAct_A2.7", "exclusion").
+without_prejudice("AIAct_A2.7", "union_law_on_the_protection_of_personal_data_privacy_and_the_confidentiality_of").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.7", A, S).
+ai_act_material(S) :- provision_trigger("AIAct_A2.7", A, S).
+obligation(A, X, "AIAct_A2.7") :- provision_trigger("AIAct_A2.7", A, X).
+without_prejudice("AIAct_A2.7", "external_or_more_specific_law").
+// AIAct_A2_P8
+ai_act_excluded(S) :- pre_market_research_testing(S).
+// GENERATED_COVERAGE_AIACT_A2_9
+source_provision("AIAct_A2.9", "ai_act").
+source_text_kind("AIAct_A2.9", "paragraph").
+source_scope_tag("AIAct_A2.9", "material").
+source_scope_tag("AIAct_A2.9", "territorial").
+source_scope_tag("AIAct_A2.9", "exclusion").
+without_prejudice("AIAct_A2.9", "this_regulation_is_without_prejudice_to_the_rules_laid_down_by_other_union_legal").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.9", A, S).
+ai_act_material(S) :- provision_trigger("AIAct_A2.9", A, S).
+without_prejudice("AIAct_A2.9", "external_or_more_specific_law").
+// AIAct_A2_P10
+ai_act_excluded(S) :- purely_personal_household_activity(S).
+// GENERATED_COVERAGE_AIACT_A2_11
+source_provision("AIAct_A2.11", "ai_act").
+source_text_kind("AIAct_A2.11", "paragraph").
+source_scope_tag("AIAct_A2.11", "material").
+source_scope_tag("AIAct_A2.11", "territorial").
+source_scope_tag("AIAct_A2.11", "exclusion").
+member_state_discretion("AIAct_A2.11", "more_favourable_worker_protection_rules").
+ai_act_territorial_link(A, S) :- provision_trigger("AIAct_A2.11", A, S).
+without_prejudice("AIAct_A2.11", "external_or_more_specific_law").
+// AIAct_A2_P12
+ai_act_excluded(S) :- free_open_source_ai(S),!high_risk_ai(S),!prohibited_practice(S).
+// GENERATED_COVERAGE_AIACT_A3
+source_provision("AIAct_A3", "ai_act").
+source_text_kind("AIAct_A3", "article").
+source_scope_tag("AIAct_A3", "definition").
+legal_effect_clause("AIAct_A3", "definition").
+// AIAct_A3_P1
+ai_system(X) :- has_feature(X, "machine_based"), has_capability(X, "autonomous_operation"), has_capability(X, "inference_from_input").
+// GENERATED_COVERAGE_AIACT_A3_2
+source_provision("AIAct_A3.2", "ai_act").
+source_text_kind("AIAct_A3.2", "paragraph").
+source_scope_tag("AIAct_A3.2", "definition").
+defined_term("AIAct_A3.2", "risk").
+definition_source("risk", "AIAct_A3.2").
+definition_matches("risk", X) :- provision_trigger("AIAct_A3.2", A, X).
+// GENERATED_COVERAGE_AIACT_A3_3
+source_provision("AIAct_A3.3", "ai_act").
+source_text_kind("AIAct_A3.3", "paragraph").
+source_scope_tag("AIAct_A3.3", "definition").
+// AIAct_A3_P3_definition_provider
+provider(A, X) :- develops_ai_system(A, X), places_on_market(A, X).
+provider(A, X) :- develops_ai_system(A, X), puts_into_service(A, X).
+provider(A, X) :- has_ai_system_developed(A, X), places_on_market_under_own_name(A, X).
+defined_term("AIAct_A3.3", "provider").
+definition_source("provider", "AIAct_A3.3").
+definition_matches("provider", X) :- provision_trigger("AIAct_A3.3", A, X).
+// GENERATED_COVERAGE_AIACT_A3_4
+source_provision("AIAct_A3.4", "ai_act").
+source_text_kind("AIAct_A3.4", "paragraph").
+source_scope_tag("AIAct_A3.4", "definition").
+// AIAct_A3_P4_definition_deployer
+deployer(A, X) :- uses_ai_system_under_authority(A, X),!personal_non_professional_activity_of_deployer(A, X).
+defined_term("AIAct_A3.4", "deployer").
+definition_source("deployer", "AIAct_A3.4").
+definition_matches("deployer", X) :- provision_trigger("AIAct_A3.4", A, X).
+// GENERATED_COVERAGE_AIACT_A3_5
+source_provision("AIAct_A3.5", "ai_act").
+source_text_kind("AIAct_A3.5", "paragraph").
+source_scope_tag("AIAct_A3.5", "definition").
+// AIAct_A3_P5_definition_authorised_representative
+authorised_representative(A, X) :- established_in(A, "eu"), written_mandate_from_provider(A, X).
+defined_term("AIAct_A3.5", "authorised_representative").
+definition_source("authorised_representative", "AIAct_A3.5").
+definition_matches("authorised_representative", X) :- provision_trigger("AIAct_A3.5", A, X).
+// GENERATED_COVERAGE_AIACT_A3_6
+source_provision("AIAct_A3.6", "ai_act").
+source_text_kind("AIAct_A3.6", "paragraph").
+source_scope_tag("AIAct_A3.6", "definition").
+// AIAct_A3_P6_definition_importer
+importer(A, X) :- established_in(A, "eu"), places_on_market(A, X), third_country_provider_name_or_trademark(X).
+defined_term("AIAct_A3.6", "importer").
+definition_source("importer", "AIAct_A3.6").
+definition_matches("importer", X) :- provision_trigger("AIAct_A3.6", A, X).
+// GENERATED_COVERAGE_AIACT_A3_7
+source_provision("AIAct_A3.7", "ai_act").
+source_text_kind("AIAct_A3.7", "paragraph").
+source_scope_tag("AIAct_A3.7", "definition").
+// AIAct_A3_P7_definition_distributor
+distributor(A, X) :- supply_chain_actor(A, X), makes_available_on_union_market(A, X),!provider(A, X),!importer(A, X).
+defined_term("AIAct_A3.7", "distributor").
+definition_source("distributor", "AIAct_A3.7").
+definition_matches("distributor", X) :- provision_trigger("AIAct_A3.7", A, X).
+// GENERATED_COVERAGE_AIACT_A3_8
+source_provision("AIAct_A3.8", "ai_act").
+source_text_kind("AIAct_A3.8", "paragraph").
+source_scope_tag("AIAct_A3.8", "definition").
+// AIAct_A3_P8_definition_operator
+operator(A, X) :- provider(A, X).
+operator(A, X) :- product_manufacturer(A, X).
+operator(A, X) :- deployer(A, X).
+operator(A, X) :- authorised_representative(A, X).
+operator(A, X) :- importer(A, X).
+operator(A, X) :- distributor(A, X).
+defined_term("AIAct_A3.8", "operator").
+definition_source("operator", "AIAct_A3.8").
+definition_matches("operator", X) :- provision_trigger("AIAct_A3.8", A, X).
+// GENERATED_COVERAGE_AIACT_A3_9
+source_provision("AIAct_A3.9", "ai_act").
+source_text_kind("AIAct_A3.9", "paragraph").
+source_scope_tag("AIAct_A3.9", "definition").
+defined_term("AIAct_A3.9", "placing_on_the_market").
+definition_source("placing_on_market", "AIAct_A3.9").
+definition_matches("placing_on_market", X) :- provision_trigger("AIAct_A3.9", A, X).
+// GENERATED_COVERAGE_AIACT_A3_10
+source_provision("AIAct_A3.10", "ai_act").
+source_text_kind("AIAct_A3.10", "paragraph").
+source_scope_tag("AIAct_A3.10", "definition").
+defined_term("AIAct_A3.10", "making_available_on_the_market").
+definition_source("making_available_on_market", "AIAct_A3.10").
+definition_matches("making_available_on_market", X) :- provision_trigger("AIAct_A3.10", A, X).
+// GENERATED_COVERAGE_AIACT_A3_11
+source_provision("AIAct_A3.11", "ai_act").
+source_text_kind("AIAct_A3.11", "paragraph").
+source_scope_tag("AIAct_A3.11", "definition").
+defined_term("AIAct_A3.11", "putting_into_service").
+definition_source("putting_into_service", "AIAct_A3.11").
+definition_matches("putting_into_service", X) :- provision_trigger("AIAct_A3.11", A, X).
+// GENERATED_COVERAGE_AIACT_A3_12
+source_provision("AIAct_A3.12", "ai_act").
+source_text_kind("AIAct_A3.12", "paragraph").
+source_scope_tag("AIAct_A3.12", "definition").
+defined_term("AIAct_A3.12", "intended_purpose").
+definition_source("intended_purpose", "AIAct_A3.12").
+definition_matches("intended_purpose", X) :- provision_trigger("AIAct_A3.12", A, X).
+// GENERATED_COVERAGE_AIACT_A3_13
+source_provision("AIAct_A3.13", "ai_act").
+source_text_kind("AIAct_A3.13", "paragraph").
+source_scope_tag("AIAct_A3.13", "definition").
+defined_term("AIAct_A3.13", "reasonably_foreseeable_misuse").
+definition_source("reasonably_foreseeable_misuse", "AIAct_A3.13").
+definition_matches("reasonably_foreseeable_misuse", X) :- provision_trigger("AIAct_A3.13", A, X).
+permission(A, X, "AIAct_A3.13") :- provision_trigger("AIAct_A3.13", A, X).
+// GENERATED_COVERAGE_AIACT_A3_14
+source_provision("AIAct_A3.14", "ai_act").
+source_text_kind("AIAct_A3.14", "paragraph").
+source_scope_tag("AIAct_A3.14", "definition").
+defined_term("AIAct_A3.14", "safety_component").
+definition_source("safety_component", "AIAct_A3.14").
+definition_matches("safety_component", X) :- provision_trigger("AIAct_A3.14", A, X).
+// GENERATED_COVERAGE_AIACT_A3_15
+source_provision("AIAct_A3.15", "ai_act").
+source_text_kind("AIAct_A3.15", "paragraph").
+source_scope_tag("AIAct_A3.15", "definition").
+defined_term("AIAct_A3.15", "instructions_for_use").
+definition_source("instructions_for_use", "AIAct_A3.15").
+definition_matches("instructions_for_use", X) :- provision_trigger("AIAct_A3.15", A, X).
+// GENERATED_COVERAGE_AIACT_A3_16
+source_provision("AIAct_A3.16", "ai_act").
+source_text_kind("AIAct_A3.16", "paragraph").
+source_scope_tag("AIAct_A3.16", "definition").
+defined_term("AIAct_A3.16", "recall_of_an_ai_system").
+definition_source("ai_system_recall", "AIAct_A3.16").
+definition_matches("ai_system_recall", X) :- provision_trigger("AIAct_A3.16", A, X).
+// GENERATED_COVERAGE_AIACT_A3_17
+source_provision("AIAct_A3.17", "ai_act").
+source_text_kind("AIAct_A3.17", "paragraph").
+source_scope_tag("AIAct_A3.17", "definition").
+defined_term("AIAct_A3.17", "withdrawal_of_an_ai_system").
+definition_source("ai_system_withdrawal", "AIAct_A3.17").
+definition_matches("ai_system_withdrawal", X) :- provision_trigger("AIAct_A3.17", A, X).
+// GENERATED_COVERAGE_AIACT_A3_18
+source_provision("AIAct_A3.18", "ai_act").
+source_text_kind("AIAct_A3.18", "paragraph").
+source_scope_tag("AIAct_A3.18", "definition").
+defined_term("AIAct_A3.18", "performance_of_an_ai_system").
+definition_source("ai_system_performance", "AIAct_A3.18").
+definition_matches("ai_system_performance", X) :- provision_trigger("AIAct_A3.18", A, X).
+// GENERATED_COVERAGE_AIACT_A3_19
+source_provision("AIAct_A3.19", "ai_act").
+source_text_kind("AIAct_A3.19", "paragraph").
+source_scope_tag("AIAct_A3.19", "definition").
+defined_term("AIAct_A3.19", "notifying_authority").
+definition_source("notifying_authority", "AIAct_A3.19").
+definition_matches("notifying_authority", X) :- provision_trigger("AIAct_A3.19", A, X).
+// GENERATED_COVERAGE_AIACT_A3_20
+source_provision("AIAct_A3.20", "ai_act").
+source_text_kind("AIAct_A3.20", "paragraph").
+source_scope_tag("AIAct_A3.20", "definition").
+defined_term("AIAct_A3.20", "conformity_assessment").
+definition_source("conformity_assessment", "AIAct_A3.20").
+definition_matches("conformity_assessment", X) :- provision_trigger("AIAct_A3.20", A, X).
+// GENERATED_COVERAGE_AIACT_A3_21
+source_provision("AIAct_A3.21", "ai_act").
+source_text_kind("AIAct_A3.21", "paragraph").
+source_scope_tag("AIAct_A3.21", "definition").
+defined_term("AIAct_A3.21", "conformity_assessment_body").
+definition_source("conformity_assessment_body", "AIAct_A3.21").
+definition_matches("conformity_assessment_body", X) :- provision_trigger("AIAct_A3.21", A, X).
+// GENERATED_COVERAGE_AIACT_A3_22
+source_provision("AIAct_A3.22", "ai_act").
+source_text_kind("AIAct_A3.22", "paragraph").
+source_scope_tag("AIAct_A3.22", "definition").
+defined_term("AIAct_A3.22", "notified_body").
+definition_source("notified_body", "AIAct_A3.22").
+definition_matches("notified_body", X) :- provision_trigger("AIAct_A3.22", A, X).
+// GENERATED_COVERAGE_AIACT_A3_23
+source_provision("AIAct_A3.23", "ai_act").
+source_text_kind("AIAct_A3.23", "paragraph").
+source_scope_tag("AIAct_A3.23", "definition").
+defined_term("AIAct_A3.23", "substantial_modification").
+definition_source("substantial_modification", "AIAct_A3.23").
+definition_matches("substantial_modification", X) :- provision_trigger("AIAct_A3.23", A, X).
+// GENERATED_COVERAGE_AIACT_A3_24
+source_provision("AIAct_A3.24", "ai_act").
+source_text_kind("AIAct_A3.24", "paragraph").
+source_scope_tag("AIAct_A3.24", "definition").
+defined_term("AIAct_A3.24", "ce_marking").
+definition_source("ce_marking", "AIAct_A3.24").
+definition_matches("ce_marking", X) :- provision_trigger("AIAct_A3.24", A, X).
+// GENERATED_COVERAGE_AIACT_A3_25
+source_provision("AIAct_A3.25", "ai_act").
+source_text_kind("AIAct_A3.25", "paragraph").
+source_scope_tag("AIAct_A3.25", "definition").
+defined_term("AIAct_A3.25", "post_market_monitoring_system").
+definition_source("post_market_monitoring_system", "AIAct_A3.25").
+definition_matches("post_market_monitoring_system", X) :- provision_trigger("AIAct_A3.25", A, X).
+// GENERATED_COVERAGE_AIACT_A3_26
+source_provision("AIAct_A3.26", "ai_act").
+source_text_kind("AIAct_A3.26", "paragraph").
+source_scope_tag("AIAct_A3.26", "definition").
+defined_term("AIAct_A3.26", "market_surveillance_authority").
+definition_source("market_surveillance_authority", "AIAct_A3.26").
+definition_matches("market_surveillance_authority", X) :- provision_trigger("AIAct_A3.26", A, X).
+// GENERATED_COVERAGE_AIACT_A3_27
+source_provision("AIAct_A3.27", "ai_act").
+source_text_kind("AIAct_A3.27", "paragraph").
+source_scope_tag("AIAct_A3.27", "definition").
+defined_term("AIAct_A3.27", "harmonised_standard").
+definition_source("harmonised_standard", "AIAct_A3.27").
+definition_matches("harmonised_standard", X) :- provision_trigger("AIAct_A3.27", A, X).
+// GENERATED_COVERAGE_AIACT_A3_28
+source_provision("AIAct_A3.28", "ai_act").
+source_text_kind("AIAct_A3.28", "paragraph").
+source_scope_tag("AIAct_A3.28", "definition").
+defined_term("AIAct_A3.28", "common_specification").
+definition_source("common_specification", "AIAct_A3.28").
+definition_matches("common_specification", X) :- provision_trigger("AIAct_A3.28", A, X).
+// GENERATED_COVERAGE_AIACT_A3_29
+source_provision("AIAct_A3.29", "ai_act").
+source_text_kind("AIAct_A3.29", "paragraph").
+source_scope_tag("AIAct_A3.29", "definition").
+defined_term("AIAct_A3.29", "training_data").
+definition_source("training_data", "AIAct_A3.29").
+definition_matches("training_data", X) :- provision_trigger("AIAct_A3.29", A, X).
+// GENERATED_COVERAGE_AIACT_A3_30
+source_provision("AIAct_A3.30", "ai_act").
+source_text_kind("AIAct_A3.30", "paragraph").
+source_scope_tag("AIAct_A3.30", "definition").
+defined_term("AIAct_A3.30", "validation_data").
+definition_source("validation_data", "AIAct_A3.30").
+definition_matches("validation_data", X) :- provision_trigger("AIAct_A3.30", A, X).
+// GENERATED_COVERAGE_AIACT_A3_31
+source_provision("AIAct_A3.31", "ai_act").
+source_text_kind("AIAct_A3.31", "paragraph").
+source_scope_tag("AIAct_A3.31", "definition").
+defined_term("AIAct_A3.31", "validation_data_set").
+definition_source("validation_data_set", "AIAct_A3.31").
+definition_matches("validation_data_set", X) :- provision_trigger("AIAct_A3.31", A, X).
+// GENERATED_COVERAGE_AIACT_A3_32
+source_provision("AIAct_A3.32", "ai_act").
+source_text_kind("AIAct_A3.32", "paragraph").
+source_scope_tag("AIAct_A3.32", "definition").
+defined_term("AIAct_A3.32", "testing_data").
+definition_source("testing_data", "AIAct_A3.32").
+definition_matches("testing_data", X) :- provision_trigger("AIAct_A3.32", A, X).
+// GENERATED_COVERAGE_AIACT_A3_33
+source_provision("AIAct_A3.33", "ai_act").
+source_text_kind("AIAct_A3.33", "paragraph").
+source_scope_tag("AIAct_A3.33", "definition").
+defined_term("AIAct_A3.33", "input_data").
+definition_source("input_data", "AIAct_A3.33").
+definition_matches("input_data", X) :- provision_trigger("AIAct_A3.33", A, X).
+// GENERATED_COVERAGE_AIACT_A3_34
+source_provision("AIAct_A3.34", "ai_act").
+source_text_kind("AIAct_A3.34", "paragraph").
+source_scope_tag("AIAct_A3.34", "definition").
+defined_term("AIAct_A3.34", "biometric_data").
+definition_source("biometric_data", "AIAct_A3.34").
+definition_matches("biometric_data", X) :- provision_trigger("AIAct_A3.34", A, X).
+// GENERATED_COVERAGE_AIACT_A3_35
+source_provision("AIAct_A3.35", "ai_act").
+source_text_kind("AIAct_A3.35", "paragraph").
+source_scope_tag("AIAct_A3.35", "definition").
+defined_term("AIAct_A3.35", "biometric_identification").
+definition_source("biometric_identification", "AIAct_A3.35").
+definition_matches("biometric_identification", X) :- provision_trigger("AIAct_A3.35", A, X).
+// GENERATED_COVERAGE_AIACT_A3_36
+source_provision("AIAct_A3.36", "ai_act").
+source_text_kind("AIAct_A3.36", "paragraph").
+source_scope_tag("AIAct_A3.36", "definition").
+defined_term("AIAct_A3.36", "biometric_verification").
+definition_source("biometric_verification", "AIAct_A3.36").
+definition_matches("biometric_verification", X) :- provision_trigger("AIAct_A3.36", A, X).
+// GENERATED_COVERAGE_AIACT_A3_37
+source_provision("AIAct_A3.37", "ai_act").
+source_text_kind("AIAct_A3.37", "paragraph").
+source_scope_tag("AIAct_A3.37", "definition").
+defined_term("AIAct_A3.37", "special_categories_of_personal_data").
+definition_source("special_category_data", "AIAct_A3.37").
+definition_matches("special_category_data", X) :- provision_trigger("AIAct_A3.37", A, X).
+// GENERATED_COVERAGE_AIACT_A3_38
+source_provision("AIAct_A3.38", "ai_act").
+source_text_kind("AIAct_A3.38", "paragraph").
+source_scope_tag("AIAct_A3.38", "definition").
+defined_term("AIAct_A3.38", "sensitive_operational_data").
+definition_source("sensitive_operational_data", "AIAct_A3.38").
+definition_matches("sensitive_operational_data", X) :- provision_trigger("AIAct_A3.38", A, X).
+// GENERATED_COVERAGE_AIACT_A3_39
+source_provision("AIAct_A3.39", "ai_act").
+source_text_kind("AIAct_A3.39", "paragraph").
+source_scope_tag("AIAct_A3.39", "definition").
+defined_term("AIAct_A3.39", "emotion_recognition_system").
+definition_source("emotion_recognition_system", "AIAct_A3.39").
+definition_matches("emotion_recognition_system", X) :- provision_trigger("AIAct_A3.39", A, X).
+// GENERATED_COVERAGE_AIACT_A3_40
+source_provision("AIAct_A3.40", "ai_act").
+source_text_kind("AIAct_A3.40", "paragraph").
+source_scope_tag("AIAct_A3.40", "definition").
+defined_term("AIAct_A3.40", "biometric_categorisation_system").
+definition_source("biometric_categorisation_system", "AIAct_A3.40").
+definition_matches("biometric_categorisation_system", X) :- provision_trigger("AIAct_A3.40", A, X).
+// GENERATED_COVERAGE_AIACT_A3_41
+source_provision("AIAct_A3.41", "ai_act").
+source_text_kind("AIAct_A3.41", "paragraph").
+source_scope_tag("AIAct_A3.41", "definition").
+defined_term("AIAct_A3.41", "remote_biometric_identification_system").
+definition_source("remote_biometric_identification_system", "AIAct_A3.41").
+definition_matches("remote_biometric_identification_system", X) :- provision_trigger("AIAct_A3.41", A, X).
+// GENERATED_COVERAGE_AIACT_A3_42
+source_provision("AIAct_A3.42", "ai_act").
+source_text_kind("AIAct_A3.42", "paragraph").
+source_scope_tag("AIAct_A3.42", "definition").
+defined_term("AIAct_A3.42", "real_time_remote_biometric_identification_system").
+definition_source("realtime_remote_biometric_identification_system", "AIAct_A3.42").
+definition_matches("realtime_remote_biometric_identification_system", X) :- provision_trigger("AIAct_A3.42", A, X).
+// GENERATED_COVERAGE_AIACT_A3_43
+source_provision("AIAct_A3.43", "ai_act").
+source_text_kind("AIAct_A3.43", "paragraph").
+source_scope_tag("AIAct_A3.43", "definition").
+defined_term("AIAct_A3.43", "post_remote_biometric_identification_system").
+definition_source("post_remote_biometric_identification_system", "AIAct_A3.43").
+definition_matches("post_remote_biometric_identification_system", X) :- provision_trigger("AIAct_A3.43", A, X).
+// GENERATED_COVERAGE_AIACT_A3_44
+source_provision("AIAct_A3.44", "ai_act").
+source_text_kind("AIAct_A3.44", "paragraph").
+source_scope_tag("AIAct_A3.44", "definition").
+defined_term("AIAct_A3.44", "publicly_accessible_space").
+definition_source("publicly_accessible_space", "AIAct_A3.44").
+definition_matches("publicly_accessible_space", X) :- provision_trigger("AIAct_A3.44", A, X).
+permission(A, X, "AIAct_A3.44") :- provision_trigger("AIAct_A3.44", A, X).
+// GENERATED_COVERAGE_AIACT_A3_45_A
+source_provision("AIAct_A3.45.a", "ai_act").
+source_text_kind("AIAct_A3.45.a", "point").
+source_scope_tag("AIAct_A3.45.a", "definition").
+legal_effect_clause("AIAct_A3.45.a", "definition").
+// GENERATED_COVERAGE_AIACT_A3_45_B
+source_provision("AIAct_A3.45.b", "ai_act").
+source_text_kind("AIAct_A3.45.b", "point").
+source_scope_tag("AIAct_A3.45.b", "definition").
+legal_effect_clause("AIAct_A3.45.b", "definition").
+// GENERATED_COVERAGE_AIACT_A3_45
+source_provision("AIAct_A3.45", "ai_act").
+source_text_kind("AIAct_A3.45", "paragraph").
+source_scope_tag("AIAct_A3.45", "definition").
+defined_term("AIAct_A3.45", "law_enforcement_authority").
+definition_source("law_enforcement_authority", "AIAct_A3.45").
+definition_matches("law_enforcement_authority", X) :- provision_trigger("AIAct_A3.45", A, X).
+// GENERATED_COVERAGE_AIACT_A3_46
+source_provision("AIAct_A3.46", "ai_act").
+source_text_kind("AIAct_A3.46", "paragraph").
+source_scope_tag("AIAct_A3.46", "definition").
+defined_term("AIAct_A3.46", "law_enforcement").
+definition_source("law_enforcement", "AIAct_A3.46").
+definition_matches("law_enforcement", X) :- provision_trigger("AIAct_A3.46", A, X).
+// GENERATED_COVERAGE_AIACT_A3_47
+source_provision("AIAct_A3.47", "ai_act").
+source_text_kind("AIAct_A3.47", "paragraph").
+source_scope_tag("AIAct_A3.47", "definition").
+defined_term("AIAct_A3.47", "ai_office").
+definition_source("ai_office", "AIAct_A3.47").
+definition_matches("ai_office", X) :- provision_trigger("AIAct_A3.47", A, X).
+obligation(A, X, "AIAct_A3.47") :- provision_trigger("AIAct_A3.47", A, X).
+// GENERATED_COVERAGE_AIACT_A3_48
+source_provision("AIAct_A3.48", "ai_act").
+source_text_kind("AIAct_A3.48", "paragraph").
+source_scope_tag("AIAct_A3.48", "definition").
+defined_term("AIAct_A3.48", "national_competent_authority").
+definition_source("national_competent_authority", "AIAct_A3.48").
+definition_matches("national_competent_authority", X) :- provision_trigger("AIAct_A3.48", A, X).
+obligation(A, X, "AIAct_A3.48") :- provision_trigger("AIAct_A3.48", A, X).
+// GENERATED_COVERAGE_AIACT_A3_49_A_2
+source_provision("AIAct_A3.49.a_2", "ai_act").
+source_text_kind("AIAct_A3.49.a_2", "point").
+source_scope_tag("AIAct_A3.49.a_2", "definition").
+legal_effect_clause("AIAct_A3.49.a_2", "definition").
+// GENERATED_COVERAGE_AIACT_A3_49_B_2
+source_provision("AIAct_A3.49.b_2", "ai_act").
+source_text_kind("AIAct_A3.49.b_2", "point").
+source_scope_tag("AIAct_A3.49.b_2", "definition").
+legal_effect_clause("AIAct_A3.49.b_2", "definition").
+// GENERATED_COVERAGE_AIACT_A3_49_C_2
+source_provision("AIAct_A3.49.c_2", "ai_act").
+source_text_kind("AIAct_A3.49.c_2", "point").
+source_scope_tag("AIAct_A3.49.c_2", "definition").
+legal_effect_clause("AIAct_A3.49.c_2", "definition").
+// GENERATED_COVERAGE_AIACT_A3_49_D_2
+source_provision("AIAct_A3.49.d_2", "ai_act").
+source_text_kind("AIAct_A3.49.d_2", "point").
+source_scope_tag("AIAct_A3.49.d_2", "definition").
+legal_effect_clause("AIAct_A3.49.d_2", "definition").
+// GENERATED_COVERAGE_AIACT_A3_49
+source_provision("AIAct_A3.49", "ai_act").
+source_text_kind("AIAct_A3.49", "paragraph").
+source_scope_tag("AIAct_A3.49", "definition").
+defined_term("AIAct_A3.49", "serious_incident").
+definition_source("serious_incident", "AIAct_A3.49").
+definition_matches("serious_incident", X) :- provision_trigger("AIAct_A3.49", A, X).
+// GENERATED_COVERAGE_AIACT_A3_50
+source_provision("AIAct_A3.50", "ai_act").
+source_text_kind("AIAct_A3.50", "paragraph").
+source_scope_tag("AIAct_A3.50", "definition").
+defined_term("AIAct_A3.50", "personal_data").
+definition_source("personal_data", "AIAct_A3.50").
+definition_matches("personal_data", X) :- provision_trigger("AIAct_A3.50", A, X).
+// GENERATED_COVERAGE_AIACT_A3_51
+source_provision("AIAct_A3.51", "ai_act").
+source_text_kind("AIAct_A3.51", "paragraph").
+source_scope_tag("AIAct_A3.51", "definition").
+defined_term("AIAct_A3.51", "non_personal_data").
+definition_source("non_personal_data", "AIAct_A3.51").
+definition_matches("non_personal_data", X) :- provision_trigger("AIAct_A3.51", A, X).
+// GENERATED_COVERAGE_AIACT_A3_52
+source_provision("AIAct_A3.52", "ai_act").
+source_text_kind("AIAct_A3.52", "paragraph").
+source_scope_tag("AIAct_A3.52", "definition").
+defined_term("AIAct_A3.52", "profiling").
+definition_source("profiling", "AIAct_A3.52").
+definition_matches("profiling", X) :- provision_trigger("AIAct_A3.52", A, X).
+// GENERATED_COVERAGE_AIACT_A3_53
+source_provision("AIAct_A3.53", "ai_act").
+source_text_kind("AIAct_A3.53", "paragraph").
+source_scope_tag("AIAct_A3.53", "definition").
+defined_term("AIAct_A3.53", "real_world_testing_plan").
+definition_source("real_world_testing_plan", "AIAct_A3.53").
+definition_matches("real_world_testing_plan", X) :- provision_trigger("AIAct_A3.53", A, X).
+// GENERATED_COVERAGE_AIACT_A3_54
+source_provision("AIAct_A3.54", "ai_act").
+source_text_kind("AIAct_A3.54", "paragraph").
+source_scope_tag("AIAct_A3.54", "definition").
+defined_term("AIAct_A3.54", "sandbox_plan").
+definition_source("sandbox_plan", "AIAct_A3.54").
+definition_matches("sandbox_plan", X) :- provision_trigger("AIAct_A3.54", A, X).
+// GENERATED_COVERAGE_AIACT_A3_55
+source_provision("AIAct_A3.55", "ai_act").
+source_text_kind("AIAct_A3.55", "paragraph").
+source_scope_tag("AIAct_A3.55", "definition").
+defined_term("AIAct_A3.55", "ai_regulatory_sandbox").
+definition_source("ai_regulatory_sandbox", "AIAct_A3.55").
+definition_matches("ai_regulatory_sandbox", X) :- provision_trigger("AIAct_A3.55", A, X).
+// GENERATED_COVERAGE_AIACT_A3_56
+source_provision("AIAct_A3.56", "ai_act").
+source_text_kind("AIAct_A3.56", "paragraph").
+source_scope_tag("AIAct_A3.56", "definition").
+defined_term("AIAct_A3.56", "ai_literacy").
+definition_source("ai_literacy", "AIAct_A3.56").
+definition_matches("ai_literacy", X) :- provision_trigger("AIAct_A3.56", A, X).
+// GENERATED_COVERAGE_AIACT_A3_57
+source_provision("AIAct_A3.57", "ai_act").
+source_text_kind("AIAct_A3.57", "paragraph").
+source_scope_tag("AIAct_A3.57", "definition").
+defined_term("AIAct_A3.57", "testing_in_real_world_conditions").
+definition_source("testing_in_real_world_conditions", "AIAct_A3.57").
+definition_matches("testing_in_real_world_conditions", X) :- provision_trigger("AIAct_A3.57", A, X).
+// GENERATED_COVERAGE_AIACT_A3_58
+source_provision("AIAct_A3.58", "ai_act").
+source_text_kind("AIAct_A3.58", "paragraph").
+source_scope_tag("AIAct_A3.58", "definition").
+legal_effect_clause("AIAct_A3.58", "definition").
+// GENERATED_COVERAGE_AIACT_A3_59
+source_provision("AIAct_A3.59", "ai_act").
+source_text_kind("AIAct_A3.59", "paragraph").
+source_scope_tag("AIAct_A3.59", "definition").
+defined_term("AIAct_A3.59", "informed_consent").
+definition_source("informed_consent", "AIAct_A3.59").
+definition_matches("informed_consent", X) :- provision_trigger("AIAct_A3.59", A, X).
+// GENERATED_COVERAGE_AIACT_A3_60
+source_provision("AIAct_A3.60", "ai_act").
+source_text_kind("AIAct_A3.60", "paragraph").
+source_scope_tag("AIAct_A3.60", "definition").
+// AIAct_A3_P60_definition_deep_fake
+deep_fake(X) :- ai_generated_or_manipulated_content(X), resembles_existing_subject(X), falsely_appears_authentic_or_truthful(X).
+defined_term("AIAct_A3.60", "deep_fake").
+definition_source("deep_fake", "AIAct_A3.60").
+definition_matches("deep_fake", X) :- provision_trigger("AIAct_A3.60", A, X).
+// GENERATED_COVERAGE_AIACT_A3_61_A_3_I
+source_provision("AIAct_A3.61.a_3.i", "ai_act").
+source_text_kind("AIAct_A3.61.a_3.i", "subpoint").
+source_scope_tag("AIAct_A3.61.a_3.i", "definition").
+legal_effect_clause("AIAct_A3.61.a_3.i", "definition").
+// GENERATED_COVERAGE_AIACT_A3_61_A_3_II
+source_provision("AIAct_A3.61.a_3.ii", "ai_act").
+source_text_kind("AIAct_A3.61.a_3.ii", "subpoint").
+source_scope_tag("AIAct_A3.61.a_3.ii", "definition").
+legal_effect_clause("AIAct_A3.61.a_3.ii", "definition").
+// GENERATED_COVERAGE_AIACT_A3_61_A_3_III
+source_provision("AIAct_A3.61.a_3.iii", "ai_act").
+source_text_kind("AIAct_A3.61.a_3.iii", "subpoint").
+source_scope_tag("AIAct_A3.61.a_3.iii", "definition").
+legal_effect_clause("AIAct_A3.61.a_3.iii", "definition").
+// GENERATED_COVERAGE_AIACT_A3_61_A_3
+source_provision("AIAct_A3.61.a_3", "ai_act").
+source_text_kind("AIAct_A3.61.a_3", "point").
+source_scope_tag("AIAct_A3.61.a_3", "definition").
+legal_effect_clause("AIAct_A3.61.a_3", "definition").
+// GENERATED_COVERAGE_AIACT_A3_61_B_3
+source_provision("AIAct_A3.61.b_3", "ai_act").
+source_text_kind("AIAct_A3.61.b_3", "point").
+source_scope_tag("AIAct_A3.61.b_3", "definition").
+legal_effect_clause("AIAct_A3.61.b_3", "definition").
+// GENERATED_COVERAGE_AIACT_A3_61
+source_provision("AIAct_A3.61", "ai_act").
+source_text_kind("AIAct_A3.61", "paragraph").
+source_scope_tag("AIAct_A3.61", "definition").
+defined_term("AIAct_A3.61", "widespread_infringement").
+definition_source("widespread_infringement", "AIAct_A3.61").
+definition_matches("widespread_infringement", X) :- provision_trigger("AIAct_A3.61", A, X).
+// GENERATED_COVERAGE_AIACT_A3_62
+source_provision("AIAct_A3.62", "ai_act").
+source_text_kind("AIAct_A3.62", "paragraph").
+source_scope_tag("AIAct_A3.62", "definition").
+defined_term("AIAct_A3.62", "critical_infrastructure").
+definition_source("critical_infrastructure", "AIAct_A3.62").
+definition_matches("critical_infrastructure", X) :- provision_trigger("AIAct_A3.62", A, X).
+// AIAct_A3_P63
+gpai_model(X) :- has_feature(X, "significant_generality"), has_capability(X, "wide_range_of_tasks").
+// GENERATED_COVERAGE_AIACT_A3_64
+source_provision("AIAct_A3.64", "ai_act").
+source_text_kind("AIAct_A3.64", "paragraph").
+source_scope_tag("AIAct_A3.64", "definition").
+// AIAct_A3_P64_high_impact_capabilities
+high_impact_capabilities(X) :- capabilities_match_or_exceed_advanced_gpai_models(X).
+defined_term("AIAct_A3.64", "high_impact_capabilities").
+definition_source("high_impact_capabilities", "AIAct_A3.64").
+definition_matches("high_impact_capabilities", X) :- provision_trigger("AIAct_A3.64", A, X).
+// GENERATED_COVERAGE_AIACT_A3_65
+source_provision("AIAct_A3.65", "ai_act").
+source_text_kind("AIAct_A3.65", "paragraph").
+source_scope_tag("AIAct_A3.65", "definition").
+// AIAct_A3_P65_systemic_risk
+systemic_risk(X) :- gpai_model(X), high_impact_capabilities(X), significant_union_market_impact_or_negative_effects(X).
+defined_term("AIAct_A3.65", "systemic_risk").
+definition_source("systemic_risk", "AIAct_A3.65").
+definition_matches("systemic_risk", X) :- provision_trigger("AIAct_A3.65", A, X).
+// GENERATED_COVERAGE_AIACT_A3_66
+source_provision("AIAct_A3.66", "ai_act").
+source_text_kind("AIAct_A3.66", "paragraph").
+source_scope_tag("AIAct_A3.66", "definition").
+// AIAct_A3_P66_gpai_system
+general_purpose_ai_system(X) :- ai_system(X), based_on_gpai_model(X), capable_of_variety_of_purposes(X).
+defined_term("AIAct_A3.66", "general_purpose_ai_system").
+definition_source("general_purpose_ai_system", "AIAct_A3.66").
+definition_matches("general_purpose_ai_system", X) :- provision_trigger("AIAct_A3.66", A, X).
+// GENERATED_COVERAGE_AIACT_A3_67
+source_provision("AIAct_A3.67", "ai_act").
+source_text_kind("AIAct_A3.67", "paragraph").
+source_scope_tag("AIAct_A3.67", "definition").
+defined_term("AIAct_A3.67", "floating_point_operation").
+definition_source("floating_point_operation", "AIAct_A3.67").
+definition_matches("floating_point_operation", X) :- provision_trigger("AIAct_A3.67", A, X).
+// GENERATED_COVERAGE_AIACT_A3_68
+source_provision("AIAct_A3.68", "ai_act").
+source_text_kind("AIAct_A3.68", "paragraph").
+source_scope_tag("AIAct_A3.68", "definition").
+defined_term("AIAct_A3.68", "downstream_provider").
+definition_source("downstream_provider", "AIAct_A3.68").
+definition_matches("downstream_provider", X) :- provision_trigger("AIAct_A3.68", A, X).
+// GENERATED_COVERAGE_AIACT_A5
+source_provision("AIAct_A5", "ai_act").
+source_text_kind("AIAct_A5", "article").
+source_scope_tag("AIAct_A5", "material").
+article_header("AIAct_A5", "ai_act").
+// AIAct_A5_P1_PT_a
+prohibited_practice(X) :- ai_system(X), has_feature(X, "subliminal_manipulation").
+// AIAct_A5_P1_PT_b
+prohibited_practice(X) :- ai_system(X), has_feature(X, "exploits_vulnerabilities").
+// GENERATED_COVERAGE_AIACT_A5_1_C_I
+source_provision("AIAct_A5.1.c.i", "ai_act").
+source_text_kind("AIAct_A5.1.c.i", "subpoint").
+source_scope_tag("AIAct_A5.1.c.i", "material").
+prohibited_social_scoring_harm_type("unrelated_context_detrimental_treatment").
+legal_effect_clause("AIAct_A5.1.c.i", "material").
+// GENERATED_COVERAGE_AIACT_A5_1_C_II
+source_provision("AIAct_A5.1.c.ii", "ai_act").
+source_text_kind("AIAct_A5.1.c.ii", "subpoint").
+source_scope_tag("AIAct_A5.1.c.ii", "material").
+prohibited_social_scoring_harm_type("unjustified_or_disproportionate_treatment").
+legal_effect_clause("AIAct_A5.1.c.ii", "material").
+// AIAct_A5_P1_PT_c
+prohibited_practice(X) :- ai_system(X), has_feature(X, "social_scoring").
+// AIAct_A5_P1_PT_d
+prohibited_practice(X) :- ai_system(X), has_feature(X, "predictive_policing_profiling"),!predictive_policing_supporting_human_assessment_exception(X).
+// AIAct_A5_P1_PT_e
+prohibited_practice(X) :- ai_system(X), has_feature(X, "untargeted_face_db_scraping").
+// AIAct_A5_P1_PT_f
+prohibited_practice(X) :- ai_system(X), has_feature(X, "emotion_inference_workplace_edu"),!emotion_inference_medical_or_safety_exception(X).
+// AIAct_A5_P1_PT_g
+prohibited_practice(X) :- ai_system(X), has_feature(X, "biometric_categorisation_special"),!biometric_categorisation_lawful_filtering_exception(X).
+// GENERATED_COVERAGE_AIACT_A5_1_H_I
+source_provision("AIAct_A5.1.h.i", "ai_act").
+source_text_kind("AIAct_A5.1.h.i", "subpoint").
+source_scope_tag("AIAct_A5.1.h.i", "material").
+// AIAct_A5_P1_h_law_enforcement_exception_ground
+rbi_law_enforcement_exception(X) :- ai_system(X), rbi_exception_ground(X, "AIAct_A5.1.h.i").
+legal_effect_clause("AIAct_A5.1.h.i", "material").
+// GENERATED_COVERAGE_AIACT_A5_1_H_II
+source_provision("AIAct_A5.1.h.ii", "ai_act").
+source_text_kind("AIAct_A5.1.h.ii", "subpoint").
+source_scope_tag("AIAct_A5.1.h.ii", "material").
+// AIAct_A5_P1_h_law_enforcement_exception_ground
+rbi_law_enforcement_exception(X) :- ai_system(X), rbi_exception_ground(X, "AIAct_A5.1.h.ii").
+legal_effect_clause("AIAct_A5.1.h.ii", "material").
+// GENERATED_COVERAGE_AIACT_A5_1_H_III
+source_provision("AIAct_A5.1.h.iii", "ai_act").
+source_text_kind("AIAct_A5.1.h.iii", "subpoint").
+source_scope_tag("AIAct_A5.1.h.iii", "material").
+// AIAct_A5_P1_h_law_enforcement_exception_ground
+rbi_law_enforcement_exception(X) :- ai_system(X), rbi_exception_ground(X, "AIAct_A5.1.h.iii").
+without_prejudice("AIAct_A5.1.h.iii", "external_or_more_specific_law").
+// AIAct_A5_P1_PT_h
+prohibited_practice(X) :- ai_system(X), has_feature(X, "realtime_remote_biometric_id_public"),!rbi_law_enforcement_exception(X).
+// GENERATED_COVERAGE_AIACT_A5_1
+source_provision("AIAct_A5.1", "ai_act").
+source_text_kind("AIAct_A5.1", "paragraph").
+source_scope_tag("AIAct_A5.1", "material").
+source_scope_tag("AIAct_A5.1", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A5_P1_PROHIBITED_PRACTICE
+prohibition(A, X, "AIAct_A5.1_prohibited_ai_practice") :- applies_via_actor(X, T, "ai_act", A), prohibited_practice(X).
+obligation(A, X, "AIAct_A5.1") :- provision_trigger("AIAct_A5.1", A, X).
+// GENERATED_COVERAGE_AIACT_A5_2_A
+source_provision("AIAct_A5.2.a", "ai_act").
+source_text_kind("AIAct_A5.2.a", "point").
+source_scope_tag("AIAct_A5.2.a", "material").
+legal_effect_clause("AIAct_A5.2.a", "material").
+// GENERATED_COVERAGE_AIACT_A5_2_B
+source_provision("AIAct_A5.2.b", "ai_act").
+source_text_kind("AIAct_A5.2.b", "point").
+source_scope_tag("AIAct_A5.2.b", "material").
+obligation(A, X, "AIAct_A5.2.b") :- provision_trigger("AIAct_A5.2.b", A, X).
+permission(A, X, "AIAct_A5.2.b") :- provision_trigger("AIAct_A5.2.b", A, X).
+// GENERATED_COVERAGE_AIACT_A5_2
+source_provision("AIAct_A5.2", "ai_act").
+source_text_kind("AIAct_A5.2", "paragraph").
+source_scope_tag("AIAct_A5.2", "material").
+obligation(A, X, "AIAct_A5.2") :- provision_trigger("AIAct_A5.2", A, X).
+// GENERATED_COVERAGE_AIACT_A5_3
+source_provision("AIAct_A5.3", "ai_act").
+source_text_kind("AIAct_A5.3", "paragraph").
+source_scope_tag("AIAct_A5.3", "material").
+source_scope_tag("AIAct_A5.3", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A5_P3_PRIOR_AUTHORISATION_FOR_PERMITTED_RBI
+obligation(A, X, "AIAct_A5.3_prior_authorisation_for_permitted_realtime_rbi") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), has_feature(X, "realtime_remote_biometric_id_public"), rbi_law_enforcement_exception(X).
+ai_act_material(S) :- provision_trigger("AIAct_A5.3", A, S).
+obligation(A, X, "AIAct_A5.3") :- provision_trigger("AIAct_A5.3", A, X).
+permission(A, X, "AIAct_A5.3") :- provision_trigger("AIAct_A5.3", A, X).
+// GENERATED_COVERAGE_AIACT_A5_4
+source_provision("AIAct_A5.4", "ai_act").
+source_text_kind("AIAct_A5.4", "paragraph").
+source_scope_tag("AIAct_A5.4", "material").
+source_scope_tag("AIAct_A5.4", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A5_P4_NOTIFY_AUTHORITIES_FOR_PERMITTED_RBI
+obligation(A, X, "AIAct_A5.4_notify_authorities_for_permitted_realtime_rbi") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), has_feature(X, "realtime_remote_biometric_id_public"), rbi_law_enforcement_exception(X).
+ai_act_material(S) :- provision_trigger("AIAct_A5.4", A, S).
+obligation(A, X, "AIAct_A5.4") :- provision_trigger("AIAct_A5.4", A, X).
+without_prejudice("AIAct_A5.4", "external_or_more_specific_law").
+// GENERATED_COVERAGE_AIACT_A5_5
+source_provision("AIAct_A5.5", "ai_act").
+source_text_kind("AIAct_A5.5", "paragraph").
+source_scope_tag("AIAct_A5.5", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A5.5", A, S).
+obligation(A, X, "AIAct_A5.5") :- provision_trigger("AIAct_A5.5", A, X).
+permission(A, X, "AIAct_A5.5") :- provision_trigger("AIAct_A5.5", A, X).
+// GENERATED_COVERAGE_AIACT_A5_6
+source_provision("AIAct_A5.6", "ai_act").
+source_text_kind("AIAct_A5.6", "paragraph").
+source_scope_tag("AIAct_A5.6", "material").
+obligation(A, X, "AIAct_A5.6") :- provision_trigger("AIAct_A5.6", A, X).
+// GENERATED_COVERAGE_AIACT_A5_7
+source_provision("AIAct_A5.7", "ai_act").
+source_text_kind("AIAct_A5.7", "paragraph").
+source_scope_tag("AIAct_A5.7", "material").
+obligation(A, X, "AIAct_A5.7") :- provision_trigger("AIAct_A5.7", A, X).
+// GENERATED_COVERAGE_AIACT_A5_8
+source_provision("AIAct_A5.8", "ai_act").
+source_text_kind("AIAct_A5.8", "paragraph").
+source_scope_tag("AIAct_A5.8", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A5.8", A, S).
+obligation(A, X, "AIAct_A5.8") :- provision_trigger("AIAct_A5.8", A, X).
+without_prejudice("AIAct_A5.8", "external_or_more_specific_law").
+// GENERATED_COVERAGE_AIACT_A6
+source_provision("AIAct_A6", "ai_act").
+source_text_kind("AIAct_A6", "article").
+source_scope_tag("AIAct_A6", "material").
+article_header("AIAct_A6", "ai_act").
+// GENERATED_COVERAGE_AIACT_A6_1_A
+source_provision("AIAct_A6.1.a", "ai_act").
+source_text_kind("AIAct_A6.1.a", "point").
+source_scope_tag("AIAct_A6.1.a", "material").
+legal_effect_clause("AIAct_A6.1.a", "material").
+// GENERATED_COVERAGE_AIACT_A6_1_B
+source_provision("AIAct_A6.1.b", "ai_act").
+source_text_kind("AIAct_A6.1.b", "point").
+source_scope_tag("AIAct_A6.1.b", "material").
+legal_effect_clause("AIAct_A6.1.b", "material").
+// AIAct_A6_P1
+high_risk_ai(X) :- ai_system(X), safety_component_of(X, Y), annex_i_legislation(L), subject_to_third_party_assessment(Y, L).
+// AIAct_A6_P1_alt
+high_risk_ai(X) :- ai_system(X), annex_i_legislation(L), subject_to_third_party_assessment(X, L).
+// AIAct_A6_P2
+high_risk_ai(X) :- ai_system(X), used_in(X, U), annex_iii_use_case(U).
+// GENERATED_COVERAGE_AIACT_A6_3_A
+source_provision("AIAct_A6.3.a", "ai_act").
+source_text_kind("AIAct_A6.3.a", "point").
+source_scope_tag("AIAct_A6.3.a", "material").
+not_high_risk_derogation_factor(X, "narrow_procedural_task") :- narrow_procedural_task(X).
+legal_effect_clause("AIAct_A6.3.a", "material").
+// GENERATED_COVERAGE_AIACT_A6_3_B
+source_provision("AIAct_A6.3.b", "ai_act").
+source_text_kind("AIAct_A6.3.b", "point").
+source_scope_tag("AIAct_A6.3.b", "material").
+not_high_risk_derogation_factor(X, "improves_previous_human_activity") :- improves_previous_human_activity_result(X).
+legal_effect_clause("AIAct_A6.3.b", "material").
+// GENERATED_COVERAGE_AIACT_A6_3_C
+source_provision("AIAct_A6.3.c", "ai_act").
+source_text_kind("AIAct_A6.3.c", "point").
+source_scope_tag("AIAct_A6.3.c", "material").
+not_high_risk_derogation_factor(X, "detects_decision_patterns_or_deviations") :- detects_decision_patterns_or_deviations(X).
+legal_effect_clause("AIAct_A6.3.c", "material").
+// GENERATED_COVERAGE_AIACT_A6_3_D
+source_provision("AIAct_A6.3.d", "ai_act").
+source_text_kind("AIAct_A6.3.d", "point").
+source_scope_tag("AIAct_A6.3.d", "material").
+not_high_risk_derogation_factor(X, "preparatory_assessment_task") :- preparatory_assessment_task(X).
+obligation(A, X, "AIAct_A6.3.d") :- provision_trigger("AIAct_A6.3.d", A, X).
+// GENERATED_COVERAGE_AIACT_A6_3
+source_provision("AIAct_A6.3", "ai_act").
+source_text_kind("AIAct_A6.3", "paragraph").
+source_scope_tag("AIAct_A6.3", "material").
+// AIAct_A6_P3_high_risk_derogation
+not_high_risk_ai(X) :- ai_system(X), annex_iii_use_case(U), used_in(X, U), no_significant_risk_to_health_safety_fundamental_rights(X), not_high_risk_derogation_factor(X, F),!profiling_of_natural_persons(X).
+obligation(A, X, "AIAct_A6.3") :- provision_trigger("AIAct_A6.3", A, X).
+// GENERATED_COVERAGE_AIACT_A6_4
+source_provision("AIAct_A6.4", "ai_act").
+source_text_kind("AIAct_A6.4", "paragraph").
+source_scope_tag("AIAct_A6.4", "material").
+source_scope_tag("AIAct_A6.4", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A6_P4_DOCUMENT_NON_HIGH_RISK_ASSESSMENT
+obligation(A, X, "AIAct_A6.4_document_non_high_risk_assessment") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), ai_system(X), used_in(X, U), annex_iii_use_case(U), provider_claims_not_high_risk(A, X).
+// AIAct_A6_P4_REGISTER_NON_HIGH_RISK_CLAIM
+obligation(A, X, "AIAct_A6.4_register_under_article_49_if_claiming_not_high_risk") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), ai_system(X), used_in(X, U), annex_iii_use_case(U), provider_claims_not_high_risk(A, X).
+obligation(A, X, "AIAct_A6.4") :- provision_trigger("AIAct_A6.4", A, X).
+// GENERATED_COVERAGE_AIACT_A6_5
+source_provision("AIAct_A6.5", "ai_act").
+source_text_kind("AIAct_A6.5", "paragraph").
+source_scope_tag("AIAct_A6.5", "material").
+obligation(A, X, "AIAct_A6.5") :- provision_trigger("AIAct_A6.5", A, X).
+// GENERATED_COVERAGE_AIACT_A6_6
+source_provision("AIAct_A6.6", "ai_act").
+source_text_kind("AIAct_A6.6", "paragraph").
+source_scope_tag("AIAct_A6.6", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A6.6", A, S).
+permission(A, X, "AIAct_A6.6") :- provision_trigger("AIAct_A6.6", A, X).
+// GENERATED_COVERAGE_AIACT_A6_7
+source_provision("AIAct_A6.7", "ai_act").
+source_text_kind("AIAct_A6.7", "paragraph").
+source_scope_tag("AIAct_A6.7", "material").
+obligation(A, X, "AIAct_A6.7") :- provision_trigger("AIAct_A6.7", A, X).
+// GENERATED_COVERAGE_AIACT_A6_8
+source_provision("AIAct_A6.8", "ai_act").
+source_text_kind("AIAct_A6.8", "paragraph").
+source_scope_tag("AIAct_A6.8", "material").
+obligation(A, X, "AIAct_A6.8") :- provision_trigger("AIAct_A6.8", A, X).
+// GENERATED_COVERAGE_AIACT_A7
+source_provision("AIAct_A7", "ai_act").
+source_text_kind("AIAct_A7", "article").
+source_scope_tag("AIAct_A7", "material").
+article_header("AIAct_A7", "ai_act").
+// GENERATED_COVERAGE_AIACT_A7_1_A
+source_provision("AIAct_A7.1.a", "ai_act").
+source_text_kind("AIAct_A7.1.a", "point").
+source_scope_tag("AIAct_A7.1.a", "material").
+legal_effect_clause("AIAct_A7.1.a", "material").
+// GENERATED_COVERAGE_AIACT_A7_1_B
+source_provision("AIAct_A7.1.b", "ai_act").
+source_text_kind("AIAct_A7.1.b", "point").
+source_scope_tag("AIAct_A7.1.b", "material").
+legal_effect_clause("AIAct_A7.1.b", "material").
+// GENERATED_COVERAGE_AIACT_A7_1
+source_provision("AIAct_A7.1", "ai_act").
+source_text_kind("AIAct_A7.1", "paragraph").
+source_scope_tag("AIAct_A7.1", "material").
+permission(A, X, "AIAct_A7.1") :- provision_trigger("AIAct_A7.1", A, X).
+// GENERATED_COVERAGE_AIACT_A7_2_A
+source_provision("AIAct_A7.2.a", "ai_act").
+source_text_kind("AIAct_A7.2.a", "point").
+source_scope_tag("AIAct_A7.2.a", "material").
+legal_effect_clause("AIAct_A7.2.a", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_B
+source_provision("AIAct_A7.2.b", "ai_act").
+source_text_kind("AIAct_A7.2.b", "point").
+source_scope_tag("AIAct_A7.2.b", "material").
+legal_effect_clause("AIAct_A7.2.b", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_C
+source_provision("AIAct_A7.2.c", "ai_act").
+source_text_kind("AIAct_A7.2.c", "point").
+source_scope_tag("AIAct_A7.2.c", "material").
+legal_effect_clause("AIAct_A7.2.c", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_D
+source_provision("AIAct_A7.2.d", "ai_act").
+source_text_kind("AIAct_A7.2.d", "point").
+source_scope_tag("AIAct_A7.2.d", "material").
+permission(A, X, "AIAct_A7.2.d") :- provision_trigger("AIAct_A7.2.d", A, X).
+// GENERATED_COVERAGE_AIACT_A7_2_E
+source_provision("AIAct_A7.2.e", "ai_act").
+source_text_kind("AIAct_A7.2.e", "point").
+source_scope_tag("AIAct_A7.2.e", "material").
+legal_effect_clause("AIAct_A7.2.e", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_F
+source_provision("AIAct_A7.2.f", "ai_act").
+source_text_kind("AIAct_A7.2.f", "point").
+source_scope_tag("AIAct_A7.2.f", "material").
+legal_effect_clause("AIAct_A7.2.f", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_G
+source_provision("AIAct_A7.2.g", "ai_act").
+source_text_kind("AIAct_A7.2.g", "point").
+source_scope_tag("AIAct_A7.2.g", "material").
+legal_effect_clause("AIAct_A7.2.g", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_H_I
+source_provision("AIAct_A7.2.h.i", "ai_act").
+source_text_kind("AIAct_A7.2.h.i", "subpoint").
+source_scope_tag("AIAct_A7.2.h.i", "material").
+obligation(A, X, "AIAct_A7.2.h.i") :- provision_trigger("AIAct_A7.2.h.i", A, X).
+// GENERATED_COVERAGE_AIACT_A7_2_H
+source_provision("AIAct_A7.2.h", "ai_act").
+source_text_kind("AIAct_A7.2.h", "point").
+source_scope_tag("AIAct_A7.2.h", "material").
+legal_effect_clause("AIAct_A7.2.h", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_J
+source_provision("AIAct_A7.2.j", "ai_act").
+source_text_kind("AIAct_A7.2.j", "point").
+source_scope_tag("AIAct_A7.2.j", "material").
+legal_effect_clause("AIAct_A7.2.j", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_K_I
+source_provision("AIAct_A7.2.k.i", "ai_act").
+source_text_kind("AIAct_A7.2.k.i", "subpoint").
+source_scope_tag("AIAct_A7.2.k.i", "material").
+legal_effect_clause("AIAct_A7.2.k.i", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_K_II
+source_provision("AIAct_A7.2.k.ii", "ai_act").
+source_text_kind("AIAct_A7.2.k.ii", "subpoint").
+source_scope_tag("AIAct_A7.2.k.ii", "material").
+legal_effect_clause("AIAct_A7.2.k.ii", "material").
+// GENERATED_COVERAGE_AIACT_A7_2_K
+source_provision("AIAct_A7.2.k", "ai_act").
+source_text_kind("AIAct_A7.2.k", "point").
+source_scope_tag("AIAct_A7.2.k", "material").
+legal_effect_clause("AIAct_A7.2.k", "material").
+// GENERATED_COVERAGE_AIACT_A7_2
+source_provision("AIAct_A7.2", "ai_act").
+source_text_kind("AIAct_A7.2", "paragraph").
+source_scope_tag("AIAct_A7.2", "material").
+obligation(A, X, "AIAct_A7.2") :- provision_trigger("AIAct_A7.2", A, X).
+// GENERATED_COVERAGE_AIACT_A7_3_A
+source_provision("AIAct_A7.3.a", "ai_act").
+source_text_kind("AIAct_A7.3.a", "point").
+source_scope_tag("AIAct_A7.3.a", "material").
+legal_effect_clause("AIAct_A7.3.a", "material").
+// GENERATED_COVERAGE_AIACT_A7_3_B
+source_provision("AIAct_A7.3.b", "ai_act").
+source_text_kind("AIAct_A7.3.b", "point").
+source_scope_tag("AIAct_A7.3.b", "material").
+legal_effect_clause("AIAct_A7.3.b", "material").
+// GENERATED_COVERAGE_AIACT_A7_3
+source_provision("AIAct_A7.3", "ai_act").
+source_text_kind("AIAct_A7.3", "paragraph").
+source_scope_tag("AIAct_A7.3", "material").
+permission(A, X, "AIAct_A7.3") :- provision_trigger("AIAct_A7.3", A, X).
+// GENERATED_COVERAGE_AIACT_A50
+source_provision("AIAct_A50", "ai_act").
+source_text_kind("AIAct_A50", "article").
+source_scope_tag("AIAct_A50", "unsure").
+source_scope_tag("AIAct_A50", "material").
+article_header("AIAct_A50", "ai_act").
+// GENERATED_COVERAGE_AIACT_A50_1
+source_provision("AIAct_A50.1", "ai_act").
+source_text_kind("AIAct_A50.1", "paragraph").
+source_scope_tag("AIAct_A50.1", "unsure").
+source_scope_tag("AIAct_A50.1", "material").
+source_scope_tag("AIAct_A50.1", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A50_P1_INFORM_AI_INTERACTION
+obligation(A, X, "AIAct_A50.1_inform_natural_person_ai_interaction") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), intended_to_interact_directly_with_natural_persons(X),!interaction_obviously_ai(X).
+obligation(A, X, "AIAct_A50.1") :- provision_trigger("AIAct_A50.1", A, X).
+// GENERATED_COVERAGE_AIACT_A50_2
+source_provision("AIAct_A50.2", "ai_act").
+source_text_kind("AIAct_A50.2", "paragraph").
+source_scope_tag("AIAct_A50.2", "unsure").
+source_scope_tag("AIAct_A50.2", "material").
+source_scope_tag("AIAct_A50.2", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A50_P2_MARK_SYNTHETIC_OUTPUTS
+obligation(A, X, "AIAct_A50.2_mark_synthetic_outputs_machine_readable") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), generates_synthetic_content(X).
+obligation(A, X, "AIAct_A50.2") :- provision_trigger("AIAct_A50.2", A, X).
+permission(A, X, "AIAct_A50.2") :- provision_trigger("AIAct_A50.2", A, X).
+// GENERATED_COVERAGE_AIACT_A50_3
+source_provision("AIAct_A50.3", "ai_act").
+source_text_kind("AIAct_A50.3", "paragraph").
+source_scope_tag("AIAct_A50.3", "unsure").
+source_scope_tag("AIAct_A50.3", "material").
+source_scope_tag("AIAct_A50.3", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A50_P3_INFORM_EMOTION_RECOGNITION
+obligation(A, X, "AIAct_A50.3_inform_exposed_persons_emotion_recognition") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), emotion_recognition_system(X).
+// AIAct_A50_P3_INFORM_BIOMETRIC_CATEGORISATION
+obligation(A, X, "AIAct_A50.3_inform_exposed_persons_biometric_categorisation") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), biometric_categorisation_system(X).
+obligation(A, X, "AIAct_A50.3") :- provision_trigger("AIAct_A50.3", A, X).
+// GENERATED_COVERAGE_AIACT_A50_4
+source_provision("AIAct_A50.4", "ai_act").
+source_text_kind("AIAct_A50.4", "paragraph").
+source_scope_tag("AIAct_A50.4", "unsure").
+source_scope_tag("AIAct_A50.4", "material").
+source_scope_tag("AIAct_A50.4", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A50_P4_DISCLOSE_DEEP_FAKE
+obligation(A, X, "AIAct_A50.4_disclose_deep_fake_content") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), deep_fake_generation_or_manipulation(X),!deep_fake_disclosure_exempt(X).
+// AIAct_A50_P4_DISCLOSE_AI_GENERATED_PUBLIC_INTEREST_TEXT
+obligation(A, X, "AIAct_A50.4_disclose_ai_generated_public_interest_text") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), generated_text_public_interest(X),!human_review_or_editorial_control(X).
+obligation(A, X, "AIAct_A50.4") :- provision_trigger("AIAct_A50.4", A, X).
+// GENERATED_COVERAGE_AIACT_A50_5
+source_provision("AIAct_A50.5", "ai_act").
+source_text_kind("AIAct_A50.5", "paragraph").
+source_scope_tag("AIAct_A50.5", "unsure").
+source_scope_tag("AIAct_A50.5", "material").
+source_scope_tag("AIAct_A50.5", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P1
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.1_inform_natural_person_ai_interaction").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P3_EMOTION
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.3_inform_exposed_persons_emotion_recognition").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P3_BIOMETRIC
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.3_inform_exposed_persons_biometric_categorisation").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P4_DEEP_FAKE
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.4_disclose_deep_fake_content").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P4_TEXT
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.4_disclose_ai_generated_public_interest_text").
+obligation(A, X, "AIAct_A50.5") :- provision_trigger("AIAct_A50.5", A, X).
+// GENERATED_COVERAGE_AIACT_A50_6
+source_provision("AIAct_A50.6", "ai_act").
+source_text_kind("AIAct_A50.6", "paragraph").
+source_scope_tag("AIAct_A50.6", "unsure").
+source_scope_tag("AIAct_A50.6", "material").
+without_prejudice("AIAct_A50.6", "paragraphs_1_to_4_shall_not_affect_the_requirements_and_obligations_set_out_in_c").
+obligation(A, X, "AIAct_A50.6") :- provision_trigger("AIAct_A50.6", A, X).
+without_prejudice("AIAct_A50.6", "external_or_more_specific_law").
+// GENERATED_COVERAGE_AIACT_A50_7
+source_provision("AIAct_A50.7", "ai_act").
+source_text_kind("AIAct_A50.7", "paragraph").
+source_scope_tag("AIAct_A50.7", "unsure").
+source_scope_tag("AIAct_A50.7", "material").
+ai_act_material(S) :- provision_trigger("AIAct_A50.7", A, S).
+obligation(A, X, "AIAct_A50.7") :- provision_trigger("AIAct_A50.7", A, X).
+permission(A, X, "AIAct_A50.7") :- provision_trigger("AIAct_A50.7", A, X).
+// GENERATED_COVERAGE_AIACT_A51
+source_provision("AIAct_A51", "ai_act").
+source_text_kind("AIAct_A51", "article").
+source_scope_tag("AIAct_A51", "material").
+article_header("AIAct_A51", "ai_act").
+// AIAct_A51_P1_PT_a
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, "compute_above_10e25").
+// AIAct_A51_P1_PT_b
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, "commission_designated").
+// GENERATED_COVERAGE_AIACT_A51_1
+source_provision("AIAct_A51.1", "ai_act").
+source_text_kind("AIAct_A51.1", "paragraph").
+source_scope_tag("AIAct_A51.1", "material").
+// AIAct_A51_P1_systemic_risk_conditions
+gpai_systemic_risk(X) :- gpai_model(X), gpai_high_impact_capability(X).
+gpai_systemic_risk(X) :- gpai_model(X), has_feature(X, "commission_designated").
+ai_act_material(S) :- provision_trigger("AIAct_A51.1", A, S).
+obligation(A, X, "AIAct_A51.1") :- provision_trigger("AIAct_A51.1", A, X).
+// GENERATED_COVERAGE_AIACT_A51_2
+source_provision("AIAct_A51.2", "ai_act").
+source_text_kind("AIAct_A51.2", "paragraph").
+source_scope_tag("AIAct_A51.2", "material").
+// AIAct_A51_P2_high_impact_presumption
+gpai_high_impact_capability(X) :- gpai_model(X), has_feature(X, "compute_above_10e25").
+obligation(A, X, "AIAct_A51.2") :- provision_trigger("AIAct_A51.2", A, X).
+// GENERATED_COVERAGE_AIACT_A51_3
+source_provision("AIAct_A51.3", "ai_act").
+source_text_kind("AIAct_A51.3", "paragraph").
+source_scope_tag("AIAct_A51.3", "material").
+obligation(A, X, "AIAct_A51.3") :- provision_trigger("AIAct_A51.3", A, X).
+// GENERATED_COVERAGE_AIACT_A52
+source_provision("AIAct_A52", "ai_act").
+source_text_kind("AIAct_A52", "article").
+source_scope_tag("AIAct_A52", "unsure").
+article_header("AIAct_A52", "ai_act").
+// GENERATED_COVERAGE_AIACT_A52_1
+source_provision("AIAct_A52.1", "ai_act").
+source_text_kind("AIAct_A52.1", "paragraph").
+source_scope_tag("AIAct_A52.1", "unsure").
+source_scope_tag("AIAct_A52.1", "obligation").
+// COPIED_FROM_OBLIGATION_RULES_SHEET
+// AIAct_A52_P1_NOTIFY_COMMISSION
+obligation(A, X, "AIAct_A52.1_notify_commission_within_two_weeks") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), gpai_model(X), gpai_high_impact_capability(X).
+// AIAct_A52_P1_INCLUDE_DEMONSTRATING_INFORMATION
+obligation(A, X, "AIAct_A52.1_include_information_demonstrating_requirement_met") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), gpai_model(X), gpai_high_impact_capability(X).
+obligation(A, X, "AIAct_A52.1") :- provision_trigger("AIAct_A52.1", A, X).
+permission(A, X, "AIAct_A52.1") :- provision_trigger("AIAct_A52.1", A, X).
+// GENERATED_COVERAGE_AIACT_A52_2
+source_provision("AIAct_A52.2", "ai_act").
+source_text_kind("AIAct_A52.2", "paragraph").
+source_scope_tag("AIAct_A52.2", "unsure").
+permission(A, X, "AIAct_A52.2") :- provision_trigger("AIAct_A52.2", A, X).
+// GENERATED_COVERAGE_AIACT_A52_3
+source_provision("AIAct_A52.3", "ai_act").
+source_text_kind("AIAct_A52.3", "paragraph").
+source_scope_tag("AIAct_A52.3", "unsure").
+obligation(A, X, "AIAct_A52.3") :- provision_trigger("AIAct_A52.3", A, X).
+// GENERATED_COVERAGE_AIACT_A52_4
+source_provision("AIAct_A52.4", "ai_act").
+source_text_kind("AIAct_A52.4", "paragraph").
+source_scope_tag("AIAct_A52.4", "unsure").
+permission(A, X, "AIAct_A52.4") :- provision_trigger("AIAct_A52.4", A, X).
+// GENERATED_COVERAGE_AIACT_A52_5
+source_provision("AIAct_A52.5", "ai_act").
+source_text_kind("AIAct_A52.5", "paragraph").
+source_scope_tag("AIAct_A52.5", "unsure").
+obligation(A, X, "AIAct_A52.5") :- provision_trigger("AIAct_A52.5", A, X).
+permission(A, X, "AIAct_A52.5") :- provision_trigger("AIAct_A52.5", A, X).
+// GENERATED_COVERAGE_AIACT_A52_6
+source_provision("AIAct_A52.6", "ai_act").
+source_text_kind("AIAct_A52.6", "paragraph").
+source_scope_tag("AIAct_A52.6", "unsure").
+obligation(A, X, "AIAct_A52.6") :- provision_trigger("AIAct_A52.6", A, X).
+without_prejudice("AIAct_A52.6", "external_or_more_specific_law").
+// GENERATED_COVERAGE_AIACT_A111
+source_provision("AIAct_A111", "ai_act").
+source_text_kind("AIAct_A111", "article").
+source_scope_tag("AIAct_A111", "temporal").
+legal_effect_clause("AIAct_A111", "temporal").
+// AIAct_A111_P1
+transitional_grace("ai_act", "high_risk_predeployed", "2026-08-02").
+// GENERATED_COVERAGE_AIACT_A111_2
+source_provision("AIAct_A111.2", "ai_act").
+source_text_kind("AIAct_A111.2", "paragraph").
+source_scope_tag("AIAct_A111.2", "temporal").
+transitional_grace("ai_act", "high_risk_predeployed_significant_design_change_or_annex_x", "2026-08-02").
+obligation(A, X, "AIAct_A111.2") :- provision_trigger("AIAct_A111.2", A, X).
+without_prejudice("AIAct_A111.2", "external_or_more_specific_law").
+// AIAct_A111_P3
+transitional_grace("ai_act", "gpai_predeployed",      "2027-08-02").
+// AIAct_A113_chapeau
+entry_into_force("ai_act", "2024-08-01").
+// AIAct_A113_chapeau
+application_date("ai_act", "general",                "2026-08-02").
+// AIAct_A113_PT_a
+application_date("ai_act", "chapter_i_general",     "2025-02-02").
+// AIAct_A113_PT_a
+application_date("ai_act", "chapter_ii_prohibitions","2025-02-02").
+// AIAct_A113_PT_b
+application_date("ai_act", "chapter_v_gpai",         "2025-08-02").
+// AIAct_A113_PT_b
+application_date("ai_act", "chapter_vii_governance", "2025-08-02").
+// AIAct_A113_PT_b
+application_date("ai_act", "chapter_xii_penalties",  "2025-08-02").
+// AIAct_A113_PT_c
+application_date("ai_act", "art_6_p1_high_risk_nlf", "2027-08-02").
+// GDPR_A3_P2_PT_a_specific
+gdpr_art3_2_applies(A, S) :- controller(A, S), data_subjects_in_eu_targeted(S, A).
+// GDPR_A3_P2_PT_a_specific_processor
+gdpr_art3_2_applies(A, S) :- processor(A, S), data_subjects_in_eu_targeted(S, A).
+// GDPR_A3_P2_PT_b_specific
+gdpr_art3_2_applies(A, S) :- controller(A, S), monitors_behaviour_in_eu(A, S).
+// GDPR_A3_P2_PT_b_specific_processor
+gdpr_art3_2_applies(A, S) :- processor(A, S), monitors_behaviour_in_eu(A, S).
+// GDPR_A9_2_a_exception
+gdpr_art9_exception(S) :- explicit_consent_special_category(S).
+// GDPR_A9_2_b_exception
+gdpr_art9_exception(S) :- employment_social_security_law_basis(S).
+// GDPR_A9_2_c_exception
+gdpr_art9_exception(S) :- vital_interests_incapable(S).
+// GDPR_A9_2_d_exception
+gdpr_art9_exception(S) :- nonprofit_legitimate_activity_safeguards(S).
+// GDPR_A9_2_e_exception
+gdpr_art9_exception(S) :- manifestly_public_by_data_subject(S).
+// GDPR_A9_2_f_exception
+gdpr_art9_exception(S) :- legal_claims_or_judicial_capacity(S).
+// GDPR_A9_2_g_exception
+gdpr_art9_exception(S) :- substantial_public_interest_law_basis(S).
+// GDPR_A9_2_h_exception
+gdpr_art9_exception(S) :- healthcare_socialcare_law_or_contract(S).
+// GDPR_A9_2_i_exception
+gdpr_art9_exception(S) :- public_health_interest_law_basis(S).
+// GDPR_A9_2_j_exception
+gdpr_art9_exception(S) :- research_archiving_statistics_law_basis(S).
+// GDPR_A9_P1_PROHIBITION
+prohibition(A, S, "GDPR_A9.1_process_special_category_data") :- applies_via_actor(S, T, "gdpr", A), processing_concerns(S, D), special_category_data(D),!gdpr_art9_exception(S).
+// GDPR_A10_PROHIBITION
+prohibition(A, S, "GDPR_A10_process_criminal_offence_data_without_authority_or_law") :- applies_via_actor(S, T, "gdpr", A), processing_concerns(S, D), criminal_offence_data(D),!official_authority_control(S),!law_authorises_criminal_data_processing(S).
+// GDPR_A11_P1_NO_EXTRA_IDENTIFICATION
+no_obligation(A, S, "GDPR_A11.1_maintain_acquire_or_process_additional_identification_info") :- applies_via_actor(S, T, "gdpr", A), controller(A, S), identification_not_required_for_purposes(S).
+// GDPR_A11_P2_INFORM_CANNOT_IDENTIFY
+obligation(A, S, "GDPR_A11.2_inform_data_subject_cannot_identify_if_possible") :- applies_via_actor(S, T, "gdpr", A), controller(A, S), not_in_position_to_identify_data_subject(S), informing_data_subject_possible(S).
+// GDPR_A27_P2_EXEMPT_OCCASIONAL
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), occasional_processing(S),!large_scale_special_category_processing(S),!large_scale_criminal_offence_processing(S).
+// GDPR_A27_P2_EXEMPT_PUBLIC_AUTHORITY
+gdpr_representative_obligation_exempt(A, S) :- gdpr_art3_2_applies(A, S), public_authority_body(A).
+// GDPR_A27_P1_DESIGNATE_REPRESENTATIVE
+obligation(A, S, "GDPR_A27.1_designate_representative_in_union") :- applies_via_actor(S, T, "gdpr", A), gdpr_art3_2_applies(A, S),!gdpr_representative_obligation_exempt(A, S).
+// GDPR_A27_P3_REP_ESTABLISHED_WHERE_DATA_SUBJECTS_ARE
+obligation(A, S, "GDPR_A27.3_representative_established_where_data_subjects_are") :- obligation(A, S, "GDPR_A27.1_designate_representative_in_union").
+// GDPR_A27_P4_MANDATE_REPRESENTATIVE
+obligation(A, S, "GDPR_A27.4_mandate_representative_for_authorities_and_data_subjects") :- obligation(A, S, "GDPR_A27.1_designate_representative_in_union").
+// AIAct_A5_P1_PROHIBITED_PRACTICE
+prohibition(A, X, "AIAct_A5.1_prohibited_ai_practice") :- applies_via_actor(X, T, "ai_act", A), prohibited_practice(X).
+// AIAct_A5_P3_PRIOR_AUTHORISATION_FOR_PERMITTED_RBI
+obligation(A, X, "AIAct_A5.3_prior_authorisation_for_permitted_realtime_rbi") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), has_feature(X, "realtime_remote_biometric_id_public"), rbi_law_enforcement_exception(X).
+// AIAct_A5_P4_NOTIFY_AUTHORITIES_FOR_PERMITTED_RBI
+obligation(A, X, "AIAct_A5.4_notify_authorities_for_permitted_realtime_rbi") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), has_feature(X, "realtime_remote_biometric_id_public"), rbi_law_enforcement_exception(X).
+// AIAct_A6_P4_DOCUMENT_NON_HIGH_RISK_ASSESSMENT
+obligation(A, X, "AIAct_A6.4_document_non_high_risk_assessment") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), ai_system(X), used_in(X, U), annex_iii_use_case(U), provider_claims_not_high_risk(A, X).
+// AIAct_A6_P4_REGISTER_NON_HIGH_RISK_CLAIM
+obligation(A, X, "AIAct_A6.4_register_under_article_49_if_claiming_not_high_risk") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), ai_system(X), used_in(X, U), annex_iii_use_case(U), provider_claims_not_high_risk(A, X).
+// AIAct_A50_P1_INFORM_AI_INTERACTION
+obligation(A, X, "AIAct_A50.1_inform_natural_person_ai_interaction") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), intended_to_interact_directly_with_natural_persons(X),!interaction_obviously_ai(X).
+// AIAct_A50_P2_MARK_SYNTHETIC_OUTPUTS
+obligation(A, X, "AIAct_A50.2_mark_synthetic_outputs_machine_readable") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), generates_synthetic_content(X).
+// AIAct_A50_P3_INFORM_EMOTION_RECOGNITION
+obligation(A, X, "AIAct_A50.3_inform_exposed_persons_emotion_recognition") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), emotion_recognition_system(X).
+// AIAct_A50_P3_INFORM_BIOMETRIC_CATEGORISATION
+obligation(A, X, "AIAct_A50.3_inform_exposed_persons_biometric_categorisation") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), biometric_categorisation_system(X).
+// AIAct_A50_P4_DISCLOSE_DEEP_FAKE
+obligation(A, X, "AIAct_A50.4_disclose_deep_fake_content") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), deep_fake_generation_or_manipulation(X),!deep_fake_disclosure_exempt(X).
+// AIAct_A50_P4_DISCLOSE_AI_GENERATED_PUBLIC_INTEREST_TEXT
+obligation(A, X, "AIAct_A50.4_disclose_ai_generated_public_interest_text") :- applies_via_actor(X, T, "ai_act", A), deployer(A, X), generated_text_public_interest(X),!human_review_or_editorial_control(X).
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P1
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.1_inform_natural_person_ai_interaction").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P3_EMOTION
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.3_inform_exposed_persons_emotion_recognition").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P3_BIOMETRIC
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.3_inform_exposed_persons_biometric_categorisation").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P4_DEEP_FAKE
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.4_disclose_deep_fake_content").
+// AIAct_A50_P5_CLEAR_NOTICE_FROM_P4_TEXT
+obligation(A, X, "AIAct_A50.5_clear_distinguishable_accessible_information") :- obligation(A, X, "AIAct_A50.4_disclose_ai_generated_public_interest_text").
+// AIAct_A51_P1_PT_a_HIGH_IMPACT_BY_COMPUTE
+gpai_high_impact_capability(X) :- gpai_model(X), has_feature(X, "compute_above_10e25").
+// AIAct_A51_P1_PT_a_HIGH_IMPACT_DIRECT
+gpai_high_impact_capability(X) :- gpai_model(X), has_feature(X, "high_impact_capabilities").
+// AIAct_A52_P1_NOTIFY_COMMISSION
+obligation(A, X, "AIAct_A52.1_notify_commission_within_two_weeks") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), gpai_model(X), gpai_high_impact_capability(X).
+// AIAct_A52_P1_INCLUDE_DEMONSTRATING_INFORMATION
+obligation(A, X, "AIAct_A52.1_include_information_demonstrating_requirement_met") :- applies_via_actor(X, T, "ai_act", A), provider(A, X), gpai_model(X), gpai_high_impact_capability(X).
+
+// ---- generated universal orchestration ----
+in_force(R, "current") :- entry_into_force(R, _).
+in_force(R, "current") :- application_date(R, "general", _).
+applies(S, T, R) :- in_force(R, T), regulation_territorial_link(R, A, S), regulation_material(R, S), !regulation_excluded(R, S).
+applies_via_actor(S, T, R, A) :- in_force(R, T), regulation_territorial_link(R, A, S), regulation_material(R, S), !regulation_excluded(R, S).
+regulation_material("ai_act", S) :- ai_act_material(S).
+regulation_territorial_link("ai_act", A, S) :- ai_act_territorial_link(A, S).
+regulation_excluded("ai_act", S) :- ai_act_excluded(S).
+regulation_material("gdpr", S) :- gdpr_material(S).
+regulation_territorial_link("gdpr", A, S) :- gdpr_territorial_link(A, S).
+regulation_excluded("gdpr", S) :- gdpr_excluded(S).

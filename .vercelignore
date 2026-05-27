@@ -1,0 +1,9 @@
+.venv
+.env
+.env.local
+compliance_secrets.env
+frontend/node_modules
+**/__pycache__
+.pytest_cache
+.git
+rules/.DS_Store

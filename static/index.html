@@ -2,190 +2,1560 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Compliance QA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compliance Checker</title>
   <style>
-    :root { font-family: system-ui, sans-serif; color: #111; background: #f6f6f6; }
-    body { max-width: 960px; margin: 0 auto; padding: 1.25rem; }
-    h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 0.75rem; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f2ee;
+      --surface: #ffffff;
+      --surface-2: #f9f7f4;
+      --surface-3: #f2efe9;
+      --border: #e2ddd8;
+      --border-dark: #ccc6bf;
+      --text: #1a1816;
+      --text-mid: #5c5650;
+      --text-dim: #908881;
+      --accent: #2d5be3;
+      --accent-soft: #eef1fd;
+      --accent-border: #c7d2fe;
+      --green: #1a6b3a;
+      --green-bg: #edf7f1;
+      --green-border: #b8dfc8;
+      --yellow: #8a5f00;
+      --yellow-bg: #fdf7e7;
+      --yellow-border: #e8d49a;
+      --red: #991b1b;
+      --red-bg: #fef2f2;
+      --red-border: #fca5a5;
+      --radius: 10px;
+      --shadow: 0 8px 22px rgba(26, 24, 22, 0.06);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+    button, textarea, input { font: inherit; }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    .nav {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 28px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      margin-right: 28px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      height: 52px;
+      padding: 0 16px;
+      border-bottom: 2px solid transparent;
+      color: var(--text-mid);
+      font-size: 13px;
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .nav-tab:hover { color: var(--text); }
+    .nav-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      font-weight: 600;
+    }
+    .main {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      min-height: calc(100vh - 52px);
+    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 28px 24px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .right {
+      padding: 28px 32px;
+      overflow-y: auto;
+      max-height: calc(100vh - 52px);
+    }
+    .label {
+      margin-bottom: 8px;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
     textarea {
-      width: 100%; min-height: 5rem; padding: 0.6rem; font-size: 1rem;
-      border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: var(--text);
+      padding: 14px;
+      line-height: 1.65;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
     }
-    button {
-      margin-top: 0.5rem; padding: 0.45rem 1rem; font-size: 1rem;
-      border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer;
+    textarea:focus {
+      border-color: var(--accent);
+      background: var(--surface);
     }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .terms { margin: 1rem 0; font-size: 0.9rem; color: #444; }
-    .grid { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
-    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
-    section {
-      background: #fff; border: 1px solid #e5e5e5; border-radius: 8px;
-      padding: 0.75rem 1rem;
+    textarea::placeholder { color: var(--text-dim); }
+    .run-btn,
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
-    section h2 { font-size: 1rem; margin: 0 0 0.5rem; }
-    .err { color: #b91c1c; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    pre {
-      margin: 0; white-space: pre-wrap; word-break: break-word;
-      font-size: 0.78rem; background: #f1f5f9; padding: 0.5rem; border-radius: 4px;
-      max-height: 28rem; overflow: auto;
+    .run-btn {
+      width: 100%;
+      padding: 11px 20px;
+      background: var(--text);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
     }
-    .empty { color: #64748b; font-size: 0.9rem; }
+    .run-btn:hover:not(:disabled) { background: #33302d; }
+    .run-btn:disabled {
+      background: var(--border);
+      color: var(--text-dim);
+      cursor: not-allowed;
+    }
+    .secondary-btn {
+      padding: 8px 12px;
+      background: var(--surface);
+      color: var(--text-mid);
+      border-color: var(--border);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .secondary-btn:hover:not(:disabled) {
+      background: var(--surface-2);
+      color: var(--text);
+      border-color: var(--border-dark);
+    }
+    .spinner {
+      width: 13px;
+      height: 13px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      display: none;
+      animation: spin 0.7s linear infinite;
+    }
+    .spinner.active { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .example-chip {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--text-mid);
+      font-size: 12px;
+      text-align: left;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .example-chip:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--text);
+    }
+    .example-chip:last-child { margin-bottom: 0; }
+    .coverage-note {
+      margin-top: auto;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .empty {
+      padding: 70px 18px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+    .empty-icon {
+      font-size: 30px;
+      margin-bottom: 14px;
+      opacity: 0.55;
+    }
+    .empty-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .card {
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card:last-child { margin-bottom: 0; }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .card-title {
+      flex: 1;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .card-body { padding: 18px; }
+    .card-subtle {
+      margin-bottom: 12px;
+      color: var(--text-dim);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .chip.yes {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: var(--green);
+    }
+    .chip.maybe {
+      background: var(--yellow-bg);
+      border-color: var(--yellow-border);
+      color: var(--yellow);
+    }
+    .chip.no {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+    .chip.neutral {
+      background: var(--surface-2);
+      border-color: var(--border);
+      color: var(--text-mid);
+    }
+    .scope-reg-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .scope-reg-name {
+      flex: 1;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .scope-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scope-track {
+      width: 108px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--border);
+      overflow: hidden;
+    }
+    .scope-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .scope-fill.high { background: var(--green); }
+    .scope-fill.mid { background: #d97706; }
+    .scope-fill.low { background: #9ca3af; }
+    .scope-text {
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .scope-text.high { color: var(--green); }
+    .scope-text.mid { color: #d97706; }
+    .scope-text.low { color: var(--text-dim); }
+    .scope-cat {
+      padding: 12px 0 6px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .scope-cat:first-child {
+      padding-top: 0;
+      margin-top: 0;
+      border-top: none;
+    }
+    .step {
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .step:last-child { margin-bottom: 0; }
+    .step summary {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 13px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .step summary::-webkit-details-marker { display: none; }
+    .step summary:hover { background: var(--surface-2); }
+    .step-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      border: 1px solid;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .step-icon.pass {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: var(--green);
+    }
+    .step-icon.warn {
+      background: var(--yellow-bg);
+      border-color: var(--yellow-border);
+      color: var(--yellow);
+    }
+    .step-icon.fail {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+    .step-icon.info {
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+    .step-main {
+      flex: 1;
+      min-width: 0;
+    }
+    .step-article {
+      margin-bottom: 2px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .step-name {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .step-summary {
+      margin-top: 2px;
+      color: var(--text-mid);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .step-link {
+      flex-shrink: 0;
+      padding: 3px 8px;
+      border: 1px solid var(--accent-border);
+      border-radius: 5px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .step-link:hover { background: #dde6fb; }
+    .step-body {
+      border-top: 1px solid var(--border);
+      padding: 0 13px 13px 43px;
+    }
+    .step-body-inner { padding-top: 11px; }
+    .reasoning-chain {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .chain-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+    .chain-arrow {
+      flex-shrink: 0;
+      min-width: 12px;
+      padding-top: 1px;
+      color: var(--text-dim);
+      font-size: 10px;
+    }
+    .chain-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .chain-code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--surface-3);
+      color: var(--accent);
+      font-size: 10px;
+    }
+    .citation-snippet {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: var(--surface-2);
+      color: var(--text-mid);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .step-conclusion {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border: 1px solid;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .step-conclusion.pass {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: var(--green);
+    }
+    .step-conclusion.warn {
+      background: var(--yellow-bg);
+      border-color: var(--yellow-border);
+      color: var(--yellow);
+    }
+    .step-conclusion.fail {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+    .step-conclusion.info {
+      background: var(--accent-soft);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+    .final-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1.5px solid;
+      border-radius: 8px;
+    }
+    .final-box.high {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+    }
+    .final-box.mid {
+      background: var(--yellow-bg);
+      border-color: var(--yellow-border);
+    }
+    .final-box.low {
+      background: var(--surface-2);
+      border-color: var(--border);
+    }
+    .final-label {
+      margin-bottom: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .final-label.high { color: var(--green); }
+    .final-label.mid { color: #d97706; }
+    .final-label.low { color: var(--text-dim); }
+    .final-text {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .final-text.high { color: var(--green); }
+    .final-text.mid { color: var(--yellow); }
+    .final-text.low { color: var(--text-mid); }
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 24, 22, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 40;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(580px, 100vw);
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border);
+      background: var(--surface);
+      transform: translateX(100%);
+      transition: transform 0.28s ease;
+      z-index: 41;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .drawer-title {
+      flex: 1;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .drawer-close {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-mid);
+      cursor: pointer;
+    }
+    .drawer-close:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .drawer-sub {
+      padding: 8px 24px 10px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-dim);
+      font-size: 12px;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+    .fact-block,
+    .rule-block {
+      margin-bottom: 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .fact-block:last-child,
+    .rule-block:last-child { margin-bottom: 0; }
+    .fact-block-header,
+    .rule-block-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .fact-block-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .fact-checkbox {
+      margin-top: 2px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .fact-plain {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .fact-trigger {
+      margin-top: 3px;
+      color: var(--text-dim);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .rule-block-article {
+      margin-bottom: 3px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .rule-block-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .rule-block-desc {
+      margin-top: 4px;
+      color: var(--text-mid);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .rule-code,
+    .fact-code {
+      background: #1e1e2e;
+      overflow-x: auto;
+    }
+    .rule-code pre,
+    .fact-code pre {
+      padding: 12px 14px;
+      color: #cdd6f4;
+      font-size: 11px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .drawer-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--text-mid);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .technical {
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .technical summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      background: var(--surface-2);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-mid);
+    }
+    .technical-body { padding: 14px; }
+    .technical-body details { margin-top: 10px; }
+    .technical-body details:first-child { margin-top: 0; }
+    .technical-body summary {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .technical-body pre {
+      margin-top: 8px;
+      max-height: 280px;
+      overflow: auto;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--surface-3);
+      color: var(--text);
+      font-size: 11px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .notice {
+      margin-top: 12px;
+      padding: 14px;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 980px) {
+      .main { grid-template-columns: 1fr; }
+      .left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .right { max-height: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>Compliance question</h1>
-  <textarea id="q" placeholder="e.g. Does GDPR apply to my product?"></textarea>
-  <button id="go" type="button">Ask</button>
-  <div class="terms" id="terms"></div>
-  <div class="grid">
-    <section>
-      <h2>Legal knowledge graph</h2>
-      <div id="legal"></div>
-    </section>
-    <section>
-      <h2>Company playbook graph</h2>
-      <div id="playbook"></div>
-    </section>
+  <div class="nav">
+    <div class="nav-brand">Legal Knowledge Engine</div>
+    <div class="nav-tab active" id="tabCheck">Compliance Check</div>
+    <div class="nav-tab" id="tabRules">Rule Catalog</div>
   </div>
-
-  <h1 style="margin-top:2rem;">Applicability (scope test)</h1>
-  <p class="terms">Default: <strong>scope_applicability</strong> — MATERIAL, TERRITORIAL, TEMPORAL, EXCLUSION → <code>law_applies</code> (<code>rules/golden/scope_applicability.dl</code>). See <code>rules/SCOPE_TESTING.md</code>. Optional question still drives Neo4j retrieval.</p>
-  <textarea id="rq" placeholder="Optional question for graph retrieval"></textarea>
-  <textarea id="facts" style="min-height:7rem;margin-top:0.5rem;" placeholder='Facts JSON (scope profile)'></textarea>
-  <button id="reason" type="button">Run reason</button>
-  <div class="terms" id="rmeta"></div>
-  <pre id="rout" class="empty" style="margin-top:0.75rem;">Results appear here.</pre>
-
+  <div class="main">
+    <div class="left">
+      <div>
+        <div class="label">Describe your situation</div>
+        <textarea id="inputText" placeholder="e.g. I am selling an AI predictive maintenance system to factories in Germany. The system analyses vibration data to predict machine failure. It does not process identifiable worker data."></textarea>
+      </div>
+      <button class="run-btn" id="runBtn">
+        <span class="spinner" id="spinner"></span>
+        <span id="btnLabel">Run check</span>
+      </button>
+      <div>
+        <div class="label" style="margin-bottom:10px;">Examples</div>
+        <button class="example-chip" type="button" data-example-index="0">AI predictive maintenance for factories in Germany and the Netherlands, with no identifiable worker data.</button>
+        <button class="example-chip" type="button" data-example-index="1">HR analytics SaaS processing identifiable employee data for EU-based companies.</button>
+        <button class="example-chip" type="button" data-example-index="2">Weather forecasting API using AI models across Europe, with billing contacts and API keys.</button>
+      </div>
+      <div class="coverage-note" id="coverageNote">Loading coverage and rule catalog...</div>
+    </div>
+    <div class="right" id="rightPanel">
+      <div class="empty">
+        <div class="empty-icon">[ ]</div>
+        <div class="empty-text">Describe your situation and run the check.<br />The engine will extract facts, assess regulations, and show rule-backed detail where available.</div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-title" id="drawerTitle">Details</div>
+      <button class="drawer-close" id="drawerClose" type="button">X</button>
+    </div>
+    <div class="drawer-sub" id="drawerSub"></div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
   <script>
-    const q = document.getElementById("q");
-    const go = document.getElementById("go");
-    const termsEl = document.getElementById("terms");
-    const legalEl = document.getElementById("legal");
-    const playbookEl = document.getElementById("playbook");
+    const EXAMPLES = [
+      "I am selling an AI predictive maintenance system for stamping machines to factories in Germany and the Netherlands. The system analyses vibration and sensor data to predict machine failure. It does not use identifiable worker data.",
+      "We operate an HR analytics SaaS platform that processes employee performance scores, attendance records, and productivity metrics for EU-based companies. Individual employees can be identified from the data.",
+      "We provide a weather forecasting API service to enterprise customers across Europe. The service uses AI models trained on global weather data. We collect API keys and billing information from customers but no personal data from end users."
+    ];
+    const COMPATIBILITY_ONLY_PREDICATES = new Set(["case", "regulation", "law_in_force", "processing_personal_data", "territorial_link_eu"]);
+    const NEGATED_PERSONAL_DATA_RX = /\b(?:no|not|without|does not|doesn't|do not|don't)\b[^.]{0,80}?(?:personal data|identifiable(?:\s+\w+){0,3}|worker data|employee data|email|name|health data|pii)/i;
+    const EU_TERMS = [
+      "eu", "europe", "european", "eea", "germany", "france", "spain", "italy", "sweden",
+      "finland", "denmark", "ireland", "netherlands", "belgium", "austria", "poland",
+      "portugal", "romania", "czech", "estonia", "latvia", "lithuania", "luxembourg",
+      "malta", "cyprus", "slovakia", "slovenia", "croatia", "hungary", "greece", "bulgaria"
+    ];
+    const state = {
+      activeExample: -1,
+      situation: "",
+      flow: null,
+      reason: null,
+      universal: null,
+      clarificationAnswers: {},
+      selectedFactIds: new Set(),
+      catalog: null,
+      lastUniversalRequest: null,
+      drawerMode: null,
+      drawerFocusProvision: null
+    };
+    const inputEl = document.getElementById("inputText");
+    const runBtn = document.getElementById("runBtn");
+    const spinnerEl = document.getElementById("spinner");
+    const btnLabelEl = document.getElementById("btnLabel");
+    const rightPanelEl = document.getElementById("rightPanel");
+    const coverageNoteEl = document.getElementById("coverageNote");
+    const drawerEl = document.getElementById("drawer");
+    const drawerOverlayEl = document.getElementById("drawerOverlay");
+    const drawerTitleEl = document.getElementById("drawerTitle");
+    const drawerSubEl = document.getElementById("drawerSub");
+    const drawerBodyEl = document.getElementById("drawerBody");
+    const tabCheckEl = document.getElementById("tabCheck");
+    const tabRulesEl = document.getElementById("tabRules");
 
-    function renderBlock(data) {
-      if (data.error) {
-        return '<div class="err">' + escapeHtml(data.error) + "</div>";
-      }
-      const m = data.matches || [];
-      if (!m.length) {
-        return '<p class="empty">No nodes matched the search terms on string properties.</p>';
-      }
-      return "<pre>" + escapeHtml(JSON.stringify(m, null, 2)) + "</pre>";
-    }
-
-    function escapeHtml(s) {
-      return String(s)
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
     }
-
-    async function run() {
-      const question = q.value.trim();
-      if (!question) return;
-      go.disabled = true;
-      termsEl.textContent = "";
-      legalEl.innerHTML = "<p class=\"empty\">Loading…</p>";
-      playbookEl.innerHTML = "<p class=\"empty\">Loading…</p>";
+    function escapeAttr(value) {
+      return escapeHtml(value).replace(/'/g, "&#39;");
+    }
+    function prettyJson(value) {
+      return JSON.stringify(value, null, 2);
+    }
+    function shorten(text, maxLength) {
+      const source = String(text || "").trim();
+      if (!source) return "";
+      if (source.length <= maxLength) return source;
+      return source.slice(0, maxLength - 1).trimEnd() + "...";
+    }
+    function normalizeRegulationKey(raw) {
+      const text = String(raw || "").trim().toLowerCase();
+      if (!text) return "";
+      if (text === "eu_ai_act" || text === "eu ai act") return "ai_act";
+      return text.replace(/\s+/g, "_");
+    }
+    function formatRegulationName(raw) {
+      const key = normalizeRegulationKey(raw);
+      if (key === "gdpr") return "GDPR";
+      if (key === "ai_act") return "EU AI Act";
+      return String(raw || "Unknown").replace(/_/g, " ").replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+    }
+    function formatProvisionLabel(provisionId, catalogEntry) {
+      if (catalogEntry && catalogEntry.provision_long_id) return catalogEntry.provision_long_id;
+      return provisionId || "Catalog entry";
+    }
+    function normalizeInstrumentEvaluationMap() {
+      const result = {};
+      const reasonBody = state.reason || state.flow;
+      const rows = (reasonBody && reasonBody.instrument_evaluations) || [];
+      rows.forEach(function (row) {
+        const key = normalizeRegulationKey(row.instrument_id || row.regulation);
+        if (key) result[key] = row;
+      });
+      return result;
+    }
+    function normalizeUniversalEvaluationMap() {
+      const result = {};
+      const rows = (state.universal && state.universal.evaluations) || [];
+      rows.forEach(function (row) {
+        const key = normalizeRegulationKey(row.regulation);
+        if (key) result[key] = row;
+      });
+      return result;
+    }
+    function canonicalFactCode(fact) {
+      return fact.predicate + "(" + (fact.args || []).map(function (arg) {
+        return JSON.stringify(arg);
+      }).join(", ") + ")";
+    }
+    function setBusy(isBusy, label) {
+      runBtn.disabled = isBusy;
+      spinnerEl.classList.toggle("active", isBusy);
+      btnLabelEl.textContent = label || (isBusy ? "Running check" : "Run check");
+    }
+    async function postJson(url, payload) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error((await response.text()) || response.statusText);
+      return response.json();
+    }
+    async function getJson(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error((await response.text()) || response.statusText);
+      return response.json();
+    }
+    function selectedFactItems() {
+      if (!state.flow || !state.flow.proposed_fact_items) return [];
+      return state.flow.proposed_fact_items.filter(function (item) {
+        return state.selectedFactIds.has(String(item.id));
+      });
+    }
+    function currentCompatibilityFacts() {
+      return selectedFactItems().map(function (item) {
+        return { predicate: item.predicate, args: Array.isArray(item.args) ? item.args : [] };
+      });
+    }
+    async function refreshFlow(message, options) {
+      if (!state.situation) return;
+      const request = {
+        situation: state.situation,
+        case_id: state.flow && state.flow.case_id ? state.flow.case_id : null,
+        clarification_answers: state.clarificationAnswers,
+        selected_fact_ids: Array.from(state.selectedFactIds).map(function (id) { return Number(id); })
+      };
+      setBusy(true, message || "Updating results...");
       try {
-        const res = await fetch("/api/ask", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question }),
-        });
-        if (!res.ok) {
-          const t = await res.text();
-          throw new Error(t || res.statusText);
+        const flow = await postJson("/api/applicability-flow", request);
+        state.flow = flow;
+        state.reason = flow;
+        state.universal = flow.universal || null;
+        state.lastUniversalRequest = flow.fact_payload || null;
+        if (!state.selectedFactIds.size) {
+          state.selectedFactIds = new Set((flow.proposed_fact_items || []).filter(function (item) {
+            return item.selected !== false;
+          }).map(function (item) { return String(item.id); }));
         }
-        const body = await res.json();
-        termsEl.textContent =
-          "Search terms used: " + (body.terms_used && body.terms_used.length
-            ? body.terms_used.join(", ")
-            : "(none)");
-        legalEl.innerHTML = renderBlock(body.legal);
-        playbookEl.innerHTML = renderBlock(body.playbook);
-      } catch (e) {
-        legalEl.innerHTML = '<div class="err">' + escapeHtml(e.message) + "</div>";
-        playbookEl.innerHTML = "";
+        if (options && options.closeDrawer) closeDrawer();
+        renderRightPanel();
       } finally {
-        go.disabled = false;
+        setBusy(false, "Run check");
       }
     }
-
-    go.addEventListener("click", run);
-    q.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter" && (ev.metaKey || ev.ctrlKey)) run();
-    });
-
-    const rq = document.getElementById("rq");
-    const factsEl = document.getElementById("facts");
-    const reasonBtn = document.getElementById("reason");
-    const rmeta = document.getElementById("rmeta");
-    const rout = document.getElementById("rout");
-    if (!factsEl.value.trim()) {
-      factsEl.value = JSON.stringify(
-        [
-          { predicate: "case", args: ["s1"] },
-          { predicate: "regulation", args: ["gdpr"] },
-          { predicate: "processing_personal_data", args: ["s1"] },
-          { predicate: "territorial_link_eu", args: ["s1"] },
-          { predicate: "law_in_force", args: ["gdpr"] },
-        ],
-        null,
-        2
-      );
+    function hasFact(facts, predicate) {
+      return (facts || []).some(function (fact) {
+        return fact && fact.predicate === predicate;
+      });
     }
-
-    async function runReason() {
-      let facts;
+    function hasAnyTerm(text, terms) {
+      return terms.some(function (term) { return text.indexOf(term) >= 0; });
+    }
+    function stripNegatedPersonalData(text) {
+      return String(text || "").replace(NEGATED_PERSONAL_DATA_RX, " ");
+    }
+    function pushUniqueFact(facts, predicate, args, reason) {
+      const key = predicate + "::" + JSON.stringify(args);
+      if (facts.some(function (fact) { return fact._key === key; })) return;
+      facts.push({ _key: key, predicate: predicate, args: args, reason: reason || "" });
+    }
+    function buildCrossRegulationFacts(rawFacts) {
+      const filtered = (rawFacts || [])
+        .filter(function (fact) { return fact && fact.predicate && !COMPATIBILITY_ONLY_PREDICATES.has(fact.predicate); })
+        .map(function (fact) {
+          return { predicate: fact.predicate, args: Array.isArray(fact.args) ? fact.args : [], reason: "selected fact" };
+        });
+      if (filtered.length) return { mode: "selected", facts: filtered };
+      const text = String(state.situation || "").toLowerCase();
+      const cleanedPersonalText = stripNegatedPersonalData(text);
+      const scenarioId = (state.flow && state.flow.case_id) || "scenario_input";
+      const actorId = "your_org";
+      const datumId = "input_record";
+      const personId = "data_subject";
+      const facts = [];
+      const hasCompatData = hasFact(rawFacts, "processing_personal_data");
+      const hasCompatEu = hasFact(rawFacts, "territorial_link_eu");
+      const hasNegativePersonalDataHint = NEGATED_PERSONAL_DATA_RX.test(text);
+      const hasDataHint = hasCompatData || hasAnyTerm(cleanedPersonalText, ["personal data", "email", "name", "customer data", "user data", "health", "biometric", "metrics", "address", "phone", "profile", "employee data", "worker data"]);
+      const hasProcessingHint = hasDataHint || hasAnyTerm(text, ["process", "processing", "store", "collect", "collecting", "use", "using", "analyse", "analyze", "track", "monitor", "handle"]);
+      const hasEuHint = hasCompatEu || hasAnyTerm(text, EU_TERMS);
+      const hasMarketHint = hasAnyTerm(text, ["sell", "selling", "offer", "offering", "market", "placing on the market", "customer", "customers", "factory", "factories", "client", "clients"]);
+      const hasEstablishmentHint = hasAnyTerm(text, ["based in", "established in", "headquartered in", "located in"]) && hasEuHint;
+      const hasAiHint = hasAnyTerm(text, [" ai ", "artificial intelligence", "machine learning", "ml ", "model", "llm", "generative", "foundation model", "predictive maintenance"]) || text.indexOf("ai") === 0;
+      if (hasProcessingHint) {
+        pushUniqueFact(facts, "processing", [scenarioId], "processing language in the narrative");
+        pushUniqueFact(facts, "processing_concerns", [scenarioId, datumId], "connect the scenario to a data item");
+        pushUniqueFact(facts, "automated_means", [scenarioId], "digital or software workflow implied");
+        pushUniqueFact(facts, "controller", [actorId, scenarioId], "the described organisation appears to control the workflow");
+      }
+      if (hasDataHint && !hasNegativePersonalDataHint) {
+        pushUniqueFact(facts, "natural_person", [personId], "the text suggests identifiable people");
+        pushUniqueFact(facts, "concerns", [datumId, personId], "the data item appears to concern a person");
+        pushUniqueFact(facts, "identifies", [datumId, personId], "the text suggests the person could be identified");
+      }
+      if (hasEstablishmentHint && hasProcessingHint) {
+        pushUniqueFact(facts, "established_in", [actorId, "eu"], "the text explicitly suggests an EU establishment");
+        pushUniqueFact(facts, "processing_in_context_of_establishment", [scenarioId, actorId], "the processing appears tied to that establishment");
+      }
+      if (hasEuHint && hasDataHint && hasMarketHint) {
+        pushUniqueFact(facts, "data_subjects_in_eu_targeted", [scenarioId, actorId], "the narrative suggests people in the EU are being targeted");
+      }
+      if (hasAiHint) {
+        pushUniqueFact(facts, "has_feature", [scenarioId, "machine_based"], "the narrative suggests a machine-based system");
+        pushUniqueFact(facts, "has_capability", [scenarioId, "autonomous_operation"], "the narrative suggests autonomous operation");
+        pushUniqueFact(facts, "has_capability", [scenarioId, "inference_from_input"], "the narrative suggests inference from input");
+      }
+      if (hasAiHint && hasMarketHint) {
+        pushUniqueFact(facts, "provider", [actorId, scenarioId], "selling the system suggests provider role");
+      }
+      if (hasAiHint && hasEuHint) {
+        pushUniqueFact(facts, "places_on_eu_market", [actorId, scenarioId], "AI sales into EU countries suggest EU market placement");
+      }
+      return { mode: "transformed", facts: facts };
+    }
+    async function ensureCatalogLoaded() {
+      if (state.catalog) return state.catalog;
       try {
-        facts = JSON.parse(factsEl.value.trim() || "[]");
-        if (!Array.isArray(facts)) throw new Error("facts must be a JSON array");
-      } catch (e) {
-        rout.textContent = "Invalid JSON: " + e.message;
+        state.catalog = await getJson("/api/rule-catalog");
+        renderCoverageNote();
+        return state.catalog;
+      } catch (error) {
+        coverageNoteEl.textContent = "Rule catalog unavailable right now. The checker can still run, but rule browsing may be limited.";
+        throw error;
+      }
+    }
+    function renderCoverageNote() {
+      const regs = (state.catalog && state.catalog.supported_regulations || []).map(formatRegulationName);
+      if (!regs.length) {
+        coverageNoteEl.textContent = "Coverage could not be loaded.";
         return;
       }
-      reasonBtn.disabled = true;
-      rmeta.textContent = "";
-      rout.textContent = "Loading…";
+      coverageNoteEl.innerHTML = "Covers <strong>" + regs.map(escapeHtml).join("</strong> and <strong>") + "</strong>. Preliminary analysis only, not legal advice.";
+    }
+    async function runCheck() {
+      const situation = inputEl.value.trim();
+      if (!situation) return;
+      state.situation = situation;
+      state.clarificationAnswers = {};
+      state.selectedFactIds = new Set();
+      setBusy(true, "Extracting facts...");
       try {
-        const res = await fetch("/api/reason", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            question: rq.value.trim() || null,
-            facts,
-            profile: "scope_applicability",
-          }),
-        });
-        if (!res.ok) {
-          const t = await res.text();
-          throw new Error(t || res.statusText);
-        }
-        const body = await res.json();
-        rmeta.textContent =
-          "profile: " +
-          body.profile +
-          " | Soufflé: " +
-          body.souffle_installed +
-          (body.applicability && body.applicability.verdict
-            ? " | verdict: " + body.applicability.verdict
-            : "") +
-          (body.schema_errors && body.schema_errors.length
-            ? " | errors: " + body.schema_errors.length
-            : "");
-        rout.textContent = JSON.stringify(body, null, 2);
-      } catch (e) {
-        rout.textContent = e.message;
+        await ensureCatalogLoaded().catch(function () { return null; });
+        const flow = await postJson("/api/applicability-flow", { situation: situation });
+        state.flow = flow;
+        state.reason = flow;
+        state.universal = flow.universal || null;
+        state.lastUniversalRequest = flow.fact_payload || null;
+        state.selectedFactIds = new Set((flow.proposed_fact_items || []).filter(function (item) {
+          return item.selected !== false;
+        }).map(function (item) { return String(item.id); }));
+        renderRightPanel();
+      } catch (error) {
+        rightPanelEl.innerHTML = '<div class="card"><div class="card-header"><div class="card-title">Check failed</div></div><div class="card-body"><div class="step-conclusion fail">' + escapeHtml(error.message) + "</div></div></div>";
       } finally {
-        reasonBtn.disabled = false;
+        setBusy(false, "Run check");
       }
     }
-    reasonBtn.addEventListener("click", runReason);
+    async function applyFactSelections() {
+      if (!state.flow) return;
+      try {
+        await refreshFlow("Updating results...", { closeDrawer: true });
+      } catch (error) {
+        drawerBodyEl.insertAdjacentHTML("afterbegin", '<div class="step-conclusion fail" style="margin-bottom:12px;">' + escapeHtml(error.message) + "</div>");
+      }
+    }
+    async function answerClarification(id, answer) {
+      state.clarificationAnswers[id] = answer;
+      await refreshFlow("Updating clarifications...");
+    }
+    function toggleFactSelection(id, checked) {
+      const key = String(id);
+      if (checked) state.selectedFactIds.add(key);
+      else state.selectedFactIds.delete(key);
+      if (state.drawerMode === "facts") renderFactDrawer();
+    }
+    function getCatalogProvision(provisionLongId) {
+      if (!state.catalog || !state.catalog.provisions) return null;
+      for (const entry of state.catalog.provisions) {
+        if (entry.provision_long_id === provisionLongId) return entry;
+      }
+      return null;
+    }
+    function openDrawer(mode) {
+      state.drawerMode = mode;
+      drawerOverlayEl.classList.add("open");
+      drawerEl.classList.add("open");
+      if (mode === "facts") {
+        tabCheckEl.classList.add("active");
+        tabRulesEl.classList.remove("active");
+        renderFactDrawer();
+      } else if (mode === "rules") {
+        tabCheckEl.classList.remove("active");
+        tabRulesEl.classList.add("active");
+        renderRuleDrawer(state.drawerFocusProvision);
+      }
+    }
+    function closeDrawer() {
+      state.drawerMode = null;
+      state.drawerFocusProvision = null;
+      drawerOverlayEl.classList.remove("open");
+      drawerEl.classList.remove("open");
+      tabCheckEl.classList.add("active");
+      tabRulesEl.classList.remove("active");
+    }
+    function factSelectionSummary() {
+      const items = selectedFactItems().filter(function (item) { return item.predicate !== "case"; });
+      if (!items.length) return '<span class="chip maybe">No extracted facts are currently selected.</span>';
+      return items.slice(0, 8).map(function (item) {
+        return '<span class="chip yes">' + escapeHtml(item.human) + "</span>";
+      }).join("");
+    }
+    function renderFactDrawer() {
+      const flow = state.flow;
+      if (!flow) {
+        drawerTitleEl.textContent = "Fact Extractor";
+        drawerSubEl.textContent = "Run a check first to inspect extracted facts.";
+        drawerBodyEl.innerHTML = '<div class="empty"><div class="empty-text">No fact extraction is available yet.</div></div>';
+        return;
+      }
+      const payload = (flow && flow.fact_payload) || {};
+      const selectedCompatibility = payload.compatibility_facts || [];
+      const transformed = payload.all_facts || [];
+      drawerTitleEl.textContent = "Fact Extractor";
+      drawerSubEl.textContent = "Review extracted facts, adjust the selected facts, and inspect the canonical payload returned by the backend.";
+      let html = '<div class="pill-note">' + selectedCompatibility.length + " compatibility facts prepared</div>";
+      html += '<div class="pill-note">' + transformed.length + " canonical facts prepared</div>";
+      html += '<div style="margin-top:16px;">';
+      (flow.proposed_fact_items || []).forEach(function (item) {
+        const checked = state.selectedFactIds.has(String(item.id));
+        html += '<div class="fact-block"><div class="fact-block-header">';
+        html += '<input class="fact-checkbox" type="checkbox" ' + (checked ? "checked" : "") + ' onchange="toggleFactSelection(' + Number(item.id) + ', this.checked)" />';
+        html += '<div><div class="fact-plain">' + escapeHtml(item.human) + "</div>";
+        html += '<div class="fact-trigger">Source: ' + escapeHtml(item.source || "rules") + "</div></div></div>";
+        html += '<div class="fact-code"><pre>' + escapeHtml(canonicalFactCode(item)) + "</pre></div></div>";
+      });
+      html += "</div>";
+      if (flow.extractor_notes && flow.extractor_notes.length) {
+        html += '<div style="margin-top:18px;"><div class="label" style="margin-bottom:10px;">What the system noticed in your text</div>';
+        flow.extractor_notes.forEach(function (note) {
+          html += '<div class="pill-note" style="margin: 0 8px 8px 0;">' + escapeHtml(note) + "</div>";
+        });
+        html += "</div>";
+      }
+      html += '<div style="margin-top:18px;"><div class="label" style="margin-bottom:10px;">Canonical payload</div><div class="fact-code"><pre>' + escapeHtml(prettyJson(payload)) + "</pre></div></div>";
+      html += '<div style="margin-top:18px;"><div class="label" style="margin-bottom:10px;">Compatibility facts sent to engine</div><div class="fact-code"><pre>' + escapeHtml(prettyJson(selectedCompatibility)) + "</pre></div></div>";
+      html += '<div style="margin-top:18px;"><div class="label" style="margin-bottom:10px;">Cross-regulation facts sent to engine</div><div class="fact-code"><pre>' + escapeHtml(prettyJson(transformed)) + "</pre></div></div>";
+      html += '<div class="drawer-actions"><button class="run-btn" type="button" style="width:auto;" onclick="applyFactSelections()">Update results</button></div>';
+      drawerBodyEl.innerHTML = html;
+    }
+    async function openRuleCatalog(focusProvisionId) {
+      state.drawerFocusProvision = focusProvisionId || null;
+      await ensureCatalogLoaded().catch(function () { return null; });
+      openDrawer("rules");
+    }
+    function renderRuleDrawer(focusProvisionId) {
+      drawerTitleEl.textContent = "Rule Catalog";
+      drawerSubEl.textContent = "Corpus-backed rule catalog built from the current workbook. Links are only shown where the current result references a real provision.";
+      if (!state.catalog || !state.catalog.provisions) {
+        drawerBodyEl.innerHTML = '<div class="empty"><div class="empty-text">Rule catalog is unavailable.</div></div>';
+        return;
+      }
+      const byRegulation = {};
+      state.catalog.provisions.forEach(function (entry) {
+        const key = normalizeRegulationKey(entry.regulation);
+        if (!byRegulation[key]) byRegulation[key] = [];
+        byRegulation[key].push(entry);
+      });
+      let html = "";
+      Object.keys(byRegulation).sort().forEach(function (regKey) {
+        html += '<div class="label" style="margin-bottom:10px;">' + escapeHtml(formatRegulationName(regKey)) + "</div>";
+        byRegulation[regKey].forEach(function (entry) {
+          const highlighted = focusProvisionId && entry.provision_long_id === focusProvisionId;
+          const heading = entry.title || entry.provision_long_id;
+          const descParts = [];
+          if (entry.type) descParts.push(entry.type);
+          if (entry.scope_tags && entry.scope_tags.length) descParts.push(entry.scope_tags.join(", "));
+          html += '<div class="rule-block" id="rule-' + escapeAttr(entry.provision_long_id) + '"' + (highlighted ? ' style="border-color: var(--accent);"' : "") + ">";
+          html += '<div class="rule-block-header"' + (highlighted ? ' style="background: var(--accent-soft);"' : "") + ">";
+          html += '<div class="rule-block-article">' + escapeHtml(entry.provision_long_id) + "</div>";
+          html += '<div class="rule-block-name">' + escapeHtml(heading) + "</div>";
+          if (descParts.length || entry.text) {
+            html += '<div class="rule-block-desc">';
+            if (descParts.length) html += escapeHtml(descParts.join(" | "));
+            if (entry.text) html += (descParts.length ? "<br />" : "") + escapeHtml(shorten(entry.text, 320));
+            html += "</div>";
+          }
+          html += "</div>";
+          if (entry.rules && entry.rules.length) {
+            html += '<div class="rule-code"><pre>' + escapeHtml(entry.rules.map(function (rule) { return rule.rule_text; }).join("\n")) + "</pre></div>";
+          } else if (entry.datalog_rule) {
+            html += '<div class="rule-code"><pre>' + escapeHtml(entry.datalog_rule) + "</pre></div>";
+          }
+          html += "</div>";
+        });
+      });
+      drawerBodyEl.innerHTML = html || '<div class="empty"><div class="empty-text">No catalog entries found.</div></div>';
+      if (focusProvisionId) {
+        setTimeout(function () {
+          const target = document.getElementById("rule-" + focusProvisionId);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 60);
+      }
+    }
+    function summarizeScopeDimension(name, block) {
+      if (!block) {
+        return {
+          icon: "info",
+          summary: "No compatibility result is available for this check yet.",
+          detailRows: [],
+          conclusionClass: "info",
+          conclusionText: "No compatibility output is available for this check."
+        };
+      }
+      const status = String(block.status || "cannot_determine");
+      const pairs = (block.passed_pairs || block.triggered_pairs || []).map(function (pair) { return JSON.stringify(pair); });
+      if (status === "pass") {
+        return {
+          icon: "pass",
+          summary: "The compatibility scope check supports this element.",
+          detailRows: pairs.length ? pairs.map(function (pair) { return { arrow: "->", text: "Supporting tuple " + pair }; }) : [{ arrow: "->", text: "The compatibility engine marked this check as satisfied." }],
+          conclusionClass: "pass",
+          conclusionText: "Compatibility scope output supports this element."
+        };
+      }
+      if (status === "fail") {
+        return {
+          icon: "fail",
+          summary: "The compatibility scope check does not currently support this element.",
+          detailRows: pairs.length ? pairs.map(function (pair) { return { arrow: "->", text: "Observed tuple " + pair }; }) : [{ arrow: "->", text: "No supporting compatibility tuple was produced for this check." }],
+          conclusionClass: "fail",
+          conclusionText: "Compatibility scope output does not currently support this element."
+        };
+      }
+      return {
+        icon: "warn",
+        summary: "The compatibility scope check needs more information here.",
+        detailRows: [{ arrow: "?", text: "The compatibility engine could not determine this check from the current facts." }],
+        conclusionClass: "warn",
+        conclusionText: "More information is needed for this compatibility check."
+      };
+    }
+    function humanizeDimension(name) {
+      const key = String(name || "").toUpperCase();
+      if (key === "TEMPORAL") return "Temporal scope";
+      if (key === "TERRITORIAL") return "Territorial scope";
+      if (key === "MATERIAL") return "Material scope";
+      if (key === "EXCLUSION" || key === "EXCLUSIONS") return "Exclusions";
+      if (key === "VERDICT") return "Final conclusion";
+      if (key === "DEFINITION") return "Definition";
+      return key || "Detail";
+    }
+    function scopeSectionIdForDimension(name) {
+      const key = String(name || "").toUpperCase();
+      if (key === "TEMPORAL") return "temporal";
+      if (key === "TERRITORIAL") return "territorial";
+      if (key === "MATERIAL") return "material";
+      if (key === "EXCLUSION" || key === "EXCLUSIONS") return "exclusions";
+      return null;
+    }
+    function buildFallbackScopeSections(scopeEval) {
+      const scope = scopeEval && scopeEval.scope ? scopeEval.scope : {};
+      const skipFurther = new Set((scopeEval && scopeEval.skip_further) || []);
+      return [
+        { id: "temporal", label: "Temporal scope", status: scope.TEMPORAL && scope.TEMPORAL.status || "cannot_determine", skipped: skipFurther.has("temporal"), passed_pairs: scope.TEMPORAL && scope.TEMPORAL.passed_pairs || [], triggered_pairs: scope.TEMPORAL && scope.TEMPORAL.triggered_pairs || [] },
+        { id: "territorial", label: "Territorial scope", status: scope.TERRITORIAL && scope.TERRITORIAL.status || "cannot_determine", skipped: skipFurther.has("territorial"), passed_pairs: scope.TERRITORIAL && scope.TERRITORIAL.passed_pairs || [], triggered_pairs: scope.TERRITORIAL && scope.TERRITORIAL.triggered_pairs || [] },
+        { id: "material", label: "Material scope", status: scope.MATERIAL && scope.MATERIAL.status || "cannot_determine", skipped: skipFurther.has("material"), passed_pairs: scope.MATERIAL && scope.MATERIAL.passed_pairs || [], triggered_pairs: scope.MATERIAL && scope.MATERIAL.triggered_pairs || [] },
+        { id: "exclusions", label: "Exclusions", status: scope.EXCLUSION && scope.EXCLUSION.status || "cannot_determine", skipped: skipFurther.has("exclusions"), passed_pairs: scope.EXCLUSION && scope.EXCLUSION.passed_pairs || [], triggered_pairs: scope.EXCLUSION && scope.EXCLUSION.triggered_pairs || [] }
+      ];
+    }
+    function orderedScopeSections(universalEval, scopeEval) {
+      if (universalEval && Array.isArray(universalEval.scope_sections) && universalEval.scope_sections.length) {
+        return universalEval.scope_sections;
+      }
+      if (scopeEval && Array.isArray(scopeEval.scope_sections) && scopeEval.scope_sections.length) {
+        return scopeEval.scope_sections;
+      }
+      if (scopeEval) return buildFallbackScopeSections(scopeEval);
+      return [];
+    }
+    function traceKindUi(kind) {
+      if (kind === "ground") return { icon: "pass", label: "Ground fact" };
+      if (kind === "derive") return { icon: "pass", label: "Derived rule" };
+      if (kind === "gap") return { icon: "warn", label: "Missing support" };
+      if (kind === "exclude") return { icon: "fail", label: "Blocking fact" };
+      if (kind === "~ndaf") return { icon: "warn", label: "Negation support" };
+      return { icon: "info", label: "Trace detail" };
+    }
+    function scoreUi(universalEval, scopeEval) {
+      if (universalEval) {
+        if (universalEval.indication === "yes") return { fill: 85, cls: "high", label: "likely in scope" };
+        if (universalEval.indication === "partial") return { fill: 52, cls: "mid", label: "needs review" };
+        if (universalEval.indication === "no") return { fill: 14, cls: "low", label: "currently out of scope" };
+      }
+      if (scopeEval) {
+        if (scopeEval.verdict === "applies") return { fill: 76, cls: "high", label: "scope supported" };
+        if (scopeEval.verdict === "cannot_determine") return { fill: 46, cls: "mid", label: "needs more facts" };
+        return { fill: 14, cls: "low", label: "scope not shown" };
+      }
+      if (state.universal && state.universal.message && state.universal.reasoning && state.universal.reasoning.skipped) {
+        return { fill: 18, cls: "low", label: "engine unavailable" };
+      }
+      return { fill: 18, cls: "low", label: "not enough data" };
+    }
+    function renderTraceStep(line, index) {
+      const ui = traceKindUi(line.kind);
+      const provision = line.provision_long_id ? getCatalogProvision(line.provision_long_id) : null;
+      const articleLabel = formatProvisionLabel(line.provision_long_id, provision);
+      const note = line.note || "";
+      const citationText = line.citation && line.citation.text ? shorten(line.citation.text, 320) : "";
+      let html = '<details class="step"' + (index === 0 ? " open" : "") + "><summary>";
+      html += '<span class="step-icon ' + ui.icon + '">' + escapeHtml(ui.icon === "pass" ? "OK" : ui.icon === "warn" ? "?" : ui.icon === "fail" ? "X" : "i") + "</span>";
+      html += '<span class="step-main"><div class="step-article">' + escapeHtml(articleLabel) + "</div>";
+      html += '<div class="step-name">' + escapeHtml(humanizeDimension(line.dimension) + " - " + ui.label) + "</div>";
+      html += '<div class="step-summary">' + escapeHtml(note || line.atom || "No detail supplied.") + "</div></span>";
+      if (line.provision_long_id) {
+        html += '<button class="step-link" type="button" onclick="event.stopPropagation(); openRuleCatalog(\'' + escapeAttr(line.provision_long_id) + '\')">view rule</button>';
+      }
+      html += '</summary><div class="step-body"><div class="step-body-inner"><div class="reasoning-chain">';
+      html += '<div class="chain-row"><div class="chain-arrow">-></div><div class="chain-text"><strong>Atom</strong> <span class="chain-code">' + escapeHtml(line.atom || "") + "</span></div></div>";
+      if (note) html += '<div class="chain-row"><div class="chain-arrow">-></div><div class="chain-text"><strong>Reason</strong> ' + escapeHtml(note) + "</div></div>";
+      if (line.kind) html += '<div class="chain-row"><div class="chain-arrow">-></div><div class="chain-text"><strong>Trace kind</strong> ' + escapeHtml(line.kind) + "</div></div>";
+      html += "</div>";
+      if (citationText) html += '<div class="citation-snippet">' + escapeHtml(citationText) + "</div>";
+      html += '<div class="step-conclusion ' + ui.icon + '">This step is rendered from actual provenance output.</div></div></div></details>';
+      return html;
+    }
+    function renderScopeStep(label, model, index) {
+      let html = '<details class="step"' + (index === 0 ? " open" : "") + "><summary>";
+      html += '<span class="step-icon ' + model.icon + '">' + escapeHtml(model.icon === "pass" ? "OK" : model.icon === "warn" ? "?" : model.icon === "fail" ? "X" : "i") + "</span>";
+      html += '<span class="step-main"><div class="step-article">Compatibility scope</div><div class="step-name">' + escapeHtml(label) + '</div><div class="step-summary">' + escapeHtml(model.summary) + "</div></span></summary>";
+      html += '<div class="step-body"><div class="step-body-inner"><div class="reasoning-chain">';
+      model.detailRows.forEach(function (row) {
+        html += '<div class="chain-row"><div class="chain-arrow">' + escapeHtml(row.arrow) + '</div><div class="chain-text">' + escapeHtml(row.text) + "</div></div>";
+      });
+      html += '</div><div class="step-conclusion ' + model.conclusionClass + '">' + escapeHtml(model.conclusionText) + "</div></div></div></details>";
+      return html;
+    }
+    function renderUniversalStatusChip(section) {
+      const status = String(section && section.status || "cannot_determine");
+      let chipClass = "neutral";
+      let text = "needs review";
+      if (section.id === "exclusions") {
+        if (status === "fail") {
+          chipClass = "no";
+          text = "triggered";
+        } else if (status === "pass") {
+          chipClass = "yes";
+          text = "not triggered";
+        }
+      } else if (status === "pass") {
+        chipClass = "yes";
+        text = "yes";
+      } else if (status === "fail") {
+        chipClass = "no";
+        text = "no";
+      } else {
+        chipClass = "maybe";
+      }
+      return '<span class="chip ' + chipClass + '">' + escapeHtml(section.label + ": " + text) + "</span>";
+    }
+    function renderQuestionCard(reasonBody) {
+      const questions = (reasonBody && reasonBody.clarifying_questions) || [];
+      if (!questions.length) return "";
+      let html = '<div class="card"><div class="card-header"><div class="card-title">Open questions</div></div><div class="card-body">';
+      html += '<div class="card-subtle">We need these answers before showing the final regulation cards. Your answers are turned into backend facts and the engines are run again.</div>';
+      questions.forEach(function (question) {
+        const answer = state.clarificationAnswers[question.id];
+        html += '<div class="fact-block" style="margin-bottom:12px;"><div class="fact-block-header" style="display:block;">';
+        html += '<div class="fact-plain">' + escapeHtml(question.text) + "</div>";
+        html += '<div class="fact-trigger">Needed for ' + escapeHtml(formatRegulationName(question.regulation)) + " " + escapeHtml(question.dimension || "scope") + " assessment.</div>";
+        html += '<div class="drawer-actions" style="margin-top:10px;">';
+        html += '<button class="secondary-btn" type="button" ' + (answer === "yes" ? 'style="border-color: var(--green-border); color: var(--green);"' : "") + ' onclick="answerClarification(\'' + escapeAttr(question.id) + '\', \'yes\')">Yes</button>';
+        html += '<button class="secondary-btn" type="button" ' + (answer === "no" ? 'style="border-color: var(--red-border); color: var(--red);"' : "") + ' onclick="answerClarification(\'' + escapeAttr(question.id) + '\', \'no\')">No</button>';
+        html += "</div></div></div>";
+      });
+      html += "</div></div>";
+      return html;
+    }
+    function renderFactCard() {
+      if (!state.flow) return "";
+      let html = '<div class="card"><div class="card-header"><div class="card-title">Fact Extractor</div>';
+      html += '<button class="secondary-btn" type="button" onclick="openDrawer(\'facts\')">View extracted predicates</button></div><div class="card-body">';
+      html += '<div class="card-subtle">Facts inferred from your situation text. The drawer shows the canonical payload returned by the backend, the compatibility projection, and any clarification answers merged into the run.</div>';
+      html += '<div class="chips">' + factSelectionSummary() + "</div>";
+      if (state.flow.extractor_notes && state.flow.extractor_notes.length) {
+        html += '<div style="margin-top:12px;">';
+        state.flow.extractor_notes.forEach(function (note) {
+          html += '<span class="pill-note" style="margin: 0 8px 8px 0;">' + escapeHtml(note) + "</span>";
+        });
+        html += "</div>";
+      }
+      html += "</div></div>";
+      return html;
+    }
+    function renderRegulationCard(regulationKey, universalEval, scopeEval) {
+      const score = scoreUi(universalEval, scopeEval);
+      const displayName = formatRegulationName(regulationKey);
+      const scopeSections = orderedScopeSections(universalEval, scopeEval);
+      const conclusionText = universalEval && universalEval.headline
+        ? universalEval.headline
+        : scopeEval && scopeEval.verdict === "applies"
+        ? displayName + " is supported by the compatibility scope check."
+        : scopeEval && scopeEval.verdict === "does_not_apply"
+        ? displayName + " is not supported by the compatibility scope check."
+        : state.universal && state.universal.message && state.universal.reasoning && state.universal.reasoning.skipped
+        ? "Detailed cross-regulation output is currently unavailable."
+        : "Not enough information is available yet for a grounded conclusion.";
+      const finalLevel = score.cls === "high" ? "high" : score.cls === "mid" ? "mid" : "low";
+      const provenanceLines = (state.universal && state.universal.provenance && state.universal.provenance.by_regulation && state.universal.provenance.by_regulation[regulationKey]) || [];
+      const defeasibilityRows = (state.universal && state.universal.defeasibility && state.universal.defeasibility[regulationKey]) || [];
+      const provenanceBySection = {};
+      provenanceLines.forEach(function (line) {
+        const sectionId = scopeSectionIdForDimension(line.dimension);
+        if (!sectionId) return;
+        if (!provenanceBySection[sectionId]) provenanceBySection[sectionId] = [];
+        provenanceBySection[sectionId].push(line);
+      });
+      let html = '<div class="card"><div class="card-header"><div class="scope-reg-header">';
+      html += '<div class="scope-reg-name">Scope Analysis - ' + escapeHtml(displayName) + '</div><div class="scope-bar-wrap"><div class="scope-track"><div class="scope-fill ' + score.cls + '" style="width:' + score.fill + '%;"></div></div><div class="scope-text ' + score.cls + '">' + escapeHtml(score.label) + "</div></div></div></div><div class=\"card-body\">";
+      if (universalEval) {
+        html += '<div class="scope-cat">Cross-regulation view</div><div class="chips" style="margin-bottom:10px;">';
+        html += '<span class="chip ' + (universalEval.indication === "yes" ? "yes" : universalEval.indication === "partial" ? "maybe" : universalEval.indication === "no" ? "no" : "neutral") + '">' + escapeHtml(universalEval.headline || "No headline available.") + "</span>";
+        scopeSections.filter(function (section) { return !section.skipped; }).forEach(function (section) {
+          html += renderUniversalStatusChip(section);
+        });
+        html += "</div>";
+      }
+      if (scopeSections.length) {
+        let renderedCount = 0;
+        scopeSections.forEach(function (section) {
+          if (section.skipped) return;
+          html += '<div class="scope-cat">' + escapeHtml(section.label) + "</div>";
+          const sectionLines = provenanceBySection[section.id] || [];
+          if (sectionLines.length) {
+            sectionLines.slice(0, 8).forEach(function (line, index) {
+              html += renderTraceStep(line, index);
+            });
+          } else {
+            html += renderScopeStep(section.label, summarizeScopeDimension(section.label, section), renderedCount);
+          }
+          renderedCount += 1;
+        });
+      } else {
+        html += '<div class="scope-cat">Result status</div><div class="step"><div class="step-body" style="display:block;padding:12px 13px 13px 13px;border-top:none;"><div class="step-body-inner"><div class="step-conclusion info">No engine-backed regulation result is available for this regulation yet.</div></div></div></div>';
+      }
+      if (defeasibilityRows.length) {
+        html += '<div class="scope-cat">What could change this</div>';
+        defeasibilityRows.slice(0, 6).forEach(function (row, index) {
+          html += renderTraceStep({
+            kind: row.mode === "gap" ? "gap" : "~ndaf",
+            dimension: "VERDICT",
+            atom: row.atom,
+            note: row.note,
+            provision_long_id: row.provision_long_id,
+            citation: row.citation
+          }, index);
+        });
+      }
+      html += '<div class="final-box ' + finalLevel + '"><div class="final-label ' + finalLevel + '">' + escapeHtml(universalEval && universalEval.final_conclusion_label || scopeEval && scopeEval.final_conclusion_label || "Final conclusion") + '</div><div class=\"final-text ' + finalLevel + '\">' + escapeHtml(conclusionText) + "</div></div></div></div>";
+      return html;
+    }
+    function renderSupportingContextCard() {
+      const graph = (state.flow && state.flow.graph_citations) || {};
+      const dimensions = Object.keys(graph).filter(function (key) {
+        return Array.isArray(graph[key]) && graph[key].length;
+      });
+      if (!dimensions.length) return "";
+      let html = '<div class="card"><div class="card-header"><div class="card-title">Supporting context</div></div><div class="card-body">';
+      html += '<div class="card-subtle">These snippets are grouped from graph matches and are shown as context only, not as final legal conclusions.</div>';
+      dimensions.forEach(function (dimension) {
+        html += '<div class="scope-cat">' + escapeHtml(humanizeDimension(dimension)) + '</div><ul style="padding-left: 18px; color: var(--text-mid); font-size: 12px; line-height: 1.65;">';
+        graph[dimension].slice(0, 6).forEach(function (row) {
+          const labels = (row.labels || []).join(", ");
+          html += "<li><strong>" + escapeHtml(labels || "Graph match") + "</strong>: " + escapeHtml(row.preview || "") + "</li>";
+        });
+        html += "</ul>";
+      });
+      html += "</div></div>";
+      return html;
+    }
+    function renderTechnicalCard() {
+      const reasonBody = state.reason || state.flow;
+      if (!reasonBody && !state.universal) return "";
+      let html = '<details class="technical"><summary>How this result was produced</summary><div class="technical-body">';
+      if (state.flow && state.flow.extractor_notes && state.flow.extractor_notes.length) {
+        html += '<details open><summary>What the system noticed in your text</summary><pre>' + escapeHtml(state.flow.extractor_notes.join("\n")) + "</pre></details>";
+      }
+      if (state.flow && state.flow.fact_payload) {
+        html += '<details><summary>Main fact set used for the analysis</summary><pre>' + escapeHtml(prettyJson(state.flow.fact_payload)) + "</pre></details>";
+      }
+      if (reasonBody && reasonBody.normalized_facts) {
+        html += '<details><summary>Facts sent to the basic scope checker</summary><pre>' + escapeHtml(prettyJson(reasonBody.normalized_facts)) + "</pre></details>";
+      }
+      if (state.flow && state.flow.fact_payload && state.flow.fact_payload.all_facts) {
+        html += '<details><summary>Facts sent to the detailed rule engine</summary><pre>' + escapeHtml(prettyJson(state.flow.fact_payload.all_facts)) + "</pre></details>";
+      }
+      if (reasonBody && reasonBody.reasoning) {
+        html += '<details><summary>Basic scope checker output</summary><pre>' + escapeHtml(prettyJson(reasonBody.reasoning)) + "</pre></details>";
+      }
+      if (state.universal) {
+        html += '<details><summary>Detailed rule engine output</summary><pre>' + escapeHtml(prettyJson(state.universal.reasoning || state.universal)) + "</pre></details>";
+      }
+      if (state.flow && state.flow.legal) {
+        html += '<details><summary>Supporting legal source matches</summary><pre>' + escapeHtml(prettyJson({ legal: state.flow.legal, playbook: state.flow.playbook })) + "</pre></details>";
+      }
+      html += "</div></details>";
+      return html;
+    }
+    function regulationKeysToRender() {
+      const keys = new Set();
+      if (state.catalog && Array.isArray(state.catalog.supported_regulations)) {
+        state.catalog.supported_regulations.forEach(function (reg) { keys.add(normalizeRegulationKey(reg)); });
+      }
+      const reasonBody = state.reason || state.flow;
+      if (reasonBody && Array.isArray(reasonBody.supported_regulations)) {
+        reasonBody.supported_regulations.forEach(function (reg) { keys.add(normalizeRegulationKey(reg)); });
+      }
+      if (state.universal && Array.isArray(state.universal.supported_regulations)) {
+        state.universal.supported_regulations.forEach(function (reg) { keys.add(normalizeRegulationKey(reg)); });
+      }
+      Object.keys(normalizeInstrumentEvaluationMap()).forEach(function (key) { keys.add(key); });
+      Object.keys(normalizeUniversalEvaluationMap()).forEach(function (key) { keys.add(key); });
+      return Array.from(keys).filter(Boolean).sort();
+    }
+    function renderRightPanel() {
+      const flow = state.flow;
+      const reasonBody = state.reason || state.flow;
+      if (!flow || !reasonBody) {
+        rightPanelEl.innerHTML = '<div class="empty"><div class="empty-icon">[ ]</div><div class="empty-text">Describe your situation and run the check.<br />The engine will extract facts, assess regulations, and show rule-backed detail where available.</div></div>';
+        return;
+      }
+      const scopeMap = normalizeInstrumentEvaluationMap();
+      const universalMap = normalizeUniversalEvaluationMap();
+      let html = renderFactCard();
+      html += renderQuestionCard(reasonBody);
+      regulationKeysToRender().forEach(function (regKey) {
+        html += renderRegulationCard(regKey, universalMap[regKey], scopeMap[regKey]);
+      });
+      html += renderSupportingContextCard();
+      html += renderTechnicalCard();
+      html += '<div class="notice">Speculative scope analysis based on extracted and transformed facts. Not a legal determination. Verify with qualified counsel.</div>';
+      rightPanelEl.innerHTML = html;
+    }
+    document.querySelectorAll("[data-example-index]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const index = Number(button.getAttribute("data-example-index"));
+        state.activeExample = index;
+        inputEl.value = EXAMPLES[index];
+      });
+    });
+    inputEl.addEventListener("input", function () { state.activeExample = -1; });
+    runBtn.addEventListener("click", runCheck);
+    inputEl.addEventListener("keydown", function (event) {
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        event.preventDefault();
+        runCheck();
+      }
+    });
+    tabRulesEl.addEventListener("click", function () { openRuleCatalog(); });
+    tabCheckEl.addEventListener("click", function () { closeDrawer(); });
+    drawerOverlayEl.addEventListener("click", closeDrawer);
+    document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+    window.openDrawer = openDrawer;
+    window.openRuleCatalog = openRuleCatalog;
+    window.toggleFactSelection = toggleFactSelection;
+    window.applyFactSelections = applyFactSelections;
+    window.answerClarification = answerClarification;
+    ensureCatalogLoaded().catch(function () { return null; });
   </script>
 </body>
 </html>

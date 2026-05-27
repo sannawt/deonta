@@ -1,0 +1,10 @@
+{
+  "name": "compliance-calculator",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "cd frontend && npm ci && npm run build"
+  }
+}

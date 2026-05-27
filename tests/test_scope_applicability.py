@@ -23,7 +23,6 @@ def test_validate_scope_facts_accepts_union_case():
     assert ("case", ("s1",)) in norm
 
 
-@pytest.mark.skipif(not souffle_available(), reason="Soufflé not installed")
 @pytest.mark.parametrize(
     "fixture,expected",
     [
@@ -37,16 +36,17 @@ def test_scope_verdict_matches_fixture(fixture: str, expected: str):
     errs, norm = validate_scope_facts(data["facts"])
     assert not errs
     out = run_scope_applicability(norm)
+    assert out["ok"], out.get("message")
+    assert out.get("engine") == "python_datalog"
     rep = build_applicability_report(out.get("outputs") or {})
     assert rep["verdict"] == expected == data["expect_verdict"]
 
 
-@pytest.mark.skipif(not souffle_available(), reason="Soufflé not installed")
-def test_souffle_scope_outputs_rows():
+def test_scope_python_engine_law_applies_row():
     data = _load("eu_gdpr_applies.json")
     _, norm = validate_scope_facts(data["facts"])
     out = run_scope_applicability(norm)
-    assert out["ok"], out.get("stderr") or out.get("message")
+    assert out["ok"], out.get("message")
     assert out["outputs"].get("law_applies") == [["s1", "gdpr"]]
 
 

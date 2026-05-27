@@ -3,11 +3,19 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
+from logic.corpus import extensional_predicates, load_predicate_catalog
+
 REPO = Path(__file__).resolve().parents[1]
 
 
 @lru_cache(maxsize=1)
 def load_required_facts_rows() -> tuple[dict[str, Any], ...]:
+    try:
+        catalog = load_predicate_catalog()
+        if catalog:
+            return tuple(catalog)
+    except Exception:  # noqa: BLE001
+        pass
     path = REPO / "schemas" / "required_facts.json"
     if not path.is_file():
         return tuple()
@@ -45,8 +53,20 @@ def validate_ground_facts(
     errors: list[str] = []
     normalized: list[tuple[str, tuple[str, ...]]] = []
     if not schema:
-        errors.append("schemas/required_facts.json missing or empty; run scripts/export_rules_xlsx.py")
+        errors.append(
+            "predicate schema missing or empty; run scripts/build_corpus.py or scripts/export_rules_xlsx.py"
+        )
         return errors, normalized
+
+    try:
+        allowed_predicates = {
+            str(row.get("predicate") or "").strip()
+            for row in extensional_predicates()
+        }
+    except Exception:  # noqa: BLE001
+        allowed_predicates = set()
+    if not allowed_predicates:
+        allowed_predicates = set(schema)
 
     for i, raw in enumerate(facts):
         if not isinstance(raw, dict):
@@ -60,6 +80,11 @@ def validate_ground_facts(
         name = str(pred).strip()
         if name not in schema:
             errors.append(f"facts[{i}]: unknown predicate {name!r}")
+            continue
+        if name not in allowed_predicates:
+            errors.append(
+                f"facts[{i}]: predicate {name!r} is not user-extensional/reference and cannot be asserted directly"
+            )
             continue
         if not isinstance(args, list):
             errors.append(f"facts[{i}]: args must be a list")

@@ -2,4 +2,14 @@
 .env.local
 compliance_secrets.env
 .venv/
+frontend/node_modules/
+frontend/dist/
 __pycache__/
+# Corpus build dir: ignore everything except committed deploy artifacts
+build/*
+!build/corpus.dl
+!build/predicates.json
+!build/citations.json
+!build/regulations.json
+!build/rules_index.json
+rules/.DS_Store

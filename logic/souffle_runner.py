@@ -1,10 +1,13 @@
 import csv
+import re
 import shutil
 import subprocess
 import tempfile
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+
+from logic.corpus import build_path, ensure_corpus_ready
 
 REPO = Path(__file__).resolve().parents[1]
 SCOPE_APPLICABILITY_DL = REPO / "rules" / "golden" / "scope_applicability.dl"
@@ -21,6 +24,20 @@ def _write_facts(work_dir: Path, facts: list[tuple[str, tuple[str, ...]]]) -> No
         by_pred[pred].append("\t".join(args))
     for pred, lines in by_pred.items():
         (work_dir / f"{pred}.facts").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _declared_inputs(program_text: str) -> set[str]:
+    return {
+        m.group(1)
+        for m in re.finditer(r"^\s*\.input\s+([A-Za-z_][A-Za-z0-9_]*)\s*$", program_text, re.M)
+    }
+
+
+def _ensure_empty_input_facts(work_dir: Path, program_text: str) -> None:
+    for pred in _declared_inputs(program_text):
+        fact_path = work_dir / f"{pred}.facts"
+        if not fact_path.exists():
+            fact_path.write_text("", encoding="utf-8")
 
 
 def _read_output_csv(out_dir: Path, relation: str) -> list[list[str]]:
@@ -61,9 +78,11 @@ def _run_souffle(
         work = Path(tmp)
         out_dir = work / "out"
         out_dir.mkdir()
+        program_text = program_source.read_text(encoding="utf-8")
         _write_facts(work, facts)
+        _ensure_empty_input_facts(work, program_text)
         program = work / "program.dl"
-        program.write_text(program_source.read_text(encoding="utf-8"), encoding="utf-8")
+        program.write_text(program_text, encoding="utf-8")
 
         cmd = [
             "souffle",
@@ -95,19 +114,30 @@ def _run_souffle(
 
 def run_scope_applicability(
     facts: list[tuple[str, tuple[str, ...]]],
+    *,
+    prefer_souffle: bool = False,
 ) -> dict[str, Any]:
-    """Applicability check: material, territorial, temporal, exclusion → law_applies."""
-    return _run_souffle(
-        SCOPE_APPLICABILITY_DL,
-        facts,
-        [
-            "material_scope_ok",
-            "territorial_scope_ok",
-            "temporal_scope_ok",
-            "excluded",
-            "law_applies",
-        ],
-    )
+    """
+    Applicability: material, territorial, temporal, exclusion → law_applies.
+
+    By default uses **pure Python** (no Soufflé). Set prefer_souffle=True and install
+    Soufflé to run the same logic via rules/golden/scope_applicability.dl.
+    """
+    if prefer_souffle and souffle_available():
+        return _run_souffle(
+            SCOPE_APPLICABILITY_DL,
+            facts,
+            [
+                "material_scope_ok",
+                "territorial_scope_ok",
+                "temporal_scope_ok",
+                "excluded",
+                "law_applies",
+            ],
+        )
+    from logic.py_scope_engine import evaluate_scope_program
+
+    return evaluate_scope_program(facts)
 
 
 def run_souffle_golden(
@@ -119,3 +149,13 @@ def run_souffle_golden(
         facts,
         ["gdpr_protects", "not_personal_data", "recital_principle"],
     )
+
+
+def run_corpus_program(
+    facts: list[tuple[str, tuple[str, ...]]],
+    *,
+    output_relations: list[str],
+) -> dict[str, Any]:
+    """Run the generated universal corpus with the existing Soufflé path."""
+    ensure_corpus_ready()
+    return _run_souffle(build_path("corpus.dl"), facts, output_relations)
