@@ -2,6 +2,25 @@
 
 Vercel serves the **React UI** from `frontend/dist` and runs **FastAPI** as a Python serverless function at `/api/*`.
 
+## Build failed / wrong “Initial commit”
+
+If the Vercel deployment shows commit **`3f3ac20`** or message **“Initial commit”**, the project is **not** connected to the current repo.
+
+**Fix in Vercel → Project → Settings → Git:**
+
+| Field | Value |
+|--------|--------|
+| Repository | `sannawt/compliance_calculator` |
+| Production branch | `main` |
+
+Then **Deployments → Redeploy** and confirm the commit is **`cb8f64c`** or newer (message mentions ComplianceTwin, Docker, or Vercel).
+
+Correct repo URL: **https://github.com/sannawt/compliance_calculator**
+
+If the deploy still fails with `cd frontend` / `npm ci`, you are still on an old commit without `frontend/`.
+
+**Prefer Render (Docker)** for this app — see [DEPLOY.md](DEPLOY.md).
+
 ## Before first deploy
 
 1. **Push the full app to GitHub** (not only `static/`):

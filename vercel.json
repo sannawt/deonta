@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "pip install -r requirements.txt && cd frontend && npm ci",
+  "installCommand": "python3 -m pip install -r requirements.txt && test -d frontend || (echo 'ERROR: No frontend/ — connect repo sannawt/compliance_calculator branch main' && exit 1) && cd frontend && npm ci",
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": null,
