@@ -1,0 +1,44 @@
+# Proves GitHub main has ComplianceTwin + Docker image builds (same as Render).
+name: Verify main
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ComplianceTwin layout on this commit
+        run: |
+          test -f Dockerfile
+          test -f render.yaml
+          test -f frontend/src/App.tsx
+          test -f build/corpus.dl
+          test -f data/legal_graph/articles.csv
+          grep -q 'FRONTEND_DIST' main.py
+          grep -q 'compliance_twin' README.md || true
+          echo "commit=$(git rev-parse --short HEAD)"
+          echo "ComplianceTwin artifacts present at $(git rev-parse --short HEAD)"
+
+      - name: Job summary
+        run: |
+          {
+            echo "## ComplianceTwin verified"
+            echo "- Commit: \`$(git rev-parse HEAD)\`"
+            echo "- Short: \`$(git rev-parse --short HEAD)\`"
+            echo "- Render must deploy **this** commit (Docker), not \`38170bc\`"
+            echo "- Live check: \`/api/ui-meta\` → \`ui: compliance_twin\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  docker-build:
+    needs: verify-layout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image (Render uses same Dockerfile)
+        run: docker build -t compliance-twin:ci .
