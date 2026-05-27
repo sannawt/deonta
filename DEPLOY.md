@@ -4,9 +4,12 @@ Vercel often fails for this repo (Python + large `rules/` + corpus + LLM timeout
 
 ## Recommended: Render (Docker)
 
+Confirm GitHub is current: https://github.com/sannawt/compliance_calculator/commits/main  
+(latest should be **today**, not ~18 days ago).
+
 1. Push `main` to GitHub (includes `Dockerfile`, `render.yaml`, `build/`, `data/legal_graph/`).
 2. [Render](https://dashboard.render.com) → **New** → **Blueprint**.
-3. Connect `sannawt/compliance_calculator` and apply `render.yaml`.
+3. Connect `sannawt/compliance_calculator`, branch **`main`**, and apply `render.yaml`.
 4. In the service → **Environment**, set:
    - `OPENAI_API_KEY` (optional)
    - `NEO4J_PLAYBOOK_PASSWORD` (optional, for company playbooks)
@@ -55,11 +58,37 @@ Alternative: [ngrok](https://ngrok.com) — `ngrok http 8000` while `make run` i
 
 Never commit `.env.local`.
 
+## Render still shows a repo “updated 18 days ago”
+
+GitHub **is** updated; Render is serving an **old deploy** or the wrong service type.
+
+1. Open your **Web Service** (not Static Site) → **Events** tab.
+2. Check the commit hash on the last successful deploy. If it is `38170bc` or from May 9, you are on the initial commit.
+3. **Manual Deploy** → **Deploy latest commit** (top right on the service page).
+4. **Settings** → **Build & Deploy**:
+   - **Branch:** `main`
+   - **Auto-Deploy:** On
+   - **Root Directory:** empty (repo root)
+   - **Runtime:** Docker (must match `render.yaml`; not “Python” only unless you change the setup)
+5. If there is no **Deploy latest commit**, or the repo looks frozen:
+   - **Settings** → **Delete Web Service** (or disconnect)
+   - **New** → **Blueprint** → select `sannawt/compliance_calculator` again → **Apply**
+6. Reconnect GitHub if needed: Account Settings → **GitHub** → reconnect `sannawt`.
+
+After a good deploy, **Events** should show commit `657b032` or newer and a Docker build log including `npm run build`.
+
+Verify live app:
+
+- `https://<your-service>.onrender.com/api/ui-meta` → `"ui": "compliance_twin"`
+- `/` → ComplianceTwin chat UI (not “Compliance question”)
+
 ## Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
-| Old “Compliance question” page | Wrong deploy root or old commit; use Docker/Render, not static-only hosting |
+| Render repo date stale in picker | Ignore the picker date; use **Deploy latest commit** on the service |
+| Old “Compliance question” page | Old commit deployed; redeploy `main` with Docker (see above) |
+| Wrong deploy root or old commit | Use Docker/Render, not static-only hosting |
 | 503 / corpus error on startup | Ensure `build/corpus.dl` and `build/*.json` are in the image (committed in git) |
 | API works, blank UI | Frontend build failed; check Docker build logs for `npm run build` |
 | Timeouts on chat | Increase host timeout (Render paid) or disable LLM env flags |
