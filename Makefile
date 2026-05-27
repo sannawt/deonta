@@ -4,6 +4,7 @@ export-rules:
 	.venv/bin/python scripts/export_rules_xlsx.py
 
 test:
+	.venv/bin/pip install -q -r requirements-dev.txt
 	.venv/bin/pytest -q
 
 CURSOR_NODE = /Applications/Cursor.app/Contents/Resources/app/resources/helpers/node

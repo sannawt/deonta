@@ -42,7 +42,10 @@ If the deploy still fails with `cd frontend` / `npm ci`, you are still on an old
 
 4. **Root Directory**: repo root (not `static/`).
 
-5. Leave **Build** / **Output** empty in the dashboard if using `vercel.json` (recommended).
+5. **Important:** In **Settings → Build & Deploy**, clear any custom **Install Command** / **Build Command** overrides.  
+   If the log shows `pip install -r requirements.txt && cd frontend && npm ci`, the dashboard is overriding `vercel.json` — delete those overrides and redeploy.
+
+6. Latest `vercel.json` only runs `cd frontend && npm ci` (Python deps install automatically for `api/index.py`).
 
 ## Verify after deploy
 
