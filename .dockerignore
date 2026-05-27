@@ -1,0 +1,12 @@
+.venv
+.git
+.env
+.env.local
+compliance_secrets.env
+frontend/node_modules
+frontend/dist
+**/__pycache__
+.pytest_cache
+*.pyc
+rules/.DS_Store
+.vercel

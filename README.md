@@ -1,0 +1,59 @@
+# ComplianceTwin
+
+EU regulatory scope and applicability (GDPR, EU AI Act) with a symbolic engine, local legal graph, and optional LLM summaries.
+
+## Run locally (your machine)
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env.local   # add OPENAI_API_KEY, Neo4j passwords as needed
+make run
+```
+
+Open **http://localhost:8000/** — ComplianceTwin workbench (chat + assessment panel).
+
+## Let others use the same app (three options)
+
+### Option A — Public URL from your laptop (fastest, ~2 minutes)
+
+Good for demos and a small team while you keep developing locally.
+
+1. In one terminal: `make run`
+2. In another: `make share`
+
+`make share` prints a **https://….trycloudflare.com** (or similar) link anyone can open. Your computer must stay on and the server running.
+
+Install the tunnel tool once: `brew install cloudflared` (macOS).
+
+### Option B — Docker on any server (recommended for a stable link)
+
+Same UI and API as localhost, runs without your laptop.
+
+```bash
+docker compose up --build
+```
+
+Then open **http://localhost:8000/** on that machine, or the server’s public IP / hostname on port 8000.
+
+Deploy the same image to [Render](https://render.com):
+
+1. New → **Blueprint** → connect `sannawt/compliance_calculator`
+2. Add secrets in the dashboard (`OPENAI_API_KEY`, optional Neo4j)
+3. Use the generated `https://compliance-twin.onrender.com` URL
+
+See [DEPLOY.md](DEPLOY.md) for Render and env details.
+
+### Option C — Vercel (static UI + serverless API)
+
+See [VERCEL.md](VERCEL.md). This stack is heavier on Vercel than Docker/Render; prefer **Option B** if Vercel builds fail or APIs time out.
+
+## Tests
+
+```bash
+make test
+```
+
+## Legacy UI
+
+http://localhost:8000/legacy — older compliance checker page.

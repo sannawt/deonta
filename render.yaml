@@ -1,0 +1,29 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Dashboard → New → Blueprint → connect this repo, or merge and use "New Blueprint".
+
+services:
+  - type: web
+    name: compliance-twin
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: LEGAL_GRAPH_BACKEND
+        value: local
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: LLM_FACTS_SUMMARY
+        value: "1"
+      - key: LLM_SCOPE_SUMMARY
+        value: "1"
+      - key: NEO4J_PLAYBOOK_URI
+        sync: false
+      - key: NEO4J_PLAYBOOK_USER
+        sync: false
+      - key: NEO4J_PLAYBOOK_PASSWORD
+        sync: false
+      - key: NEO4J_PLAYBOOK_DATABASE
+        sync: false
