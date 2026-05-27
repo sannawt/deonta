@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ensureCatalogLoaded } from "./lib/ruleCatalog";
 import type { Session, Message, ChatResponse } from "./types/chat";
 import { nanoid } from "./lib/utils";
@@ -102,38 +102,8 @@ export default function App() {
     saveSessions(updated);
   }
 
-  function createSession(): Session {
-    const s: Session = {
-      id: nanoid(),
-      title: "New session",
-      messages: [],
-      created_at: Date.now(),
-    };
-    updateSessions([s, ...sessions]);
-    setActiveId(s.id);
-    return s;
-  }
-
   function patchSession(id: string, patch: Partial<Session>) {
     const updated = sessions.map((s) => (s.id === id ? { ...s, ...patch } : s));
-    updateSessions(updated);
-  }
-
-  function appendMessage(sessionId: string, msg: Message) {
-    const updated = sessions.map((s) => {
-      if (s.id !== sessionId) return s;
-      return { ...s, messages: [...s.messages, msg] };
-    });
-    updateSessions(updated);
-  }
-
-  function replaceLastMessage(sessionId: string, msg: Message) {
-    const updated = sessions.map((s) => {
-      if (s.id !== sessionId) return s;
-      const msgs = [...s.messages];
-      msgs[msgs.length - 1] = msg;
-      return { ...s, messages: msgs };
-    });
     updateSessions(updated);
   }
 

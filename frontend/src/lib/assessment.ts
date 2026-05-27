@@ -34,7 +34,7 @@ export function resolveAssessment(data: ChatResponse | null | undefined): Assess
       playbook_company_label: factsTable?.playbook_company_label,
     },
     scope: data.worksheet,
-    scope_analysis: data.assessment?.scope_analysis || data.scope_analysis,
+    scope_analysis: data.scope_analysis,
     open_questions: data.clarifying_questions,
     playbook: data.playbook,
     applicability_results: data.symbolic?.applicability_results,

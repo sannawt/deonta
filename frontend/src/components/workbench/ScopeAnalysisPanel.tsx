@@ -56,7 +56,7 @@ function dedupeCitations<T extends { provision_long_id?: string; label?: string 
   return out;
 }
 
-function CitationChip({ c }: { c: { label: string; eurlex_url?: string | null; display?: string; excerpt?: string } }) {
+function CitationChip({ c }: { c: { label: string; eurlex_url?: string | null; display?: string; excerpt?: string | null } }) {
   const title = [c.display || c.label, c.excerpt].filter(Boolean).join(" — ");
   if (c.eurlex_url) {
     return (
