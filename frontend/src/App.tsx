@@ -3,20 +3,22 @@ import { ensureCatalogLoaded } from "./lib/ruleCatalog";
 import type { Session, Message, ChatResponse } from "./types/chat";
 import { nanoid } from "./lib/utils";
 import { PolygonBackground } from "./components/compliance-twin/PolygonBackground";
-import { Sidebar } from "./components/compliance-twin/Sidebar";
+import { Sidebar, type PrimaryView } from "./components/compliance-twin/Sidebar";
 import { ChatHeader } from "./components/compliance-twin/ChatHeader";
-import { ChatInputBar } from "./components/compliance-twin/ChatInputBar";
-import { WelcomeScreen } from "./components/compliance-twin/WelcomeScreen";
-import { ChatMessage } from "./components/cards/ChatMessage";
 import { AssessmentPanel } from "./components/workbench/AssessmentPanel";
 import { resolveAssessment } from "./lib/assessment";
-import { ProductsMatrix } from "./components/workbench/ProductsMatrix";
-import { ProductDetailView } from "./components/workbench/ProductDetailView";
+import { Wizard } from "./components/product/Wizard";
+import { ProductsLibrary } from "./components/product/ProductsLibrary";
+import { ProductPage } from "./components/product/ProductPage";
+import { RuntimeInfo } from "./components/product/RuntimeInfo";
+import { ChatHelperDrawer } from "./components/product/ChatHelperDrawer";
+import { loadProducts, saveProducts, upsertProduct, type ProductRecord } from "./lib/productStore";
 
 // ── LocalStorage persistence ──────────────────────────────────────────────
 // Bump key when response card shape changes (old saved messages lack bottom_line / facts_table).
 const SESSIONS_STORAGE_KEY = "ct_sessions_v2";
 const SIDEBAR_COLLAPSED_KEY = "ct_sidebar_collapsed";
+const PRODUCTS_KEY_MIGRATE = "ct_products_v1";
 
 function loadSidebarCollapsed(): boolean {
   try {
@@ -73,15 +75,22 @@ async function callChat(
 
 export default function App() {
   const [sessions, setSessions] = useState<Session[]>(loadSessions);
-  const [activeId, setActiveId] = useState<string | null>(
-    sessions.length > 0 ? sessions[0].id : null
-  );
+  const [activeId, setActiveId] = useState<string | null>(sessions.length > 0 ? sessions[0].id : null);
   const [playbookCompany, setPlaybookCompany] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(loadSidebarCollapsed);
-  const [loading, setLoading] = useState(false);
   const streamRef = useRef<HTMLDivElement>(null);
-  const [view, setView] = useState<"chat" | "products" | "product_detail">("chat");
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [view, setView] = useState<PrimaryView>("wizard");
+  const [products, setProducts] = useState<ProductRecord[]>(() => {
+    try {
+      // ensure key exists for local-only redesign; old installs won’t have it.
+      localStorage.getItem(PRODUCTS_KEY_MIGRATE);
+      return loadProducts();
+    } catch {
+      return [];
+    }
+  });
+  const [activeProductId, setActiveProductId] = useState<string | null>(products[0]?.id ?? null);
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Pre-load rule catalog on mount
   useEffect(() => { ensureCatalogLoaded(); }, []);
@@ -104,6 +113,13 @@ export default function App() {
   function updateSessions(updated: Session[]) {
     setSessions(updated);
     saveSessions(updated);
+  }
+
+  function updateProducts(next: ProductRecord[]) {
+    setProducts(next);
+    try {
+      saveProducts(next);
+    } catch {}
   }
 
   function patchSession(id: string, patch: Partial<Session>) {
@@ -150,7 +166,7 @@ export default function App() {
       return sessionsWithMsg;
     });
 
-    setLoading(true);
+    // Chat helper mode will manage its own loading state (wizard/products are primary).
 
     try {
       const data = await callChat(
@@ -191,7 +207,7 @@ export default function App() {
         return updated;
       });
     } finally {
-      setLoading(false);
+      // no-op
     }
   }
 
@@ -217,13 +233,21 @@ export default function App() {
     return null;
   })();
 
+  const activeProduct = products.find((p) => p.id === activeProductId) ?? null;
+
   return (
     <>
       <PolygonBackground />
       <div className="app-shell">
         <Sidebar
-          sessions={sessions}
-          activeId={activeId}
+          view={view}
+          onNavigate={(v) => setView(v)}
+          products={products}
+          activeProductId={activeProductId}
+          onSelectProduct={(id) => {
+            setActiveProductId(id);
+            setView("products");
+          }}
           playbookCompanyId={playbookCompany}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => {
@@ -235,24 +259,11 @@ export default function App() {
               return next;
             });
           }}
-          onSelect={setActiveId}
-          // If user selects a session, switch back to chat view
-          // (products view is separate)
-          onNew={() => {
-            const s: Session = {
-              id: nanoid(),
-              title: "New session",
-              messages: [],
-              playbook_company_id: playbookCompany.trim() || undefined,
-              created_at: Date.now(),
-            };
-            setSessions((prev) => { const u = [s, ...prev]; saveSessions(u); return u; });
-            setActiveId(s.id);
-          }}
           onResetUi={() => {
             try {
               localStorage.removeItem(SESSIONS_STORAGE_KEY);
               localStorage.removeItem("ct_sessions");
+              localStorage.removeItem(PRODUCTS_KEY_MIGRATE);
             } catch {}
             window.location.reload();
           }}
@@ -260,65 +271,91 @@ export default function App() {
 
         <div className="main-col">
           <ChatHeader
-            title={sessionTitle}
+            title={activeProduct?.label || "ComplianceTwin"}
             playbookCompanyId={playbookCompany}
             onPlaybookCompanyChange={handlePlaybookCompanyChange}
           />
 
           <div className="workbench-row">
             <div className="chat-col">
-              <div style={{ display: "flex", gap: 8, padding: "10px 10px 0" }}>
-                <button
-                  type="button"
-                  className={`hdr-btn${view === "chat" ? " hdr-btn-active" : ""}`}
-                  onClick={() => setView("chat")}
-                >
-                  Chat
-                </button>
-                <button
-                  type="button"
-                  className={`hdr-btn${view === "products" ? " hdr-btn-active" : ""}`}
-                  onClick={() => setView("products")}
-                >
-                  Products
-                </button>
-              </div>
-
-              {view === "products" ? (
-                <div style={{ padding: 10 }}>
-                  <ProductsMatrix
+              <div style={{ padding: 10, height: "100%", overflow: "auto" }}>
+                {view === "wizard" && (
+                  <Wizard
                     playbookCompanyId={playbookCompany.trim() || undefined}
-                    onOpenProduct={(pid) => {
-                      setSelectedProductId(pid);
-                      setView("product_detail");
+                    runAssessment={(prompt, sessionId, pb) => callChat(prompt, sessionId, undefined, pb)}
+                    onAssessment={(product, prompt, resp) => {
+                      const updated: ProductRecord = {
+                        ...product,
+                        updated_at: Date.now(),
+                        lastAssessment: { created_at: Date.now(), prompt, response: resp },
+                      };
+                      const next = upsertProduct(products, updated);
+                      updateProducts(next);
+                      setActiveProductId(updated.id);
+                      setView("products");
                     }}
                   />
-                </div>
-              ) : view === "product_detail" ? (
-                <div style={{ padding: 10 }}>
-                  {selectedProductId ? (
-                    <ProductDetailView
-                      productId={selectedProductId}
-                      onBack={() => setView("products")}
-                    />
-                  ) : (
-                    <div className="empty">No product selected.</div>
-                  )}
-                </div>
-              ) : (
-                <>
-                  <div className="message-stream" ref={streamRef}>
-                    {messages.length === 0 ? (
-                      <WelcomeScreen onSend={handleSend} />
-                    ) : (
-                      messages.map((msg) => (
-                        <ChatMessage key={msg.id} message={msg} onSend={handleSend} />
-                      ))
-                    )}
+                )}
+                {view === "wizard" && (
+                  <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 10 }}>
+                    <button type="button" className="hdr-btn" onClick={() => setChatOpen(true)}>
+                      Ask a follow‑up
+                    </button>
                   </div>
-                  <ChatInputBar onSend={handleSend} loading={loading} />
-                </>
-              )}
+                )}
+
+                {view === "products" && (
+                  <>
+                    <ProductsLibrary
+                      products={products}
+                      onOpen={(id) => {
+                        setActiveProductId(id);
+                        setView("products");
+                      }}
+                    />
+                    {activeProduct && (
+                      <div style={{ marginTop: 12 }}>
+                        <ProductPage product={activeProduct} />
+                      </div>
+                    )}
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 10 }}>
+                      <button type="button" className="hdr-btn" onClick={() => setChatOpen(true)}>
+                        Ask a follow‑up
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {view === "regulations" && (
+                  <div className="card" style={{ padding: 14 }}>
+                    <div className="card-title">Regulations</div>
+                    <div className="card-subtitle">Authoritative sources browser (next milestone)</div>
+                    <div className="empty" style={{ marginTop: 12 }}>
+                      This will surface articles/recitals with EUR‑Lex links and relationships to rules/facts.
+                    </div>
+                  </div>
+                )}
+
+                {view === "evidence" && (
+                  <div className="card" style={{ padding: 14 }}>
+                    <div className="card-title">Evidence</div>
+                    <div className="card-subtitle">Exportable record + memo (next milestone)</div>
+                    <div className="empty" style={{ marginTop: 12 }}>
+                      This will generate a defensible export with citations and a trace appendix.
+                    </div>
+                  </div>
+                )}
+
+                {view === "playbook" && (
+                  <div className="card" style={{ padding: 14 }}>
+                    <div className="card-title">Playbook</div>
+                    <div className="card-subtitle">Company knowledge (currently selected in header)</div>
+                    <div className="empty" style={{ marginTop: 12 }}>
+                      Playbook integration stays available via the company playbook selector.
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             <AssessmentPanel
@@ -328,6 +365,21 @@ export default function App() {
             />
           </div>
         </div>
+
+        <RuntimeInfo />
+        <ChatHelperDrawer
+          open={chatOpen}
+          onClose={() => setChatOpen(false)}
+          productLabel={activeProduct?.label}
+          runChat={(question) =>
+            callChat(
+              question,
+              activeProduct?.id || nanoid(),
+              undefined,
+              playbookCompany.trim() || undefined
+            )
+          }
+        />
       </div>
     </>
   );

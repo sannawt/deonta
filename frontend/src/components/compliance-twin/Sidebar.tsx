@@ -1,4 +1,4 @@
-import type { Session } from "../../types/chat";
+import type { ProductRecord } from "../../lib/productStore";
 
 const PLAYBOOK_LABELS: Record<string, string> = {
   vaisala: "Vaisala",
@@ -28,25 +28,31 @@ function LogoMark({ compact }: { compact?: boolean }) {
   );
 }
 
+export type PrimaryView = "wizard" | "products" | "regulations" | "evidence" | "playbook";
+
 interface Props {
-  sessions: Session[];
-  activeId: string | null;
-  playbookCompanyId?: string;
   collapsed?: boolean;
   onToggleCollapse?: () => void;
-  onSelect: (id: string) => void;
-  onNew: () => void;
+  playbookCompanyId?: string;
+
+  view: PrimaryView;
+  onNavigate: (v: PrimaryView) => void;
+
+  products: ProductRecord[];
+  activeProductId: string | null;
+  onSelectProduct: (id: string) => void;
   onResetUi?: () => void;
 }
 
 export function Sidebar({
-  sessions,
-  activeId,
+  products,
+  activeProductId,
   playbookCompanyId,
   collapsed = false,
   onToggleCollapse,
-  onSelect,
-  onNew,
+  view,
+  onNavigate,
+  onSelectProduct,
   onResetUi,
 }: Props) {
   const playbookLabel = playbookCompanyId
@@ -79,8 +85,8 @@ export function Sidebar({
           </div>
 
           <div className="sidebar-actions">
-            <button type="button" className="new-btn" onClick={onNew}>
-              + New session
+            <button type="button" className="new-btn" onClick={() => onNavigate("wizard")}>
+              + New assessment
             </button>
             {onResetUi && (
               <button type="button" className="hdr-btn sidebar-reset-btn" onClick={onResetUi}>
@@ -90,23 +96,44 @@ export function Sidebar({
           </div>
 
           <div className="sidebar-sessions">
-            <div className="sb-sec sidebar-sessions-label">Recent sessions</div>
-            {sessions.length === 0 && (
-              <div className="text-xs text-muted" style={{ textAlign: "center", marginTop: 24 }}>
-                No sessions yet
+            <div className="sb-sec sidebar-sessions-label">Workspace</div>
+            {(
+              [
+                ["wizard", "New assessment"],
+                ["products", "Products"],
+                ["regulations", "Regulations"],
+                ["evidence", "Evidence"],
+                ["playbook", "Playbook"],
+              ] as Array<[PrimaryView, string]>
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => onNavigate(id)}
+                className={`sess-item${view === id ? " active" : ""}`}
+              >
+                <div className="sb-item-title">{label}</div>
+                <div className="sb-item-sub">{id === "wizard" ? "Structured intake → record" : "Browse and review"}</div>
+              </button>
+            ))}
+          </div>
+
+          <div className="sidebar-sessions" style={{ marginTop: 4 }}>
+            <div className="sb-sec sidebar-sessions-label">Recent products</div>
+            {products.length === 0 && (
+              <div className="text-xs text-muted" style={{ textAlign: "center", marginTop: 12 }}>
+                No products yet
               </div>
             )}
-            {sessions.map((s) => (
+            {products.slice(0, 8).map((p) => (
               <button
-                key={s.id}
+                key={p.id}
                 type="button"
-                onClick={() => onSelect(s.id)}
-                className={`sess-item${s.id === activeId ? " active" : ""}`}
+                onClick={() => onSelectProduct(p.id)}
+                className={`sess-item${p.id === activeProductId ? " active" : ""}`}
               >
-                <div className="sb-item-title">{s.title || "Untitled session"}</div>
-                <div className="sb-item-sub">
-                  {s.messages?.[0]?.text ? s.messages[0].text.slice(0, 50) : "Ask a compliance question to begin"}
-                </div>
+                <div className="sb-item-title">{p.label}</div>
+                <div className="sb-item-sub">{p.lastAssessment ? "Assessment saved" : "No assessment yet"}</div>
               </button>
             ))}
           </div>
@@ -123,17 +150,17 @@ export function Sidebar({
 
       {collapsed && (
         <div className="sidebar-rail">
-          <button type="button" className="sidebar-rail-btn" onClick={onNew} title="New session">
+          <button type="button" className="sidebar-rail-btn" onClick={() => onNavigate("wizard")} title="New assessment">
             +
           </button>
           <div className="sidebar-rail-sessions">
-            {sessions.slice(0, 8).map((s) => (
+            {products.slice(0, 8).map((p) => (
               <button
-                key={s.id}
+                key={p.id}
                 type="button"
-                className={`sidebar-rail-dot${s.id === activeId ? " active" : ""}`}
-                onClick={() => onSelect(s.id)}
-                title={s.title || "Session"}
+                className={`sidebar-rail-dot${p.id === activeProductId ? " active" : ""}`}
+                onClick={() => onSelectProduct(p.id)}
+                title={p.label || "Product"}
               />
             ))}
           </div>
