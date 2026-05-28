@@ -69,5 +69,14 @@ def get_scenario(scenario_id: str) -> dict[str, Any] | None:
     return _STORE.get(scenario_id)
 
 
+def list_scenarios() -> list[dict[str, Any]]:
+    """In-memory list of scenario records (for product knowledge view)."""
+    return sorted(
+        (dict(v) for v in _STORE.values()),
+        key=lambda r: str(r.get("updated_at") or ""),
+        reverse=True,
+    )
+
+
 def clear_scenarios() -> None:
     _STORE.clear()

@@ -10,6 +10,8 @@ import { WelcomeScreen } from "./components/compliance-twin/WelcomeScreen";
 import { ChatMessage } from "./components/cards/ChatMessage";
 import { AssessmentPanel } from "./components/workbench/AssessmentPanel";
 import { resolveAssessment } from "./lib/assessment";
+import { ProductsMatrix } from "./components/workbench/ProductsMatrix";
+import { ProductDetailView } from "./components/workbench/ProductDetailView";
 
 // ── LocalStorage persistence ──────────────────────────────────────────────
 // Bump key when response card shape changes (old saved messages lack bottom_line / facts_table).
@@ -78,6 +80,8 @@ export default function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(loadSidebarCollapsed);
   const [loading, setLoading] = useState(false);
   const streamRef = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState<"chat" | "products" | "product_detail">("chat");
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
   // Pre-load rule catalog on mount
   useEffect(() => { ensureCatalogLoaded(); }, []);
@@ -232,6 +236,8 @@ export default function App() {
             });
           }}
           onSelect={setActiveId}
+          // If user selects a session, switch back to chat view
+          // (products view is separate)
           onNew={() => {
             const s: Session = {
               id: nanoid(),
@@ -261,16 +267,58 @@ export default function App() {
 
           <div className="workbench-row">
             <div className="chat-col">
-              <div className="message-stream" ref={streamRef}>
-                {messages.length === 0 ? (
-                  <WelcomeScreen onSend={handleSend} />
-                ) : (
-                  messages.map((msg) => (
-                    <ChatMessage key={msg.id} message={msg} onSend={handleSend} />
-                  ))
-                )}
+              <div style={{ display: "flex", gap: 8, padding: "10px 10px 0" }}>
+                <button
+                  type="button"
+                  className={`hdr-btn${view === "chat" ? " hdr-btn-active" : ""}`}
+                  onClick={() => setView("chat")}
+                >
+                  Chat
+                </button>
+                <button
+                  type="button"
+                  className={`hdr-btn${view === "products" ? " hdr-btn-active" : ""}`}
+                  onClick={() => setView("products")}
+                >
+                  Products
+                </button>
               </div>
-              <ChatInputBar onSend={handleSend} loading={loading} />
+
+              {view === "products" ? (
+                <div style={{ padding: 10 }}>
+                  <ProductsMatrix
+                    playbookCompanyId={playbookCompany.trim() || undefined}
+                    onOpenProduct={(pid) => {
+                      setSelectedProductId(pid);
+                      setView("product_detail");
+                    }}
+                  />
+                </div>
+              ) : view === "product_detail" ? (
+                <div style={{ padding: 10 }}>
+                  {selectedProductId ? (
+                    <ProductDetailView
+                      productId={selectedProductId}
+                      onBack={() => setView("products")}
+                    />
+                  ) : (
+                    <div className="empty">No product selected.</div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div className="message-stream" ref={streamRef}>
+                    {messages.length === 0 ? (
+                      <WelcomeScreen onSend={handleSend} />
+                    ) : (
+                      messages.map((msg) => (
+                        <ChatMessage key={msg.id} message={msg} onSend={handleSend} />
+                      ))
+                    )}
+                  </div>
+                  <ChatInputBar onSend={handleSend} loading={loading} />
+                </>
+              )}
             </div>
 
             <AssessmentPanel

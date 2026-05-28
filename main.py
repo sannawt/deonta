@@ -35,13 +35,14 @@ from logic.llm_answer import generate_general_answer_with_llm
 from logic.graph_citations import bucket_legal_matches
 from logic.local_legal_store import fetch_local_legal_matches, legal_graph_backend
 from logic.playbook_store import (
+    company_by_id,
     fetch_playbook_matches,
     list_playbook_companies,
 )
 from logic.phase_c_scope import analyse_phase_c_scope
 from logic.reasoner import run_universal_reasoner
 from logic.schema import load_schema_labels, validate_ground_facts
-from logic.scenario_store import get_scenario, upsert_scenario
+from logic.scenario_store import get_scenario, list_scenarios, upsert_scenario
 from logic.scope_applicability import build_applicability_report, validate_scope_facts
 from logic.souffle_runner import (
     run_scope_applicability,
@@ -967,6 +968,142 @@ def health() -> dict[str, Any]:
             "openai_configured": openai_key_set,
             "model": (os.environ.get("OPENAI_MODEL") or "gpt-4o-mini").strip(),
         },
+    }
+
+
+class ProductListRow(BaseModel):
+    product_id: str
+    label: str
+    source: Literal["session", "playbook"]
+    playbook_company_id: Optional[str] = None
+    updated_at: Optional[str] = None
+
+
+class ProductDetailResponse(BaseModel):
+    product_id: str
+    label: str
+    source: Literal["session", "playbook"]
+    playbook_company_id: Optional[str] = None
+    updated_at: Optional[str] = None
+    # When available, we return the same assessment envelope the UI already understands.
+    assessment: Optional[dict[str, Any]] = None
+
+
+@app.get("/api/products")
+def list_products(playbook_company_id: Optional[str] = None) -> dict[str, Any]:
+    """
+    Products for the knowledge view.
+
+    - session products: derived from stored scenarios (one per case_id/session)
+    - playbook products: optional, from company playbook Neo4j (Product nodes)
+    """
+    rows: list[dict[str, Any]] = []
+
+    # Session products (in-memory scenarios)
+    for s in list_scenarios():
+        sid = str(s.get("scenario_id") or "").strip()
+        if not sid:
+            continue
+        rows.append(
+            ProductListRow(
+                product_id=f"session:{sid}",
+                label=f"Session {sid[:8]}",
+                source="session",
+                updated_at=str(s.get("updated_at") or ""),
+            ).model_dump()
+        )
+
+    # Playbook products (Neo4j, optional)
+    company_id = (playbook_company_id or "").strip() or None
+    if company_id:
+        try:
+            pb = company_by_id(company_id)
+        except Exception:
+            pb = None
+        if pb:
+            try:
+                db = resolve_aura_database(
+                    os.environ["NEO4J_PLAYBOOK_URI"], "NEO4J_PLAYBOOK_DATABASE"
+                )
+                drv = get_playbook_driver()
+                prefix = pb["prefix"]
+                cypher = (
+                    "MATCH (p) "
+                    "WHERE any(l IN labels(p) WHERE l = $label) "
+                    "RETURN elementId(p) AS id, properties(p) AS props "
+                    "LIMIT 50"
+                )
+                with drv.session(database=db) as session:
+                    out = session.run(cypher, label=f"{prefix}_Product")
+                    for r in out:
+                        rid = str(r.get("id") or "")
+                        props = r.get("props") or {}
+                        name = str(props.get("name") or props.get("title") or props.get("product") or "").strip()
+                        rows.append(
+                            ProductListRow(
+                                product_id=f"playbook:{company_id}:{rid}",
+                                label=name or f"Playbook product {rid[:8]}",
+                                source="playbook",
+                                playbook_company_id=company_id,
+                            ).model_dump()
+                        )
+            except Exception:
+                # keep endpoint resilient; the UI can still show session products
+                pass
+
+    return {"version": 1, "products": rows}
+
+
+@app.get("/api/products/{product_id}")
+def get_product(product_id: str) -> dict[str, Any]:
+    """
+    Product knowledge detail.
+
+    For now:
+    - session:<case_id> returns the stored scenario facts and a minimal assessment snapshot (if available).
+    - playbook:<company_id>:<node_id> returns metadata only (assessment requires running a chat).
+
+    This keeps chat backward-compatible while we add a dedicated product view.
+    """
+    pid = (product_id or "").strip()
+    if pid.startswith("session:"):
+        sid = pid.split("session:", 1)[1].strip()
+        scenario = get_scenario(sid) or {}
+        # We can’t reconstruct the full assessment without rerunning the reasoner; return facts + metadata.
+        return {
+            "version": 1,
+            **ProductDetailResponse(
+            product_id=pid,
+            label=f"Session {sid[:8]}",
+            source="session",
+            updated_at=str(scenario.get("updated_at") or ""),
+            assessment={
+                "facts": {"from_question": scenario.get("facts") or [], "from_playbook": []},
+            },
+        ).model_dump(),
+        }
+
+    if pid.startswith("playbook:"):
+        parts = pid.split(":", 2)
+        company_id = parts[1] if len(parts) > 1 else None
+        node_id = parts[2] if len(parts) > 2 else ""
+        return {
+            "version": 1,
+            **ProductDetailResponse(
+            product_id=pid,
+            label=f"Playbook product {node_id[:8] or 'unknown'}",
+            source="playbook",
+            playbook_company_id=company_id,
+        ).model_dump(),
+        }
+
+    return {
+        "version": 1,
+        **ProductDetailResponse(
+        product_id=pid,
+        label=pid,
+        source="session",
+    ).model_dump(),
     }
 
 
