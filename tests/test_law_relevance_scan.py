@@ -12,8 +12,8 @@ from logic.law_relevance_scan import (
     build_scan_query,
     fetch_regulations_from_neo4j,
     rank_regulations,
-    reg_id_to_code,
 )
+from logic.reg_id_map import reg_id_to_code
 
 
 def test_reg_id_to_code_gdpr_and_ai_act():
@@ -64,7 +64,7 @@ def test_term_scores_orders_gdpr_above_unrelated():
             "hit_count": 0,
         },
     ]
-    ranked = rank_regulations(query, regulations, limit=10)
+    ranked, _method = rank_regulations(query, regulations, limit=10)
     assert ranked
     assert ranked[0]["code"] == "gdpr"
     if len(ranked) > 1:
@@ -83,7 +83,7 @@ def test_rank_regulations_top_10_cap():
         }
         for i in range(15)
     ]
-    ranked = rank_regulations(query, regs, limit=10)
+    ranked, _ = rank_regulations(query, regs, limit=10)
     assert len(ranked) <= 10
 
 
@@ -134,12 +134,12 @@ def test_ranking_varies_with_rich_corpus_text():
             "hit_count": 0,
         },
     ]
-    gdpr_top = rank_regulations("employee personal data HR SaaS", regulations, limit=1)[0]["code"]
-    ai_top = rank_regulations("machine learning model deployment high risk AI", regulations, limit=1)[0]["code"]
-    dsa_top = rank_regulations("online marketplace seller platform intermediary", regulations, limit=1)[0]["code"]
-    assert gdpr_top == "gdpr"
-    assert ai_top == "ai_act"
-    assert dsa_top == "dsa"
+    gdpr_top, _ = rank_regulations("employee personal data HR SaaS", regulations, limit=1)
+    ai_top, _ = rank_regulations("machine learning model deployment high risk AI", regulations, limit=1)
+    dsa_top, _ = rank_regulations("online marketplace seller platform intermediary", regulations, limit=1)
+    assert gdpr_top[0]["code"] == "gdpr"
+    assert ai_top[0]["code"] == "ai_act"
+    assert dsa_top[0]["code"] == "dsa"
 
 
 def test_retrieval_hits_boost_regulation():
@@ -161,7 +161,7 @@ def test_retrieval_hits_boost_regulation():
             "hit_count": 0,
         },
     ]
-    ranked = rank_regulations("personal data cloud service", regulations, limit=2)
+    ranked, _ = rank_regulations("personal data cloud service", regulations, limit=2)
     assert ranked[0]["code"] == "gdpr"
     assert ranked[0]["hit_count"] == 12
 
@@ -207,7 +207,7 @@ def test_fetch_regulations_from_neo4j_mock_session():
     driver = MagicMock()
     driver.session.return_value.__enter__.return_value = session
 
-    rows = fetch_regulations_from_neo4j(driver, "neo4j")
+    rows = fetch_regulations_from_neo4j(driver, "neo4j", allow_catalog_fallback=True)
     assert any(r["reg_id"] == "REG_GDPR" for r in rows)
     assert rows[0]["texts"]
 
@@ -231,3 +231,103 @@ def test_scan_relevant_laws_raises_when_local_backend(monkeypatch):
             get_legal_driver_fn=MagicMock(),
             resolve_database_fn=lambda: "neo4j",
         )
+
+
+def test_rank_regulations_vector_signal():
+    regulations = [
+        {
+            "reg_id": "REG_GDPR",
+            "name": "GDPR",
+            "short_name": "GDPR",
+            "description": "",
+            "texts": ["Personal data processing rules."],
+            "hit_count": 2,
+            "vector_hit_count": 8,
+            "max_vector_score": 0.92,
+        },
+        {
+            "reg_id": "REG_CRA",
+            "name": "Cyber Resilience Act",
+            "short_name": "CRA",
+            "description": "",
+            "texts": [],
+            "hit_count": 0,
+            "vector_hit_count": 1,
+            "max_vector_score": 0.4,
+        },
+    ]
+    ranked, method = rank_regulations(
+        "personal data SaaS",
+        regulations,
+        limit=5,
+        vector_ranked=True,
+    )
+    assert ranked[0]["code"] == "gdpr"
+    assert "semantically similar" in ranked[0]["match_rationale"]
+    assert method.startswith("neo4j_vector")
+    assert "embedding" not in ranked[0]
+    for row in ranked:
+        assert "embedding" not in row
+
+
+def test_scan_relevant_laws_vector_path(monkeypatch):
+    from logic import law_relevance_scan as mod
+    from logic.neo4j_embedding_config import EmbeddingProfile
+
+    profile = EmbeddingProfile(
+        has_embeddings=True,
+        search_labels=("Article", "Recital"),
+        vector_property="embedding",
+        dimensions=1536,
+        vector_index_name="article_emb",
+        query_provider="openai",
+        query_model="text-embedding-3-small",
+    )
+
+    monkeypatch.setenv("LEGAL_GRAPH_BACKEND", "neo4j")
+    monkeypatch.setenv("NEO4J_LEGAL_URI", "neo4j+s://x.databases.neo4j.io")
+    monkeypatch.setenv("NEO4J_LEGAL_PASSWORD", "secret")
+
+    monkeypatch.setattr(mod, "load_embedding_profile", lambda _d, _db: profile)
+    monkeypatch.setattr(
+        mod,
+        "fetch_regulations_from_neo4j",
+        lambda *_a, **_k: [
+            {
+                "reg_id": "REG_GDPR",
+                "name": "GDPR",
+                "short_name": "GDPR",
+                "official_number": "2016/679",
+                "description": "",
+                "texts": [],
+                "hit_count": 0,
+            }
+        ],
+    )
+    monkeypatch.setattr(mod, "embed_query", lambda _q, _p: [0.1] * 1536)
+    monkeypatch.setattr(
+        mod,
+        "vector_search_hits",
+        lambda *_a, **_k: [
+            {
+                "reg_key": "REG_GDPR",
+                "score": 0.88,
+                "text_preview": "Processing of personal data shall be lawful.",
+                "title": "Article 6",
+                "labels": ["Article"],
+            }
+        ],
+    )
+    monkeypatch.setattr(mod, "fetch_legal_entity_metadata", lambda *_a, **_k: {})
+
+    out = mod.scan_relevant_laws(
+        description="HR SaaS processing employee personal data in the EU",
+        get_legal_driver_fn=MagicMock(),
+        resolve_database_fn=lambda: "neo4j",
+    )
+    assert out["embedding_search"]["vector_search_used"] is True
+    assert out["results"]
+    assert out["results"][0]["code"] == "gdpr"
+    for row in out["results"]:
+        assert "embedding" not in row
+    assert "queryVector" not in str(out)

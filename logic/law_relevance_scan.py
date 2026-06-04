@@ -2,33 +2,22 @@
 
 from __future__ import annotations
 
-import json
-import math
-import os
 import re
-import urllib.error
-import urllib.request
 from typing import Any, Callable
 
 from logic.legal_db import LAW_CATALOG, engine_mode_for, law_by_code, neo4j_legal_configured
 from logic.local_legal_store import legal_graph_backend
+from logic.neo4j_embedding_config import load_embedding_profile
+from logic.neo4j_vector_search import (
+    aggregate_hits_by_regulation,
+    fetch_document_metadata,
+    fetch_legal_entity_metadata,
+    merge_vector_hits_into_regulations,
+    vector_search_hits,
+)
+from logic.query_embedder import embed_query
+from logic.reg_id_map import reg_id_to_code
 from logic.terms import terms_from_question
-
-# Neo4j regulation id (REG_*) → app law catalog code
-REG_ID_TO_CODE: dict[str, str] = {
-    "REG_GDPR": "gdpr",
-    "REG_AIACT": "ai_act",
-    "REG_AI_ACT": "ai_act",
-    "REG_CRA": "cra",
-    "REG_DORA": "dora",
-    "REG_NIS2": "nis2",
-    "REG_NIS_2": "nis2",
-    "REG_DATA_ACT": "data_act",
-    "REG_EPRIVACY": "eprivacy",
-    "REG_GPSR": "gpsr",
-    "REG_DMA": "dma",
-    "REG_DSA": "dsa",
-}
 
 _NUMBER_RE = re.compile(
     r"(?:Regulation\s*\(EU\)\s*)?(\d{4}/\d+(?:/\d+)?)|(?:Directive\s*\(EU\)\s*)?(\d{4}/\d+)",
@@ -45,11 +34,21 @@ RETURN
   coalesce(r.description, r.summary, '') AS description
 """
 
+DOCUMENTS_REGULATIONS_CYPHER = """
+MATCH (d:Document)
+RETURN
+  coalesce(d.id, elementId(d)) AS reg_id,
+  coalesce(d.title, d.name, '') AS name,
+  '' AS short_name,
+  '' AS official_number,
+  '' AS description
+"""
+
 # All provision-like nodes with body text (label-agnostic for twin_p schema drift)
 CORPUS_BY_REG_CYPHER = """
 MATCH (n)
 WHERE n.text IS NOT NULL AND size(toString(n.text)) > 35
-WITH coalesce(n.regulation_id, n.regulationId) AS reg_id, n
+WITH coalesce(n.doc_id, n.regulation_id, n.regulationId) AS reg_id, n
 WHERE reg_id IS NOT NULL
 WITH reg_id,
      collect(toString(n.text))[0..20] AS texts,
@@ -64,7 +63,7 @@ WHERE n.text IS NOT NULL AND size(toString(n.text)) > 25
   AND any(t IN $terms WHERE toLower(toString(n.text)) CONTAINS t
        OR toLower(coalesce(n.name, '')) CONTAINS t
        OR toLower(coalesce(n.title, '')) CONTAINS t)
-WITH coalesce(n.regulation_id, n.regulationId) AS reg_id, n
+WITH coalesce(n.doc_id, n.regulation_id, n.regulationId) AS reg_id, n
 WHERE reg_id IS NOT NULL
 WITH reg_id,
      count(n) AS hit_count,
@@ -125,20 +124,6 @@ def _predicate_terms_from_kg(kg_facts: list[dict[str, Any]] | None) -> set[str]:
             terms.update(t for t in pred.split("_") if len(t) >= 3)
     return terms
 
-
-def reg_id_to_code(reg_id: str) -> str:
-    key = (reg_id or "").strip().upper()
-    if key in REG_ID_TO_CODE:
-        return REG_ID_TO_CODE[key]
-    if key.startswith("REG_"):
-        slug = key[4:].lower().replace("-", "_")
-        for row in LAW_CATALOG:
-            if row["code"] == slug or slug in row["code"]:
-                return row["code"]
-        if slug == "aiact":
-            return "ai_act"
-        return slug
-    return key.lower().replace("-", "_")
 
 
 def _tokenize(text: str) -> list[str]:
@@ -221,26 +206,37 @@ def fetch_regulations_from_neo4j(
     database: str,
     *,
     query: str = "",
+    allow_catalog_fallback: bool = False,
 ) -> list[dict[str, Any]]:
     terms = terms_from_question(query) if query.strip() else []
     reg_rows: list[dict[str, Any]] = []
     corpus_rows: list[dict[str, Any]] = []
     search_rows: list[dict[str, Any]] = []
     hit_counts: dict[str, int] = {}
+    neo4j_errors: list[str] = []
 
     with driver.session(database=database) as session:
         try:
             reg_rows = [r.data() for r in session.run(REGULATIONS_CYPHER)]
-        except Exception:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001
+            neo4j_errors.append(f"regulations: {exc}")
             reg_rows = []
         if not reg_rows:
             try:
                 reg_rows = [r.data() for r in session.run(FALLBACK_REGULATIONS_CYPHER)]
-            except Exception:  # noqa: BLE001
+            except Exception as exc:  # noqa: BLE001
+                neo4j_errors.append(f"regulations_fallback: {exc}")
+                reg_rows = []
+        if not reg_rows:
+            try:
+                reg_rows = [r.data() for r in session.run(DOCUMENTS_REGULATIONS_CYPHER)]
+            except Exception as exc:  # noqa: BLE001
+                neo4j_errors.append(f"documents: {exc}")
                 reg_rows = []
         try:
             corpus_rows = [r.data() for r in session.run(CORPUS_BY_REG_CYPHER)]
-        except Exception:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001
+            neo4j_errors.append(f"corpus: {exc}")
             corpus_rows = []
         if terms:
             try:
@@ -249,15 +245,23 @@ def fetch_regulations_from_neo4j(
                     rid = str(row.get("reg_id") or "")
                     if rid:
                         hit_counts[rid] = int(row.get("hit_count") or 0)
-            except Exception:  # noqa: BLE001
+            except Exception as exc:  # noqa: BLE001
+                neo4j_errors.append(f"term_search: {exc}")
                 search_rows = []
+
+    if neo4j_errors and not reg_rows and not corpus_rows and not search_rows:
+        if allow_catalog_fallback:
+            return _catalog_as_regulations()
+        raise RuntimeError("Neo4j legal graph queries failed: " + "; ".join(neo4j_errors))
 
     merged = _merge_regulation_rows(reg_rows, corpus_rows, hit_counts=hit_counts)
     if search_rows:
         merged = _merge_regulation_rows(merged, search_rows, hit_counts=hit_counts)
 
     if not merged:
-        return _catalog_as_regulations()
+        if allow_catalog_fallback:
+            return _catalog_as_regulations()
+        raise RuntimeError("Neo4j returned no regulation nodes")
 
     # Attach catalog metadata but do not use catalog-only rows for ranking
     for reg in merged:
@@ -327,53 +331,11 @@ def _retrieval_scores(regulations: list[dict[str, Any]]) -> list[float]:
     return [int(r.get("hit_count") or 0) / max_hits for r in regulations]
 
 
-def _cosine(a: list[float], b: list[float]) -> float:
-    if not a or not b or len(a) != len(b):
-        return 0.0
-    dot = sum(x * y for x, y in zip(a, b))
-    na = math.sqrt(sum(x * x for x in a))
-    nb = math.sqrt(sum(y * y for y in b))
-    if na == 0 or nb == 0:
-        return 0.0
-    return dot / (na * nb)
-
-
-def _openai_embeddings(texts: list[str]) -> list[list[float]] | None:
-    key = (os.environ.get("OPENAI_API_KEY") or "").strip()
-    if not key or not texts:
-        return None
-    model = os.environ.get("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
-    base = (os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1").rstrip("/")
-    payload = json.dumps({"model": model, "input": texts}).encode("utf-8")
-    req = urllib.request.Request(
-        f"{base}/embeddings",
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {key}",
-            "Content-Type": "application/json",
-            "User-Agent": "compliance-calculator/1.0",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            data = json.loads(resp.read().decode())
-        items = data.get("data") or []
-        items.sort(key=lambda x: x.get("index", 0))
-        return [item["embedding"] for item in items if "embedding" in item]
-    except (urllib.error.URLError, TimeoutError, KeyError, json.JSONDecodeError, OSError):
-        return None
-
-
-def _embedding_scores(query: str, regulations: list[dict[str, Any]]) -> list[float] | None:
-    blobs = [_regulation_search_blob(r)[:8000] for r in regulations]
-    if not query.strip():
-        return None
-    vectors = _openai_embeddings([query[:8000], *blobs])
-    if not vectors or len(vectors) != len(blobs) + 1:
-        return None
-    qv = vectors[0]
-    return [_cosine(qv, v) for v in vectors[1:]]
+def _vector_retrieval_scores(regulations: list[dict[str, Any]]) -> list[float]:
+    max_score = max((float(r.get("max_vector_score") or 0.0) for r in regulations), default=0.0)
+    if max_score <= 0:
+        return [0.0] * len(regulations)
+    return [float(r.get("max_vector_score") or 0.0) / max_score for r in regulations]
 
 
 def _predicate_overlap_scores(
@@ -452,63 +414,80 @@ def rank_regulations(
     *,
     limit: int = 10,
     kg_facts: list[dict[str, Any]] | None = None,
-) -> list[dict[str, Any]]:
+    vector_ranked: bool = False,
+) -> tuple[list[dict[str, Any]], str]:
     if not regulations:
-        return []
+        return [], "none"
 
     pool: list[dict[str, Any]] = []
     for reg in regulations:
         blob_len = len(_regulation_search_blob(reg))
         hits = int(reg.get("hit_count") or 0)
-        if blob_len >= MIN_RANK_BLOB_CHARS or hits > 0:
+        vector_hits = int(reg.get("vector_hit_count") or 0)
+        if blob_len >= MIN_RANK_BLOB_CHARS or hits > 0 or vector_hits > 0:
             pool.append(reg)
 
     if not pool:
-        # Sparse Neo4j corpus — rank only rows with any retrieval signal; no catalog padding.
-        pool = [r for r in regulations if int(r.get("hit_count") or 0) > 0]
+        pool = [
+            r
+            for r in regulations
+            if int(r.get("hit_count") or 0) > 0 or int(r.get("vector_hit_count") or 0) > 0
+        ]
     if not pool:
         pool = list(regulations)
 
-    emb = _embedding_scores(query, pool)
+    vector = _vector_retrieval_scores(pool) if vector_ranked else [0.0] * len(pool)
     term = _term_scores(query, pool)
     retrieval = _retrieval_scores(pool)
     pred_overlap = _predicate_overlap_scores(kg_facts, pool)
 
-    if any(retrieval):
-        if emb:
+    has_vector = vector_ranked and any(vector)
+    has_retrieval = any(retrieval)
+
+    if has_vector:
+        if has_retrieval:
             raw = [
-                0.40 * r + 0.30 * e + 0.15 * t + 0.15 * p
-                for r, e, t, p in zip(retrieval, emb, term, pred_overlap)
+                0.45 * v + 0.25 * r + 0.15 * t + 0.15 * p
+                for v, r, t, p in zip(vector, retrieval, term, pred_overlap)
             ]
-            method = "retrieval+embedding+terms+predicates"
+            method = "neo4j_vector+retrieval+terms+predicates"
         else:
-            raw = [0.55 * r + 0.25 * t + 0.20 * p for r, t, p in zip(retrieval, term, pred_overlap)]
-            method = "retrieval+terms+predicates"
-    elif emb:
-        raw = [0.65 * e + 0.20 * t + 0.15 * p for e, t, p in zip(emb, term, pred_overlap)]
-        method = "embedding+terms+predicates"
+            raw = [0.60 * v + 0.25 * t + 0.15 * p for v, t, p in zip(vector, term, pred_overlap)]
+            method = "neo4j_vector+terms+predicates"
+    elif has_retrieval:
+        raw = [0.55 * r + 0.25 * t + 0.20 * p for r, t, p in zip(retrieval, term, pred_overlap)]
+        method = "retrieval+terms+predicates"
     else:
         raw = [0.70 * t + 0.30 * p for t, p in zip(term, pred_overlap)]
-        method = "terms+predicates"
+        method = "fallback_no_neo4j_vectors" if vector_ranked else "terms+predicates"
 
     raw = _normalize_scores(raw)
-    ranked = sorted(zip(raw, pool, retrieval, pred_overlap), key=lambda x: x[0], reverse=True)
+    ranked = sorted(
+        zip(raw, pool, retrieval, pred_overlap, vector),
+        key=lambda x: x[0],
+        reverse=True,
+    )
     out: list[dict[str, Any]] = []
-    for score, reg, ret_score, pred_score in ranked[:limit]:
+    for score, reg, ret_score, pred_score, vec_score in ranked[:limit]:
         if score <= 0 and out:
             break
         rationale_parts: list[str] = []
-        if int(reg.get("hit_count") or 0) > 0:
+        vh = int(reg.get("vector_hit_count") or 0)
+        if vh > 0:
+            rationale_parts.append(f"{vh} semantically similar provisions")
+        if int(reg.get("hit_count") or 0) > 0 and not vh:
             rationale_parts.append(f"{reg.get('hit_count')} matching provisions")
+        elif int(reg.get("hit_count") or 0) > 0:
+            rationale_parts.append(f"{reg.get('hit_count')} term matches")
         if pred_score > 0:
             rationale_parts.append("predicate overlap with product facts")
-        if ret_score > 0:
+        if ret_score > 0 and not vh:
             rationale_parts.append("term retrieval match")
         row = _format_result(reg, score, match_rationale="; ".join(rationale_parts))
         row["rank_method"] = method
         out.append(row)
 
-    return out
+    return out, method
 
 
 def scan_relevant_laws(
@@ -532,8 +511,41 @@ def scan_relevant_laws(
     scan_query = build_scan_query(description, kg_facts)
     driver = get_legal_driver_fn()
     database = resolve_database_fn()
-    regulations = fetch_regulations_from_neo4j(driver, database, query=scan_query)
-    results = rank_regulations(scan_query, regulations, limit=limit, kg_facts=kg_facts)
+
+    profile = load_embedding_profile(driver, database)
+    try:
+        regulations = fetch_regulations_from_neo4j(driver, database, query=scan_query)
+    except RuntimeError as exc:
+        if profile.usable() and "no regulation nodes" in str(exc).lower():
+            regulations = []
+        else:
+            raise
+
+    vector_used = False
+    if profile.usable():
+        query_vector = embed_query(scan_query, profile)
+        if query_vector:
+            hits = vector_search_hits(driver, database, profile, query_vector, top_k=max(limit * 4, 40))
+            vector_by_reg = aggregate_hits_by_regulation(hits)
+            reg_metadata = {
+                **fetch_legal_entity_metadata(driver, database),
+                **fetch_document_metadata(driver, database),
+            }
+            regulations = merge_vector_hits_into_regulations(
+                regulations, vector_by_reg, reg_metadata
+            )
+            vector_used = bool(vector_by_reg)
+
+    if not regulations:
+        raise RuntimeError("Neo4j returned no regulation nodes")
+
+    results, rank_method = rank_regulations(
+        scan_query,
+        regulations,
+        limit=limit,
+        kg_facts=kg_facts,
+        vector_ranked=profile.usable(),
+    )
     corpus_chars = sum(len(_regulation_search_blob(r)) for r in regulations)
     return {
         "version": 1,
@@ -542,5 +554,14 @@ def scan_relevant_laws(
         "regulation_count": len(regulations),
         "corpus_chars": corpus_chars,
         "results": results,
-        "rank_method": results[0].get("rank_method") if results else "none",
+        "rank_method": rank_method,
+        "embedding_search": {
+            "has_neo4j_embeddings": profile.has_embeddings,
+            "vector_search_used": vector_used,
+            "dimensions": profile.dimensions,
+            "vector_property": profile.vector_property,
+            "vector_index": profile.vector_index_name,
+            "query_provider": profile.query_provider if vector_used else "",
+            "query_model": profile.query_model if vector_used else "",
+        },
     }

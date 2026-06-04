@@ -44,6 +44,7 @@ from logic.reasoner import run_universal_reasoner
 from logic.schema import load_schema_labels, validate_ground_facts
 from logic.scenario_store import get_scenario, list_scenarios, upsert_scenario
 from logic.law_relevance_scan import scan_relevant_laws
+from logic.neo4j_legal_inspect import inspect_legal_graph
 from logic.legal_db import evidence_pack, law_summary_stub, list_laws
 from logic.account_store import ensure_account, new_account_id, normalize_account_id
 from logic.assess_pipeline import run_product_assess
@@ -150,7 +151,9 @@ def aura_instance_id(uri: str) -> Optional[str]:
 def resolve_aura_user(uri: str, env_key: str) -> str:
     aid = aura_instance_id(uri)
     raw = (os.environ.get(env_key) or "").strip()
-    if aid and (not raw or raw.lower() == "neo4j"):
+    # Only default to instance id when unset; explicit NEO4J_*_USER=neo4j is kept as-is
+    # (some Aura instances authenticate with neo4j, others with the instance id).
+    if aid and not raw:
         return aid
     return raw or "neo4j"
 
@@ -158,7 +161,7 @@ def resolve_aura_user(uri: str, env_key: str) -> str:
 def resolve_aura_database(uri: str, env_key: str) -> str:
     aid = aura_instance_id(uri)
     raw = (os.environ.get(env_key) or "").strip()
-    if aid and (not raw or raw.lower() == "neo4j"):
+    if aid and not raw:
         return aid
     return raw or "neo4j"
 
@@ -1360,6 +1363,28 @@ def api_law_obligations(code: str) -> dict[str, Any]:
 @app.post("/api/laws/evidence-pack")
 def api_evidence_pack(body: EvidencePackBody) -> dict[str, Any]:
     return {"version": 1, **evidence_pack(body.obligation_ids, body.law_codes)}
+
+
+@app.get("/api/legal-graph/inspect")
+def api_legal_graph_inspect() -> dict[str, Any]:
+    """Read-only snapshot of Neo4j legal Aura node labels, regulations, and text corpus."""
+    if legal_graph_backend() == "local":
+        raise HTTPException(
+            status_code=503,
+            detail="Legal graph inspect requires LEGAL_GRAPH_BACKEND=neo4j.",
+        )
+    try:
+        return inspect_legal_graph(
+            get_legal_driver_fn=get_legal_driver,
+            resolve_database_fn=lambda: resolve_aura_database(
+                (os.environ.get("NEO4J_LEGAL_URI") or os.environ.get("NEO4J_URI") or "").strip(),
+                "NEO4J_LEGAL_DATABASE",
+            ),
+        )
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail=f"Legal graph inspect failed: {exc}") from exc
 
 
 @app.post("/api/products/law-scan")

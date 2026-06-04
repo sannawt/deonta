@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PageFooter } from "./PageFooter";
 
 export type AppRoute =
   | "start"
@@ -25,6 +26,7 @@ export function AppShell({ onNavigateHome, children }: Props) {
         </header>
 
         <main className="ct-main">{children}</main>
+        <PageFooter />
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ import { ApplicabilityScopeView } from "../components/product/ApplicabilityScope
 import { ThinkingOverlay } from "../components/ui/ThinkingOverlay";
 import { PixelIcon } from "../components/ui/PixelIcon";
 import { WorkflowStepper } from "../components/product/WorkflowStepper";
-import { PageFooterNav } from "../components/shell/PageFooterNav";
 
 type Step = "intake" | "laws" | "scope";
 
@@ -111,30 +110,6 @@ export function ProductWorkflow({
         },
       },
     ];
-  }
-
-  function workflowFooter(_current: Step) {
-    return (
-      <PageFooterNav
-        links={[
-          { label: "Start", onClick: onNavigateHome },
-          {
-            label: "Step 1 — Describe product",
-            onClick: () => setStep("intake"),
-          },
-          {
-            label: "Step 2 — Laws",
-            onClick: () => setStep("laws"),
-            disabled: !step1Done.current || !hasInput,
-          },
-          {
-            label: "Step 3 — Scope",
-            onClick: () => setStep("scope"),
-            disabled: !step2Done.current || !step2Complete,
-          },
-        ]}
-      />
-    );
   }
 
   const runParse = useCallback(async (): Promise<boolean> => {
@@ -270,7 +245,6 @@ export function ProductWorkflow({
           onBackToLaws={() => setStep("laws")}
           onEditProduct={() => setStep("intake")}
         />
-        {workflowFooter("scope")}
       </>
     );
   }
@@ -301,7 +275,6 @@ export function ProductWorkflow({
             onBack={() => setStep("intake")}
           />
         </div>
-        {workflowFooter("laws")}
       </>
     );
   }
@@ -343,7 +316,6 @@ export function ProductWorkflow({
           <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
         </div>
       </div>
-      {workflowFooter("intake")}
     </>
   );
 }
