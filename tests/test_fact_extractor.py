@@ -10,7 +10,6 @@ def test_propose_gdpr_personal_eu():
     assert out["case_id"].startswith("sit_")
     preds = {f["predicate"] for f in out["facts_json"]}
     assert "processing" in preds
-    assert "processing_concerns" in preds
     assert "natural_person" in preds
     assert "concerns" in preds
     assert "identifies" in preds

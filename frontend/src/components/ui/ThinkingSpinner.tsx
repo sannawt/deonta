@@ -7,7 +7,7 @@ interface Props {
 }
 
 /** Scale icon — spins while the system is processing. */
-export function ThinkingSpinner({ active = true, label = "Thinking…", size = 40 }: Props) {
+export function ThinkingSpinner({ active = true, label = "Thinking…", size = 56 }: Props) {
   if (!active) return null;
 
   return (

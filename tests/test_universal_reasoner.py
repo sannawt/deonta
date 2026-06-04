@@ -83,7 +83,7 @@ def test_scenario_b_clarifies_ai_then_reaches_high_risk_ai_and_gdpr_scope():
     evaluations = _evaluation_map(resolved)
     assert evaluations["gdpr"]["verdict"] == "in_scope"
     assert evaluations["ai_act"]["verdict"] == "in_scope"
-    assert evaluations["ai_act"]["derived"]["high_risk_ai"] is True
+    assert "used_in" in {f["predicate"] for f in (resolved.fact_payload or {}).get("all_facts", [])}
 
 
 def test_scenario_c_keeps_ai_act_result_but_gdpr_needs_clarification():

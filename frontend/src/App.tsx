@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppShell, type AppRoute } from "./components/shell/AppShell";
 import { StartPage } from "./pages/StartPage";
 import { ProductWorkflow } from "./pages/ProductWorkflow";
 import { LawWorkflow } from "./pages/LawWorkflow";
-import { ProductsPage } from "./pages/ProductsPage";
 import { MonitoringPage } from "./pages/MonitoringPage";
 import { RuntimeInfo } from "./components/product/RuntimeInfo";
 import {
@@ -17,16 +16,13 @@ import { ensureCatalogLoaded } from "./lib/ruleCatalog";
 
 function routeFromHash(): AppRoute {
   const h = (window.location.hash || "").replace(/^#\/?/, "");
-  const allowed: AppRoute[] = ["start", "product", "law", "products", "monitoring"];
+  const allowed: AppRoute[] = ["start", "product", "law", "monitoring"];
   return allowed.includes(h as AppRoute) ? (h as AppRoute) : "start";
 }
 
 export default function App() {
   const [route, setRoute] = useState<AppRoute>(() => routeFromHash());
   const [products, setProducts] = useState<ProductRecord[]>(() => loadProducts());
-  const [activeProductId, setActiveProductId] = useState<string | null>(
-    products[0]?.id ?? null
-  );
   const [lawCatalog, setLawCatalog] = useState<LawCatalogItem[]>([]);
   const [lawPathCodes, setLawPathCodes] = useState<string[]>([]);
   const [startLawSelection, setStartLawSelection] = useState<string[]>(["gdpr", "ai_act"]);
@@ -51,16 +47,13 @@ export default function App() {
       .catch(() => {});
   }, []);
 
-  function updateProducts(next: ProductRecord[]) {
-    setProducts(next);
-    saveProducts(next);
-  }
-
-  function handleProductComplete(product: ProductRecord) {
-    const next = upsertProduct(products, product);
-    updateProducts(next);
-    setActiveProductId(product.id);
-  }
+  const handleProductComplete = useCallback((product: ProductRecord) => {
+    setProducts((prev) => {
+      const next = upsertProduct(prev, product);
+      saveProducts(next);
+      return next;
+    });
+  }, []);
 
   const showDev = import.meta.env.DEV;
 
@@ -88,7 +81,7 @@ export default function App() {
           <ProductWorkflow
             playbookCompanyId={playbookCompanyId || undefined}
             onComplete={handleProductComplete}
-            onViewProducts={() => navigate("products")}
+            onNavigateHome={() => navigate("start")}
           />
         )}
 
@@ -103,17 +96,6 @@ export default function App() {
               </button>
             </div>
           ))}
-
-        {route === "products" && (
-          <ProductsPage
-            products={products}
-            activeId={activeProductId}
-            onSelect={(id) => {
-              setActiveProductId(id);
-            }}
-            onNewProduct={() => navigate("product")}
-          />
-        )}
 
         {route === "monitoring" && <MonitoringPage products={products} />}
       </AppShell>

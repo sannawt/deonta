@@ -8,6 +8,8 @@ export interface KgFact {
   label: string;
   value: string;
   source?: string;
+  predicate?: string;
+  args?: string[];
 }
 
 export interface ProductSpec {

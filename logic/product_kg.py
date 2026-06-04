@@ -7,6 +7,7 @@ from typing import Any, Optional
 
 from logic.kg_schema import graph_edge, graph_node
 from logic.playbook_merge import get_playbook, rank_playbook_nodes_for_terms
+from logic.predicate_facts import graph_to_predicate_facts
 from logic.product_parse import kg_nodes_to_facts, parse_product_input
 
 
@@ -28,7 +29,11 @@ def link_playbook_nodes(
     ranked = rank_playbook_nodes_for_terms(playbook_doc, terms, cap=cap)
     extra_nodes: list[dict[str, Any]] = []
     extra_edges: list[dict[str, Any]] = []
-    product_ids = [n["id"] for n in product_nodes if n.get("type") == "Product"]
+    product_ids = [
+        n["id"]
+        for n in product_nodes
+        if n.get("type") in ("Product", "Scenario")
+    ]
     anchor = product_ids[0] if product_ids else None
 
     for pb in ranked:
@@ -90,7 +95,12 @@ def build_product_kg(
                 nodes.append(mn)
                 existing.add(mn.get("id"))
 
-    facts = kg_nodes_to_facts(nodes)
+    scenario_id = next(
+        (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),
+        "scenario",
+    )
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(scenario_id))
+    facts = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
     for f in facts:
         if f.get("source") == "parse":
             f["provenance"] = "parse"
@@ -104,10 +114,11 @@ def build_product_kg(
         "nodes": nodes,
         "edges": edges,
         "facts": facts,
+        "predicate_facts": predicate_facts,
         "spec": {
             "name": parsed.get("name") or "",
             "summary": parsed.get("summary") or description,
-            "markets": parsed.get("markets") or ["EU"],
+            "markets": parsed.get("markets") or [],
             "processesPersonalData": parsed.get("processesPersonalData", "unknown"),
             "euLink": parsed.get("euLink", "unknown"),
             "aiSystem": parsed.get("aiSystem", "unknown"),
@@ -138,6 +149,11 @@ def merge_kg_patch(
             if key not in seen:
                 edges.append(e)
                 seen.add(key)
-    facts = kg_nodes_to_facts(nodes)
-    out = {**kg, "nodes": nodes, "edges": edges, "facts": facts}
+    scenario_id = next(
+        (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),
+        "scenario",
+    )
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(scenario_id))
+    facts = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
+    out = {**kg, "nodes": nodes, "edges": edges, "facts": facts, "predicate_facts": predicate_facts}
     return out

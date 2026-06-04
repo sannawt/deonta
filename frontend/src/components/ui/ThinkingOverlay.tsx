@@ -11,7 +11,7 @@ export function ThinkingOverlay({ show, label }: Props) {
 
   return (
     <div className="ct-thinking-overlay">
-      <ThinkingSpinner active label={label} size={48} />
+      <ThinkingSpinner active label={label} size={64} />
     </div>
   );
 }

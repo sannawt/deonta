@@ -11,7 +11,7 @@ interface Props {
   onDark?: boolean;
 }
 
-export function PixelIcon({ name, size = 40, className = "", alt = "", onDark = false }: Props) {
+export function PixelIcon({ name, size = 52, className = "", alt = "", onDark = false }: Props) {
   return (
     <img
       src={brandIcons[name]}

@@ -8,6 +8,11 @@ from typing import Any, Optional
 
 from logic.chat_adapter import build_chat_response
 from logic.fact_extractor import propose_scope_facts
+from logic.predicate_facts import (
+    clarifying_questions_from_missing,
+    merge_scenario_facts,
+    missing_predicates_for_regulations,
+)
 from logic.reasoner import run_universal_reasoner
 from logic.corpus import load_regulations
 from logic.terms import terms_from_question
@@ -18,14 +23,13 @@ from logic.terms import terms_from_question
 def spec_to_situation(spec: dict[str, Any], kg_facts: list[dict[str, Any]] | None = None) -> str:
     name = (spec.get("name") or "").strip() or "Unknown product"
     summary = (spec.get("summary") or "").strip() or "No description provided."
-    markets = spec.get("markets") or ["EU"]
+    markets = spec.get("markets") or []
     if isinstance(markets, list):
-        markets_s = ", ".join(str(m) for m in markets)
+        markets_s = ", ".join(str(m) for m in markets) if markets else "not specified"
     else:
-        markets_s = str(markets)
+        markets_s = str(markets) if markets else "not specified"
 
     lines = [
-        f"Assess applicable EU laws for this product and provide a defensible scope record with citations.",
         f"Product name: {name}",
         f"Product summary: {summary}",
         f"Markets: {markets_s}",
@@ -37,18 +41,51 @@ def spec_to_situation(spec: dict[str, Any], kg_facts: list[dict[str, Any]] | Non
     ]
     if kg_facts:
         lines.append("")
-        lines.append("Product knowledge graph facts:")
+        lines.append("Extracted predicate facts:")
         for f in kg_facts[:40]:
-            label = f.get("label") or f.get("predicate") or "fact"
-            val = f.get("value") or f.get("text") or ""
+            pred = f.get("predicate") or f.get("label") or "fact"
+            args = f.get("args")
+            if args:
+                val = f"{pred}({', '.join(str(a) for a in args)})"
+            else:
+                val = f.get("value") or f.get("text") or ""
             prov = f.get("provenance") or f.get("source") or ""
             suffix = f" [{prov}]" if prov else ""
-            lines.append(f"- {label}: {val}{suffix}")
+            lines.append(f"- {val}{suffix}")
     regs = spec.get("regulations") or spec.get("selectedLaws")
     if regs and isinstance(regs, list):
         lines.append("")
         lines.append(f"Focus regulations: {', '.join(str(r) for r in regs)}")
     return "\n".join(lines)
+
+
+def _normalize_regulation_codes(codes: list[str] | None) -> list[str]:
+    if not codes:
+        return list(load_regulations())
+    known = set(load_regulations())
+    out: list[str] = []
+    for raw in codes:
+        code = str(raw).strip().lower().replace("-", "_")
+        if code in known and code not in out:
+            out.append(code)
+    return out or list(load_regulations())
+
+
+def _kg_facts_to_predicate_atoms(kg_facts: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    atoms: list[dict[str, Any]] = []
+    for f in kg_facts or []:
+        pred = str(f.get("predicate") or "").strip()
+        args = f.get("args")
+        if pred and isinstance(args, list) and args:
+            atoms.append(
+                {
+                    "predicate": pred,
+                    "args": [str(x) for x in args],
+                    "source": f.get("source") or f.get("provenance") or "kg",
+                    "status": "derived",
+                }
+            )
+    return atoms
 
 
 def run_product_assess(
@@ -69,6 +106,9 @@ def run_product_assess(
     build_rule_catalog_fn,
 ) -> dict[str, Any]:
     """Run applicability pipeline and return chat-compatible assess envelope."""
+    selected_regs = _normalize_regulation_codes(
+        spec.get("regulations") or spec.get("selectedLaws")
+    )
     situation = spec_to_situation(spec, kg_facts)
     terms = terms_from_question(situation)
     legal, playbook = fetch_legal_playbook_fn(
@@ -84,6 +124,33 @@ def run_product_assess(
         playbook.get("matches") or [],
         case_id=case_id,
     )
+    kg_atoms = _kg_facts_to_predicate_atoms(kg_facts)
+    if kg_atoms:
+        merged_extracted = merge_scenario_facts(
+            [{"predicate": i["predicate"], "args": i["args"], "source": i.get("source", "kg"), "status": "derived"} for i in kg_atoms],
+            proposed.get("facts") or [],
+        )
+        proposed = {**proposed, "facts": merged_extracted}
+        items = list(proposed.get("proposed_fact_items") or [])
+        base_id = len(items) + 1
+        for idx, atom in enumerate(merged_extracted):
+            if any(
+                item.get("predicate") == atom["predicate"] and item.get("args") == atom["args"]
+                for item in items
+            ):
+                continue
+            items.append(
+                {
+                    "id": base_id + idx,
+                    "predicate": atom["predicate"],
+                    "args": atom["args"],
+                    "label": f"{atom['predicate']}({', '.join(atom['args'])})",
+                    "selected": True,
+                    "source": atom.get("source", "kg"),
+                }
+            )
+        proposed["proposed_fact_items"] = items
+
     payload, selected_items, scenario_record = build_fact_payload_fn(
         situation=situation,
         proposed=proposed,
@@ -95,7 +162,7 @@ def run_product_assess(
     cites = bucket_legal_matches_fn(legal.get("matches") or [])
     compatibility_facts = compatibility_facts_for_payload_fn(
         case_id=payload.case_id,
-        regulations=list(load_regulations()),
+        regulations=selected_regs,
         personal_data_signal=effective_signals["personal_data"],
         eu_link_signal=effective_signals["eu_link"],
         active_phases=payload.active_phases,
@@ -114,6 +181,22 @@ def run_product_assess(
         active_phases=payload.active_phases,
         signals=effective_signals,
     )
+    if selected_regs and universal.get("evaluations"):
+        sel = set(selected_regs)
+        universal = {
+            **universal,
+            "evaluations": [
+                ev for ev in universal["evaluations"] if ev.get("regulation") in sel
+            ],
+        }
+    missing = missing_predicates_for_regulations(selected_regs, payload.all_facts)
+    extra_questions = clarifying_questions_from_missing(missing)
+    seen_q = {q.get("id") for q in questions}
+    for q in extra_questions:
+        if q.get("id") not in seen_q:
+            questions.append(q)
+            seen_q.add(q.get("id"))
+
     flow_response = {
         **core.model_dump(),
         "situation": situation,
@@ -124,6 +207,7 @@ def run_product_assess(
         "scenario_record": scenario_record,
         "clarifying_questions": questions,
         "clarification_required": bool(questions),
+        "missing_predicates": missing,
         "fact_payload": payload.to_dict(),
         "universal": universal,
         "legal": legal,
@@ -145,7 +229,6 @@ def run_product_assess(
         "ready": cs.get("ready"),
         "build_stale": cs.get("stale"),
     }
-    resp["selected_regulations"] = spec.get("regulations") or spec.get("selectedLaws") or list(
-        load_regulations()
-    )
+    resp["selected_regulations"] = selected_regs
+    resp["missing_predicates"] = missing
     return resp

@@ -271,13 +271,20 @@ function InstrumentPanel({
 interface Props {
   scopeAnalysis?: ScopeAnalysis | null;
   fallbackWorksheet?: ChatResponse["worksheet"];
+  defaultViewMode?: "lawyer" | "symbolic";
+  hideViewToggle?: boolean;
 }
 
-export function ScopeAnalysisPanel({ scopeAnalysis, fallbackWorksheet }: Props) {
+export function ScopeAnalysisPanel({
+  scopeAnalysis,
+  fallbackWorksheet,
+  defaultViewMode,
+  hideViewToggle,
+}: Props) {
   const instruments = scopeAnalysis?.instruments || [];
   const [activeTab, setActiveTab] = useState(instruments[0]?.id || "GDPR");
   const [viewMode, setViewMode] = useState<"lawyer" | "symbolic">(
-    scopeAnalysis?.llm_enriched ? "lawyer" : "symbolic"
+    defaultViewMode ?? (scopeAnalysis?.llm_enriched ? "lawyer" : "symbolic")
   );
 
   useEffect(() => {
@@ -287,10 +294,14 @@ export function ScopeAnalysisPanel({ scopeAnalysis, fallbackWorksheet }: Props) 
   }, [instruments, activeTab]);
 
   useEffect(() => {
+    if (defaultViewMode) {
+      setViewMode(defaultViewMode);
+      return;
+    }
     if (scopeAnalysis?.llm_enriched) {
       setViewMode("lawyer");
     }
-  }, [scopeAnalysis?.llm_enriched]);
+  }, [scopeAnalysis?.llm_enriched, defaultViewMode]);
 
   if (instruments.length === 0) {
     if (fallbackWorksheet?.rows?.length) {
@@ -319,25 +330,27 @@ export function ScopeAnalysisPanel({ scopeAnalysis, fallbackWorksheet }: Props) 
           ))}
         </div>
 
-        <div className="scope-view-toggle" role="tablist" aria-label="Scope view mode">
-          <button
-            type="button"
-            className={`scope-view-btn${viewMode === "lawyer" ? " active" : ""}`}
-            onClick={() => setViewMode("lawyer")}
-            disabled={!scopeAnalysis?.llm_enriched}
-            title={!scopeAnalysis?.llm_enriched ? "LLM summary not available" : "Lawyer summary"}
-          >
-            Lawyer view
-          </button>
-          <button
-            type="button"
-            className={`scope-view-btn${viewMode === "symbolic" ? " active" : ""}`}
-            onClick={() => setViewMode("symbolic")}
-            title="Symbolic detail"
-          >
-            Symbolic view
-          </button>
-        </div>
+        {!hideViewToggle && (
+          <div className="scope-view-toggle" role="tablist" aria-label="Scope view mode">
+            <button
+              type="button"
+              className={`scope-view-btn${viewMode === "lawyer" ? " active" : ""}`}
+              onClick={() => setViewMode("lawyer")}
+              disabled={!scopeAnalysis?.llm_enriched}
+              title={!scopeAnalysis?.llm_enriched ? "LLM summary not available" : "Lawyer summary"}
+            >
+              Lawyer view
+            </button>
+            <button
+              type="button"
+              className={`scope-view-btn${viewMode === "symbolic" ? " active" : ""}`}
+              onClick={() => setViewMode("symbolic")}
+              title="Symbolic detail"
+            >
+              Symbolic view
+            </button>
+          </div>
+        )}
       </div>
       <InstrumentPanel inst={active} viewMode={viewMode} />
     </div>

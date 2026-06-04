@@ -542,16 +542,29 @@ def _build_fact_payload(
     )
     if (
         clarification_answers.get("aiact_ai_system") == "yes"
-        and any(f.get("predicate") == "employment_social_security_law_basis" for f in extracted_facts)
+        and any(
+            f.get("predicate") in {"employment_social_security_law_basis", "necessary_for_employment_social_security", "used_in"}
+            for f in extracted_facts
+        )
     ):
+        case_value = str(proposed.get("case_id") or "")
         clarified_facts.append(
             {
-                "predicate": "high_risk_ai_use_case",
-                "args": [str(proposed.get("case_id") or "")],
+                "predicate": "used_in",
+                "args": [case_value, "employment_workers_management"],
                 "source": "clarification",
                 "status": "confirmed",
             }
         )
+        if any(f.get("predicate") == "high_risk_ai_use_case" for f in extracted_facts):
+            clarified_facts.append(
+                {
+                    "predicate": "high_risk_ai_use_case",
+                    "args": [case_value],
+                    "source": "clarification",
+                    "status": "confirmed",
+                }
+            )
     payload = FactPayload(
         case_id=str(proposed.get("case_id") or ""),
         raw_text=situation,
@@ -1147,7 +1160,7 @@ def get_product(product_id: str) -> dict[str, Any]:
 class ProductSpecBody(BaseModel):
     name: str = ""
     summary: str = Field(default="", max_length=8000)
-    markets: list[str] = Field(default_factory=lambda: ["EU"])
+    markets: list[str] = Field(default_factory=list)
     processesPersonalData: str = "unknown"
     euLink: str = "unknown"
     aiSystem: str = "unknown"

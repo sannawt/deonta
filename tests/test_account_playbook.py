@@ -33,7 +33,7 @@ def test_parse_and_kg_with_playbook(tmp_path, monkeypatch):
     )
     assert len(kg["nodes"]) >= 2
     types = {n["type"] for n in kg["nodes"]}
-    assert "Product" in types
+    assert "Scenario" in types
     matches = playbook_matches_for_assess(aid, doc["playbook_id"], ["employee", "data"])
     assert matches.get("account_playbook") is True
 

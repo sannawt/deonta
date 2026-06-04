@@ -99,12 +99,31 @@ def build_scan_query(
     max_chars: int = 6000,
 ) -> str:
     lines = [(description or "").strip()]
+    predicate_terms: list[str] = []
     for f in kg_facts or []:
-        label = f.get("label") or f.get("predicate") or ""
+        pred = str(f.get("predicate") or f.get("label") or "").strip()
+        args = f.get("args")
+        if pred and isinstance(args, list) and args:
+            atom = f"{pred}({', '.join(str(a) for a in args)})"
+            lines.append(atom)
+            predicate_terms.append(pred.replace("_", " "))
+            continue
         val = f.get("value") or f.get("text") or ""
-        if label or val:
-            lines.append(f"{label}: {val}")
+        if pred or val:
+            lines.append(f"{pred}: {val}".strip(": "))
+    if predicate_terms:
+        lines.append(" ".join(dict.fromkeys(predicate_terms)))
     return "\n".join(lines).strip()[:max_chars]
+
+
+def _predicate_terms_from_kg(kg_facts: list[dict[str, Any]] | None) -> set[str]:
+    terms: set[str] = set()
+    for f in kg_facts or []:
+        pred = str(f.get("predicate") or f.get("label") or "").strip().lower()
+        if pred:
+            terms.add(pred)
+            terms.update(t for t in pred.split("_") if len(t) >= 3)
+    return terms
 
 
 def reg_id_to_code(reg_id: str) -> str:
@@ -357,6 +376,21 @@ def _embedding_scores(query: str, regulations: list[dict[str, Any]]) -> list[flo
     return [_cosine(qv, v) for v in vectors[1:]]
 
 
+def _predicate_overlap_scores(
+    kg_facts: list[dict[str, Any]] | None,
+    regulations: list[dict[str, Any]],
+) -> list[float]:
+    preds = _predicate_terms_from_kg(kg_facts)
+    if not preds:
+        return [0.0] * len(regulations)
+    scores: list[float] = []
+    for reg in regulations:
+        blob = _regulation_search_blob(reg).lower()
+        hits = sum(1 for p in preds if p in blob)
+        scores.append(hits / max(len(preds), 1))
+    return scores
+
+
 def _normalize_scores(values: list[float]) -> list[float]:
     if not values:
         return values
@@ -367,7 +401,12 @@ def _normalize_scores(values: list[float]) -> list[float]:
     return [(v - lo) / (hi - lo) for v in values]
 
 
-def _format_result(reg: dict[str, Any], score: float) -> dict[str, Any]:
+def _format_result(
+    reg: dict[str, Any],
+    score: float,
+    *,
+    match_rationale: str = "",
+) -> dict[str, Any]:
     reg_id = str(reg.get("reg_id") or "")
     code = reg_id_to_code(reg_id)
     catalog = law_by_code(code) or {}
@@ -403,6 +442,7 @@ def _format_result(reg: dict[str, Any], score: float) -> dict[str, Any]:
         "label": catalog.get("label") or str(reg.get("name") or short),
         "engine_mode": engine_mode_for(code),
         "hit_count": int(reg.get("hit_count") or 0),
+        "match_rationale": match_rationale or "",
     }
 
 
@@ -411,6 +451,7 @@ def rank_regulations(
     regulations: list[dict[str, Any]],
     *,
     limit: int = 10,
+    kg_facts: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if not regulations:
         return []
@@ -423,46 +464,49 @@ def rank_regulations(
             pool.append(reg)
 
     if not pool:
+        # Sparse Neo4j corpus — rank only rows with any retrieval signal; no catalog padding.
+        pool = [r for r in regulations if int(r.get("hit_count") or 0) > 0]
+    if not pool:
         pool = list(regulations)
 
     emb = _embedding_scores(query, pool)
     term = _term_scores(query, pool)
     retrieval = _retrieval_scores(pool)
+    pred_overlap = _predicate_overlap_scores(kg_facts, pool)
 
     if any(retrieval):
         if emb:
-            raw = [0.45 * r + 0.35 * e + 0.20 * t for r, e, t in zip(retrieval, emb, term)]
-            method = "retrieval+embedding+terms"
+            raw = [
+                0.40 * r + 0.30 * e + 0.15 * t + 0.15 * p
+                for r, e, t, p in zip(retrieval, emb, term, pred_overlap)
+            ]
+            method = "retrieval+embedding+terms+predicates"
         else:
-            raw = [0.65 * r + 0.35 * t for r, t in zip(retrieval, term)]
-            method = "retrieval+terms"
+            raw = [0.55 * r + 0.25 * t + 0.20 * p for r, t, p in zip(retrieval, term, pred_overlap)]
+            method = "retrieval+terms+predicates"
     elif emb:
-        raw = [0.75 * e + 0.25 * t for e, t in zip(emb, term)]
-        method = "embedding+terms"
+        raw = [0.65 * e + 0.20 * t + 0.15 * p for e, t, p in zip(emb, term, pred_overlap)]
+        method = "embedding+terms+predicates"
     else:
-        raw = term
-        method = "terms"
+        raw = [0.70 * t + 0.30 * p for t, p in zip(term, pred_overlap)]
+        method = "terms+predicates"
 
     raw = _normalize_scores(raw)
-    ranked = sorted(zip(raw, pool), key=lambda x: x[0], reverse=True)
+    ranked = sorted(zip(raw, pool, retrieval, pred_overlap), key=lambda x: x[0], reverse=True)
     out: list[dict[str, Any]] = []
-    for score, reg in ranked[:limit]:
+    for score, reg, ret_score, pred_score in ranked[:limit]:
         if score <= 0 and out:
             break
-        row = _format_result(reg, score)
+        rationale_parts: list[str] = []
+        if int(reg.get("hit_count") or 0) > 0:
+            rationale_parts.append(f"{reg.get('hit_count')} matching provisions")
+        if pred_score > 0:
+            rationale_parts.append("predicate overlap with product facts")
+        if ret_score > 0:
+            rationale_parts.append("term retrieval match")
+        row = _format_result(reg, score, match_rationale="; ".join(rationale_parts))
         row["rank_method"] = method
         out.append(row)
-
-    if len(out) < limit:
-        seen = {r["code"] for r in out}
-        for reg in regulations:
-            code = reg_id_to_code(str(reg.get("reg_id") or ""))
-            if code in seen:
-                continue
-            out.append(_format_result(reg, 0.05))
-            seen.add(code)
-            if len(out) >= limit:
-                break
 
     return out
 
@@ -489,7 +533,7 @@ def scan_relevant_laws(
     driver = get_legal_driver_fn()
     database = resolve_database_fn()
     regulations = fetch_regulations_from_neo4j(driver, database, query=scan_query)
-    results = rank_regulations(scan_query, regulations, limit=limit)
+    results = rank_regulations(scan_query, regulations, limit=limit, kg_facts=kg_facts)
     corpus_chars = sum(len(_regulation_search_blob(r)) for r in regulations)
     return {
         "version": 1,

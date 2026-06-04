@@ -253,11 +253,18 @@ def extract_facts_rules(
             facts.append(_norm_fact_dict("places_on_eu_market", ["your_org", case_id]))
         if "output_used_in_eu" in allowed and eu_hint and not provider_hint:
             facts.append(_norm_fact_dict("output_used_in_eu", [case_id]))
-        if employment_hint and "high_risk_ai_use_case" in allowed:
-            facts.append(_norm_fact_dict("high_risk_ai_use_case", [case_id]))
+        if employment_hint:
+            if "used_in" in allowed:
+                facts.append(
+                    _norm_fact_dict("used_in", [case_id, "employment_workers_management"])
+                )
+            if "high_risk_ai_use_case" in allowed:
+                facts.append(_norm_fact_dict("high_risk_ai_use_case", [case_id]))
 
     if employment_hint and "employment_social_security_law_basis" in allowed:
         facts.append(_norm_fact_dict("employment_social_security_law_basis", [case_id]))
+    if employment_hint and "necessary_for_employment_social_security" in allowed:
+        facts.append(_norm_fact_dict("necessary_for_employment_social_security", [case_id]))
 
     if _EXCLUSION.search(situation):
         notes.append("Exclusion-style wording detected in the narrative; downstream review should verify any carve-out.")

@@ -747,6 +747,7 @@ def build_chat_response(
         rule_catalog=rule_catalog,
         question_facts=facts_table.get("from_question") or [],
         case_id=str(flow_response.get("case_id") or "") or None,
+        missing_predicates=flow_response.get("missing_predicates") or [],
     )
     scope_llm = summarize_scope_analysis(scope_analysis)
     scope_analysis = merge_scope_llm(scope_analysis, scope_llm)

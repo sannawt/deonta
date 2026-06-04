@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { PixelIcon } from "../ui/PixelIcon";
-
 interface Props {
   description: string;
   files: File[];
@@ -41,9 +40,9 @@ export function ProductIntakePanel({
       }}
     >
       <header className="ct-scanner-head">
-        <PixelIcon name="productConsole" size={44} className="ct-scanner-head-icon" />
+        <PixelIcon name="productConsole" size={96} className="ct-scanner-head-icon" />
         <div className="ct-scanner-head-text">
-          <p className="ct-scanner-step">Applicability scanner — Step 1</p>
+          <p className="ct-scanner-step">Step 1</p>
           <p className="ct-scanner-intro">
             Describe your product or service. The map updates as you type.
           </p>
@@ -72,24 +71,21 @@ export function ProductIntakePanel({
           className="ct-product-upload-btn"
           onClick={() => fileRef.current?.click()}
         >
-          <PixelIcon name="document" size={44} className="ct-product-upload-icon" />
+          <PixelIcon name="document" size={56} className="ct-product-upload-icon" />
           <span className="ct-product-upload-text">
             <span className="ct-product-upload-label">Upload document</span>
             <span className="ct-product-upload-hint">PDF, DOCX, TXT, MD</span>
           </span>
         </button>
 
-        <div className="ct-product-cta-row">
-          <PixelIcon name="scale" size={44} className="ct-product-cta-icon" alt="" />
-          <button
-            type="button"
-            className="ct-btn-primary ct-product-cta"
-            disabled={!canContinue || parsing}
-            onClick={() => void onSeeLaws()}
-          >
-            See which laws apply
-          </button>
-        </div>
+        <button
+          type="button"
+          className="ct-btn-primary ct-product-cta"
+          disabled={!canContinue || parsing}
+          onClick={() => void onSeeLaws()}
+        >
+          See which laws apply
+        </button>
       </div>
 
       <input
@@ -110,7 +106,7 @@ export function ProductIntakePanel({
       )}
       {parsing && (
         <p className="ct-product-parsing text-sm">
-          <PixelIcon name="hourglass" size={22} className="ct-product-parsing-icon" />
+          <PixelIcon name="hourglass" size={36} className="ct-product-parsing-icon" />
           Updating graph…
         </p>
       )}

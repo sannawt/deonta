@@ -329,9 +329,29 @@ def build_corpus(xlsx: Path, out_dir: Path) -> dict[str, Any]:
     wb = load_workbook(xlsx, read_only=True, data_only=True)
     articles = _sheet_as_dicts(wb["Articles + Rules"])
     required = _sheet_as_dicts(wb["Required facts"])
-    obligations = _sheet_as_dicts(wb["Obligation rules"])
-    citations_rows = _sheet_as_dicts(wb["Full text Datalog map"])
+    obligations: list[dict[str, Any]] = []
+    citations_rows: list[dict[str, Any]] = []
+    if "Obligation rules" in wb.sheetnames:
+        obligations = _sheet_as_dicts(wb["Obligation rules"])
+    if "Full text Datalog map" in wb.sheetnames:
+        citations_rows = _sheet_as_dicts(wb["Full text Datalog map"])
     wb.close()
+
+    if not citations_rows:
+        citations_rows = [
+            {
+                "provision_id": row.get("provision_id"),
+                "provision_long_id": row.get("provision_long_id"),
+                "regulation": row.get("regulation"),
+                "type": row.get("type"),
+                "scope_tag": row.get("scope_tag"),
+                "title": row.get("title") or row.get("provision_name"),
+                "text": row.get("text"),
+                "datalog_rule": row.get("datalog_rule"),
+            }
+            for row in articles
+            if str(row.get("provision_long_id") or row.get("provision_id") or "").strip()
+        ]
 
     regulations = sorted(
         {
@@ -377,6 +397,8 @@ def build_corpus(xlsx: Path, out_dir: Path) -> dict[str, Any]:
                         continue
                     head_pred = _atom_predicate(rule_line.split(":-", 1)[0])
                     if head_pred in {"applies", "applies_via_actor"}:
+                        continue
+                    if head_pred == "obligation" and source_type != "obligations":
                         continue
                     emitted_lines.append(rule_line)
                     if head_pred:

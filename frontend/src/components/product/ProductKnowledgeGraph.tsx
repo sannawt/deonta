@@ -5,9 +5,13 @@ import type { KgEdge, KgNode } from "../../lib/api";
 
 const TYPE_COLORS: Record<string, string> = {
   Product: "#4a7fd4",
+  Scenario: "#4a7fd4",
   Market: "#5ba8a0",
   Data: "#c4a574",
+  Datum: "#c4a574",
   AI: "#9b8ec4",
+  AISystem: "#9b8ec4",
+  Actor: "#7a9e6a",
   Document: "#a8b4c0",
 };
 
@@ -46,7 +50,7 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
         label: n.label || n.type,
         title: `${n.type}: ${n.label}`,
         shape: "dot",
-        size: n.type === "Product" ? 22 : 14,
+        size: n.type === "Product" || n.type === "Scenario" ? 22 : 14,
         color: nodeStyle(n.type),
         font: { color: "#334155", size: 13, face: "Plus Jakarta Sans" },
       }))

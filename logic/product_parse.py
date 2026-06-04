@@ -7,8 +7,9 @@ import os
 import re
 from typing import Any, BinaryIO
 
-from logic.fact_extractor import _AI, _EU, _PERSONAL, _PROCESSING
+from logic.fact_extractor import _AI, _EU, _PERSONAL, _PROCESSING, _PROVIDER
 from logic.kg_schema import graph_edge, graph_node, new_node_id
+from logic.predicate_facts import graph_to_predicate_facts
 
 _MARKET_RE = re.compile(
     r"\b(EU|US|UK|EEA|Finland|Germany|France|global|worldwide)\b",
@@ -145,22 +146,42 @@ def parse_description(text: str) -> dict[str, Any]:
     raw = (text or "").strip()
     name = extract_product_name(raw)
 
-    markets = list({m.group(0).upper() if m.group(0).upper() in ("EU", "US", "UK", "EEA") else m.group(0) for m in _MARKET_RE.finditer(raw)})
-    if not markets:
-        markets = ["EU"] if _EU.search(raw) else ["EU"]
+    markets = list(
+        {
+            m.group(0).upper()
+            if m.group(0).upper() in ("EU", "US", "UK", "EEA")
+            else m.group(0)
+            for m in _MARKET_RE.finditer(raw)
+        }
+    )
 
     nodes: list[dict[str, Any]] = []
     edges: list[dict[str, Any]] = []
 
-    product_id = new_node_id("pr")
-    product_node = graph_node(
-        node_id=product_id,
-        node_type="Product",
-        label=name or "Product",
+    scenario_id = new_node_id("sc")
+    scenario_node = graph_node(
+        node_id=scenario_id,
+        node_type="Scenario",
+        label=name or "Product scenario",
         properties={"description": raw[:4000]},
         source="parse",
     )
-    nodes.append(product_node)
+    nodes.append(scenario_node)
+
+    org_id = new_node_id("ac")
+    org_props: dict[str, Any] = {}
+    if _PROVIDER.search(raw):
+        org_props["provider"] = "yes"
+    nodes.append(
+        graph_node(
+            node_id=org_id,
+            node_type="Actor",
+            label="Your organisation",
+            properties=org_props,
+            source="parse",
+        )
+    )
+    edges.append(graph_edge(from_id=org_id, to_id=scenario_id, edge_type="PARTICIPATES_IN"))
 
     for market in markets[:8]:
         mid = new_node_id("mk")
@@ -172,40 +193,71 @@ def parse_description(text: str) -> dict[str, Any]:
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=product_id, to_id=mid, edge_type="OPERATES_IN"))
+        edges.append(graph_edge(from_id=scenario_id, to_id=mid, edge_type="OPERATES_IN"))
 
-    if _PERSONAL.search(raw) or _PROCESSING.search(raw):
+    personal_signal = _signal_from_text(raw, _PERSONAL)
+    processing_signal = "yes" if _PROCESSING.search(raw) else "unknown"
+    if personal_signal == "yes" or processing_signal == "yes":
         did = new_node_id("dt")
+        datum_props: dict[str, Any] = {"personal_data": personal_signal}
+        if processing_signal == "yes":
+            datum_props["processing"] = "yes"
         nodes.append(
             graph_node(
                 node_id=did,
-                node_type="Data",
-                label="Personal or operational data",
-                properties={"personal_data": _signal_from_text(raw, _PERSONAL)},
+                node_type="Datum",
+                label="Operational or personal data",
+                properties=datum_props,
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=product_id, to_id=did, edge_type="PROCESSES_DATA"))
+        edges.append(graph_edge(from_id=scenario_id, to_id=did, edge_type="PROCESSES_DATA"))
+        person_id = new_node_id("ps")
+        if personal_signal == "yes":
+            nodes.append(
+                graph_node(
+                    node_id=person_id,
+                    node_type="Actor",
+                    label="Data subject",
+                    properties={"natural_person": "yes"},
+                    source="parse",
+                )
+            )
+            edges.append(graph_edge(from_id=did, to_id=person_id, edge_type="CONCERNS"))
 
     if _AI.search(raw):
         aid = new_node_id("ai")
+        ai_props: dict[str, Any] = {"has_feature": "machine_based"}
+        if _PROVIDER.search(raw):
+            ai_props["provider"] = "yes"
         nodes.append(
             graph_node(
                 node_id=aid,
-                node_type="AI",
+                node_type="AISystem",
                 label="AI system",
+                properties=ai_props,
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=product_id, to_id=aid, edge_type="USES_AI"))
+        edges.append(graph_edge(from_id=scenario_id, to_id=aid, edge_type="USES_AI"))
+        if _PROVIDER.search(raw):
+            edges.append(graph_edge(from_id=org_id, to_id=aid, edge_type="ACTS_AS"))
 
-    facts = kg_nodes_to_facts(nodes)
+    if processing_signal == "yes":
+        scenario_node.setdefault("properties", {})["processing"] = "yes"
+    if _AI.search(raw) or _PROCESSING.search(raw):
+        scenario_node.setdefault("properties", {})["automated_means"] = "yes"
+
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=scenario_id)
+    facts = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
+    eu_markets = {m.upper() for m in markets} & {"EU", "EEA"}
+    eu_link = "yes" if (_EU.search(raw) or eu_markets) else "unknown"
     return {
         "name": name,
         "summary": raw,
         "markets": markets,
-        "processesPersonalData": _signal_from_text(raw, _PERSONAL),
-        "euLink": _signal_from_text(raw, _EU) if markets else "unknown",
+        "processesPersonalData": personal_signal,
+        "euLink": eu_link,
         "aiSystem": _signal_from_text(raw, _AI),
         "nodes": nodes,
         "edges": edges,
@@ -231,45 +283,54 @@ def parse_documents(files: list[tuple[str, bytes]]) -> dict[str, Any]:
         )
     combined = "\n\n".join(chunks)
     parsed = parse_description(combined)
-    product_id = None
+    scenario_id = None
     for n in parsed.get("nodes") or []:
-        if n.get("type") == "Product":
-            product_id = n.get("id")
+        if n.get("type") in ("Product", "Scenario"):
+            scenario_id = n.get("id")
             break
     for dn in doc_nodes:
         parsed.setdefault("nodes", []).append(dn)
-        if product_id:
+        if scenario_id:
             parsed.setdefault("edges", []).append(
-                graph_edge(from_id=product_id, to_id=dn["id"], edge_type="DESCRIBED_BY")
+                graph_edge(from_id=scenario_id, to_id=dn["id"], edge_type="DESCRIBED_BY")
             )
     parsed["document_count"] = len(files)
     return parsed
 
 
-def kg_nodes_to_facts(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def kg_nodes_to_facts(
+    nodes: list[dict[str, Any]],
+    *,
+    predicate_facts: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     facts: list[dict[str, Any]] = []
-    for node in nodes:
+    for pf in predicate_facts or []:
+        pred = str(pf.get("predicate") or "")
+        args = pf.get("args") or []
+        args_s = ", ".join(str(a) for a in args)
         facts.append(
             {
-                "id": node.get("id"),
-                "label": node.get("type") or "node",
-                "value": node.get("label") or "",
-                "source": node.get("source", "parse"),
-                "predicate": node.get("type"),
-                "text": node.get("label"),
+                "id": f"pred_{pred}_{args_s}",
+                "label": pred,
+                "value": f"{pred}({args_s})" if args_s else pred,
+                "source": pf.get("source", "parse"),
+                "predicate": pred,
+                "args": list(args),
+                "text": pf.get("description") or f"{pred}({args_s})",
+                "provenance": pf.get("source", "parse"),
             }
         )
-        props = node.get("properties") or {}
-        for k, v in props.items():
-            if v and str(v) != "unknown":
-                facts.append(
-                    {
-                        "id": f"{node.get('id')}_{k}",
-                        "label": k,
-                        "value": str(v),
-                        "source": node.get("source", "parse"),
-                    }
-                )
+    for node in nodes:
+        if node.get("type") in {"Document"}:
+            facts.append(
+                {
+                    "id": node.get("id"),
+                    "label": node.get("type") or "node",
+                    "value": node.get("label") or "",
+                    "source": node.get("source", "parse"),
+                    "text": node.get("label"),
+                }
+            )
     return facts
 
 
@@ -336,5 +397,13 @@ def parse_product_input(
             if llm.get("summary"):
                 parsed["summary"] = llm["summary"]
 
-    parsed["facts"] = kg_nodes_to_facts(parsed.get("nodes") or [])
+    nodes = parsed.get("nodes") or []
+    edges = parsed.get("edges") or []
+    scenario_id = next(
+        (n.get("id") for n in nodes if n.get("type") == "Scenario"),
+        "scenario",
+    )
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(scenario_id))
+    parsed["predicate_facts"] = predicate_facts
+    parsed["facts"] = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
     return parsed

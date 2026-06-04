@@ -16,22 +16,25 @@ import {
 import { ProductIntakePanel } from "../components/product/ProductIntakePanel";
 import { ProductKnowledgeGraph } from "../components/product/ProductKnowledgeGraph";
 import { LawScanResults } from "../components/product/LawScanResults";
+import { ApplicabilityScopeView } from "../components/product/ApplicabilityScopeView";
 import { ThinkingOverlay } from "../components/ui/ThinkingOverlay";
 import { PixelIcon } from "../components/ui/PixelIcon";
+import { WorkflowStepper } from "../components/product/WorkflowStepper";
+import { PageFooterNav } from "../components/shell/PageFooterNav";
 
-type Step = "intake" | "laws";
+type Step = "intake" | "laws" | "scope";
 
 interface Props {
   playbookCompanyId?: string;
   onComplete: (product: ProductRecord) => void;
-  onViewProducts: () => void;
+  onNavigateHome: () => void;
 }
 
 function specFromParse(spec: ProductKgResponse["spec"]): ProductSpec {
   return {
     name: spec.name || "",
     summary: spec.summary || "",
-    markets: spec.markets || ["EU"],
+    markets: spec.markets || [],
     processesPersonalData: (spec.processesPersonalData as ProductSpec["processesPersonalData"]) || "unknown",
     euLink: (spec.euLink as ProductSpec["euLink"]) || "unknown",
     aiSystem: (spec.aiSystem as ProductSpec["aiSystem"]) || "unknown",
@@ -40,9 +43,9 @@ function specFromParse(spec: ProductKgResponse["spec"]): ProductSpec {
 }
 
 export function ProductWorkflow({
-  onComplete: _onComplete,
-  playbookCompanyId: _playbookCompanyId,
-  onViewProducts,
+  onComplete,
+  playbookCompanyId,
+  onNavigateHome,
 }: Props) {
   const [step, setStep] = useState<Step>("intake");
   const [scanning, setScanning] = useState(false);
@@ -57,7 +60,7 @@ export function ProductWorkflow({
   const [spec, setSpec] = useState<ProductSpec>({
     name: "",
     summary: "",
-    markets: ["EU"],
+    markets: [],
     processesPersonalData: "unknown",
     euLink: "unknown",
     aiSystem: "unknown",
@@ -65,6 +68,74 @@ export function ProductWorkflow({
   });
   const parseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scanStarted = useRef(false);
+  const step1Done = useRef(false);
+  const step2Done = useRef(false);
+
+  const hasInput =
+    description.trim().length >= 12 || files.length > 0 || kgFacts.length > 0;
+  const step2Complete =
+    step1Done.current && scanResults.length > 0 && (spec.selectedLaws?.length ?? 0) > 0;
+
+  function workflowSteps(current: Step) {
+    return [
+      {
+        id: "start",
+        label: "Start",
+        enabled: true,
+        current: false,
+        onClick: onNavigateHome,
+      },
+      {
+        id: "step1",
+        label: "Step 1",
+        enabled: true,
+        current: current === "intake",
+        onClick: () => setStep("intake"),
+      },
+      {
+        id: "step2",
+        label: "Step 2",
+        enabled: step1Done.current && hasInput,
+        current: current === "laws",
+        onClick: () => {
+          if (step1Done.current && hasInput) setStep("laws");
+        },
+      },
+      {
+        id: "step3",
+        label: "Step 3",
+        enabled: step2Done.current && step2Complete,
+        current: current === "scope",
+        onClick: () => {
+          if (step2Done.current && step2Complete) setStep("scope");
+        },
+      },
+    ];
+  }
+
+  function workflowFooter(_current: Step) {
+    return (
+      <PageFooterNav
+        links={[
+          { label: "Start", onClick: onNavigateHome },
+          {
+            label: "Step 1 — Describe product",
+            onClick: () => setStep("intake"),
+          },
+          {
+            label: "Step 2 — Laws",
+            onClick: () => setStep("laws"),
+            disabled: !step1Done.current || !hasInput,
+          },
+          {
+            label: "Step 3 — Scope",
+            onClick: () => setStep("scope"),
+            disabled: !step2Done.current || !step2Complete,
+          },
+        ]}
+      />
+    );
+  }
 
   const runParse = useCallback(async (): Promise<boolean> => {
     const text = description.trim();
@@ -90,6 +161,8 @@ export function ProductWorkflow({
           label: f.label,
           value: f.value,
           source: f.provenance || f.source,
+          predicate: f.predicate,
+          args: f.args,
         }))
       );
       if (kg.spec) {
@@ -131,18 +204,25 @@ export function ProductWorkflow({
     }
   }, [description, spec.summary, kgFacts]);
 
-  const hasInput =
-    description.trim().length >= 12 || files.length > 0 || kgFacts.length > 0;
+  function handleCheckApplicability() {
+    const selected = spec.selectedLaws ?? [];
+    if (!selected.length) {
+      setError("Select at least one regulation to check.");
+      return;
+    }
+    setError(null);
+    step2Done.current = true;
+    setStep("scope");
+  }
 
   async function handleSeeLaws() {
     if (!hasInput) {
       setError("Describe your product or upload a document first.");
       return;
     }
-    if (kgFacts.length === 0) {
-      const ok = await runParse();
-      if (!ok) return;
-    }
+    const ok = await runParse();
+    if (!ok) return;
+    step1Done.current = true;
     scanStarted.current = false;
     setStep("laws");
   }
@@ -161,8 +241,11 @@ export function ProductWorkflow({
     if (step !== "laws") return;
     if (scanStarted.current) return;
     scanStarted.current = true;
-    runLawScan();
-  }, [step, runLawScan]);
+    void (async () => {
+      await runParse();
+      await runLawScan();
+    })();
+  }, [step, runLawScan, runParse]);
 
   function toggleLaw(code: string) {
     setSpec((s) => {
@@ -172,59 +255,95 @@ export function ProductWorkflow({
     });
   }
 
+  if (step === "scope") {
+    return (
+      <>
+        <WorkflowStepper steps={workflowSteps("scope")} />
+        <ApplicabilityScopeView
+          selectedLaws={spec.selectedLaws ?? []}
+          scanResults={scanResults}
+          spec={spec}
+          description={description}
+          kgFacts={kgFacts}
+          playbookCompanyId={playbookCompanyId}
+          onComplete={onComplete}
+          onBackToLaws={() => setStep("laws")}
+          onEditProduct={() => setStep("intake")}
+        />
+        {workflowFooter("scope")}
+      </>
+    );
+  }
+
   if (step === "laws") {
     return (
-      <div className="ct-page ct-card-relative">
-        <ThinkingOverlay show={scanning} label="Searching legal database…" />
-        <div className="ct-scanner-head">
-          <PixelIcon name="scale" size={48} className="ct-scanner-head-icon" />
-          <div>
-            <p className="ct-scanner-step">Applicability scanner — Step 2</p>
-            <p className="ct-scanner-intro">
-              Top regulations from the structured legal database ranked by relevance to your product.
-            </p>
+      <>
+        <WorkflowStepper steps={workflowSteps("laws")} />
+        <div className="ct-page ct-card-relative">
+          <ThinkingOverlay show={scanning} label="Searching legal database…" />
+          <div className="ct-scanner-head">
+            <PixelIcon name="scale" size={96} className="ct-scanner-head-icon" />
+            <div>
+              <p className="ct-scanner-step">Step 2</p>
+              <p className="ct-scanner-intro">
+                Top regulations from the structured legal database ranked by relevance to your
+                product. Select laws, then check applicability.
+              </p>
+            </div>
           </div>
+          {error && <div className="err">{error}</div>}
+          <LawScanResults
+            results={scanResults}
+            selectedCodes={spec.selectedLaws ?? []}
+            loading={scanning}
+            onToggle={toggleLaw}
+            onCheckApplicability={handleCheckApplicability}
+            onBack={() => setStep("intake")}
+          />
         </div>
-        {error && <div className="err">{error}</div>}
-        <LawScanResults
-          results={scanResults}
-          selectedCodes={spec.selectedLaws ?? []}
-          loading={scanning}
-          onToggle={toggleLaw}
-          onRescan={() => {
-            scanStarted.current = true;
-            runLawScan();
-          }}
-        />
-        <p className="ct-text-link-row">
-          <button type="button" className="ct-text-link" onClick={() => setStep("intake")}>
-            Back
-          </button>
-          <span className="ct-text-link-sep">·</span>
-          <button type="button" className="ct-text-link" onClick={onViewProducts}>
-            My products
-          </button>
-        </p>
-      </div>
+        {workflowFooter("laws")}
+      </>
     );
   }
 
   return (
-    <div className="ct-page ct-product-flow">
-      {error && <div className="err">{error}</div>}
+    <>
+      <WorkflowStepper steps={workflowSteps("intake")} />
+      <div className="ct-page ct-product-flow">
+        {error && <div className="err">{error}</div>}
 
-      <div className="ct-product-layout">
-        <ProductIntakePanel
-          description={description}
-          files={files}
-          parsing={parsing}
-          canContinue={hasInput}
-          onDescriptionChange={setDescription}
-          onFilesChange={setFiles}
-          onSeeLaws={handleSeeLaws}
-        />
-        <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
+        <div className="ct-product-layout ct-product-layout--boxed">
+          <div className="ct-product-layout-left">
+            <ProductIntakePanel
+              description={description}
+              files={files}
+              parsing={parsing}
+              canContinue={hasInput}
+              onDescriptionChange={setDescription}
+              onFilesChange={setFiles}
+              onSeeLaws={handleSeeLaws}
+            />
+            {kgFacts.some((f) => f.predicate && f.args?.length) && (
+              <div className="ct-product-predicate-facts">
+                <h3 className="ct-card-title">Extracted facts</h3>
+                <ul className="ct-product-fact-list">
+                  {kgFacts
+                    .filter((f) => f.predicate && f.args?.length)
+                    .slice(0, 12)
+                    .map((f) => (
+                      <li key={f.id}>
+                        <code>{f.value || f.label}</code>
+                        {f.source && <span className="ct-muted"> · {f.source}</span>}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
+        </div>
       </div>
-    </div>
+      {workflowFooter("intake")}
+    </>
   );
 }

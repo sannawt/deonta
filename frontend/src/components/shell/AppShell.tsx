@@ -4,7 +4,6 @@ export type AppRoute =
   | "start"
   | "product"
   | "law"
-  | "products"
   | "monitoring";
 
 interface Props {

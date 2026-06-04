@@ -1,12 +1,12 @@
 import type { LawScanResult } from "../../lib/api";
-import { PixelIcon } from "../ui/PixelIcon";
 
 interface Props {
   results: LawScanResult[];
   selectedCodes: string[];
   loading?: boolean;
   onToggle: (code: string) => void;
-  onRescan: () => void;
+  onCheckApplicability: () => void;
+  onBack: () => void;
 }
 
 function scorePercent(score: number): string {
@@ -18,11 +18,23 @@ export function LawScanResults({
   selectedCodes,
   loading,
   onToggle,
-  onRescan,
+  onCheckApplicability,
+  onBack,
 }: Props) {
   if (!results.length && !loading) {
-    return <p className="ct-muted">No matching regulations found. Try a longer product description.</p>;
+    return (
+      <>
+        <p className="ct-muted">No matching regulations found. Try a longer product description.</p>
+        <div className="ct-scanner-actions">
+          <button type="button" className="ct-btn-outline ct-scanner-action-btn" onClick={onBack}>
+            Go back
+          </button>
+        </div>
+      </>
+    );
   }
+
+  const canCheck = selectedCodes.length > 0 && !loading;
 
   return (
     <div className="ct-law-scan">
@@ -33,6 +45,7 @@ export function LawScanResults({
             <th>Short</th>
             <th>Number</th>
             <th>Description</th>
+            <th>Match</th>
             <th>Relevance</th>
           </tr>
         </thead>
@@ -50,6 +63,7 @@ export function LawScanResults({
               <td>{row.short}</td>
               <td>{row.number}</td>
               <td>{row.description}</td>
+              <td className="ct-muted">{row.match_rationale || "—"}</td>
               <td>
                 <span className="ct-law-scan-score" title={scorePercent(row.score)}>
                   <span
@@ -63,17 +77,25 @@ export function LawScanResults({
           ))}
         </tbody>
       </table>
-      <p className="ct-text-link-row">
+
+      <div className="ct-scanner-actions">
         <button
           type="button"
-          className="ct-text-link ct-text-link-primary ct-link-with-icon"
-          disabled={loading}
-          onClick={onRescan}
+          className="ct-btn-primary ct-scanner-action-btn"
+          disabled={!canCheck}
+          onClick={onCheckApplicability}
         >
-          <PixelIcon name="scale" size={22} className="ct-link-icon" />
-          {loading ? "Searching…" : "Scan legal database"}
+          Check applicability
         </button>
-      </p>
+        <button
+          type="button"
+          className="ct-btn-outline ct-scanner-action-btn"
+          disabled={loading}
+          onClick={onBack}
+        >
+          Go back
+        </button>
+      </div>
     </div>
   );
 }

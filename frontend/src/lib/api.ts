@@ -57,6 +57,8 @@ export interface KgFact {
   value: string;
   source?: string;
   provenance?: string;
+  predicate?: string;
+  args?: string[];
 }
 
 async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
@@ -85,6 +87,8 @@ export interface LawScanResult {
   engine_mode: "symbolic" | "retrieval_only" | "planned";
   label?: string;
   reg_id?: string;
+  match_rationale?: string;
+  hit_count?: number;
 }
 
 export interface LawScanResponse {

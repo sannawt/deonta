@@ -16,6 +16,21 @@ from logic.display_tokens import (
 from logic.legal_links import dedupe_provision_ids, enrich_citation, format_provision_label
 from logic.corpus import load_citations
 
+_DIM_ALIASES: dict[str, str] = {
+    "definition": "material",
+    "material": "material",
+    "territorial": "territorial",
+    "territory": "territorial",
+    "temporal": "temporal",
+    "exclusion": "exclusions",
+    "exclusions": "exclusions",
+}
+
+
+def _normalize_missing_dim(dim: str) -> str:
+    return _DIM_ALIASES.get(str(dim or "").strip().lower(), "material")
+
+
 _INSTRUMENT_META = {
     "GDPR": {"id": "GDPR", "label": "GDPR", "reg_key": "gdpr", "full_name": "General Data Protection Regulation"},
     "EU_AI_ACT": {
@@ -384,12 +399,21 @@ def build_scope_analysis(
     rule_catalog: list[dict[str, Any]],
     question_facts: list[dict[str, Any]] | None = None,
     case_id: str | None = None,
+    missing_predicates: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Build per-instrument scope analysis from engine outputs."""
     catalog = _catalog_by_plid(rule_catalog)
     cit_map = _citations_map()
     by_reg = provenance.get("by_regulation") or {}
     question_facts = question_facts or []
+    missing_predicates = missing_predicates or []
+    missing_by_reg_dim: dict[tuple[str, str], list[str]] = {}
+    for row in missing_predicates:
+        reg = str(row.get("regulation") or "").strip().lower()
+        dim = _normalize_missing_dim(str(row.get("dimension") or "material"))
+        example = str(row.get("example") or row.get("predicate") or "").strip()
+        if reg and example:
+            missing_by_reg_dim.setdefault((reg, dim), []).append(example)
 
     instruments: list[dict[str, Any]] = []
 
@@ -402,6 +426,10 @@ def build_scope_analysis(
         reg_lines = list(by_reg.get(reg_key) or [])
         trace = res.get("trace") or []
         missing = [str(a) for a in (res.get("missing_atoms") or []) if str(a).strip()]
+        for dim in _DIM_ORDER:
+            for atom in missing_by_reg_dim.get((reg_key, dim), []):
+                if atom not in missing:
+                    missing.append(atom)
 
         dimensions: list[dict[str, Any]] = []
         for dim in _DIM_ORDER:
