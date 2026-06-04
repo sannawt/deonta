@@ -3,6 +3,13 @@ import { nanoid } from "./utils";
 
 export type ProductId = string;
 
+export interface KgFact {
+  id: string;
+  label: string;
+  value: string;
+  source?: string;
+}
+
 export interface ProductSpec {
   name: string;
   summary: string;
@@ -10,6 +17,13 @@ export interface ProductSpec {
   processesPersonalData: "yes" | "no" | "unknown";
   euLink: "yes" | "no" | "unknown";
   aiSystem: "yes" | "no" | "unknown";
+  selectedLaws?: string[];
+}
+
+export interface ProductDocument {
+  id: string;
+  name: string;
+  status: "ready" | "pending";
 }
 
 export interface ProductRecord {
@@ -18,6 +32,8 @@ export interface ProductRecord {
   created_at: number;
   updated_at: number;
   spec: ProductSpec;
+  kgFacts?: KgFact[];
+  documents?: ProductDocument[];
   lastAssessment?: {
     created_at: number;
     prompt: string;
@@ -46,6 +62,23 @@ export function loadProducts(): ProductRecord[] {
 
 export function saveProducts(products: ProductRecord[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, products }));
+}
+
+export function specToKgFacts(spec: ProductSpec): KgFact[] {
+  const id = () => nanoid();
+  return [
+    { id: id(), label: "Product name", value: spec.name || "—", source: "spec" },
+    { id: id(), label: "Summary", value: spec.summary || "—", source: "spec" },
+    { id: id(), label: "Markets", value: (spec.markets || []).join(", ") || "—", source: "spec" },
+    {
+      id: id(),
+      label: "Processes personal data",
+      value: spec.processesPersonalData,
+      source: "spec",
+    },
+    { id: id(), label: "EU territorial link", value: spec.euLink, source: "spec" },
+    { id: id(), label: "AI system", value: spec.aiSystem, source: "spec" },
+  ];
 }
 
 export function createProduct(spec: ProductSpec): ProductRecord {

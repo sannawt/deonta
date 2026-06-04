@@ -49,7 +49,9 @@ If the deploy still fails with `cd frontend` / `npm ci`, you are still on an old
 
 ## Verify after deploy
 
-- `https://<your-app>.vercel.app/` → ComplianceTwin (chat + assessment panel)
+- `https://<your-app>.vercel.app/` → ComplianceTwin product app (marketing-minimal UI, no chat)
+- `POST /api/products/assess` → structured applicability (canonical)
+- `GET /api/laws` → EU law catalog
 - `https://<your-app>.vercel.app/api/health` → JSON health
 - `https://<your-app>.vercel.app/api/ui-meta` → `{ "ui": "compliance_twin", ... }`
 

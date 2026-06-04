@@ -6,7 +6,7 @@ from typing import Any, Literal, Optional
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from neo4j import GraphDatabase, Driver
@@ -43,6 +43,22 @@ from logic.phase_c_scope import analyse_phase_c_scope
 from logic.reasoner import run_universal_reasoner
 from logic.schema import load_schema_labels, validate_ground_facts
 from logic.scenario_store import get_scenario, list_scenarios, upsert_scenario
+from logic.law_relevance_scan import scan_relevant_laws
+from logic.legal_db import evidence_pack, law_summary_stub, list_laws
+from logic.account_store import ensure_account, new_account_id, normalize_account_id
+from logic.assess_pipeline import run_product_assess
+from logic.playbook_merge import (
+    append_playbook_nodes,
+    create_playbook,
+    get_playbook,
+    list_playbooks,
+    playbook_matches_for_assess,
+    update_playbook,
+)
+from logic.playbook_neo4j_mirror import mirror_playbook_to_neo4j
+from logic.product_kg import build_product_kg
+from logic.product_parse import parse_product_input
+from logic.terms import terms_from_question
 from logic.scope_applicability import build_applicability_report, validate_scope_facts
 from logic.souffle_runner import (
     run_scope_applicability,
@@ -58,33 +74,6 @@ load_dotenv(BASE_DIR / "compliance_secrets.env", override=True)
 
 STATIC_DIR = BASE_DIR / "static"
 FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
-
-STOPWORDS = frozenset(
-    """
-    the and for are but not you all can her was one our out get has him his how
-    may she way who its let what when will with from that this have been into
-    than then them they your such only also about would could should does did
-    any some into onto unto per via
-    """.split()
-)
-
-
-def terms_from_question(question: str) -> list[str]:
-    words = re.findall(r"[a-zA-Z0-9]{2,}", question.lower())
-    out: list[str] = []
-    for w in words:
-        if w in STOPWORDS:
-            continue
-        if w not in out:
-            out.append(w)
-        if len(out) >= 12:
-            break
-    if not out:
-        t = question.strip().lower()
-        if t:
-            out = [t[:64]]
-    return out
-
 
 RETRIEVAL_CYPHER = """
 MATCH (n)
@@ -358,17 +347,65 @@ def get_playbook_driver() -> Driver:
     return _playbook_driver
 
 
+def _resolve_account_id(
+    header_value: Optional[str] = None,
+    body_value: Optional[str] = None,
+) -> Optional[str]:
+    return normalize_account_id(header_value) or normalize_account_id(body_value)
+
+
+def _require_account_id(
+    x_account_id: Optional[str] = Header(None, alias="X-Account-Id"),
+) -> str:
+    aid = _resolve_account_id(x_account_id)
+    if not aid:
+        raise HTTPException(status_code=401, detail="Missing or invalid X-Account-Id")
+    ensure_account(aid)
+    return aid
+
+
 def _fetch_legal_playbook(
     terms: list[str],
     *,
     playbook_company_id: Optional[str] = None,
+    account_id: Optional[str] = None,
+    account_playbook_id: Optional[str] = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     legal: dict[str, Any] = {"matches": [], "error": None}
     playbook: dict[str, Any] = {
         "matches": [],
         "error": None,
-        "company_id": playbook_company_id,
+        "company_id": playbook_company_id or account_playbook_id,
     }
+
+    if account_id and account_playbook_id:
+        playbook = playbook_matches_for_assess(account_id, account_playbook_id, terms)
+        legal["match_count"] = len(legal.get("matches") or [])
+        playbook["match_count"] = len(playbook.get("matches") or [])
+        if legal_graph_backend() == "local":
+            try:
+                legal["matches"] = fetch_local_legal_matches(terms)
+                legal["backend"] = "local_csv"
+            except Exception as e:  # noqa: BLE001
+                legal["error"] = f"{type(e).__name__}: {e}"
+        else:
+            try:
+                legal["matches"] = fetch_matches(
+                    get_legal_driver(),
+                    resolve_aura_database(
+                        os.environ["NEO4J_LEGAL_URI"], "NEO4J_LEGAL_DATABASE"
+                    ),
+                    terms,
+                )
+                legal["backend"] = "neo4j"
+            except KeyError as e:
+                legal["error"] = f"missing env: {e.args[0]}"
+            except ValueError as e:
+                legal["error"] = str(e)
+            except Exception as e:  # noqa: BLE001
+                legal["error"] = f"{type(e).__name__}: {e}"
+        legal["match_count"] = len(legal["matches"])
+        return legal, playbook
 
     if legal_graph_backend() == "local":
         try:
@@ -1107,6 +1144,265 @@ def get_product(product_id: str) -> dict[str, Any]:
     }
 
 
+class ProductSpecBody(BaseModel):
+    name: str = ""
+    summary: str = Field(default="", max_length=8000)
+    markets: list[str] = Field(default_factory=lambda: ["EU"])
+    processesPersonalData: str = "unknown"
+    euLink: str = "unknown"
+    aiSystem: str = "unknown"
+    regulations: list[str] = Field(default_factory=list)
+
+
+class ProductAssessBody(BaseModel):
+    spec: ProductSpecBody
+    kg_facts: list[dict[str, Any]] = Field(default_factory=list)
+    playbook_company_id: Optional[str] = None
+    playbook_id: Optional[str] = None
+    account_id: Optional[str] = None
+    case_id: Optional[str] = None
+
+
+class LawScanBody(BaseModel):
+    description: str = ""
+    kg_facts: list[dict[str, Any]] = Field(default_factory=list)
+    limit: int = Field(default=10, ge=1, le=50)
+
+
+class AccountBootstrapBody(BaseModel):
+    account_id: Optional[str] = None
+
+
+class PlaybookCreateBody(BaseModel):
+    name: str = "My company"
+
+
+class PlaybookPatchBody(BaseModel):
+    name: Optional[str] = None
+    nodes: Optional[list[dict[str, Any]]] = None
+    edges: Optional[list[dict[str, Any]]] = None
+
+
+class ProductParseBody(BaseModel):
+    description: str = ""
+    playbook_id: Optional[str] = None
+
+
+class ProductKgPatchBody(BaseModel):
+    nodes: list[dict[str, Any]] = Field(default_factory=list)
+    edges: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class EvidencePackBody(BaseModel):
+    obligation_ids: list[str] = Field(default_factory=list)
+    law_codes: list[str] = Field(default_factory=list)
+
+
+@app.post("/api/account/bootstrap")
+def api_account_bootstrap(body: Optional[AccountBootstrapBody] = None) -> dict[str, Any]:
+    existing = None
+    if body and body.account_id:
+        existing = normalize_account_id(body.account_id)
+    if existing:
+        ensure_account(existing)
+        return {"version": 1, "account_id": existing, "created": False}
+    aid = new_account_id()
+    ensure_account(aid)
+    return {"version": 1, "account_id": aid, "created": True}
+
+
+@app.get("/api/playbooks")
+def api_list_playbooks(account_id: str = Header(..., alias="X-Account-Id")) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    return {"version": 1, "playbooks": list_playbooks(aid)}
+
+
+@app.post("/api/playbooks")
+def api_create_playbook(
+    body: PlaybookCreateBody,
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    doc = create_playbook(aid, body.name)
+    mirror_playbook_to_neo4j(doc)
+    return {"version": 1, **doc}
+
+
+@app.get("/api/playbooks/{playbook_id}")
+def api_get_playbook(
+    playbook_id: str,
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    doc = get_playbook(aid, playbook_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Playbook not found")
+    return {"version": 1, **doc}
+
+
+@app.patch("/api/playbooks/{playbook_id}")
+def api_patch_playbook(
+    playbook_id: str,
+    body: PlaybookPatchBody,
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    doc = update_playbook(aid, playbook_id, body.model_dump(exclude_none=True))
+    if not doc:
+        raise HTTPException(status_code=404, detail="Playbook not found")
+    mirror_playbook_to_neo4j(doc)
+    return {"version": 1, **doc}
+
+
+@app.post("/api/playbooks/{playbook_id}/documents")
+async def api_playbook_documents(
+    playbook_id: str,
+    files: list[UploadFile] = File(...),
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    doc = get_playbook(aid, playbook_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Playbook not found")
+    file_tuples: list[tuple[str, bytes]] = []
+    for uf in files:
+        raw = await uf.read()
+        file_tuples.append((uf.filename or "upload", raw))
+    parsed = parse_product_input(description="", files=file_tuples, use_llm=False)
+    nodes = parsed.get("nodes") or []
+    for n in nodes:
+        n["source"] = "upload"
+    meta = {
+        "filename": ", ".join(f[0] for f in file_tuples),
+        "status": "parsed",
+        "node_count": len(nodes),
+    }
+    updated = append_playbook_nodes(
+        aid,
+        playbook_id,
+        nodes,
+        parsed.get("edges"),
+        document_meta=meta,
+    )
+    if updated:
+        mirror_playbook_to_neo4j(updated)
+    return {"version": 1, "playbook": updated, "parsed_nodes": len(nodes)}
+
+
+@app.post("/api/products/parse")
+async def api_products_parse(
+    description: str = Form(""),
+    playbook_id: Optional[str] = Form(None),
+    files: list[UploadFile] = File(default=[]),
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    file_tuples: list[tuple[str, bytes]] = []
+    for uf in files or []:
+        raw = await uf.read()
+        file_tuples.append((uf.filename or "upload", raw))
+    kg = build_product_kg(
+        account_id=aid,
+        playbook_id=(playbook_id or "").strip() or None,
+        description=description,
+        files=file_tuples or None,
+    )
+    return {"version": 1, **kg}
+
+
+@app.post("/api/products/parse/json")
+def api_products_parse_json(
+    body: ProductParseBody,
+    account_id: str = Header(..., alias="X-Account-Id"),
+) -> dict[str, Any]:
+    aid = _require_account_id(account_id)
+    kg = build_product_kg(
+        account_id=aid,
+        playbook_id=(body.playbook_id or "").strip() or None,
+        description=body.description,
+    )
+    return {"version": 1, **kg}
+
+
+@app.get("/api/laws")
+def api_list_laws() -> dict[str, Any]:
+    return {"version": 1, "laws": list_laws()}
+
+
+@app.get("/api/laws/{code}/summary")
+def api_law_summary(code: str) -> dict[str, Any]:
+    return {"version": 1, **law_summary_stub(code)}
+
+
+@app.get("/api/laws/{code}/obligations")
+def api_law_obligations(code: str) -> dict[str, Any]:
+    summary = law_summary_stub(code)
+    return {
+        "version": 1,
+        "code": summary.get("code"),
+        "obligations": summary.get("obligations") or [],
+    }
+
+
+@app.post("/api/laws/evidence-pack")
+def api_evidence_pack(body: EvidencePackBody) -> dict[str, Any]:
+    return {"version": 1, **evidence_pack(body.obligation_ids, body.law_codes)}
+
+
+@app.post("/api/products/law-scan")
+def api_products_law_scan(body: LawScanBody) -> dict[str, Any]:
+    """Semantic relevance scan over Neo4j legal Aura (twin_p corpus)."""
+    try:
+        return scan_relevant_laws(
+            description=body.description,
+            kg_facts=body.kg_facts,
+            limit=body.limit,
+            get_legal_driver_fn=get_legal_driver,
+            resolve_database_fn=lambda: resolve_aura_database(
+                (os.environ.get("NEO4J_LEGAL_URI") or os.environ.get("NEO4J_URI") or "").strip(),
+                "NEO4J_LEGAL_DATABASE",
+            ),
+        )
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(
+            status_code=502,
+            detail=f"Law scan failed: {exc}",
+        ) from exc
+
+
+@app.post("/api/products/assess")
+def api_products_assess(
+    body: ProductAssessBody,
+    x_account_id: Optional[str] = Header(None, alias="X-Account-Id"),
+) -> dict[str, Any]:
+    """Canonical structured assessment (no chat UI)."""
+    spec = body.spec.model_dump()
+    case_id = (body.case_id or "").strip() or None
+    account_id = _resolve_account_id(x_account_id, body.account_id)
+    account_playbook_id = (body.playbook_id or "").strip() or None
+    demo_playbook_id = (body.playbook_company_id or "").strip() or None
+    if account_playbook_id and account_id:
+        demo_playbook_id = None
+    return run_product_assess(
+        spec=spec,
+        kg_facts=body.kg_facts,
+        playbook_company_id=demo_playbook_id,
+        account_id=account_id,
+        account_playbook_id=account_playbook_id,
+        case_id=case_id,
+        fetch_legal_playbook_fn=_fetch_legal_playbook,
+        build_fact_payload_fn=_build_fact_payload,
+        effective_payload_signals_fn=_effective_payload_signals,
+        clarifying_questions_for_payload_fn=_clarifying_questions_for_payload,
+        bucket_legal_matches_fn=bucket_legal_matches,
+        compatibility_facts_for_payload_fn=compatibility_facts_for_payload,
+        run_reason_core_fn=_run_reason_core,
+        build_rule_catalog_fn=_build_rule_catalog,
+    )
+
+
 _NO_CACHE_HEADERS = {
     "Cache-Control": "no-store, no-cache, must-revalidate",
     "Pragma": "no-cache",
@@ -1135,6 +1431,46 @@ def _ui_meta() -> dict[str, Any]:
 def ui_meta() -> dict[str, Any]:
     """Tell the browser which UI build is active (debug stale-cache issues)."""
     return _ui_meta()
+
+
+def _public_png(name: str) -> FileResponse:
+    for base in (FRONTEND_DIST, BASE_DIR / "frontend" / "public"):
+        path = base / name
+        if path.is_file():
+            return FileResponse(path, media_type="image/png")
+    from fastapi import HTTPException
+
+    raise HTTPException(status_code=404, detail="Run make frontend")
+
+
+@app.get("/hourglass.png")
+def hourglass_png() -> FileResponse:
+    """Scale/sand icon (product path + thinking spinner) from frontend/public."""
+    return _public_png("hourglass.png")
+
+
+@app.get("/legal-sand.png")
+def legal_sand_png() -> FileResponse:
+    """Legal brand icon (wig + sand) from frontend/public."""
+    return _public_png("legal-sand.png")
+
+
+@app.get("/document.png")
+def document_png() -> FileResponse:
+    """Document upload icon from frontend/public."""
+    return _public_png("document.png")
+
+
+@app.get("/scale.png")
+def scale_png() -> FileResponse:
+    """Scales of justice icon from frontend/public."""
+    return _public_png("scale.png")
+
+
+@app.get("/product-console.png")
+def product_console_png() -> FileResponse:
+    """Product path icon (controller + hourglass) from frontend/public."""
+    return _public_png("product-console.png")
 
 
 @app.get("/")

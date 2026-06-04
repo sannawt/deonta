@@ -20,29 +20,28 @@ export function ProductsLibrary({ products, onOpen }: Props) {
   }, [products, q]);
 
   return (
-    <div className="card" style={{ padding: 14 }}>
-      <div className="card-title">Products</div>
-      <div className="card-subtitle">Saved product specs and assessment snapshots (local only)</div>
+    <div className="ct-block">
+      <h2 className="ct-card-title">Products</h2>
+      <p className="ct-page-sub" style={{ marginBottom: 20 }}>
+        Saved specs and assessment snapshots
+      </p>
 
-      <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
-        <input
-          className="input"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Filter products…"
-          style={{ flex: 1 }}
-        />
-      </div>
+      <input
+        className="input"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Filter products…"
+        style={{ width: "100%", marginBottom: 20 }}
+      />
 
-      <div style={{ marginTop: 12, display: "grid", gap: 8 }}>
-        {filtered.length === 0 && <div className="empty">No products yet. Run a New assessment first.</div>}
+      <div className="ct-product-list">
+        {filtered.length === 0 && <div className="empty">No products yet. Start the product workflow.</div>}
         {filtered.map((p) => (
           <button
             key={p.id}
             type="button"
-            className="sess-item"
+            className="ct-list-row"
             onClick={() => onOpen(p.id)}
-            style={{ textAlign: "left" }}
           >
             <div className="sb-item-title">{p.label}</div>
             <div className="sb-item-sub">

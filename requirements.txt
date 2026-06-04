@@ -1,5 +1,8 @@
 fastapi==0.115.6
 uvicorn[standard]==0.32.1
+python-multipart==0.0.20
 neo4j==5.27.0
 python-dotenv==1.0.1
 openpyxl==3.1.5
+pypdf==5.1.0
+python-docx==1.1.2
