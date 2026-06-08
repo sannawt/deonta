@@ -17,6 +17,7 @@ import {
   MIN_INTAKE_LENGTH,
   pause,
   PRIMARY_LAW_COUNT,
+  SLIDE_TRANSITION_MS,
   shortProductAck,
   specFromParse,
 } from "../lib/complianceChatFlow";
@@ -30,7 +31,7 @@ import { ChatScopeLawCard } from "../components/chat/ChatScopeLawCard";
 
 type ChatPhase = "intake" | "running" | "done";
 type MessageKind = "text" | "law_scan" | "scope_law";
-type BusyLabel = "thinking" | "scanning" | "assessing" | null;
+type BusyLabel = "thinking" | "scanning" | "assessing" | "between_slides" | null;
 
 interface ComplianceChatMessage {
   id: string;
@@ -116,6 +117,15 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
     setMessages((m) => [...m, msg]);
   }, []);
 
+  const pauseBetweenSlides = useCallback(
+    async (resumeLabel: Exclude<BusyLabel, "between_slides" | null> = "assessing") => {
+      setBusyLabel("between_slides");
+      await pause(SLIDE_TRANSITION_MS);
+      setBusyLabel(resumeLabel);
+    },
+    [],
+  );
+
   const appendScopeLawMessages = useCallback(
     async (
       codes: string[],
@@ -171,9 +181,10 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           kind: "text",
           content: document.summaryLine,
         });
-        await pause(280);
+        await pauseBetweenSlides("assessing");
       }
 
+      let scopeCardsShown = 0;
       for (const code of codes) {
         const inst = scopeInstruments.find((i) =>
           [i.reg_key, i.id, i.label].some(
@@ -186,6 +197,10 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           document.lawBlocks.find((b) => b.lawTitle.toLowerCase().includes(code.replace(/_/g, " ")));
         if (!lawBlock) continue;
 
+        if (scopeCardsShown > 0) {
+          await pauseBetweenSlides("assessing");
+        }
+
         appendMessage({
           id: `scope-law-${code}-${Date.now()}`,
           role: "assistant",
@@ -196,10 +211,10 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
             .map((q) => q.text || "")
             .filter(Boolean),
         });
-        await pause(320);
+        scopeCardsShown += 1;
       }
     },
-    [appendMessage],
+    [appendMessage, pauseBetweenSlides],
   );
 
   const runScopeForCodes = useCallback(
@@ -274,9 +289,7 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           kind: "text",
           content: shortProductAck(nextSpec),
         });
-        await pause(350);
-
-        setBusyLabel("scanning");
+        await pauseBetweenSlides("scanning");
         const scan = await scanRelevantLaws({
           description: text,
           kg_facts: [],
@@ -307,7 +320,7 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           kind: "law_scan",
           laws: rows,
         });
-        await pause(350);
+        await pauseBetweenSlides("scanning");
 
         appendMessage({
           id: `law-intro-${Date.now()}`,
@@ -315,7 +328,7 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           kind: "text",
           content: lawScanIntro(rows),
         });
-        await pause(300);
+        await pauseBetweenSlides("assessing");
 
         const primaryCodes = rows.slice(0, PRIMARY_LAW_COUNT).map((r) => r.code);
         setBusyLabel("assessing");
@@ -354,7 +367,7 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
         setBusyLabel(null);
       }
     },
-    [appendMessage, runScopeForCodes],
+    [appendMessage, pauseBetweenSlides, runScopeForCodes],
   );
 
   const reviewRemaining = useCallback(async () => {
@@ -451,11 +464,13 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
   const remainingCount = scanResults.filter((r) => !assessedCodes.includes(r.code)).length;
 
   const busyText =
-    busyLabel === "scanning"
-      ? "Scanning applicable regulations…"
-      : busyLabel === "assessing"
-        ? "Assessing scope…"
-        : "Thinking…";
+    busyLabel === "between_slides"
+      ? "Preparing next step…"
+      : busyLabel === "scanning"
+        ? "Scanning applicable regulations…"
+        : busyLabel === "assessing"
+          ? "Assessing scope…"
+          : "Thinking…";
 
   return (
     <div className="ct-page ct-chat-page">
@@ -510,14 +525,25 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           })()}
           {busy ? (
             <ChatMessage role="assistant">
-              <p className="ct-chat-typing">
-                <span className="ct-chat-typing-dots" aria-hidden>
-                  <span />
-                  <span />
-                  <span />
-                </span>
-                {busyText}
-              </p>
+              {busyLabel === "between_slides" ? (
+                <p className="ct-chat-slide-wait">
+                  <PixelIcon
+                    name="hourglass"
+                    size={40}
+                    className="ct-chat-slide-wait-icon"
+                  />
+                  <span>{busyText}</span>
+                </p>
+              ) : (
+                <p className="ct-chat-typing">
+                  <span className="ct-chat-typing-dots" aria-hidden>
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                  {busyText}
+                </p>
+              )}
             </ChatMessage>
           ) : null}
           <div ref={bottomRef} />

@@ -19,7 +19,24 @@ def accounts_root() -> Path:
     raw = (os.environ.get("ACCOUNTS_DATA_DIR") or "").strip()
     if raw:
         return Path(raw).expanduser().resolve()
-    return DEFAULT_ACCOUNTS_ROOT
+
+    candidates: list[Path] = [DEFAULT_ACCOUNTS_ROOT]
+    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+        candidates.insert(0, Path("/tmp/ct-accounts"))
+
+    for root in candidates:
+        try:
+            root.mkdir(parents=True, exist_ok=True)
+            probe = root / ".write_probe"
+            probe.write_text("ok", encoding="utf-8")
+            probe.unlink(missing_ok=True)
+            return root
+        except OSError:
+            continue
+
+    fallback = Path("/tmp/ct-accounts")
+    fallback.mkdir(parents=True, exist_ok=True)
+    return fallback
 
 
 def new_account_id() -> str:

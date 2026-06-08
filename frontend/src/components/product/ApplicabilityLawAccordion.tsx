@@ -8,6 +8,7 @@ import {
   type ScannedLawItem,
 } from "../../lib/applicabilityScan";
 import { humanizeMissingQuestion } from "../../lib/plainLanguage";
+import { lawNameFromScannedItem } from "../../lib/lawDisplayName";
 import { ScopeDimensionCard } from "./ScopeDimensionCard";
 
 const DIM_ORDER = ["temporal", "territorial", "material", "exclusions"];
@@ -17,7 +18,15 @@ interface Props {
   instrument?: ScopeInstrument;
   openQuestions?: ClarifyingQuestion[];
   defaultOpen?: boolean;
+  collapsible?: boolean;
   onFocus?: () => void;
+}
+
+function confidenceTone(confidence: string): string {
+  const value = confidence.toLowerCase();
+  if (value === "high") return "high";
+  if (value === "low") return "low";
+  return "medium";
 }
 
 export function ApplicabilityLawAccordion({
@@ -25,9 +34,10 @@ export function ApplicabilityLawAccordion({
   instrument,
   openQuestions = [],
   defaultOpen = false,
+  collapsible = true,
   onFocus,
 }: Props) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [open, setOpen] = useState(defaultOpen || !collapsible);
   const lawCode = item.scanRow?.catalog_code || item.scanRow?.code || item.rowCode;
   const lawQuestions = filterQuestionsForLaw(openQuestions, lawCode);
   const detail = buildLawVerdictDetail({ item, instrument, openQuestions: lawQuestions });
@@ -42,25 +52,18 @@ export function ApplicabilityLawAccordion({
     .map((m) => humanizeMissingQuestion(m))
     .filter(Boolean);
 
-  const instrumentTitle = instrument?.full_name?.trim();
-  const lawTitle =
-    instrumentTitle ||
-    (item.fullLabel && item.fullLabel !== item.listLabel
-      ? `${item.listLabel} — ${item.fullLabel}`
-      : item.listLabel);
+  const lawTitle = lawNameFromScannedItem(item);
+  const subtitle =
+    instrument?.label?.trim() &&
+    instrument.label.trim().toLowerCase() !== lawTitle.toLowerCase()
+      ? instrument.label.trim()
+      : item.scanRow?.number?.trim() || "";
 
   const statusSymbol = STATUS_SYMBOL[item.status] || "△";
   const badgeClass = verdictBadgeClass(detail.verdict);
+  const confTone = confidenceTone(detail.confidence);
 
-  const legalTestLine = useMemo(() => {
-    if (!detail.legalTests.length) return null;
-    return detail.legalTests
-      .map((t) => (
-        <span key={t.label}>
-          <strong>{t.label}</strong> {t.answer}
-        </span>
-      ));
-  }, [detail.legalTests]);
+  const legalTests = useMemo(() => detail.legalTests, [detail.legalTests]);
 
   const toggle = () => {
     setOpen((v) => {
@@ -70,68 +73,103 @@ export function ApplicabilityLawAccordion({
     });
   };
 
-  return (
-    <div className={`ct-scope-law-panel ct-scope-law-${item.status}${open ? " open" : ""}`}>
-      <button type="button" className="ct-scope-law-panel-head" onClick={toggle}>
-        <span className="ct-scope-law-symbol" aria-hidden>
-          {statusSymbol}
+  const isOpen = collapsible ? open : true;
+
+  const headContent = (
+    <>
+      <span className="ct-scope-law-symbol" aria-hidden>
+        {statusSymbol}
+      </span>
+      <span className="ct-scope-law-panel-title-wrap">
+        <span className="ct-scope-law-panel-title">
+          <strong>{lawTitle}</strong>
         </span>
-        <span className="ct-scope-law-panel-title-wrap">
-          <span className="ct-scope-law-panel-title">
-            <strong>{lawTitle}</strong>
-          </span>
-          <span className={`ct-scope-verdict-badge ${badgeClass}`}>{detail.verdict}</span>
-        </span>
+        <span className={`ct-scope-verdict-badge ${badgeClass}`}>{detail.verdict}</span>
+      </span>
+      {collapsible ? (
         <span className="ct-scope-law-chevron" aria-hidden>
           {open ? "▾" : "▸"}
         </span>
-      </button>
+      ) : null}
+    </>
+  );
 
-      {open ? (
-        <div className="ct-scope-law-panel-body">
-          {detail.summary ? (
-            <p className="ct-scope-law-summary">{detail.summary}</p>
-          ) : null}
+  const detailBody = (
+    <div className="ct-scope-law-panel-body ct-scope-detail-view">
+      <header className="ct-scope-detail-hero">
+        <div className="ct-scope-detail-hero-text">
+          <h2 className="ct-scope-detail-title">{lawTitle}</h2>
+          {subtitle ? <p className="ct-scope-detail-subtitle">{subtitle}</p> : null}
+        </div>
+        <span className={`ct-scope-detail-verdict ${badgeClass}`}>{detail.verdict}</span>
+      </header>
 
-          <div className="ct-scope-law-meta">
-            <p className="ct-scope-law-meta-row">
-              <span className="ct-scope-law-meta-label">Confidence</span>
-              <span>{detail.confidence}</span>
-            </p>
-            {legalTestLine ? (
-              <p className="ct-scope-law-meta-row ct-scope-law-meta-row--test">
-                {legalTestLine}
-              </p>
-            ) : null}
-          </div>
-
-          {instrumentMissing.length > 0 ? (
-            <div className="ct-scope-law-open-questions">
-              <p className="ct-scope-law-meta-label">Open questions</p>
-              <ul>
-                {instrumentMissing.map((q) => (
-                  <li key={q}>{q}</li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
-          {dimensions.length > 0 ? (
-            <div className="ct-scope-dim-stack">
-              {dimensions.map((dim) => (
-                <ScopeDimensionCard
-                  key={dim.id}
-                  dim={dim}
-                  openQuestions={lawQuestions}
-                  defaultOpen={dim.result === "UNKNOWN" || dim.result === "FAIL"}
-                />
-              ))}
-            </div>
-          ) : detail.legalTests.length === 0 ? (
-            <p className="ct-scope-prose">No scope dimension breakdown for this instrument yet.</p>
-          ) : null}
+      {detail.summary ? (
+        <div className="ct-scope-detail-summary">
+          <p>{detail.summary}</p>
         </div>
       ) : null}
+
+      <div className="ct-scope-detail-meta">
+        <div className={`ct-scope-detail-meta-card ct-scope-detail-meta-card--${confTone}`}>
+          <span className="ct-scope-detail-meta-label">Confidence</span>
+          <span className="ct-scope-detail-meta-value">{detail.confidence}</span>
+        </div>
+        {legalTests.map((test) => (
+          <div key={test.label} className="ct-scope-detail-meta-card ct-scope-detail-meta-card--test">
+            <span className="ct-scope-detail-meta-label">{test.label}</span>
+            <span className="ct-scope-detail-meta-value">{test.answer}</span>
+          </div>
+        ))}
+      </div>
+
+      {instrumentMissing.length > 0 ? (
+        <aside className="ct-scope-detail-open-questions">
+          <h3 className="ct-scope-detail-section-title">Open questions</h3>
+          <ul>
+            {instrumentMissing.map((q) => (
+              <li key={q}>{q}</li>
+            ))}
+          </ul>
+        </aside>
+      ) : null}
+
+      {dimensions.length > 0 ? (
+        <section className="ct-scope-detail-dimensions">
+          <h3 className="ct-scope-detail-section-title">Scope dimensions</h3>
+          <div className="ct-scope-dim-card-stack">
+            {dimensions.map((dim) => (
+              <ScopeDimensionCard
+                key={dim.id}
+                dim={dim}
+                regKey={instrument?.reg_key}
+                openQuestions={lawQuestions}
+                defaultOpen={dim.result === "UNKNOWN" || dim.result === "FAIL"}
+              />
+            ))}
+          </div>
+        </section>
+      ) : detail.legalTests.length === 0 ? (
+        <p className="ct-scope-prose">No scope dimension breakdown for this instrument yet.</p>
+      ) : null}
+    </div>
+  );
+
+  return (
+    <div
+      className={`ct-scope-law-panel ct-scope-law-${item.status}${isOpen ? " open" : ""}${collapsible ? "" : " ct-scope-law-panel--detail"}`}
+    >
+      {collapsible ? (
+        <button type="button" className="ct-scope-law-panel-head" onClick={toggle}>
+          {headContent}
+        </button>
+      ) : (
+        <div className="ct-scope-law-panel-head ct-scope-law-panel-head--static ct-scope-law-panel-head--hidden">
+          {headContent}
+        </div>
+      )}
+
+      {isOpen ? detailBody : null}
     </div>
   );
 }

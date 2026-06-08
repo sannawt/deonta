@@ -10,6 +10,7 @@ FROM python:3.12-slim AS runtime
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
+ENV ACCOUNTS_DATA_DIR=/tmp/ct-accounts
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

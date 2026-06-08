@@ -114,14 +114,14 @@ export function ScopeChatPanel({
         <p className="ct-scope-chat-hint">
           {focusedLawLabel
             ? `Discussing ${focusedLawLabel}`
-            : "Select a law to add context"}
+            : "Select a law on the left for context"}
         </p>
       </header>
 
       <div className="ct-scope-chat-messages">
         {messages.length === 0 ? (
           <p className="ct-scope-chat-empty">
-            Ask about scope, missing facts, or a specific law. Open a law card on the left for context.
+            Ask about scope, missing facts, or a specific law. Select a law on the left for context.
           </p>
         ) : null}
         {messages.map((m) => (

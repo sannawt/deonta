@@ -91,4 +91,5 @@ Verify live app:
 | Wrong deploy root or old commit | Use Docker/Render, not static-only hosting |
 | 503 / corpus error on startup | Ensure `build/corpus.dl` and `build/*.json` are in the image (committed in git) |
 | API works, blank UI | Frontend build failed; check Docker build logs for `npm run build` |
+| `Account bootstrap failed (500)` | UI is static but `/api/*` is down. On **Vercel**, use **Render + Docker** instead, or redeploy after the corpus/account deploy fixes on `main`. Check `https://<host>/api/health` — if it errors, the Python API did not start. |
 | Timeouts on chat | Increase host timeout (Render paid) or disable LLM env flags |

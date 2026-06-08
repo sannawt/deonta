@@ -11,6 +11,8 @@ services:
     plan: free
     healthCheckPath: /api/health
     envVars:
+      - key: ACCOUNTS_DATA_DIR
+        value: /tmp/ct-accounts
       - key: LEGAL_GRAPH_BACKEND
         value: local
       - key: OPENAI_API_KEY

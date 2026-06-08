@@ -112,7 +112,7 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
     <div className="ct-kg-wrap">
       <div ref={containerRef} className="ct-kg-canvas" aria-label="Product knowledge graph" />
       {nodes.length === 0 && (
-        <p className="ct-kg-hint">Your product map appears here as you describe it.</p>
+        <p className="ct-kg-hint">Your product map appears here as you add details.</p>
       )}
     </div>
   );

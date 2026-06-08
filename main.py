@@ -321,6 +321,16 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Compliance QA", lifespan=lifespan)
 
+
+@app.middleware("http")
+async def no_cache_frontend_assets(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/assets/"):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+    return response
+
+
 if (FRONTEND_DIST / "assets").is_dir():
     app.mount(
         "/assets",
@@ -1253,15 +1263,21 @@ class EvidencePackBody(BaseModel):
 
 @app.post("/api/account/bootstrap")
 def api_account_bootstrap(body: Optional[AccountBootstrapBody] = None) -> dict[str, Any]:
-    existing = None
-    if body and body.account_id:
-        existing = normalize_account_id(body.account_id)
-    if existing:
-        ensure_account(existing)
-        return {"version": 1, "account_id": existing, "created": False}
-    aid = new_account_id()
-    ensure_account(aid)
-    return {"version": 1, "account_id": aid, "created": True}
+    try:
+        existing = None
+        if body and body.account_id:
+            existing = normalize_account_id(body.account_id)
+        if existing:
+            ensure_account(existing)
+            return {"version": 1, "account_id": existing, "created": False}
+        aid = new_account_id()
+        ensure_account(aid)
+        return {"version": 1, "account_id": aid, "created": True}
+    except OSError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Account storage is not writable: {exc}",
+        ) from exc
 
 
 @app.get("/api/playbooks")

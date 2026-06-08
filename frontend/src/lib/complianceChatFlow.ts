@@ -5,9 +5,16 @@ import type { ScopeInstrument } from "../types/chat";
 
 export const PRIMARY_LAW_COUNT = 3;
 export const MIN_INTAKE_LENGTH = 12;
+/** Hourglass pause between sequential chat slides and workflow steps. */
+export const SLIDE_TRANSITION_MS = 3_000;
 
 export function pause(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function waitBetweenSlides(onWaiting?: () => void): Promise<void> {
+  onWaiting?.();
+  await pause(SLIDE_TRANSITION_MS);
 }
 
 export function specFromParse(

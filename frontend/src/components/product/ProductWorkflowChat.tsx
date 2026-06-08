@@ -47,13 +47,10 @@ interface Props {
   allScanResults: LawScanResult[] | null;
   loadingAllResults: boolean;
   selectedCodes: string[];
-  includeSecondary: boolean;
   onInputChange: (value: string) => void;
   onFilesChange: (files: File[]) => void;
   onSend: () => void;
   onLoadAll: () => void;
-  onToggleLaw: (code: string) => void;
-  onIncludeSecondaryChange: (include: boolean) => void;
   onCheckApplicability: () => void;
   hideCompose?: boolean;
 }
@@ -71,13 +68,10 @@ export function ProductWorkflowChat({
   allScanResults,
   loadingAllResults,
   selectedCodes,
-  includeSecondary,
   onInputChange,
   onFilesChange,
   onSend,
   onLoadAll,
-  onToggleLaw,
-  onIncludeSecondaryChange,
   onCheckApplicability,
   hideCompose = false,
 }: Props) {
@@ -151,9 +145,6 @@ export function ProductWorkflowChat({
                     onLoadAll={onLoadAll}
                     selectedCodes={selectedCodes}
                     loading={scanning}
-                    includeSecondary={includeSecondary}
-                    onIncludeSecondaryChange={onIncludeSecondaryChange}
-                    onToggle={onToggleLaw}
                     onCheckApplicability={onCheckApplicability}
                   />
                 </div>

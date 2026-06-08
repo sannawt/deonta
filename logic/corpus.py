@@ -42,13 +42,21 @@ def corpus_status() -> dict[str, Any]:
             BUILD_SCRIPT.stat().st_mtime if BUILD_SCRIPT.is_file() else 0,
         )
         stale = any(build_path(name).stat().st_mtime < src_mtime for name in BUILD_FILES)
+    if missing:
+        ready = False
+    elif not xlsx.is_file():
+        # Deploy: committed build/*.json + corpus.dl are enough without the local workbook.
+        ready = True
+    else:
+        ready = not stale
+
     return {
         "workbook": str(xlsx),
         "workbook_exists": xlsx.is_file(),
         "build_dir": str(BUILD_DIR),
         "missing": missing,
         "stale": stale,
-        "ready": xlsx.is_file() and not missing and not stale,
+        "ready": ready,
     }
 
 
@@ -56,9 +64,14 @@ def ensure_corpus_ready() -> None:
     status = corpus_status()
     if status["ready"]:
         return
+    if status["missing"]:
+        raise CorpusNotReadyError(
+            "Corpus build artifacts are missing from build/. "
+            "Run `python scripts/build_corpus.py <workbook.xlsx> -o build/` and commit the output."
+        )
     raise CorpusNotReadyError(
-        "Corpus build is missing or stale. Run "
-        "`python scripts/build_corpus.py \"/Users/sannawong-toropainen/Compliance calculator.xlsx\" -o build/`."
+        "Corpus build is stale. Run "
+        f"`python scripts/build_corpus.py \"{status['workbook']}\" -o build/`."
     )
 
 

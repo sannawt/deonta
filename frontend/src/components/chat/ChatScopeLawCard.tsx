@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ScopeChatLawBlock } from "../../lib/scopeChatNarrative";
-import type { ScopeCitation, ScopeDimension, ScopeInstrument } from "../../types/chat";
+import { collectDimensionCitations, splitEvidenceRefs } from "../../lib/citations";
+import type { ScopeDimension, ScopeInstrument } from "../../types/chat";
 import {
   dimensionResultPlain,
   dimensionResultSentence,
@@ -17,19 +18,6 @@ interface Props {
   instrument?: ScopeInstrument;
   openQuestions?: string[];
   defaultExpanded?: boolean;
-}
-
-function dedupeCitations(items: (ScopeCitation | undefined | null)[]): ScopeCitation[] {
-  const seen = new Set<string>();
-  const out: ScopeCitation[] = [];
-  for (const item of items) {
-    if (!item?.label) continue;
-    const key = item.provision_long_id || item.label;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(item);
-  }
-  return out;
 }
 
 function splitClauses(text: string): string[] {
@@ -83,19 +71,23 @@ function filterQuestions(raw: string[]): string[] {
     .slice(0, 4);
 }
 
-function DimensionAccordion({ dim }: { dim: ScopeDimension }) {
+function DimensionAccordion({
+  dim,
+  regKey,
+}: {
+  dim: ScopeDimension;
+  regKey?: string;
+}) {
   const [open, setOpen] = useState(false);
   const resultLabel = dimensionResultPlain(dim.result);
   const tone = resultTone(dim.result);
-  const analysis =
+  const rawAnalysis =
     dim.llm?.interpretation?.trim() ||
     dim.evidence?.trim() ||
     dimensionResultSentence(dim.label, dim.result);
+  const { body: analysis, refs: evidenceRefs } = splitEvidenceRefs(rawAnalysis);
   const why = dim.llm?.why_result?.trim() || "";
-  const citations = dedupeCitations([
-    ...(dim.citations ?? []),
-    ...(dim.rules_invoked ?? []).map((r) => r.citation),
-  ]);
+  const citations = collectDimensionCitations(dim, evidenceRefs, regKey);
 
   return (
     <div className={`ct-chat-dim-acc ${open ? "is-open" : ""}`}>
@@ -188,7 +180,11 @@ export function ChatScopeLawCard({
               <p className="ct-chat-scope-card-section-label">Scope dimensions</p>
               <div className="ct-chat-dim-acc-stack">
                 {dimensions.map((dim) => (
-                  <DimensionAccordion key={dim.id} dim={dim} />
+                  <DimensionAccordion
+                    key={dim.id}
+                    dim={dim}
+                    regKey={instrument?.reg_key}
+                  />
                 ))}
               </div>
             </div>

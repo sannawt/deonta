@@ -2,9 +2,10 @@ import type { ScopeCitation } from "../../types/chat";
 
 interface Props {
   citation: ScopeCitation;
+  className?: string;
 }
 
-export function ChatCitationLink({ citation }: Props) {
+export function ChatCitationLink({ citation, className = "ct-chat-cite-link" }: Props) {
   const title = [citation.display || citation.label, citation.title, citation.excerpt]
     .filter(Boolean)
     .join(" — ");
@@ -15,11 +16,11 @@ export function ChatCitationLink({ citation }: Props) {
         href={citation.eurlex_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="ct-chat-cite-link"
+        className={className}
         title={title}
       >
         {citation.label}
-        <span className="ct-chat-cite-ext" aria-hidden>
+        <span className="ct-cite-ext" aria-hidden>
           ↗
         </span>
       </a>
@@ -27,7 +28,7 @@ export function ChatCitationLink({ citation }: Props) {
   }
 
   return (
-    <span className="ct-chat-cite-link ct-chat-cite-link--static" title={title}>
+    <span className={`${className} ct-cite-link--static`} title={title}>
       {citation.label}
     </span>
   );
