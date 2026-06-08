@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import type { ClarifyingQuestion, ScopeInstrument } from "../../types/chat";
 import {
   STATUS_SYMBOL,
@@ -21,13 +21,6 @@ interface Props {
   defaultOpen?: boolean;
   collapsible?: boolean;
   onFocus?: () => void;
-}
-
-function confidenceTone(confidence: string): string {
-  const value = confidence.toLowerCase();
-  if (value === "high") return "high";
-  if (value === "low") return "low";
-  return "medium";
 }
 
 export function ApplicabilityLawAccordion({
@@ -62,9 +55,6 @@ export function ApplicabilityLawAccordion({
 
   const statusSymbol = STATUS_SYMBOL[item.status] || "△";
   const badgeClass = verdictBadgeClass(detail.verdict);
-  const confTone = confidenceTone(detail.confidence);
-
-  const legalTests = useMemo(() => detail.legalTests, [detail.legalTests]);
 
   const toggle = () => {
     setOpen((v) => {
@@ -116,19 +106,6 @@ export function ApplicabilityLawAccordion({
         </div>
       ) : null}
 
-      <div className="ct-scope-detail-meta">
-        <div className={`ct-scope-detail-meta-card ct-scope-detail-meta-card--${confTone}`}>
-          <span className="ct-scope-detail-meta-label">Confidence</span>
-          <span className="ct-scope-detail-meta-value">{detail.confidence}</span>
-        </div>
-        {legalTests.map((test) => (
-          <div key={test.label} className="ct-scope-detail-meta-card ct-scope-detail-meta-card--test">
-            <span className="ct-scope-detail-meta-label">{test.label}</span>
-            <span className="ct-scope-detail-meta-value">{test.answer}</span>
-          </div>
-        ))}
-      </div>
-
       {instrumentMissing.length > 0 ? (
         <aside className="ct-scope-detail-open-questions">
           <h3 className="ct-scope-detail-section-title">Open questions</h3>
@@ -142,7 +119,6 @@ export function ApplicabilityLawAccordion({
 
       {dimensions.length > 0 ? (
         <section className="ct-scope-detail-dimensions">
-          <h3 className="ct-scope-detail-section-title">Scope dimensions</h3>
           <div className="ct-scope-dim-card-stack">
             {dimensions.map((dim) => (
               <ScopeDimensionCard
