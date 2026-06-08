@@ -83,12 +83,27 @@ export interface LawScanResult {
   short: string;
   number: string;
   description: string;
+  summary?: string;
+  keywords?: string[];
   score: number;
   engine_mode: "symbolic" | "retrieval_only" | "planned";
   label?: string;
   reg_id?: string;
+  catalog_code?: string | null;
+  document_tier?: string;
   match_rationale?: string;
   hit_count?: number;
+  rank_method?: string;
+}
+
+export interface LawScanEmbeddingMeta {
+  has_neo4j_embeddings?: boolean;
+  vector_search_used?: boolean;
+  dimensions?: number;
+  vector_property?: string;
+  vector_index?: string;
+  query_provider?: string;
+  query_model?: string;
 }
 
 export interface LawScanResponse {
@@ -96,14 +111,28 @@ export interface LawScanResponse {
   scan_query: string;
   backend: string;
   regulation_count?: number;
+  corpus_chars?: number;
+  total_ranked?: number;
+  match_count?: number;
+  total_match_count?: number;
+  min_score?: number;
+  include_secondary?: boolean;
+  full_scan?: boolean;
+  display_limit?: number;
+  total_hits?: number;
+  total_vector_hits?: number;
   results: LawScanResult[];
   rank_method?: string;
+  embedding_search?: LawScanEmbeddingMeta;
 }
 
 export async function scanRelevantLaws(body: {
   description: string;
   kg_facts: KgFact[];
   limit?: number;
+  min_score?: number;
+  include_secondary?: boolean;
+  full_scan?: boolean;
 }): Promise<LawScanResponse> {
   const res = await apiFetch("/api/products/law-scan", {
     method: "POST",
@@ -111,7 +140,10 @@ export async function scanRelevantLaws(body: {
     body: JSON.stringify({
       description: body.description,
       kg_facts: body.kg_facts,
-      limit: body.limit ?? 10,
+      limit: body.limit ?? 5,
+      min_score: body.min_score ?? 0.75,
+      include_secondary: body.include_secondary ?? false,
+      full_scan: body.full_scan ?? false,
     }),
   });
   if (!res.ok) {

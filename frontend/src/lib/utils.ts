@@ -1,4 +1,5 @@
 import type { DimResult } from "../types/chat";
+import type { LawScanResult } from "./api";
 
 export function cn(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -181,8 +182,163 @@ export function predicateOnlyFromAtom(atom: string): string {
   const cleaned = stripInternalIds(atom);
   const m = cleaned.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*\(/);
   if (m) return m[1];
-  // if it's already just a predicate token
   const t = cleaned.trim();
   const m2 = t.match(/^([A-Za-z_][A-Za-z0-9_]*)$/);
   return m2 ? m2[1] : t;
+}
+
+export interface UserLawScanGroup {
+  primary: LawScanResult;
+  groupCodes: string[];
+  matchCount: number;
+}
+
+export function userLawRowKey(row: LawScanResult): string {
+  const cat = (row.catalog_code || "").trim().toLowerCase();
+  const num = row.number && row.number !== "—" ? row.number : "";
+  if (cat) return `${cat}|${num}`;
+  return `${(row.short || row.code).trim().toLowerCase()}|${num}`;
+}
+
+/** Collapse duplicate catalog rows (e.g. many GDPR documents → one user row). */
+export function groupUserLawRows(rows: LawScanResult[]): UserLawScanGroup[] {
+  const groups = new Map<string, LawScanResult[]>();
+  for (const row of rows) {
+    const key = userLawRowKey(row);
+    const list = groups.get(key) ?? [];
+    list.push(row);
+    groups.set(key, list);
+  }
+  return Array.from(groups.values())
+    .map((list) => {
+      const sorted = [...list].sort((a, b) => b.score - a.score);
+      return {
+        primary: sorted[0],
+        groupCodes: sorted.map((r) => r.code),
+        matchCount: sorted.length,
+      };
+    })
+    .sort((a, b) => b.primary.score - a.primary.score);
+}
+
+export function isLawGroupSelected(group: UserLawScanGroup, selectedCodes: string[]): boolean {
+  return group.groupCodes.some((c) => selectedCodes.includes(c));
+}
+
+export function toggleLawGroupSelection(
+  group: UserLawScanGroup,
+  selectedCodes: string[],
+): string[] {
+  if (isLawGroupSelected(group, selectedCodes)) {
+    return selectedCodes.filter((c) => !group.groupCodes.includes(c));
+  }
+  const next = selectedCodes.filter((c) => !group.groupCodes.includes(c));
+  next.push(group.primary.code);
+  return next;
+}
+
+export interface FormattedLawScanRow {
+  key: string;
+  shortName: string;
+  lawNumber: string;
+  documentTitle: string;
+  catalogBadge: string;
+  scoreLabel: string;
+  scoreWidth: string;
+}
+
+const KEYWORD_COLOR_CLASSES = [
+  "ct-law-scan-keyword-rose",
+  "ct-law-scan-keyword-sky",
+  "ct-law-scan-keyword-mint",
+  "ct-law-scan-keyword-amber",
+  "ct-law-scan-keyword-lavender",
+  "ct-law-scan-keyword-coral",
+] as const;
+
+export function keywordColorClass(keyword: string): string {
+  let hash = 0;
+  for (let i = 0; i < keyword.length; i += 1) {
+    hash = (hash + keyword.charCodeAt(i) * (i + 1)) % KEYWORD_COLOR_CLASSES.length;
+  }
+  return KEYWORD_COLOR_CLASSES[hash];
+}
+
+export function lawScanKeywords(row: LawScanResult): string[] {
+  if (row.keywords?.length) {
+    return row.keywords
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .filter((kw) => kw.split(/\s+/).length <= 3)
+      .slice(0, 6);
+  }
+  return (row.description || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .filter((kw) => kw.split(/\s+/).length <= 3)
+    .slice(0, 6);
+}
+
+const LAW_ROW_CODE_UUID_RX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function isUuidCode(code: string): boolean {
+  return LAW_ROW_CODE_UUID_RX.test((code || "").trim());
+}
+
+export function catalogBadgeLabel(catalogCode?: string | null): string {
+  const code = (catalogCode || "").trim().toLowerCase();
+  if (!code) return "";
+  const labels: Record<string, string> = {
+    gdpr: "GDPR",
+    ai_act: "AI Act",
+    cra: "CRA",
+    dora: "DORA",
+    nis2: "NIS2",
+    data_act: "Data Act",
+    eprivacy: "ePrivacy",
+    gpsr: "GPSR",
+    dma: "DMA",
+    dsa: "DSA",
+  };
+  return labels[code] || code.replace(/_/g, " ").toUpperCase();
+}
+
+export function assessCodeForLawRow(row: LawScanResult): string {
+  return (row.catalog_code || row.code || "").trim().toLowerCase();
+}
+
+export function resolveAssessCodes(
+  selectedCodes: string[],
+  scanResults: LawScanResult[],
+): string[] {
+  const byCode = new Map(scanResults.map((r) => [r.code, r]));
+  const out: string[] = [];
+  for (const code of selectedCodes) {
+    const row = byCode.get(code);
+    const assessCode = row ? assessCodeForLawRow(row) : code;
+    if (assessCode && !out.includes(assessCode)) {
+      out.push(assessCode);
+    }
+  }
+  return out;
+}
+
+export function formatLawScanRow(row: LawScanResult): FormattedLawScanRow {
+  const badge = catalogBadgeLabel(row.catalog_code);
+  const shortName = (row.short || badge || row.number || "—").trim();
+  const lawNumber =
+    row.number && row.number !== "—" ? row.number : "";
+  const documentTitle = (row.summary || row.label || row.short || "—").trim();
+  const scorePct = `${Math.round(Math.max(0, Math.min(1, row.score)) * 100)}%`;
+  return {
+    key: row.code,
+    shortName,
+    lawNumber,
+    documentTitle,
+    catalogBadge: badge,
+    scoreLabel: scorePct,
+    scoreWidth: scorePct,
+  };
 }

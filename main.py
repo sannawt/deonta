@@ -1182,7 +1182,16 @@ class ProductAssessBody(BaseModel):
 class LawScanBody(BaseModel):
     description: str = ""
     kg_facts: list[dict[str, Any]] = Field(default_factory=list)
-    limit: int = Field(default=10, ge=1, le=50)
+    limit: int = Field(default=5, ge=0, le=500)
+    min_score: float = Field(default=0.75, ge=0.0, le=1.0)
+    include_secondary: bool = Field(
+        default=False,
+        description="Include implementing/delegated acts and EU body internal rules",
+    )
+    full_scan: bool = Field(
+        default=False,
+        description="Rank full corpus (slower); default returns top matches only",
+    )
 
 
 class AccountBootstrapBody(BaseModel):
@@ -1395,6 +1404,9 @@ def api_products_law_scan(body: LawScanBody) -> dict[str, Any]:
             description=body.description,
             kg_facts=body.kg_facts,
             limit=body.limit,
+            min_score=body.min_score,
+            include_secondary=body.include_secondary,
+            full_scan=body.full_scan,
             get_legal_driver_fn=get_legal_driver,
             resolve_database_fn=lambda: resolve_aura_database(
                 (os.environ.get("NEO4J_LEGAL_URI") or os.environ.get("NEO4J_URI") or "").strip(),

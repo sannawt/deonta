@@ -92,6 +92,17 @@ RETURN
   '' AS official_number
 """
 
+DOCUMENT_ENRICH_BY_IDS_QUERY = """
+UNWIND $ids AS doc_id
+MATCH (d:Document)
+WHERE d.id = doc_id
+RETURN
+  coalesce(d.id, elementId(d)) AS reg_key,
+  coalesce(d.title, d.name, '') AS name,
+  '' AS short_name,
+  '' AS official_number
+"""
+
 
 def _cosine_query_for_property(vector_property: str) -> str:
     if vector_property == "text_embeddings":
@@ -202,6 +213,28 @@ def fetch_document_metadata(driver: Any, database: str) -> dict[str, dict[str, A
     return out
 
 
+def fetch_document_metadata_for_ids(
+    driver: Any,
+    database: str,
+    ids: list[str],
+) -> dict[str, dict[str, Any]]:
+    """Load Document metadata for a bounded set of doc ids (fast scan path)."""
+    keys = [str(i).strip() for i in ids if str(i).strip()]
+    if not keys:
+        return {}
+    out: dict[str, dict[str, Any]] = {}
+    try:
+        with driver.session(database=database) as session:
+            rows = [r.data() for r in session.run(DOCUMENT_ENRICH_BY_IDS_QUERY, ids=keys)]
+    except Exception:  # noqa: BLE001
+        return out
+    for row in rows:
+        rk = str(row.get("reg_key") or "").strip().lower()
+        if rk:
+            out[rk] = row
+    return out
+
+
 def fetch_legal_entity_metadata(driver: Any, database: str) -> dict[str, dict[str, Any]]:
     """Load LegalEntity nodes for regulation metadata merge."""
     out: dict[str, dict[str, Any]] = {}
@@ -239,13 +272,18 @@ def merge_vector_hits_into_regulations(
                 "hit_count": 0,
             },
         )
-        le = legal_entities.get(reg_key) or {}
+        le = legal_entities.get(reg_key) or legal_entities.get(reg_key.lower()) or {}
         if le.get("name"):
             entry["name"] = str(le["name"])
         if le.get("short_name"):
             entry["short_name"] = str(le["short_name"])
         if le.get("official_number"):
             entry["official_number"] = str(le["official_number"])
+
+        if not entry.get("name"):
+            top_titles = vec.get("top_titles") or []
+            if top_titles:
+                entry["name"] = str(top_titles[0])
 
         entry["vector_hit_count"] = int(vec.get("vector_hit_count") or 0)
         entry["max_vector_score"] = float(vec.get("max_vector_score") or 0.0)

@@ -11,6 +11,7 @@ import {
 import { ScopeAnalysisPanel } from "../workbench/ScopeAnalysisPanel";
 import { ThinkingOverlay } from "../ui/ThinkingOverlay";
 import { PixelIcon } from "../ui/PixelIcon";
+import { resolveAssessCodes } from "../../lib/utils";
 import type { ChatResponse, ScopeAnalysis, ScopeInstrument } from "../../types/chat";
 
 const RESULT_BADGE: Record<string, string> = {
@@ -78,9 +79,10 @@ export function ApplicabilityScopeView({
     description,
     kgFacts,
     selectedLaws,
+    scanResults,
     playbookCompanyId,
   });
-  payloadRef.current = { spec, description, kgFacts, selectedLaws, playbookCompanyId };
+  payloadRef.current = { spec, description, kgFacts, selectedLaws, scanResults, playbookCompanyId };
 
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
@@ -89,23 +91,33 @@ export function ApplicabilityScopeView({
     const byCode = new Map(scanResults.map((r) => [r.code, r]));
     return selectedLaws.map((code) => {
       const row = byCode.get(code);
+      const assessCode = row?.catalog_code || row?.code || code;
       return {
-        code,
-        short: row?.short || code.toUpperCase(),
+        code: assessCode,
+        rowCode: code,
+        short: row?.short || row?.label || assessCode.toUpperCase(),
+        label: row?.short || row?.label || assessCode.toUpperCase(),
         number: row?.number || "—",
         engine_mode: row?.engine_mode || "retrieval_only",
       };
     });
   }, [scanResults, selectedLaws]);
 
+  const assessCodes = useMemo(
+    () => resolveAssessCodes(selectedLaws, scanResults),
+    [selectedLaws, scanResults],
+  );
+
   const runSymbolicAssess = useCallback(async () => {
     const {
       spec: currentSpec,
       description: currentDescription,
       kgFacts: currentFacts,
-      selectedLaws: laws,
+      selectedLaws: rowCodes,
+      scanResults: results,
       playbookCompanyId: playbookId,
     } = payloadRef.current;
+    const resolvedCodes = resolveAssessCodes(rowCodes, results);
 
     setLoading(true);
     setError(null);
@@ -125,7 +137,7 @@ export function ApplicabilityScopeView({
       const assessSpec: ProductSpec = {
         ...currentSpec,
         summary: currentSpec.summary?.trim() || currentDescription.trim(),
-        selectedLaws: laws,
+        selectedLaws: resolvedCodes,
         ...(freshKg.spec
           ? {
               name: freshKg.spec.name || currentSpec.name,
@@ -143,7 +155,7 @@ export function ApplicabilityScopeView({
       const created = createProduct(assessSpec);
       created.kgFacts = freshFacts.length ? freshFacts : currentFacts;
       const result = await assessProduct({
-        spec: { ...assessSpec, regulations: laws },
+        spec: { ...assessSpec, regulations: resolvedCodes },
         kg_facts: created.kgFacts,
         account_id: aid,
         playbook_company_id: playbookId,
@@ -172,7 +184,7 @@ export function ApplicabilityScopeView({
   }, [runSymbolicAssess]);
 
   const assessment = resolveAssessment(response);
-  const scopeAnalysis = filterScopeAnalysis(assessment?.scope_analysis, selectedLaws);
+  const scopeAnalysis = filterScopeAnalysis(assessment?.scope_analysis, assessCodes);
   const instruments = scopeAnalysis?.instruments ?? [];
 
   const summaryRows = lawMeta.map((law) => {
@@ -180,7 +192,7 @@ export function ApplicabilityScopeView({
     if (!inst) {
       return {
         code: law.code,
-        short: law.short,
+        short: law.label || law.short,
         number: law.number,
         material: "—",
         territorial: "—",
@@ -191,7 +203,7 @@ export function ApplicabilityScopeView({
     const dim = (id: string) => inst.dimensions?.find((d) => d.id === id)?.result ?? "—";
     return {
       code: law.code,
-      short: law.short,
+      short: law.label || law.short,
       number: law.number,
       material: dim("material"),
       territorial: dim("territorial"),
@@ -219,8 +231,8 @@ export function ApplicabilityScopeView({
 
       <div className="ct-scope-selected-laws">
         {lawMeta.map((law) => (
-          <span key={law.code} className="ct-chip active">
-            {law.short}
+          <span key={law.rowCode} className="ct-chip active">
+            {law.label || law.short}
             {law.engine_mode !== "symbolic" && (
               <span className="ct-scope-chip-note"> · retrieval only</span>
             )}

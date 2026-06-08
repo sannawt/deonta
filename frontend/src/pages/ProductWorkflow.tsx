@@ -5,6 +5,7 @@ import {
   type KgEdge,
   type KgNode,
   type LawScanResult,
+  type LawScanResponse,
   type ProductKgResponse,
 } from "../lib/api";
 import { ensureAccountId } from "../lib/account";
@@ -51,6 +52,10 @@ export function ProductWorkflow({
   const [parsing, setParsing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [scanResults, setScanResults] = useState<LawScanResult[]>([]);
+  const [allScanResults, setAllScanResults] = useState<LawScanResult[] | null>(null);
+  const [scanResponse, setScanResponse] = useState<LawScanResponse | null>(null);
+  const [loadingAllResults, setLoadingAllResults] = useState(false);
+  const [includeSecondary, setIncludeSecondary] = useState(false);
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [kgNodes, setKgNodes] = useState<KgNode[]>([]);
@@ -152,18 +157,24 @@ export function ProductWorkflow({
     }
   }, [description, files]);
 
-  const runLawScan = useCallback(async () => {
+  const runLawScan = useCallback(async (secondaryOverride?: boolean) => {
     setScanning(true);
     setError(null);
+    const includeSec = secondaryOverride ?? includeSecondary;
     try {
       const queryText = [description.trim(), spec.summary?.trim()].filter(Boolean).join("\n");
       const data = await scanRelevantLaws({
         description: queryText,
         kg_facts: kgFacts,
-        limit: 10,
+        limit: 5,
+        min_score: 0.75,
+        include_secondary: includeSec,
+        full_scan: false,
       });
       const rows = data.results ?? [];
+      setScanResponse(data);
       setScanResults(rows);
+      setAllScanResults(null);
       setSpec((s) => ({
         ...s,
         selectedLaws:
@@ -173,11 +184,50 @@ export function ProductWorkflow({
       }));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Law scan failed");
+      setScanResponse(null);
       setScanResults([]);
+      setAllScanResults(null);
     } finally {
       setScanning(false);
     }
-  }, [description, spec.summary, kgFacts]);
+  }, [description, spec.summary, kgFacts, includeSecondary]);
+
+  const loadAllScanResults = useCallback(async () => {
+    if (loadingAllResults || allScanResults) return;
+    setLoadingAllResults(true);
+    setError(null);
+    try {
+      const queryText = [description.trim(), spec.summary?.trim()].filter(Boolean).join("\n");
+      const data = await scanRelevantLaws({
+        description: queryText,
+        kg_facts: kgFacts,
+        limit: 0,
+        min_score: 0.75,
+        include_secondary: includeSecondary,
+        full_scan: true,
+      });
+      setAllScanResults(data.results ?? []);
+      setScanResponse((prev) =>
+        prev
+          ? {
+              ...prev,
+              total_match_count: data.total_match_count ?? data.match_count,
+            }
+          : data,
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not load all law matches");
+    } finally {
+      setLoadingAllResults(false);
+    }
+  }, [
+    allScanResults,
+    description,
+    includeSecondary,
+    kgFacts,
+    loadingAllResults,
+    spec.summary,
+  ]);
 
   function handleCheckApplicability() {
     const selected = spec.selectedLaws ?? [];
@@ -195,11 +245,21 @@ export function ProductWorkflow({
       setError("Describe your product or upload a document first.");
       return;
     }
-    const ok = await runParse();
-    if (!ok) return;
+    setError(null);
+    setScanning(true);
+    setScanResults([]);
+    setScanResponse(null);
     step1Done.current = true;
-    scanStarted.current = false;
+    scanStarted.current = true;
     setStep("laws");
+
+    const ok = await runParse();
+    if (!ok) {
+      setScanning(false);
+      scanStarted.current = false;
+      return;
+    }
+    await runLawScan();
   }
 
   useEffect(() => {
@@ -217,7 +277,16 @@ export function ProductWorkflow({
     if (scanStarted.current) return;
     scanStarted.current = true;
     void (async () => {
-      await runParse();
+      setScanning(true);
+      setScanResults([]);
+      setScanResponse(null);
+      setError(null);
+      const ok = await runParse();
+      if (!ok) {
+        setScanning(false);
+        scanStarted.current = false;
+        return;
+      }
       await runLawScan();
     })();
   }, [step, runLawScan, runParse]);
@@ -225,8 +294,12 @@ export function ProductWorkflow({
   function toggleLaw(code: string) {
     setSpec((s) => {
       const cur = s.selectedLaws ?? [];
-      const next = cur.includes(code) ? cur.filter((c) => c !== code) : [...cur, code];
-      return { ...s, selectedLaws: next };
+      return {
+        ...s,
+        selectedLaws: cur.includes(code)
+          ? cur.filter((c) => c !== code)
+          : [...cur, code],
+      };
     });
   }
 
@@ -253,27 +326,42 @@ export function ProductWorkflow({
     return (
       <>
         <WorkflowStepper steps={workflowSteps("laws")} />
-        <div className="ct-page ct-card-relative">
-          <ThinkingOverlay show={scanning} label="Searching legal database…" />
-          <div className="ct-scanner-head">
-            <PixelIcon name="scale" size={96} className="ct-scanner-head-icon" />
-            <div>
-              <p className="ct-scanner-step">Step 2</p>
-              <p className="ct-scanner-intro">
-                Top regulations from the structured legal database ranked by relevance to your
-                product. Select laws, then check applicability.
-              </p>
-            </div>
-          </div>
-          {error && <div className="err">{error}</div>}
-          <LawScanResults
-            results={scanResults}
-            selectedCodes={spec.selectedLaws ?? []}
-            loading={scanning}
-            onToggle={toggleLaw}
-            onCheckApplicability={handleCheckApplicability}
-            onBack={() => setStep("intake")}
-          />
+        <div className={`ct-page ct-card-relative${scanning ? " ct-law-scan-loading" : ""}`}>
+          <ThinkingOverlay show={scanning} label="Finding relevant laws…" />
+          {!scanning && (
+            <>
+              <div className="ct-scanner-head">
+                <PixelIcon name="scale" size={96} className="ct-scanner-head-icon" />
+                <div>
+                  <p className="ct-scanner-step">Step 2</p>
+                  <p className="ct-scanner-intro">
+                    Top regulations from the structured legal database ranked by relevance to your
+                    product. Select laws, then check applicability.
+                  </p>
+                </div>
+              </div>
+              {error && <div className="err">{error}</div>}
+              <LawScanResults
+                scanResponse={scanResponse}
+                results={scanResults}
+                allResults={allScanResults}
+                loadingAll={loadingAllResults}
+                onLoadAll={loadAllScanResults}
+                selectedCodes={spec.selectedLaws ?? []}
+                loading={false}
+                includeSecondary={includeSecondary}
+                onIncludeSecondaryChange={(next) => {
+                  setIncludeSecondary(next);
+                  scanStarted.current = true;
+                  setAllScanResults(null);
+                  void runLawScan(next);
+                }}
+                onToggle={toggleLaw}
+                onCheckApplicability={handleCheckApplicability}
+                onBack={() => setStep("intake")}
+              />
+            </>
+          )}
         </div>
       </>
     );

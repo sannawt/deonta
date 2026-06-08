@@ -8,6 +8,7 @@ import pytest
 
 from logic.law_relevance_scan import (
     _format_result,
+    _humanize_match_rationale,
     _merge_regulation_rows,
     build_scan_query,
     fetch_regulations_from_neo4j,
@@ -64,11 +65,132 @@ def test_term_scores_orders_gdpr_above_unrelated():
             "hit_count": 0,
         },
     ]
-    ranked, _method = rank_regulations(query, regulations, limit=10)
+    ranked, _method, _, _ = rank_regulations(query, regulations, limit=10, min_score=0)
     assert ranked
     assert ranked[0]["code"] == "gdpr"
     if len(ranked) > 1:
         assert ranked[0]["score"] >= ranked[1]["score"]
+
+
+def test_rank_regulations_min_score_filter():
+    query = "data processing"
+    regs = [
+        {
+            "reg_id": "REG_GDPR",
+            "name": "GDPR personal data processing",
+            "short_name": "GDPR",
+            "description": "personal data processing",
+            "texts": ["personal data processing " * 20],
+        },
+        {
+            "reg_id": "REG_OTHER",
+            "name": "Unrelated fisheries law",
+            "short_name": "Fish",
+            "description": "fisheries quotas",
+            "texts": ["fisheries quotas " * 5],
+        },
+    ]
+    ranked, _, total, _ = rank_regulations(query, regs, min_score=0.75)
+    assert total >= 1
+    assert ranked
+    assert all(r["score"] >= 0.75 for r in ranked)
+
+
+def test_rank_regulations_excludes_implementing_by_default():
+    query = "personal data processing"
+    regs = [
+        {
+            "reg_id": "REG_GDPR",
+            "name": "Regulation (EU) 2016/679 on the protection of personal data",
+            "short_name": "GDPR",
+            "description": "personal data",
+            "texts": ["personal data processing " * 20],
+        },
+        {
+            "reg_id": "REG_IMPL",
+            "name": (
+                "Commission Implementing Decision (EU) 2021/1772 pursuant to "
+                "Regulation (EU) 2016/679 on the adequate protection of personal data"
+            ),
+            "short_name": "",
+            "description": "personal data",
+            "texts": ["personal data processing " * 20],
+        },
+    ]
+    ranked_default, _, _, _ = rank_regulations(query, regs, min_score=0.5)
+    codes = {r["reg_id"] for r in ranked_default}
+    assert "REG_GDPR" in codes
+    assert "REG_IMPL" not in codes
+
+    ranked_all, _, _, _ = rank_regulations(
+        query, regs, min_score=0.5, include_secondary=True
+    )
+    assert any(r["reg_id"] == "REG_IMPL" for r in ranked_all)
+
+
+def test_rank_regulations_excludes_council_and_noise_by_default():
+    query = "personal data processing"
+    regs = [
+        {
+            "reg_id": "REG_GDPR",
+            "name": "Regulation (EU) 2016/679 on the protection of personal data",
+            "short_name": "GDPR",
+            "description": "personal data",
+            "texts": ["personal data processing " * 20],
+        },
+        {
+            "reg_id": "REG_COUNCIL",
+            "name": (
+                "Council Regulation (EU) 2022/2065 concerning restrictive measures "
+                "in view of the situation in Ukraine"
+            ),
+            "short_name": "",
+            "description": "personal data processing",
+            "texts": ["personal data processing " * 20],
+        },
+        {
+            "reg_id": "REG_COMM",
+            "name": "Commission Regulation (EU) No 651/2014 declaring certain categories of aid compatible",
+            "short_name": "",
+            "description": "personal data processing",
+            "texts": ["personal data processing " * 20],
+        },
+    ]
+    ranked, _, _, _ = rank_regulations(query, regs, min_score=0.5)
+    codes = {r["reg_id"] for r in ranked}
+    assert "REG_GDPR" in codes
+    assert "REG_COUNCIL" not in codes
+    assert "REG_COMM" not in codes
+
+
+def test_rank_regulations_excludes_internal_with_secondary():
+    query = "personal data processing"
+    regs = [
+        {
+            "reg_id": "REG_IMPL",
+            "name": (
+                "Commission Implementing Decision (EU) 2021/1772 pursuant to "
+                "Regulation (EU) 2016/679 on the adequate protection of personal data"
+            ),
+            "short_name": "",
+            "description": "personal data",
+            "texts": ["personal data processing " * 20],
+        },
+        {
+            "reg_id": "REG_INTERNAL",
+            "name": (
+                "Decision of the Management Board of ENISA on internal rules "
+                "concerning personal data processing"
+            ),
+            "short_name": "",
+            "description": "personal data",
+            "texts": ["personal data processing " * 20],
+        },
+    ]
+    ranked, _, _, _ = rank_regulations(query, regs, min_score=0.5, include_secondary=True)
+    codes = {r["reg_id"] for r in ranked}
+    assert "REG_IMPL" in codes
+    assert "REG_INTERNAL" not in codes
 
 
 def test_rank_regulations_top_10_cap():
@@ -83,7 +205,7 @@ def test_rank_regulations_top_10_cap():
         }
         for i in range(15)
     ]
-    ranked, _ = rank_regulations(query, regs, limit=10)
+    ranked, _, _, _ = rank_regulations(query, regs, limit=10, min_score=0)
     assert len(ranked) <= 10
 
 
@@ -101,7 +223,49 @@ def test_format_result_uses_catalog_short():
     )
     assert row["code"] == "gdpr"
     assert row["short"] == "GDPR"
+    assert row["catalog_code"] == "gdpr"
     assert row["engine_mode"] == "symbolic"
+
+
+def test_format_result_document_uuid_uses_title_not_slug():
+    doc_id = "abb0ba05-5750-11ee-9220-01aa75ed71a1"
+    title = (
+        "Commission Implementing Decision EU 2023/1795of 10 July 2023pursuant to "
+        "Regulation (EU) 2016/679 (General Data Protection Regulation)"
+    )
+    row = _format_result(
+        {
+            "reg_id": doc_id,
+            "name": title,
+            "short_name": "",
+            "official_number": "",
+            "description": "",
+            "texts": ["(1) Regulation (EU) 2016/679 sets out the rules for transfer."],
+        },
+        0.82,
+    )
+    assert row["code"] == doc_id
+    assert row["catalog_code"] == "gdpr"
+    assert "ABB0BA05" not in row["short"]
+    assert row["short"] not in {"EU Regulation", "EU Directive", ""}
+    assert row["document_tier"] == "implementing"
+    assert row["number"] == "2023/1795"
+    assert "personal data" in row["description"]
+    assert "Regulation (EU)" in row["label"]
+
+
+def test_humanize_match_rationale():
+    text = _humanize_match_rationale(
+        vector_hits=3,
+        term_hits=12,
+        pred_score=0.5,
+        ret_score=0.2,
+        has_vector=True,
+    )
+    assert "Semantically similar" in text
+    assert "keyword overlap" in text
+    assert "product graph" in text
+    assert "557" not in text
 
 
 def test_ranking_varies_with_rich_corpus_text():
@@ -134,9 +298,15 @@ def test_ranking_varies_with_rich_corpus_text():
             "hit_count": 0,
         },
     ]
-    gdpr_top, _ = rank_regulations("employee personal data HR SaaS", regulations, limit=1)
-    ai_top, _ = rank_regulations("machine learning model deployment high risk AI", regulations, limit=1)
-    dsa_top, _ = rank_regulations("online marketplace seller platform intermediary", regulations, limit=1)
+    gdpr_top, _, _, _ = rank_regulations(
+        "employee personal data HR SaaS", regulations, limit=1, min_score=0
+    )
+    ai_top, _, _, _ = rank_regulations(
+        "machine learning model deployment high risk AI", regulations, limit=1, min_score=0
+    )
+    dsa_top, _, _, _ = rank_regulations(
+        "online marketplace seller platform intermediary", regulations, limit=1, min_score=0
+    )
     assert gdpr_top[0]["code"] == "gdpr"
     assert ai_top[0]["code"] == "ai_act"
     assert dsa_top[0]["code"] == "dsa"
@@ -161,7 +331,9 @@ def test_retrieval_hits_boost_regulation():
             "hit_count": 0,
         },
     ]
-    ranked, _ = rank_regulations("personal data cloud service", regulations, limit=2)
+    ranked, _, _, _ = rank_regulations(
+        "personal data cloud service", regulations, limit=2, min_score=0
+    )
     assert ranked[0]["code"] == "gdpr"
     assert ranked[0]["hit_count"] == 12
 
@@ -256,14 +428,15 @@ def test_rank_regulations_vector_signal():
             "max_vector_score": 0.4,
         },
     ]
-    ranked, method = rank_regulations(
+    ranked, method, _, _ = rank_regulations(
         "personal data SaaS",
         regulations,
         limit=5,
+        min_score=0,
         vector_ranked=True,
     )
     assert ranked[0]["code"] == "gdpr"
-    assert "semantically similar" in ranked[0]["match_rationale"]
+    assert "Semantically similar" in ranked[0]["match_rationale"]
     assert method.startswith("neo4j_vector")
     assert "embedding" not in ranked[0]
     for row in ranked:

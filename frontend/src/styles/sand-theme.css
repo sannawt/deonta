@@ -27,6 +27,9 @@
   --ct-fs-base: 1.125rem;
   --ct-fs-sm: 1rem;
   --ct-fs-xs: 0.875rem;
+  --ct-fs-2xs: 0.6875rem;
+  --ct-fs-3xs: 0.5625rem;
+  --ct-fs-4xs: 0.5rem;
   --ct-fs-title: clamp(1.5rem, 3.5vw, 2rem);
   --ct-fs-intro: 1.2rem;
   --ct-fs-btn: 1.15rem;
@@ -455,9 +458,203 @@ body::before {
   font-size: var(--ct-fs-sm);
 }
 
-.ct-law-scan-table .ct-law-scan-check {
-  width: 2rem;
+.ct-law-scan-loading {
+  min-height: 280px;
+}
+
+.ct-law-scan .ct-law-scan-table th,
+.ct-law-scan .ct-law-scan-table td {
+  font-size: var(--ct-fs-xs);
+  padding: 6px 8px;
   vertical-align: top;
+}
+
+.ct-law-scan .ct-law-scan-table th {
+  font-size: var(--ct-fs-xs);
+  font-weight: 600;
+}
+
+.ct-law-scan-table .ct-law-scan-check {
+  width: 1.75rem;
+  vertical-align: top;
+}
+
+.ct-law-scan-short {
+  width: 6.5rem;
+  vertical-align: top;
+}
+
+.ct-law-scan-short-name {
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: var(--ct-fs-2xs);
+}
+
+.ct-law-scan-related {
+  margin-top: 1px;
+  font-size: var(--ct-fs-3xs);
+  color: var(--pixel-muted);
+  line-height: 1.15;
+}
+
+.ct-law-scan .ct-law-scan-doc-title {
+  min-width: 14rem;
+  max-width: 28rem;
+  line-height: 1.35;
+  font-size: var(--ct-fs-sm);
+  font-weight: 500;
+  color: var(--txt);
+  white-space: normal;
+  word-break: break-word;
+}
+
+.ct-law-scan-keywords-cell {
+  min-width: 10rem;
+  max-width: 18rem;
+}
+
+.ct-law-scan-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.ct-law-scan .ct-law-scan-keyword {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: var(--ct-fs-xs);
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1px solid var(--pixel-black);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.ct-law-scan-keyword-rose {
+  background: #f8d4d4;
+  border-color: #9a4545;
+  color: #5c2020;
+}
+
+.ct-law-scan-keyword-sky {
+  background: #cce8f5;
+  border-color: #3d7a99;
+  color: #1e4458;
+}
+
+.ct-law-scan-keyword-mint {
+  background: #cce8d4;
+  border-color: #3d7a55;
+  color: #1e4a30;
+}
+
+.ct-law-scan-keyword-amber {
+  background: #f5e6b8;
+  border-color: #9a7a2e;
+  color: #5c4810;
+}
+
+.ct-law-scan-keyword-lavender {
+  background: #ddd4f0;
+  border-color: #6a549a;
+  color: #3d2d5c;
+}
+
+.ct-law-scan-keyword-coral {
+  background: #f5d4c4;
+  border-color: #9a5a3d;
+  color: #5c3018;
+}
+
+.ct-law-scan .ct-law-scan-score-cell {
+  width: 5rem;
+  white-space: nowrap;
+  font-size: var(--ct-fs-xs);
+}
+
+.ct-law-scan .ct-law-scan-score-cell .ct-law-scan-score {
+  font-size: var(--ct-fs-xs);
+  gap: 6px;
+  min-width: 4rem;
+}
+
+.ct-law-scan .ct-law-scan-score-cell .ct-law-scan-bar {
+  height: 5px;
+  max-width: 40px;
+}
+
+.ct-law-scan-summary-line {
+  margin: 0 0 8px;
+  font-size: var(--ct-fs-xs);
+}
+
+.ct-law-scan-filter {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: var(--ct-fs-xs);
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.ct-law-scan-filter input {
+  margin-top: 2px;
+}
+
+.ct-law-scan-law {
+  max-width: 18rem;
+}
+
+.ct-law-scan-law-title {
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ct-law-scan-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.ct-law-scan-law-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.ct-law-scan-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: var(--ct-fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--pixel-black);
+  background: var(--pixel-sand);
+}
+
+.ct-law-scan-badge-rules {
+  font-weight: 600;
+  border-style: dashed;
+}
+
+.ct-law-scan-subtitle {
+  font-size: var(--ct-fs-sm);
+}
+
+.ct-law-scan-summary {
+  max-width: 22rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.ct-law-scan-why {
+  max-width: 14rem;
+  line-height: 1.4;
 }
 
 .ct-law-scan-score {
@@ -474,6 +671,100 @@ body::before {
   max-width: 48px;
   background: var(--pixel-black);
   vertical-align: middle;
+}
+
+.ct-law-scan-section-title {
+  font-size: var(--ct-fs-md);
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.ct-law-scan-group-note {
+  font-size: var(--ct-fs-sm);
+  margin-top: 2px;
+}
+
+.ct-law-scan-expand-row {
+  margin: 8px 0 0;
+}
+
+.ct-law-scan-expand-btn,
+.ct-law-scan-load-all {
+  font-size: var(--ct-fs-2xs);
+  padding: 4px 10px;
+}
+
+.ct-law-scan-load-all {
+  margin-bottom: 10px;
+}
+
+.ct-law-scan-raw-score {
+  font-size: var(--ct-fs-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ct-law-scan .ct-law-scan-raw-table th,
+.ct-law-scan .ct-law-scan-raw-table td {
+  font-size: var(--ct-fs-xs);
+  padding: 6px 8px;
+}
+
+.ct-law-scan .ct-law-scan-raw-title {
+  font-size: var(--ct-fs-sm);
+  line-height: 1.35;
+}
+
+.ct-law-scan-raw {
+  margin-top: 28px;
+  border: 1px solid var(--pixel-black);
+  background: var(--pixel-sand);
+}
+
+.ct-law-scan-raw-toggle {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.ct-law-scan-raw-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.ct-law-scan-raw-body {
+  padding: 0 14px 14px;
+  border-top: 1px dashed var(--pixel-black);
+}
+
+.ct-law-scan-raw-meta {
+  margin: 12px 0;
+  font-size: var(--ct-fs-sm);
+}
+
+.ct-law-scan-raw-meta p {
+  margin: 4px 0;
+}
+
+.ct-law-scan-raw-table {
+  font-size: var(--ct-fs-sm);
+}
+
+.ct-law-scan-raw-title {
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ct-law-scan-raw-keywords {
+  max-width: 12rem;
+}
+
+.ct-law-scan-raw-id {
+  font-size: var(--ct-fs-xs);
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Step 3 — symbolic scope */

@@ -5,12 +5,23 @@ from __future__ import annotations
 import re
 from typing import Any, Callable
 
+from logic.law_title_format import (
+    catalog_for_primary_document,
+    classify_document_tier,
+    is_noise_document,
+    is_uuid_slug,
+    parse_document_display,
+    should_exclude_tier,
+    tier_score_penalty,
+    title_summary,
+)
 from logic.legal_db import LAW_CATALOG, engine_mode_for, law_by_code, neo4j_legal_configured
 from logic.local_legal_store import legal_graph_backend
 from logic.neo4j_embedding_config import load_embedding_profile
 from logic.neo4j_vector_search import (
     aggregate_hits_by_regulation,
     fetch_document_metadata,
+    fetch_document_metadata_for_ids,
     fetch_legal_entity_metadata,
     merge_vector_hits_into_regulations,
     vector_search_hits,
@@ -36,6 +47,18 @@ RETURN
 
 DOCUMENTS_REGULATIONS_CYPHER = """
 MATCH (d:Document)
+RETURN
+  coalesce(d.id, elementId(d)) AS reg_id,
+  coalesce(d.title, d.name, '') AS name,
+  '' AS short_name,
+  '' AS official_number,
+  '' AS description
+"""
+
+DOCUMENTS_BY_IDS_CYPHER = """
+UNWIND $ids AS doc_id
+MATCH (d:Document)
+WHERE d.id = doc_id
 RETURN
   coalesce(d.id, elementId(d)) AS reg_id,
   coalesce(d.title, d.name, '') AS name,
@@ -201,12 +224,44 @@ def _merge_regulation_rows(
     return list(by_id.values())
 
 
+def _fetch_documents_by_ids(driver: Any, database: str, ids: list[str]) -> list[dict[str, Any]]:
+    keys = [str(i).strip() for i in ids if str(i).strip()]
+    if not keys:
+        return []
+    try:
+        with driver.session(database=database) as session:
+            rows = [r.data() for r in session.run(DOCUMENTS_BY_IDS_CYPHER, ids=keys)]
+    except Exception:  # noqa: BLE001
+        return []
+    return [
+        {
+            "reg_id": str(row.get("reg_id") or ""),
+            "name": str(row.get("name") or ""),
+            "short_name": str(row.get("short_name") or ""),
+            "official_number": str(row.get("official_number") or ""),
+            "description": str(row.get("description") or ""),
+            "texts": [],
+            "hit_count": 0,
+        }
+        for row in rows
+    ]
+
+
+def _vector_search_top_k(*, limit: int, full_scan: bool, regulation_count: int) -> int:
+    if full_scan:
+        return min(200, max(regulation_count, 80))
+    if limit > 0:
+        return max(limit * 12, 60)
+    return min(200, max(regulation_count, 80))
+
+
 def fetch_regulations_from_neo4j(
     driver: Any,
     database: str,
     *,
     query: str = "",
     allow_catalog_fallback: bool = False,
+    skip_corpus: bool = False,
 ) -> list[dict[str, Any]]:
     terms = terms_from_question(query) if query.strip() else []
     reg_rows: list[dict[str, Any]] = []
@@ -233,11 +288,12 @@ def fetch_regulations_from_neo4j(
             except Exception as exc:  # noqa: BLE001
                 neo4j_errors.append(f"documents: {exc}")
                 reg_rows = []
-        try:
-            corpus_rows = [r.data() for r in session.run(CORPUS_BY_REG_CYPHER)]
-        except Exception as exc:  # noqa: BLE001
-            neo4j_errors.append(f"corpus: {exc}")
-            corpus_rows = []
+        if not skip_corpus:
+            try:
+                corpus_rows = [r.data() for r in session.run(CORPUS_BY_REG_CYPHER)]
+            except Exception as exc:  # noqa: BLE001
+                neo4j_errors.append(f"corpus: {exc}")
+                corpus_rows = []
         if terms:
             try:
                 search_rows = [r.data() for r in session.run(SEARCH_BY_TERMS_CYPHER, terms=terms)]
@@ -296,6 +352,16 @@ def _catalog_as_regulations() -> list[dict[str, Any]]:
     return rows
 
 
+def _regulation_title_blob(reg: dict[str, Any]) -> str:
+    parts = [
+        reg.get("name"),
+        reg.get("short_name"),
+        reg.get("description"),
+        reg.get("official_number"),
+    ]
+    return " ".join(str(p) for p in parts if p).strip()
+
+
 def _regulation_search_blob(reg: dict[str, Any]) -> str:
     texts = reg.get("texts") or []
     if isinstance(texts, list):
@@ -312,13 +378,13 @@ def _regulation_search_blob(reg: dict[str, Any]) -> str:
     return " ".join(str(p) for p in parts if p).strip()
 
 
-def _term_scores(query: str, regulations: list[dict[str, Any]]) -> list[float]:
+def _term_scores(query: str, regulations: list[dict[str, Any]], *, title_only: bool = False) -> list[float]:
     terms = _tokenize(query)
     if not terms:
         return [0.0] * len(regulations)
     scores: list[float] = []
     for reg in regulations:
-        blob = _regulation_search_blob(reg).lower()
+        blob = (_regulation_title_blob if title_only else _regulation_search_blob)(reg).lower()
         hits = sum(1 for t in terms if t in blob)
         scores.append(hits / max(len(terms), 1))
     return scores
@@ -331,11 +397,12 @@ def _retrieval_scores(regulations: list[dict[str, Any]]) -> list[float]:
     return [int(r.get("hit_count") or 0) / max_hits for r in regulations]
 
 
-def _vector_retrieval_scores(regulations: list[dict[str, Any]]) -> list[float]:
-    max_score = max((float(r.get("max_vector_score") or 0.0) for r in regulations), default=0.0)
-    if max_score <= 0:
-        return [0.0] * len(regulations)
-    return [float(r.get("max_vector_score") or 0.0) / max_score for r in regulations]
+def _vector_scores_raw(regulations: list[dict[str, Any]]) -> list[float]:
+    """Cosine similarity from Neo4j (0–1); do not re-normalise to pool max."""
+    return [
+        min(1.0, max(0.0, float(r.get("max_vector_score") or 0.0)))
+        for r in regulations
+    ]
 
 
 def _predicate_overlap_scores(
@@ -353,14 +420,100 @@ def _predicate_overlap_scores(
     return scores
 
 
-def _normalize_scores(values: list[float]) -> list[float]:
-    if not values:
-        return values
-    lo = min(values)
-    hi = max(values)
-    if hi <= lo:
-        return [1.0 if v > 0 else 0.0 for v in values]
-    return [(v - lo) / (hi - lo) for v in values]
+def _blend_vector_score(
+    vec: float,
+    ret: float,
+    term: float,
+    pred: float,
+    *,
+    with_retrieval: bool,
+) -> float:
+    """Combine cosine similarity with auxiliary signals; strong vectors keep absolute scale."""
+    if with_retrieval:
+        blended = 0.75 * vec + 0.08 * ret + 0.12 * term + 0.05 * pred
+    else:
+        blended = 0.86 * vec + 0.09 * term + 0.05 * pred
+    if vec >= 0.72:
+        blended = max(blended, vec * 0.90)
+    return blended
+
+
+def _calibrated_relevance_score(blended: float, vec_raw: float) -> float:
+    """Map corpus-realistic cosine (often 0.45–0.58) onto the user-facing 0–1 scale."""
+    if vec_raw <= 0:
+        return blended
+    # In this Aura corpus, strong matches peak near ~0.55 cosine — not 0.85+.
+    anchor = 0.75 + min(0.22, max(0.0, (vec_raw - 0.47)) / 0.11 * 0.20)
+    return min(1.0, max(blended, anchor))
+
+
+def _passes_relevance_gate(
+    reg: dict[str, Any],
+    *,
+    vec_raw: float,
+    term: float,
+    pred: float,
+    is_catalog_primary: bool,
+    include_secondary: bool,
+) -> bool:
+    if is_catalog_primary:
+        return True
+    vec_floor = 0.50 if include_secondary else 0.47
+    term_floor = 0.30 if include_secondary else 0.22
+    pred_floor = 0.18 if include_secondary else 0.15
+    if vec_raw >= vec_floor and int(reg.get("vector_hit_count") or 0) >= 1:
+        return True
+    if term >= term_floor:
+        return True
+    if pred >= pred_floor:
+        return True
+    return False
+
+
+def _is_catalog_primary(reg: dict[str, Any], title: str) -> bool:
+    primary_code, _, _ = catalog_for_primary_document(
+        title, str(reg.get("official_number") or "")
+    )
+    if primary_code:
+        return True
+    mapped = reg_id_to_code(str(reg.get("reg_id") or ""))
+    return bool(law_by_code(mapped))
+
+
+def _stable_row_code(reg_id: str, catalog_code: str) -> str:
+    rid = (reg_id or "").strip()
+    if is_uuid_slug(rid.replace("-", "_")) or re.match(
+        r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        rid,
+        re.I,
+    ):
+        return rid.lower()
+    mapped = reg_id_to_code(rid)
+    if mapped and not is_uuid_slug(mapped):
+        return mapped
+    if catalog_code:
+        return catalog_code
+    return mapped or rid.lower()
+
+
+def _humanize_match_rationale(
+    *,
+    vector_hits: int,
+    term_hits: int,
+    pred_score: float,
+    ret_score: float,
+    has_vector: bool,
+) -> str:
+    parts: list[str] = []
+    if vector_hits > 0:
+        parts.append("Semantically similar to your product profile")
+    if term_hits > 0:
+        parts.append("Strong keyword overlap with your product description")
+    if pred_score > 0:
+        parts.append("Matches facts from your product graph")
+    if ret_score > 0 and not has_vector:
+        parts.append("Matched provisions in the legal corpus")
+    return "; ".join(parts)
 
 
 def _format_result(
@@ -370,39 +523,72 @@ def _format_result(
     match_rationale: str = "",
 ) -> dict[str, Any]:
     reg_id = str(reg.get("reg_id") or "")
-    code = reg_id_to_code(reg_id)
-    catalog = law_by_code(code) or {}
+    title = str(reg.get("name") or "")
     texts = reg.get("texts") or []
     text_block = ""
     if isinstance(texts, list) and texts:
-        text_block = _excerpt(str(texts[0]), 280)
-    desc = str(reg.get("description") or "").strip()
-    if desc in (catalog.get("label") or "", catalog.get("short") or ""):
-        desc = ""
-    if not desc:
-        desc = text_block
-    if not desc:
-        desc = str(reg.get("name") or catalog.get("label") or code)
-    number = str(reg.get("official_number") or "").strip()
-    if not number:
-        number = catalog.get("number") or ""
-    if not number:
-        number = _extract_number(desc, _regulation_search_blob(reg), str(reg.get("name") or ""))
-    short = (
-        str(reg.get("short_name") or "").strip()
-        or catalog.get("short")
-        or catalog.get("label")
-        or code.upper()
+        text_block = str(texts[0])
+
+    display = parse_document_display(
+        title,
+        official_number=str(reg.get("official_number") or ""),
+        short_name=str(reg.get("short_name") or ""),
+        description=str(reg.get("description") or ""),
+        provision_excerpt=text_block,
     )
+
+    catalog_code = display["catalog_code"] or ""
+    if not catalog_code:
+        mapped = reg_id_to_code(reg_id)
+        if mapped and not is_uuid_slug(mapped):
+            catalog_code = mapped
+
+    code = _stable_row_code(reg_id, catalog_code)
+    catalog = law_by_code(catalog_code) or law_by_code(reg_id_to_code(reg_id)) or {}
+
+    number = display["number"] or catalog.get("number") or ""
+    if not number:
+        number = _extract_number(title, _regulation_search_blob(reg))
+
+    short = display["short"] or ""
+    if not short and catalog.get("short"):
+        short = catalog["short"]
+    elif not short:
+        short = catalog.get("label") or ""
+    if short and len(short) > 48 and catalog.get("short"):
+        short = catalog["short"]
+    if is_uuid_slug(short.replace("-", "_")):
+        short = display["full_title"][:40].rstrip()
+        if len(display["full_title"]) > 40:
+            short += "…"
+
+    full_title = display.get("full_title") or title or short
+    topics = display.get("description")
+    if isinstance(topics, list):
+        keywords = [str(k).strip() for k in topics if str(k).strip()]
+        keyword_line = ", ".join(keywords)
+    else:
+        keywords = []
+        keyword_line = str(topics or "").strip()
+    summary = title_summary(full_title) or keyword_line or short
+    if not keyword_line and summary:
+        keyword_line = summary
+
+    engine_code = catalog_code or (code if code in {r["code"] for r in LAW_CATALOG} else "")
+    document_tier = display.get("document_tier") or classify_document_tier(title)
     return {
         "code": code,
         "short": short,
         "number": number or "—",
-        "description": _excerpt(desc, 300),
+        "summary": _excerpt(summary, 220),
+        "keywords": keywords[:6],
+        "description": _excerpt(keyword_line, 300),
         "score": round(max(0.0, min(1.0, score)), 4),
         "reg_id": reg_id,
-        "label": catalog.get("label") or str(reg.get("name") or short),
-        "engine_mode": engine_mode_for(code),
+        "label": _excerpt(summary, 220),
+        "catalog_code": catalog_code or None,
+        "document_tier": document_tier,
+        "engine_mode": engine_mode_for(engine_code or catalog_code or reg_id_to_code(reg_id)),
         "hit_count": int(reg.get("hit_count") or 0),
         "match_rationale": match_rationale or "",
     }
@@ -412,12 +598,14 @@ def rank_regulations(
     query: str,
     regulations: list[dict[str, Any]],
     *,
-    limit: int = 10,
+    limit: int = 0,
+    min_score: float = 0.75,
+    include_secondary: bool = False,
     kg_facts: list[dict[str, Any]] | None = None,
     vector_ranked: bool = False,
-) -> tuple[list[dict[str, Any]], str]:
+) -> tuple[list[dict[str, Any]], str, int, int]:
     if not regulations:
-        return [], "none"
+        return [], "none", 0, 0
 
     pool: list[dict[str, Any]] = []
     for reg in regulations:
@@ -436,8 +624,10 @@ def rank_regulations(
     if not pool:
         pool = list(regulations)
 
-    vector = _vector_retrieval_scores(pool) if vector_ranked else [0.0] * len(pool)
-    term = _term_scores(query, pool)
+    vector = _vector_scores_raw(pool) if vector_ranked else [0.0] * len(pool)
+    term = _term_scores(query, pool, title_only=vector_ranked and any(
+        float(r.get("max_vector_score") or 0.0) for r in pool
+    ))
     retrieval = _retrieval_scores(pool)
     pred_overlap = _predicate_overlap_scores(kg_facts, pool)
 
@@ -447,54 +637,92 @@ def rank_regulations(
     if has_vector:
         if has_retrieval:
             raw = [
-                0.45 * v + 0.25 * r + 0.15 * t + 0.15 * p
+                min(1.0, _blend_vector_score(v, r, t, p, with_retrieval=True))
                 for v, r, t, p in zip(vector, retrieval, term, pred_overlap)
             ]
             method = "neo4j_vector+retrieval+terms+predicates"
         else:
-            raw = [0.60 * v + 0.25 * t + 0.15 * p for v, t, p in zip(vector, term, pred_overlap)]
+            raw = [
+                min(1.0, _blend_vector_score(v, 0.0, t, p, with_retrieval=False))
+                for v, t, p in zip(vector, term, pred_overlap)
+            ]
             method = "neo4j_vector+terms+predicates"
     elif has_retrieval:
-        raw = [0.55 * r + 0.25 * t + 0.20 * p for r, t, p in zip(retrieval, term, pred_overlap)]
+        raw = [
+            min(1.0, 0.50 * r + 0.35 * t + 0.15 * p)
+            for r, t, p in zip(retrieval, term, pred_overlap)
+        ]
         method = "retrieval+terms+predicates"
     else:
-        raw = [0.70 * t + 0.30 * p for t, p in zip(term, pred_overlap)]
+        raw = [min(1.0, 0.75 * t + 0.25 * p) for t, p in zip(term, pred_overlap)]
         method = "fallback_no_neo4j_vectors" if vector_ranked else "terms+predicates"
 
-    raw = _normalize_scores(raw)
     ranked = sorted(
-        zip(raw, pool, retrieval, pred_overlap, vector),
+        zip(raw, pool, retrieval, term, pred_overlap, vector),
         key=lambda x: x[0],
         reverse=True,
     )
+    effective_min = min_score + (0.05 if include_secondary else 0.0)
+    total_ranked = sum(1 for score, *_rest in ranked if score > 0)
     out: list[dict[str, Any]] = []
-    for score, reg, ret_score, pred_score, vec_score in ranked[:limit]:
-        if score <= 0 and out:
-            break
+    total_passing = 0
+    for score, reg, ret_score, term_score, pred_score, vec_raw in ranked:
+        if score <= 0:
+            continue
+        title = str(reg.get("name") or "")
+        if is_noise_document(title):
+            continue
+        tier = classify_document_tier(title)
+        is_catalog_primary = _is_catalog_primary(reg, title)
+        if should_exclude_tier(
+            tier,
+            include_secondary=include_secondary,
+            is_catalog_primary=is_catalog_primary,
+        ):
+            continue
+        if not _passes_relevance_gate(
+            reg,
+            vec_raw=vec_raw,
+            term=term_score,
+            pred=pred_score,
+            is_catalog_primary=is_catalog_primary,
+            include_secondary=include_secondary,
+        ):
+            continue
+        adjusted = max(
+            0.0,
+            score - (0.0 if is_catalog_primary else tier_score_penalty(tier)),
+        )
+        adjusted = _calibrated_relevance_score(adjusted, vec_raw)
+        if adjusted < effective_min:
+            continue
         rationale_parts: list[str] = []
         vh = int(reg.get("vector_hit_count") or 0)
-        if vh > 0:
-            rationale_parts.append(f"{vh} semantically similar provisions")
-        if int(reg.get("hit_count") or 0) > 0 and not vh:
-            rationale_parts.append(f"{reg.get('hit_count')} matching provisions")
-        elif int(reg.get("hit_count") or 0) > 0:
-            rationale_parts.append(f"{reg.get('hit_count')} term matches")
-        if pred_score > 0:
-            rationale_parts.append("predicate overlap with product facts")
-        if ret_score > 0 and not vh:
-            rationale_parts.append("term retrieval match")
-        row = _format_result(reg, score, match_rationale="; ".join(rationale_parts))
+        th = int(reg.get("hit_count") or 0)
+        match_text = _humanize_match_rationale(
+            vector_hits=vh,
+            term_hits=th,
+            pred_score=pred_score,
+            ret_score=ret_score,
+            has_vector=vec_raw > 0,
+        )
+        row = _format_result(reg, adjusted, match_rationale=match_text)
         row["rank_method"] = method
-        out.append(row)
+        total_passing += 1
+        if limit <= 0 or len(out) < limit:
+            out.append(row)
 
-    return out, method
+    return out, method, total_ranked, total_passing
 
 
 def scan_relevant_laws(
     *,
     description: str,
     kg_facts: list[dict[str, Any]] | None = None,
-    limit: int = 10,
+    limit: int = 5,
+    min_score: float = 0.75,
+    include_secondary: bool = False,
+    full_scan: bool = False,
     get_legal_driver_fn: Callable[[], Any],
     resolve_database_fn: Callable[[], str],
 ) -> dict[str, Any]:
@@ -513,46 +741,106 @@ def scan_relevant_laws(
     database = resolve_database_fn()
 
     profile = load_embedding_profile(driver, database)
-    try:
-        regulations = fetch_regulations_from_neo4j(driver, database, query=scan_query)
-    except RuntimeError as exc:
-        if profile.usable() and "no regulation nodes" in str(exc).lower():
-            regulations = []
-        else:
-            raise
-
+    regulations: list[dict[str, Any]] = []
     vector_used = False
-    if profile.usable():
+    fast_path = profile.usable() and not full_scan
+
+    if fast_path:
         query_vector = embed_query(scan_query, profile)
         if query_vector:
-            hits = vector_search_hits(driver, database, profile, query_vector, top_k=max(limit * 4, 40))
-            vector_by_reg = aggregate_hits_by_regulation(hits)
-            reg_metadata = {
-                **fetch_legal_entity_metadata(driver, database),
-                **fetch_document_metadata(driver, database),
-            }
-            regulations = merge_vector_hits_into_regulations(
-                regulations, vector_by_reg, reg_metadata
+            hits = vector_search_hits(
+                driver,
+                database,
+                profile,
+                query_vector,
+                top_k=_vector_search_top_k(
+                    limit=limit, full_scan=False, regulation_count=0
+                ),
             )
+            vector_by_reg = aggregate_hits_by_regulation(hits)
             vector_used = bool(vector_by_reg)
+            if vector_by_reg:
+                doc_ids = list(vector_by_reg.keys())
+                regulations = _fetch_documents_by_ids(driver, database, doc_ids)
+                reg_metadata = fetch_document_metadata_for_ids(driver, database, doc_ids)
+                regulations = merge_vector_hits_into_regulations(
+                    regulations, vector_by_reg, reg_metadata
+                )
+
+    if not regulations:
+        try:
+            regulations = fetch_regulations_from_neo4j(
+                driver,
+                database,
+                query=scan_query,
+                skip_corpus=fast_path or profile.usable(),
+            )
+        except RuntimeError as exc:
+            if profile.usable() and "no regulation nodes" in str(exc).lower():
+                regulations = []
+            else:
+                raise
+
+        if profile.usable():
+            query_vector = embed_query(scan_query, profile)
+            if query_vector:
+                hits = vector_search_hits(
+                    driver,
+                    database,
+                    profile,
+                    query_vector,
+                    top_k=_vector_search_top_k(
+                        limit=limit,
+                        full_scan=full_scan,
+                        regulation_count=len(regulations),
+                    ),
+                )
+                vector_by_reg = aggregate_hits_by_regulation(hits)
+                if full_scan:
+                    reg_metadata = {
+                        **fetch_legal_entity_metadata(driver, database),
+                        **fetch_document_metadata(driver, database),
+                    }
+                else:
+                    reg_metadata = fetch_document_metadata_for_ids(
+                        driver, database, list(vector_by_reg.keys())
+                    )
+                regulations = merge_vector_hits_into_regulations(
+                    regulations, vector_by_reg, reg_metadata
+                )
+                vector_used = bool(vector_by_reg)
 
     if not regulations:
         raise RuntimeError("Neo4j returned no regulation nodes")
 
-    results, rank_method = rank_regulations(
+    rank_limit = 0 if full_scan else limit
+    results, rank_method, total_ranked, total_passing = rank_regulations(
         scan_query,
         regulations,
-        limit=limit,
+        limit=rank_limit,
+        min_score=min_score,
+        include_secondary=include_secondary,
         kg_facts=kg_facts,
         vector_ranked=profile.usable(),
     )
     corpus_chars = sum(len(_regulation_search_blob(r)) for r in regulations)
+    total_hits = sum(int(r.get("hit_count") or 0) for r in regulations)
+    total_vector_hits = sum(int(r.get("vector_hit_count") or 0) for r in regulations)
     return {
         "version": 1,
         "scan_query": scan_query,
         "backend": "neo4j",
         "regulation_count": len(regulations),
         "corpus_chars": corpus_chars,
+        "total_ranked": total_ranked,
+        "match_count": len(results),
+        "total_match_count": total_passing,
+        "min_score": min_score,
+        "include_secondary": include_secondary,
+        "full_scan": full_scan,
+        "display_limit": limit if not full_scan else 0,
+        "total_hits": total_hits,
+        "total_vector_hits": total_vector_hits,
         "results": results,
         "rank_method": rank_method,
         "embedding_search": {
