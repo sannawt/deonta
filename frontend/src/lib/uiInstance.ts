@@ -1,4 +1,4 @@
-export type UiMode = "chat" | "workflow";
+export type UiMode = "chat" | "workflow" | "both";
 
 export interface UiMeta {
   ui?: string;
@@ -22,7 +22,7 @@ export async function fetchUiMeta(): Promise<UiMeta> {
     cached = (await res.json()) as UiMeta;
     return cached;
   } catch {
-    return { ui_mode: "workflow", default_route: "product" };
+    return { ui_mode: "both", default_route: "start" };
   }
 }
 

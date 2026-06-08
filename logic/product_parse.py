@@ -167,11 +167,10 @@ def parse_description(text: str) -> dict[str, Any]:
     edges: list[dict[str, Any]] = []
 
     product_id = new_node_id("pr")
-    product_label = name or "Your product"
     product_node = graph_node(
         node_id=product_id,
         node_type="Product",
-        label=product_label,
+        label="Your product",
         properties={"description": raw[:4000]},
         source="parse",
     )
@@ -398,6 +397,9 @@ def parse_product_input(
                 parsed["summary"] = llm["summary"]
 
     nodes = parsed.get("nodes") or []
+    for n in nodes:
+        if n.get("type") in ("Product", "Scenario"):
+            n["label"] = "Your product"
     edges = parsed.get("edges") or []
     product_id = next(
         (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),

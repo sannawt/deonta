@@ -15,14 +15,14 @@ case "$INSTANCE" in
   prototype)
     export PORT=8001
     export APP_INSTANCE=prototype
-    export UI_MODE=workflow
+    export UI_MODE=both
     export PROTOTYPE_MODE=1
     PEER="http://127.0.0.1:8000/"
     ;;
   main)
     export PORT=8000
     export APP_INSTANCE=main
-    export UI_MODE=chat
+    export UI_MODE=both
     export PROTOTYPE_MODE=0
     PEER="http://127.0.0.1:8001/"
     ;;

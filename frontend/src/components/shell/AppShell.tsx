@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { InstanceBadge } from "./InstanceBadge";
 import { PageFooter } from "./PageFooter";
 
 export type AppRoute =
@@ -10,13 +9,11 @@ export type AppRoute =
   | "monitoring";
 
 interface Props {
-  uiMode?: "chat" | "workflow";
-  peerUrl?: string;
   onNavigateHome: () => void;
   children: ReactNode;
 }
 
-export function AppShell({ uiMode = "workflow", peerUrl, onNavigateHome, children }: Props) {
+export function AppShell({ onNavigateHome, children }: Props) {
   return (
     <div className="ct-shell">
       <div className="ct-layout">
@@ -27,7 +24,6 @@ export function AppShell({ uiMode = "workflow", peerUrl, onNavigateHome, childre
               omplianceTwin
             </span>
           </button>
-          <InstanceBadge uiMode={uiMode} peerUrl={peerUrl} />
         </header>
 
         <main className="ct-main">{children}</main>

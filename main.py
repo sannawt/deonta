@@ -1543,16 +1543,19 @@ def _ui_meta() -> dict[str, Any]:
     instance = (os.environ.get("APP_INSTANCE") or "").strip() or (
         "prototype" if prototype else "main"
     )
-    ui_mode = (os.environ.get("UI_MODE") or "").strip().lower() or (
-        "workflow" if prototype else "chat"
-    )
-    if ui_mode not in ("chat", "workflow"):
-        ui_mode = "workflow" if prototype else "chat"
-    default_route = "product" if ui_mode == "workflow" else "chat"
-    peer_url = "http://127.0.0.1:8000/" if port == 8001 else "http://127.0.0.1:8001/"
-    peer_label = (
-        "Chat workbench (:8000)" if ui_mode == "workflow" else "Product workflow (:8001)"
-    )
+    ui_mode = (os.environ.get("UI_MODE") or "").strip().lower() or "both"
+    if ui_mode not in ("chat", "workflow", "both"):
+        ui_mode = "both"
+    if ui_mode == "both":
+        default_route = "start"
+        peer_url = ""
+        peer_label = ""
+    else:
+        default_route = "product" if ui_mode == "workflow" else "chat"
+        peer_url = "http://127.0.0.1:8000/" if port == 8001 else "http://127.0.0.1:8001/"
+        peer_label = (
+            "Chat workbench (:8000)" if ui_mode == "workflow" else "Product workflow (:8001)"
+        )
 
     index_path = FRONTEND_DIST / "index.html"
     if not index_path.is_file():
@@ -1595,12 +1598,13 @@ def ui_meta(request: Request) -> dict[str, Any]:
     if host_port:
         meta["port"] = host_port
         meta["local_url"] = f"http://{request.url.hostname}:{host_port}/"
-        if host_port == 8001:
-            meta["peer_url"] = "http://127.0.0.1:8000/"
-            meta["peer_label"] = "Chat workbench (:8000)"
-        elif host_port == 8000:
-            meta["peer_url"] = "http://127.0.0.1:8001/"
-            meta["peer_label"] = "Product workflow (:8001)"
+        if meta.get("ui_mode") != "both":
+            if host_port == 8001:
+                meta["peer_url"] = "http://127.0.0.1:8000/"
+                meta["peer_label"] = "Chat workbench (:8000)"
+            elif host_port == 8000:
+                meta["peer_url"] = "http://127.0.0.1:8001/"
+                meta["peer_label"] = "Product workflow (:8001)"
     return meta
 
 

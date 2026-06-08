@@ -26,6 +26,23 @@ function splitRefs(text: string): { body: string; refs: string } {
   };
 }
 
+function splitClauses(text: string): string[] {
+  const formatted = formatEngineTokens(text);
+  if (!formatted) return [];
+  const parts = formatted
+    .split(/;\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.length > 1 ? parts : [formatted];
+}
+
+function splitLegalRefs(text: string): string[] {
+  return text
+    .split(/;\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
 function resultIcon(result: string): string {
   switch (result) {
     case "PASS":
@@ -121,10 +138,20 @@ export function ScopeDimensionCard({ dim, openQuestions = [], defaultOpen = fals
       </summary>
 
       <div className="ct-scope-dim-card-body">
-        {analysisBody ? (
-          <p className="ct-scope-dim-analysis">{formatEngineTokens(analysisBody)}</p>
+        {analysisBody || why ? (
+          <div className="ct-scope-dim-block ct-scope-dim-block--findings">
+            {analysisBody ? (
+              <ul className="ct-scope-dim-finding-list">
+                {splitClauses(analysisBody).map((clause) => (
+                  <li key={clause}>{clause}</li>
+                ))}
+              </ul>
+            ) : null}
+            {why ? (
+              <p className="ct-scope-dim-conclusion">{formatEngineTokens(why)}</p>
+            ) : null}
+          </div>
         ) : null}
-        {why ? <p className="ct-scope-dim-why">{formatEngineTokens(why)}</p> : null}
 
         {supportingFacts.length > 0 ? (
           <div className="ct-scope-dim-block">
@@ -138,9 +165,13 @@ export function ScopeDimensionCard({ dim, openQuestions = [], defaultOpen = fals
         ) : null}
 
         {legalRefs ? (
-          <div className="ct-scope-dim-block">
+          <div className="ct-scope-dim-block ct-scope-dim-block--legal">
             <p className="ct-scope-dim-block-label">Legal basis</p>
-            <p className="ct-scope-dim-refs">{legalRefs}</p>
+            <ul className="ct-scope-dim-legal-list">
+              {splitLegalRefs(legalRefs).map((ref) => (
+                <li key={ref}>{ref}</li>
+              ))}
+            </ul>
           </div>
         ) : null}
 

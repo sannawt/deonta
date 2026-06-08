@@ -9,7 +9,6 @@ import {
   type ProductSpec,
 } from "../../lib/productStore";
 import { ThinkingOverlay } from "../ui/ThinkingOverlay";
-import { PixelIcon } from "../ui/PixelIcon";
 import { ApplicabilityScopeWorkbench } from "./ApplicabilityScopeWorkbench";
 import { ScopeAnalysisChatBlock } from "./ScopeAnalysisChatBlock";
 import { buildApplicabilityVerdictSummary } from "../../lib/applicabilityVerdict";
@@ -265,18 +264,6 @@ export function ApplicabilityScopeView({
   return (
     <div className={`ct-card-relative${embedded ? "" : " ct-page"}`}>
       <ThinkingOverlay show={loading} label="Running per-law scope assessment…" />
-
-      {!embedded && (
-        <div className="ct-scanner-head">
-          <PixelIcon name="scale" size={64} className="ct-scanner-head-icon" />
-          <div>
-            <p className="ct-scanner-step">Applicability scan</p>
-            <p className="ct-scanner-intro">
-              Review scanned laws, per-instrument verdicts, and the facts driving each assessment.
-            </p>
-          </div>
-        </div>
-      )}
 
       {error && <div className="err">{error}</div>}
 

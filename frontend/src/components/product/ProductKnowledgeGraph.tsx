@@ -45,15 +45,20 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
     const productEdges = edges.filter((e) => productIds.has(e.from) && productIds.has(e.to));
 
     const visNodes = new DataSet(
-      productNodes.map((n) => ({
+      productNodes.map((n) => {
+        const isMain =
+          n.type === "Product" || n.type === "Scenario";
+        const label = isMain ? "Your product" : n.label || n.type;
+        return {
         id: n.id,
-        label: n.label || n.type,
-        title: `${n.type}: ${n.label}`,
+        label,
+        title: `${n.type}: ${label}`,
         shape: "dot",
         size: n.type === "Product" ? 24 : n.type === "Scenario" ? 20 : 14,
         color: nodeStyle(n.type),
         font: { color: "#334155", size: 13, face: "Plus Jakarta Sans" },
-      }))
+      };
+      })
     );
     const visEdges = new DataSet(
       productEdges.map((e) => ({

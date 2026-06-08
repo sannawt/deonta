@@ -21,7 +21,7 @@ def test_parse_description_product_node_label():
     text = "I have AI product that screens CVs. its call CVSCAN"
     parsed = parse_description(text)
     product = next(n for n in parsed["nodes"] if n["type"] == "Product")
-    assert product["label"] == "CVSCAN"
+    assert product["label"] == "Your product"
     assert parsed["name"] == "CVSCAN"
     assert parsed["markets"] == []
     assert parsed["euLink"] == "unknown"
