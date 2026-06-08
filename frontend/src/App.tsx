@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AppShell, type AppRoute } from "./components/shell/AppShell";
-import { StartPage } from "./pages/StartPage";
+import { DashboardPage } from "./pages/DashboardPage";
 import { ProductWorkflow } from "./pages/ProductWorkflow";
 import { ComplianceChatPage } from "./pages/ComplianceChatPage";
 import { MonitoringPage } from "./pages/MonitoringPage";
@@ -14,11 +14,11 @@ import {
 import { fetchLaws } from "./lib/api";
 import { ensureCatalogLoaded } from "./lib/ruleCatalog";
 
-const ROUTES: AppRoute[] = ["start", "chat", "product", "law", "monitoring"];
+const ROUTES: AppRoute[] = ["dashboard", "chat", "product", "law", "monitoring"];
 
 function routeFromHash(): AppRoute {
   const h = (window.location.hash || "").replace(/^#\/?/, "");
-  return ROUTES.includes(h as AppRoute) ? (h as AppRoute) : "start";
+  return ROUTES.includes(h as AppRoute) ? (h as AppRoute) : "dashboard";
 }
 
 export default function App() {
@@ -28,7 +28,7 @@ export default function App() {
 
   function navigate(next: AppRoute) {
     setRoute(next);
-    const hash = next === "start" ? "" : `#/${next}`;
+    const hash = next === "dashboard" ? "" : `#/${next}`;
     window.history.replaceState(null, "", hash || window.location.pathname);
   }
 
@@ -55,28 +55,35 @@ export default function App() {
 
   return (
     <>
-      <AppShell onNavigateHome={() => navigate("start")}>
-        {route === "start" && (
-          <StartPage
+      <AppShell
+        currentRoute={route}
+        onNavigate={navigate}
+        products={products}
+      >
+        {route === "dashboard" && (
+          <DashboardPage
+            products={products}
             onProductPath={() => navigate("product")}
             onChatPath={() => navigate("chat")}
           />
         )}
 
-        {route === "chat" && <ComplianceChatPage onNavigateHome={() => navigate("start")} />}
+        {route === "chat" && (
+          <ComplianceChatPage onNavigateHome={() => navigate("dashboard")} />
+        )}
 
         {route === "product" && (
           <ProductWorkflow
             playbookCompanyId={playbookCompanyId || undefined}
             onComplete={handleProductComplete}
-            onNavigateHome={() => navigate("start")}
+            onNavigateHome={() => navigate("dashboard")}
           />
         )}
 
         {route === "law" && (
           <div className="ct-page">
             <p className="ct-page-sub">Law workflow is available from a direct link only.</p>
-            <button type="button" className="ct-btn-primary" onClick={() => navigate("start")}>
+            <button type="button" className="ct-btn-primary" onClick={() => navigate("dashboard")}>
               Go to Home
             </button>
           </div>
