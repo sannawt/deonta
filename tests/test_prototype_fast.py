@@ -35,7 +35,9 @@ def test_catalog_scan_antenna_returns_many_laws():
     assert out["backend"] == "prototype_catalog"
     codes = {r["code"] for r in out["results"]}
     assert "red" in codes
-    assert len(out["results"]) >= 6
+    assert "gdpr" in codes
+    assert "cra" in codes
+    assert len(out["results"]) >= 10
 
 
 def test_heuristic_instruments_have_dimensions():

@@ -40,6 +40,32 @@ _HARDWARE_CODES = frozenset(
 _CONNECTIVITY_CODES = frozenset({"cra", "nis2", "data_act", "red", "eecc"})
 _PRIVACY_CODES = frozenset({"gdpr", "eprivacy", "data_act"})
 
+# Demo fixture: smart antenna / connected hardware kit (matches test workflow text)
+_PROTOTYPE_DEMO_CODES: tuple[str, ...] = (
+    "rohs",
+    "cra",
+    "gdpr",
+    "gpsr",
+    "product_liability",
+    "data_act",
+    "nis2",
+    "reach",
+    "ai_act",
+    "eprivacy",
+    "eecc",
+    "red",
+    "weee",
+    "market_surveillance",
+)
+
+_DEMO_DESCRIPTION_MARKERS = (
+    "antenna",
+    "rooftop",
+    "wireless broadband",
+    "receiver box",
+    "outdoor antenna",
+)
+
 _SCAN_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
 _ASSESS_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
 _CACHE_MAX = 32
@@ -131,7 +157,10 @@ def assess_cache_key(
         for f in (kg_facts or [])[:24]
         if f.get("predicate")
     ]
-    return fingerprint("assess", normalize_description(description), codes, kg)
+    from logic.prototype_smartroof_scope import is_smartroof_demo
+
+    fixture_tag = "smartroof_v2" if is_smartroof_demo(description) else ""
+    return fingerprint("assess", fixture_tag, normalize_description(description), codes, kg)
 
 
 def get_cached_scan(key: str) -> dict[str, Any] | None:
@@ -207,6 +236,19 @@ def catalog_scan_row(code: str, score: float, position: int) -> dict[str, Any]:
     }
 
 
+def _enrich_demo_catalog_codes(description: str, codes: list[str]) -> list[str]:
+    lower = normalize_description(description)
+    if not any(marker in lower for marker in _DEMO_DESCRIPTION_MARKERS):
+        return codes
+    seen = set(codes)
+    out = list(codes)
+    for code in _PROTOTYPE_DEMO_CODES:
+        if code not in seen:
+            seen.add(code)
+            out.append(code)
+    return out
+
+
 def catalog_scan_response(
     description: str,
     *,
@@ -215,7 +257,7 @@ def catalog_scan_response(
     include_secondary: bool = True,
 ) -> dict[str, Any] | None:
     """Build a law-scan response from catalog keyword inference only (no Neo4j)."""
-    codes = catalog_codes_from_description(description)
+    codes = _enrich_demo_catalog_codes(description, catalog_codes_from_description(description))
     if len(codes) < 3:
         return None
 
@@ -229,9 +271,25 @@ def catalog_scan_response(
     if not rows:
         return None
 
-    rows.sort(key=lambda r: r["score"], reverse=True)
-    if limit > 0:
+    from logic.prototype_smartroof_scope import demo_scan_extra_rows, is_smartroof_demo
+
+    smartroof = is_smartroof_demo(description)
+    if smartroof:
+        seen_codes = {r["code"] for r in rows}
+        for extra in demo_scan_extra_rows():
+            if extra["code"] not in seen_codes:
+                rows.append(extra)
+                seen_codes.add(extra["code"])
+        demo_order = [*_PROTOTYPE_DEMO_CODES, "red_cyber"]
+        order_index = {c: i for i, c in enumerate(demo_order)}
+        rows.sort(key=lambda r: order_index.get(r["code"], 99))
+        if limit > 0:
+            rows = rows[: max(limit, 16)]
+    elif limit > 0:
+        rows.sort(key=lambda r: r["score"], reverse=True)
         rows = rows[:limit]
+    else:
+        rows.sort(key=lambda r: r["score"], reverse=True)
 
     scan_query = description.strip()[:2000]
     return {

@@ -15,7 +15,6 @@ interface Props {
   focusedInstrument?: ScopeInstrument;
   playbookCompanyId?: string;
   sessionId?: string;
-  overallSummary?: string;
 }
 
 function assistantFromResponse(data: {
@@ -39,7 +38,6 @@ export function ScopeChatPanel({
   focusedInstrument,
   playbookCompanyId,
   sessionId,
-  overallSummary,
 }: Props) {
   const [messages, setMessages] = useState<ChatLine[]>([]);
   const [input, setInput] = useState("");
@@ -51,19 +49,6 @@ export function ScopeChatPanel({
   useEffect(() => {
     if (sessionId) chatSessionRef.current = sessionId;
   }, [sessionId]);
-
-  useEffect(() => {
-    const intro = overallSummary?.trim()
-      ? overallSummary.trim()
-      : `Scope assessment for ${productTitle}. Open a law below to inspect material, territorial, temporal, and exclusion gates — then ask follow-up questions here.`;
-    setMessages([
-      {
-        id: "intro",
-        role: "system",
-        content: intro,
-      },
-    ]);
-  }, [productTitle, overallSummary]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -134,6 +119,11 @@ export function ScopeChatPanel({
       </header>
 
       <div className="ct-scope-chat-messages">
+        {messages.length === 0 ? (
+          <p className="ct-scope-chat-empty">
+            Ask about scope, missing facts, or a specific law. Open a law card on the left for context.
+          </p>
+        ) : null}
         {messages.map((m) => (
           <div
             key={m.id}

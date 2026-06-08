@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import type { ClarifyingQuestion, ScopeInstrument } from "../../types/chat";
 import {
+  STATUS_SYMBOL,
   buildLawVerdictDetail,
   filterQuestionsForLaw,
+  verdictBadgeClass,
   type ScannedLawItem,
 } from "../../lib/applicabilityScan";
 import { humanizeMissingQuestion } from "../../lib/plainLanguage";
@@ -40,29 +42,25 @@ export function ApplicabilityLawAccordion({
     .map((m) => humanizeMissingQuestion(m))
     .filter(Boolean);
 
-  const summaryProse = useMemo(() => {
-    const parts: string[] = [];
-    if (detail.summary) {
-      parts.push(detail.summary);
-    } else if (!dimensions.length && !detail.legalTests.length) {
-      parts.push(
-        "Scope gates for material, territorial, temporal, and exclusion tests are listed below.",
-      );
-    }
-    parts.push(`Confidence: ${detail.confidence}.`);
-    for (const t of detail.legalTests) {
-      parts.push(`${t.label} ${t.answer}.`);
-    }
-    if (instrumentMissing.length) {
-      parts.push(`Open questions: ${instrumentMissing.join("; ")}.`);
-    }
-    return parts.join(" ");
-  }, [detail, dimensions.length, instrumentMissing]);
-
+  const instrumentTitle = instrument?.full_name?.trim();
   const lawTitle =
-    item.fullLabel && item.fullLabel !== item.listLabel
+    instrumentTitle ||
+    (item.fullLabel && item.fullLabel !== item.listLabel
       ? `${item.listLabel} — ${item.fullLabel}`
-      : item.listLabel;
+      : item.listLabel);
+
+  const statusSymbol = STATUS_SYMBOL[item.status] || "△";
+  const badgeClass = verdictBadgeClass(detail.verdict);
+
+  const legalTestLine = useMemo(() => {
+    if (!detail.legalTests.length) return null;
+    return detail.legalTests
+      .map((t) => (
+        <span key={t.label}>
+          <strong>{t.label}</strong> {t.answer}
+        </span>
+      ));
+  }, [detail.legalTests]);
 
   const toggle = () => {
     setOpen((v) => {
@@ -75,8 +73,14 @@ export function ApplicabilityLawAccordion({
   return (
     <div className={`ct-scope-law-panel ct-scope-law-${item.status}${open ? " open" : ""}`}>
       <button type="button" className="ct-scope-law-panel-head" onClick={toggle}>
-        <span className="ct-scope-prose ct-scope-law-panel-title">
-          {lawTitle} — {detail.verdict}
+        <span className="ct-scope-law-symbol" aria-hidden>
+          {statusSymbol}
+        </span>
+        <span className="ct-scope-law-panel-title-wrap">
+          <span className="ct-scope-law-panel-title">
+            <strong>{lawTitle}</strong>
+          </span>
+          <span className={`ct-scope-verdict-badge ${badgeClass}`}>{detail.verdict}</span>
         </span>
         <span className="ct-scope-law-chevron" aria-hidden>
           {open ? "▾" : "▸"}
@@ -85,7 +89,32 @@ export function ApplicabilityLawAccordion({
 
       {open ? (
         <div className="ct-scope-law-panel-body">
-          <p className="ct-scope-prose">{summaryProse}</p>
+          {detail.summary ? (
+            <p className="ct-scope-law-summary">{detail.summary}</p>
+          ) : null}
+
+          <div className="ct-scope-law-meta">
+            <p className="ct-scope-law-meta-row">
+              <span className="ct-scope-law-meta-label">Confidence</span>
+              <span>{detail.confidence}</span>
+            </p>
+            {legalTestLine ? (
+              <p className="ct-scope-law-meta-row ct-scope-law-meta-row--test">
+                {legalTestLine}
+              </p>
+            ) : null}
+          </div>
+
+          {instrumentMissing.length > 0 ? (
+            <div className="ct-scope-law-open-questions">
+              <p className="ct-scope-law-meta-label">Open questions</p>
+              <ul>
+                {instrumentMissing.map((q) => (
+                  <li key={q}>{q}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
           {dimensions.length > 0 ? (
             <div className="ct-scope-dim-stack">

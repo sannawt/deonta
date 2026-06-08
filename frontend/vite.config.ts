@@ -11,7 +11,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:8000",
+        // Prototype repo (this checkout) defaults to 8001; main workbench repo uses 8000.
+        target: `http://127.0.0.1:${process.env.PORT || "8001"}`,
         changeOrigin: true,
       },
     },

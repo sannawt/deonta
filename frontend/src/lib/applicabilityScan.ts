@@ -15,7 +15,7 @@ export const SCOPE_GROUP_ORDER: ScopeGroup[] = ["likely", "maybe", "unlikely"];
 
 export const SCOPE_GROUP_LABEL: Record<ScopeGroup, string> = {
   likely: "Likely in scope",
-  maybe: "Maybe in scope",
+  maybe: "Needs review",
   unlikely: "Not likely in scope",
 };
 
@@ -56,6 +56,9 @@ export function instrumentMatchesCode(inst: ScopeInstrument, code: string): bool
   const candidates = [inst.reg_key, inst.id, inst.label]
     .filter(Boolean)
     .map((v) => normCode(String(v)));
+  if (c === "red_cyber") {
+    return candidates.some((k) => k === "red_cyber" || k === "red_cybersecurity");
+  }
   if (candidates.some((k) => k === c || k.includes(c) || c.includes(k))) return true;
   if (c === "ai_act" && candidates.some((k) => k.includes("ai"))) return true;
   return false;
@@ -201,7 +204,8 @@ export function resolveLawStatus(
   if (
     instrument.verdict === "cannot_determine" ||
     (instrument.assessment_source === "llm_assisted" ||
-      instrument.assessment_source === "heuristic") &&
+      instrument.assessment_source === "heuristic" ||
+      instrument.assessment_source === "demo_fixture") &&
       instrument.verdict !== "does_not_apply"
   ) {
     if (passCount >= 1 && instrument.verdict !== "does_not_apply") return "assessment_required";
@@ -281,10 +285,10 @@ function verdictLabel(
   if (!instrument || instrument.assessment_source === "pending") {
     return "Scope assessment pending";
   }
+  if (instrument.verdict_display) return instrument.verdict_display;
   if (instrument.assessment_source === "heuristic" && instrument.verdict === "cannot_determine") {
     return "Cannot conclude yet";
   }
-  if (instrument.verdict_display) return instrument.verdict_display;
   if (instrument.verdict === "applies") return "Indicates in scope";
   if (instrument.verdict === "does_not_apply") return "Indicates out of scope";
   return "Scope assessment required";
@@ -427,10 +431,28 @@ export function buildLawVerdictDetail(args: {
   };
 }
 
+function verdictDisplayGroup(instrument?: ScopeInstrument): ScopeGroup | null {
+  const display = (instrument?.verdict_display || "").toLowerCase();
+  if (!display) return null;
+  if (display.includes("needs review") || display.includes("scope assessment required")) {
+    return "maybe";
+  }
+  if (display.includes("indicates in scope") || display.includes("in scope")) {
+    return "likely";
+  }
+  if (display.includes("out of scope") || display.includes("not in scope")) {
+    return "unlikely";
+  }
+  return null;
+}
+
 export function resolveScopeGroup(
   item: ScannedLawItem,
   instrument?: ScopeInstrument,
 ): ScopeGroup {
+  const fromDisplay = verdictDisplayGroup(instrument);
+  if (fromDisplay) return fromDisplay;
+
   if (
     instrument?.verdict === "does_not_apply" ||
     item.tier === "unlikely" ||
@@ -440,6 +462,9 @@ export function resolveScopeGroup(
   }
   if (instrument?.verdict === "applies" || item.status === "confirmed") {
     return "likely";
+  }
+  if (instrument?.assessment_source === "demo_fixture" && instrument.verdict === "cannot_determine") {
+    return "maybe";
   }
   if (dimensionPassCount(instrument) >= 2) {
     return "likely";
@@ -479,6 +504,10 @@ export interface ProductScopeSignals {
 
 export interface ScopeOverallNarrative {
   text: string;
+  lead: string;
+  overview: string;
+  stats: { total: number; likely: number; maybe: number; unlikely: number };
+  isDemoFixture: boolean;
 }
 
 function formatLawList(labels: string[], max = 6): string {
@@ -540,8 +569,12 @@ export function buildScopeOverallNarrative(args: {
   const narrative = (args.narrativeVerdictLine || "").trim();
   const gist = (args.scenarioGist || "").trim();
   const summaryLead = firstSentence(args.productSummary || "");
-  const lead =
-    narrative.length > 40
+  const isDemoFixtureEarly = [...likely, ...maybe, ...unlikely].some(
+    ({ instrument }) => instrument?.assessment_source === "demo_fixture",
+  );
+  const lead = isDemoFixtureEarly
+    ? gist || summaryLead || "Scope assessment for the selected instruments."
+    : narrative.length > 40
       ? narrative
       : gist || summaryLead || "Scope assessment for the selected instruments.";
 
@@ -551,8 +584,12 @@ export function buildScopeOverallNarrative(args: {
       ? `${likely.length} ${likely.length === 1 ? "is" : "are"} likely in scope on the current facts.`
       : "None are likely in scope on the current facts.",
     maybe.length
-      ? `${maybe.length} sit${maybe.length === 1 ? "s" : ""} in the uncertain middle tier and need more facts or review.`
-      : "None sit in the uncertain middle tier.",
+      ? isDemoFixtureEarly
+        ? `${maybe.length} ${maybe.length === 1 ? "needs" : "need"} further review on the current facts.`
+        : `${maybe.length} sit${maybe.length === 1 ? "s" : ""} in the uncertain middle tier and need more facts or review.`
+      : isDemoFixtureEarly
+        ? "None need further review on the current facts."
+        : "None sit in the uncertain middle tier.",
     unlikely.length
       ? `${unlikely.length} ${unlikely.length === 1 ? "is" : "are"} not likely in scope after the scope gates were applied.`
       : "",
@@ -582,9 +619,32 @@ export function buildScopeOverallNarrative(args: {
     unlikelyNote = `Not likely in scope (${names}): these instruments were shortlisted because they are semantically related to your product, but the per-law scope assessment did not confirm applicability. ${context || "This often reflects territorial, material, or product-type gates that are not satisfied on the facts provided."} Open individual cards for instrument-specific reasoning.`;
   }
 
+  const isDemoFixture = [...likely, ...maybe, ...unlikely].some(
+    ({ instrument }) => instrument?.assessment_source === "demo_fixture",
+  );
+
   const statsLine = `${total} laws selected: ${likely.length} likely in scope, ${maybe.length} maybe in scope, ${unlikely.length} not likely.`;
-  const parts = [lead, overview, likelyNote, maybeNote, unlikelyNote, statsLine].filter(Boolean);
-  return { text: parts.join(" ") };
+  const compactParts = [lead, overview, statsLine].filter(Boolean);
+  const legacyParts = [lead, overview, likelyNote, maybeNote, unlikelyNote, statsLine].filter(Boolean);
+  return {
+    text: isDemoFixture ? compactParts.join(" ") : legacyParts.join(" "),
+    lead,
+    overview,
+    stats: { total, likely: likely.length, maybe: maybe.length, unlikely: unlikely.length },
+    isDemoFixture,
+  };
+}
+
+export function verdictBadgeClass(verdict: string): string {
+  const v = verdict.toLowerCase();
+  if (v.includes("indicates in scope") || v.includes("in scope on")) return "ct-scope-verdict-badge--in";
+  if (v.includes("needs review") || v.includes("scope assessment") || v.includes("cannot conclude")) {
+    return "ct-scope-verdict-badge--review";
+  }
+  if (v.includes("out of scope") || v.includes("not likely") || v.includes("not selected")) {
+    return "ct-scope-verdict-badge--out";
+  }
+  return "ct-scope-verdict-badge--neutral";
 }
 
 export function defaultFocusedRowCode(items: ScannedLawItem[]): string | null {

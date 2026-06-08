@@ -6,7 +6,7 @@ from typing import Any, Literal, Optional
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from neo4j import GraphDatabase, Driver
@@ -1010,17 +1010,14 @@ def health() -> dict[str, Any]:
         pb_ok = True
     except Exception as exc:
         pb_ok = str(exc)[:120]
-    openai_key_set = bool((os.environ.get("OPENAI_API_KEY") or "").strip())
+    from logic.openai_client import openai_status
+
     return {
         "corpus": cs,
         "souffle": _sa(),
         "legal": {"backend": legal_graph_backend(), "ok": legal_ok},
         "playbook": {"ok": pb_ok is True, "error": None if pb_ok is True else pb_ok},
-        "llm": {
-            "provider": (os.environ.get("LLM_PROVIDER") or "openai").strip() or "openai",
-            "openai_configured": openai_key_set,
-            "model": (os.environ.get("OPENAI_MODEL") or "gpt-4o-mini").strip(),
-        },
+        "llm": openai_status(),
     }
 
 
@@ -1209,6 +1206,20 @@ class LawScanBody(BaseModel):
         default=False,
         description="Rank full corpus (slower); default returns top matches only",
     )
+
+
+class WorkflowChatBody(BaseModel):
+    stage: Literal[
+        "welcome",
+        "intake_ack",
+        "law_scan_intro",
+        "scope_start",
+        "follow_up",
+    ] = "follow_up"
+    user_message: str = ""
+    product_summary: str = ""
+    selected_laws: list[str] = Field(default_factory=list)
+    law_scan_results: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class AccountBootstrapBody(BaseModel):
@@ -1413,6 +1424,23 @@ def api_legal_graph_inspect() -> dict[str, Any]:
         raise HTTPException(status_code=502, detail=f"Legal graph inspect failed: {exc}") from exc
 
 
+@app.post("/api/products/workflow-chat")
+def api_products_workflow_chat(body: WorkflowChatBody) -> dict[str, Any]:
+    """OpenAI-powered assistant copy for the product workflow chat UI."""
+    from logic.workflow_chat import generate_workflow_reply
+
+    result = generate_workflow_reply(
+        stage=body.stage,
+        context={
+            "user_message": body.user_message,
+            "product_summary": body.product_summary,
+            "selected_laws": body.selected_laws,
+            "law_scan_results": body.law_scan_results,
+        },
+    )
+    return {"version": 1, **result}
+
+
 @app.post("/api/products/law-scan")
 def api_products_law_scan(body: LawScanBody) -> dict[str, Any]:
     """Semantic relevance scan over Neo4j legal Aura (twin_p corpus)."""
@@ -1504,12 +1532,42 @@ _NO_CACHE_HEADERS = {
 
 
 def _ui_meta() -> dict[str, Any]:
+    from logic.prototype_fast import is_prototype_mode
+
+    port_raw = (os.environ.get("PORT") or "8001").strip()
+    try:
+        port = int(port_raw)
+    except ValueError:
+        port = 8001
+    prototype = is_prototype_mode()
+    instance = (os.environ.get("APP_INSTANCE") or "").strip() or (
+        "prototype" if prototype else "main"
+    )
+    ui_mode = (os.environ.get("UI_MODE") or "").strip().lower() or (
+        "workflow" if prototype else "chat"
+    )
+    if ui_mode not in ("chat", "workflow"):
+        ui_mode = "workflow" if prototype else "chat"
+    default_route = "product" if ui_mode == "workflow" else "chat"
+    peer_url = "http://127.0.0.1:8000/" if port == 8001 else "http://127.0.0.1:8001/"
+    peer_label = (
+        "Chat workbench (:8000)" if ui_mode == "workflow" else "Product workflow (:8001)"
+    )
+
     index_path = FRONTEND_DIST / "index.html"
     if not index_path.is_file():
         return {
             "ui": "missing",
             "message": "Run: make frontend",
             "dist_index": str(index_path),
+            "instance": instance,
+            "port": port,
+            "prototype_mode": prototype,
+            "ui_mode": ui_mode,
+            "default_route": default_route,
+            "local_url": f"http://127.0.0.1:{port}/",
+            "peer_url": peer_url,
+            "peer_label": peer_label,
         }
     text = index_path.read_text(encoding="utf-8")
     js_match = re.search(r'/assets/(index-[^"]+\.js)', text)
@@ -1518,13 +1576,32 @@ def _ui_meta() -> dict[str, Any]:
         "dist_index": str(index_path),
         "js_bundle": js_match.group(1) if js_match else None,
         "legacy_url": "/legacy",
+        "instance": instance,
+        "port": port,
+        "prototype_mode": prototype,
+        "ui_mode": ui_mode,
+        "default_route": default_route,
+        "local_url": f"http://127.0.0.1:{port}/",
+        "peer_url": peer_url,
+        "peer_label": peer_label,
     }
 
 
 @app.get("/api/ui-meta")
-def ui_meta() -> dict[str, Any]:
+def ui_meta(request: Request) -> dict[str, Any]:
     """Tell the browser which UI build is active (debug stale-cache issues)."""
-    return _ui_meta()
+    meta = _ui_meta()
+    host_port = request.url.port
+    if host_port:
+        meta["port"] = host_port
+        meta["local_url"] = f"http://{request.url.hostname}:{host_port}/"
+        if host_port == 8001:
+            meta["peer_url"] = "http://127.0.0.1:8000/"
+            meta["peer_label"] = "Chat workbench (:8000)"
+        elif host_port == 8000:
+            meta["peer_url"] = "http://127.0.0.1:8001/"
+            meta["peer_label"] = "Product workflow (:8001)"
+    return meta
 
 
 def _public_png(name: str) -> FileResponse:

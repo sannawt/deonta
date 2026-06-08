@@ -126,6 +126,7 @@ export interface ScopeDimension {
   id: string;
   label: string;
   result: string;
+  result_display?: string;
   evidence: string;
   predicate?: string;
   citations: ScopeCitation[];
@@ -157,7 +158,7 @@ export interface ScopeInstrument {
   missing_atoms?: string[];
   dimensions: ScopeDimension[];
   llm_summary?: string;
-  assessment_source?: "symbolic" | "llm_assisted" | "heuristic" | "pending";
+  assessment_source?: "symbolic" | "llm_assisted" | "heuristic" | "demo_fixture" | "pending";
   confidence?: "high" | "medium" | "low";
   legal_tests?: ScopeLegalTest[];
   facts_used?: string[];

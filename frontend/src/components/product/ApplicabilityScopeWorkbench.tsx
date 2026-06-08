@@ -12,6 +12,7 @@ import {
   instrumentMatchesCode,
   type ProductScopeSignals,
 } from "../../lib/applicabilityScan";
+import { PixelIcon } from "../ui/PixelIcon";
 import { ApplicabilityLawAccordion } from "./ApplicabilityLawAccordion";
 import { ScopeChatPanel } from "./ScopeChatPanel";
 
@@ -29,7 +30,14 @@ interface Props {
   loading?: boolean;
   playbookCompanyId?: string;
   sessionId?: string;
+  embedded?: boolean;
 }
+
+const GROUP_ICON: Record<(typeof SCOPE_GROUP_ORDER)[number], string> = {
+  likely: "✓",
+  maybe: "◇",
+  unlikely: "×",
+};
 
 export function ApplicabilityScopeWorkbench({
   productTitle,
@@ -45,6 +53,7 @@ export function ApplicabilityScopeWorkbench({
   loading = false,
   playbookCompanyId,
   sessionId,
+  embedded = false,
 }: Props) {
   const lawItems = useMemo(
     () =>
@@ -102,22 +111,63 @@ export function ApplicabilityScopeWorkbench({
     ],
   );
 
+  const { stats } = overallNarrative;
+
   return (
-    <div className="ct-scope-workbench">
+    <div className={`ct-scope-workbench${embedded ? " ct-scope-workbench--solo" : ""}`}>
       <div className="ct-scope-workbench-main">
+
         <section className="ct-scope-overall-card">
           <header className="ct-scope-overall-head">
-            <h2 className="ct-scope-prose ct-scope-overall-title">
-              Applicability scan: {productTitle}
-              {loading ? " Assessing…" : ""}
-            </h2>
+            <PixelIcon name="scale" size={40} className="ct-scope-overall-icon" />
+            <div className="ct-scope-overall-head-text">
+              <h2 className="ct-scope-overall-title">
+                Applicability scan: <strong>{productTitle}</strong>
+                {loading ? " — assessing…" : ""}
+              </h2>
+            </div>
           </header>
-          <p className="ct-scope-prose">{overallNarrative.text}</p>
+
+          {overallNarrative.lead ? (
+            <p className="ct-scope-overall-lead">{overallNarrative.lead}</p>
+          ) : null}
+
+          {overallNarrative.overview ? (
+            <p className="ct-scope-overall-overview">{overallNarrative.overview}</p>
+          ) : null}
+
+          <div className="ct-scope-stats-row" aria-label="Scope summary counts">
+            <div className="ct-scope-stat ct-scope-stat-total">
+              <span className="ct-scope-stat-value">{stats.total}</span>
+              <span className="ct-scope-stat-label">Selected</span>
+            </div>
+            <div className="ct-scope-stat ct-scope-stat-likely">
+              <span className="ct-scope-stat-icon" aria-hidden>
+                ✓
+              </span>
+              <span className="ct-scope-stat-value">{stats.likely}</span>
+              <span className="ct-scope-stat-label">Likely in scope</span>
+            </div>
+            <div className="ct-scope-stat ct-scope-stat-maybe">
+              <span className="ct-scope-stat-icon" aria-hidden>
+                ◇
+              </span>
+              <span className="ct-scope-stat-value">{stats.maybe}</span>
+              <span className="ct-scope-stat-label">Needs review</span>
+            </div>
+            <div className="ct-scope-stat ct-scope-stat-unlikely">
+              <span className="ct-scope-stat-icon" aria-hidden>
+                ×
+              </span>
+              <span className="ct-scope-stat-value">{stats.unlikely}</span>
+              <span className="ct-scope-stat-label">Not likely</span>
+            </div>
+          </div>
         </section>
 
         <div className="ct-scope-law-stack" aria-label="Per-law scope analysis">
           {selectedItems.length === 0 ? (
-            <p className="ct-muted">No laws selected. Go back to Step 2 to choose instruments.</p>
+            <p className="ct-muted">No laws selected. Choose instruments in the law scan above.</p>
           ) : (
             SCOPE_GROUP_ORDER.map((group) => {
               const entries = groupedLaws[group];
@@ -129,9 +179,14 @@ export function ApplicabilityScopeWorkbench({
                   aria-label={SCOPE_GROUP_LABEL[group]}
                 >
                   <header className="ct-scope-group-head">
-                    <h3 className="ct-scope-prose ct-scope-group-title">
-                      {SCOPE_GROUP_LABEL[group]} ({entries.length} instrument
-                      {entries.length === 1 ? "" : "s"})
+                    <span className="ct-scope-group-icon" aria-hidden>
+                      {GROUP_ICON[group]}
+                    </span>
+                    <h3 className="ct-scope-group-title">
+                      <strong>{SCOPE_GROUP_LABEL[group]}</strong>
+                      <span className="ct-scope-group-count">
+                        {entries.length} instrument{entries.length === 1 ? "" : "s"}
+                      </span>
                     </h3>
                   </header>
                   <div className="ct-scope-group-list">
@@ -153,15 +208,16 @@ export function ApplicabilityScopeWorkbench({
         </div>
       </div>
 
-      <ScopeChatPanel
-        productTitle={productTitle}
-        productSummary={productSummary}
-        focusedLawLabel={focusedItem?.listLabel}
-        focusedInstrument={focusedInstrument}
-        playbookCompanyId={playbookCompanyId}
-        sessionId={sessionId}
-        overallSummary={overallNarrative.text}
-      />
+      {!embedded ? (
+        <ScopeChatPanel
+          productTitle={productTitle}
+          productSummary={productSummary}
+          focusedLawLabel={focusedItem?.listLabel}
+          focusedInstrument={focusedInstrument}
+          playbookCompanyId={playbookCompanyId}
+          sessionId={sessionId}
+        />
+      ) : null}
     </div>
   );
 }

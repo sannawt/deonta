@@ -4,7 +4,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PORT="${PORT:-8000}"
+PORT="${PORT:-8001}"
 URL="http://127.0.0.1:${PORT}"
 
 if ! curl -sf --max-time 2 "${URL}/api/health" >/dev/null 2>&1; then

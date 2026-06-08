@@ -1,7 +1,7 @@
 import type { LawScanResponse } from "./api";
 import type { ChatResponse } from "../types/chat";
 
-const PREFIX = "ct-proto-v1";
+const PREFIX = "ct-proto-v3";
 
 function fp(text: string): string {
   let h = 0;

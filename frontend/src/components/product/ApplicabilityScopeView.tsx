@@ -11,7 +11,9 @@ import {
 import { ThinkingOverlay } from "../ui/ThinkingOverlay";
 import { PixelIcon } from "../ui/PixelIcon";
 import { ApplicabilityScopeWorkbench } from "./ApplicabilityScopeWorkbench";
+import { ScopeAnalysisChatBlock } from "./ScopeAnalysisChatBlock";
 import { buildApplicabilityVerdictSummary } from "../../lib/applicabilityVerdict";
+import { buildScopeChatDocument, type ScopeChatDocument } from "../../lib/scopeChatNarrative";
 import { instrumentMatchesCode } from "../../lib/applicabilityScan";
 import { resolveAssessCodes } from "../../lib/utils";
 import type { ChatResponse, ScopeAnalysis } from "../../types/chat";
@@ -41,6 +43,13 @@ interface Props {
   description: string;
   kgFacts: KgFact[];
   playbookCompanyId?: string;
+  embedded?: boolean;
+  presentation?: "workbench" | "chat";
+  onScopeDocument?: (payload: {
+    document: ScopeChatDocument | null;
+    loading: boolean;
+    error: string | null;
+  }) => void;
   onComplete: (product: ProductRecord) => void;
 }
 
@@ -53,6 +62,9 @@ export function ApplicabilityScopeView({
   description,
   kgFacts,
   playbookCompanyId,
+  embedded = false,
+  presentation = "workbench",
+  onScopeDocument,
   onComplete,
 }: Props) {
   const [loading, setLoading] = useState(true);
@@ -204,22 +216,75 @@ export function ApplicabilityScopeView({
     ],
   );
 
+  const scopeDocument = useMemo(
+    () =>
+      buildScopeChatDocument({
+        productTitle: verdictSummary.productTitle,
+        productSummary: spec.summary || description,
+        scanResults: displayScanResults,
+        selectedCodes: selectedLaws,
+        tierRows: verdictSummary.rows,
+        instruments,
+        openQuestions: assessment?.open_questions,
+        scenarioGist: assessment?.facts?.summary?.scenario_gist,
+        narrativeVerdictLine:
+          assessment?.conclusion?.verdict_line || response?.narrative?.verdict_line,
+        productSignals: {
+          euLink: spec.euLink,
+          processesPersonalData: spec.processesPersonalData,
+          aiSystem: spec.aiSystem,
+          markets: spec.markets,
+        },
+      }),
+    [
+      verdictSummary,
+      spec,
+      description,
+      displayScanResults,
+      selectedLaws,
+      instruments,
+      assessment?.open_questions,
+      assessment?.facts?.summary?.scenario_gist,
+      assessment?.conclusion?.verdict_line,
+      response?.narrative?.verdict_line,
+    ],
+  );
+
+  useEffect(() => {
+    onScopeDocument?.({
+      document: loading ? null : scopeDocument,
+      loading,
+      error,
+    });
+  }, [onScopeDocument, scopeDocument, loading, error]);
+
+  if (presentation === "chat" && embedded) {
+    return null;
+  }
+
   return (
-    <div className="ct-page ct-card-relative">
+    <div className={`ct-card-relative${embedded ? "" : " ct-page"}`}>
       <ThinkingOverlay show={loading} label="Running per-law scope assessment…" />
 
-      <div className="ct-scanner-head">
-        <PixelIcon name="scale" size={64} className="ct-scanner-head-icon" />
-        <div>
-          <p className="ct-scanner-step">Applicability scanner — Step 3</p>
-          <p className="ct-scanner-intro">
-            Review scanned laws, per-instrument verdicts, and the facts driving each assessment.
-          </p>
+      {!embedded && (
+        <div className="ct-scanner-head">
+          <PixelIcon name="scale" size={64} className="ct-scanner-head-icon" />
+          <div>
+            <p className="ct-scanner-step">Applicability scan</p>
+            <p className="ct-scanner-intro">
+              Review scanned laws, per-instrument verdicts, and the facts driving each assessment.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {error && <div className="err">{error}</div>}
 
+      {presentation === "chat" ? (
+        <ScopeAnalysisChatBlock document={scopeDocument} loading={loading} />
+      ) : null}
+
+      {presentation === "workbench" ? (
       <ApplicabilityScopeWorkbench
         productTitle={verdictSummary.productTitle}
         productSummary={spec.summary || description}
@@ -241,7 +306,9 @@ export function ApplicabilityScopeView({
         loading={loading}
         playbookCompanyId={playbookCompanyId}
         sessionId={response?.symbolic?.context?.session_id || undefined}
+        embedded={embedded}
       />
+      ) : null}
     </div>
   );
 }

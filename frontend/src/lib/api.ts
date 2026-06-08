@@ -66,7 +66,7 @@ async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
     return await fetch(input, init);
   } catch {
     throw new Error(
-      "Cannot reach the API. Start the backend with: make run — then open http://127.0.0.1:8000/ (not Vite alone)."
+      "Cannot reach the API. Start this prototype with: make run — then open http://127.0.0.1:8001/ (main workbench is on :8000)."
     );
   }
 }
@@ -205,6 +205,54 @@ export async function assessProduct(body: {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new Error(`Assessment failed (${res.status}): ${text.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+export type WorkflowChatStage =
+  | "welcome"
+  | "intake_ack"
+  | "law_scan_intro"
+  | "scope_start"
+  | "follow_up";
+
+export interface WorkflowChatResponse {
+  version?: number;
+  assistant_text: string;
+  llm_used: boolean;
+  fallback: boolean;
+}
+
+export interface HealthResponse {
+  llm?: {
+    provider?: string;
+    openai_configured?: boolean;
+    model?: string;
+    base_url?: string;
+  };
+}
+
+export async function fetchHealth(): Promise<HealthResponse> {
+  const res = await apiFetch("/api/health");
+  if (!res.ok) return {};
+  return res.json();
+}
+
+export async function sendWorkflowChat(body: {
+  stage: WorkflowChatStage;
+  user_message?: string;
+  product_summary?: string;
+  selected_laws?: string[];
+  law_scan_results?: LawScanResult[];
+}): Promise<WorkflowChatResponse> {
+  const res = await apiFetch("/api/products/workflow-chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Workflow chat failed (${res.status}): ${text.slice(0, 200)}`);
   }
   return res.json();
 }

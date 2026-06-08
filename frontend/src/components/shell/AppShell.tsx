@@ -1,18 +1,22 @@
 import type { ReactNode } from "react";
+import { InstanceBadge } from "./InstanceBadge";
 import { PageFooter } from "./PageFooter";
 
 export type AppRoute =
   | "start"
+  | "chat"
   | "product"
   | "law"
   | "monitoring";
 
 interface Props {
+  uiMode?: "chat" | "workflow";
+  peerUrl?: string;
   onNavigateHome: () => void;
   children: ReactNode;
 }
 
-export function AppShell({ onNavigateHome, children }: Props) {
+export function AppShell({ uiMode = "workflow", peerUrl, onNavigateHome, children }: Props) {
   return (
     <div className="ct-shell">
       <div className="ct-layout">
@@ -23,6 +27,7 @@ export function AppShell({ onNavigateHome, children }: Props) {
               omplianceTwin
             </span>
           </button>
+          <InstanceBadge uiMode={uiMode} peerUrl={peerUrl} />
         </header>
 
         <main className="ct-main">{children}</main>

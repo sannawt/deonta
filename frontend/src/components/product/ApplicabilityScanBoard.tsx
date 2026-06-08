@@ -230,7 +230,7 @@ export function ApplicabilityScanBoard({
             </div>
           ) : (
             <p className="ct-muted ct-applicability-empty">
-              Reasoning appears for laws selected in Step 2.
+              Reasoning appears for laws selected in the scan.
             </p>
           )}
         </section>

@@ -15,14 +15,41 @@ interface Props {
   defaultOpen?: boolean;
 }
 
-export function ScopeDimensionCard({ dim, openQuestions = [], defaultOpen = false }: Props) {
-  const resultLabel = dimensionResultPlain(dim.result);
+function splitRefs(text: string): { body: string; refs: string } {
+  const match = text.match(/\s*Refs:\s*(.+)$/i);
+  if (!match || match.index === undefined) {
+    return { body: text.trim(), refs: "" };
+  }
+  return {
+    body: text.slice(0, match.index).trim(),
+    refs: match[1].trim(),
+  };
+}
 
-  const analysis =
+function resultIcon(result: string): string {
+  switch (result) {
+    case "PASS":
+      return "✓";
+    case "FAIL":
+      return "×";
+    case "UNKNOWN":
+      return "◇";
+    default:
+      return "△";
+  }
+}
+
+export function ScopeDimensionCard({ dim, openQuestions = [], defaultOpen = false }: Props) {
+  const dimWithDisplay = dim as ScopeDimension & { result_display?: string };
+  const resultLabel =
+    dimWithDisplay.result_display?.trim() || dimensionResultPlain(dim.result);
+
+  const rawAnalysis =
     dim.llm?.interpretation?.trim() ||
     dim.evidence?.trim() ||
     dimensionResultSentence(dim.label, dim.result);
 
+  const { body: analysisBody, refs: evidenceRefs } = splitRefs(rawAnalysis);
   const why = dim.llm?.why_result?.trim() || "";
 
   const rules = dim.rules_invoked ?? [];
@@ -64,39 +91,69 @@ export function ScopeDimensionCard({ dim, openQuestions = [], defaultOpen = fals
     if (text) addUnique(unclearFacts, text);
   }
 
-  const proseParts: string[] = [
-    formatEngineTokens(analysis),
-    why ? formatEngineTokens(why) : "",
-    supportingFacts.length
-      ? `Supporting facts: ${supportingFacts.join("; ")}.`
-      : "",
-    rules.length
-      ? rules
-          .map((r) => {
-            const rule = humanizeRuleExplanation(r.rule_text, r.head_atom);
-            const cite = r.citation?.label ? ` (${r.citation.label})` : "";
-            return `${rule}${cite}`;
-          })
-          .join(" ")
-      : "",
-    citations.length
-      ? `Legal basis: ${citations.map((c) => c.label).join("; ")}.`
-      : "",
-    unclearFacts.length ? `Still unclear: ${unclearFacts.join("; ")}.` : "",
-  ].filter(Boolean);
+  const ruleRefs = rules
+    .map((r) => {
+      const rule = humanizeRuleExplanation(r.rule_text, r.head_atom);
+      const cite = r.citation?.label ? ` (${r.citation.label})` : "";
+      return `${rule}${cite}`;
+    })
+    .filter(Boolean);
 
-  const body = proseParts.join(" ");
+  const citationRefs = citations.map((c) => c.label).filter(Boolean);
+  const legalRefs = [
+    evidenceRefs,
+    ...ruleRefs,
+    citationRefs.length ? citationRefs.join("; ") : "",
+  ]
+    .filter(Boolean)
+    .join("; ");
 
   return (
-    <details className="ct-scope-dim-card" open={defaultOpen}>
+    <details className={`ct-scope-dim-card ct-scope-dim-${dim.result.toLowerCase()}`} open={defaultOpen}>
       <summary className="ct-scope-dim-card-head">
-        <span className="ct-scope-prose">
-          {dim.label} — {resultLabel}
+        <span className="ct-scope-dim-icon" aria-hidden>
+          {resultIcon(dim.result)}
+        </span>
+        <span className="ct-scope-dim-title">
+          <strong>{dim.label}</strong>
+          <span className="ct-scope-dim-result">— {resultLabel}</span>
         </span>
       </summary>
 
       <div className="ct-scope-dim-card-body">
-        <p className="ct-scope-prose">{body}</p>
+        {analysisBody ? (
+          <p className="ct-scope-dim-analysis">{formatEngineTokens(analysisBody)}</p>
+        ) : null}
+        {why ? <p className="ct-scope-dim-why">{formatEngineTokens(why)}</p> : null}
+
+        {supportingFacts.length > 0 ? (
+          <div className="ct-scope-dim-block">
+            <p className="ct-scope-dim-block-label">Supporting facts</p>
+            <ul className="ct-scope-dim-fact-list">
+              {supportingFacts.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
+        {legalRefs ? (
+          <div className="ct-scope-dim-block">
+            <p className="ct-scope-dim-block-label">Legal basis</p>
+            <p className="ct-scope-dim-refs">{legalRefs}</p>
+          </div>
+        ) : null}
+
+        {unclearFacts.length > 0 ? (
+          <div className="ct-scope-dim-block ct-scope-dim-block--unclear">
+            <p className="ct-scope-dim-block-label">Still unclear</p>
+            <ul className="ct-scope-dim-fact-list">
+              {unclearFacts.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </details>
   );

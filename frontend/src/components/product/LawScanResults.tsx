@@ -19,7 +19,7 @@ interface Props {
   onIncludeSecondaryChange?: (include: boolean) => void;
   onToggle: (code: string) => void;
   onCheckApplicability: () => void;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 function KeywordPills({ keywords }: { keywords: string[] }) {
@@ -207,11 +207,13 @@ export function LawScanResults({
           No regulations at or above {minPct}% relevance. Try a longer product description.
         </p>
         <ScanSummary scanResponse={scanResponse} resultCount={0} includeSecondary={includeSecondary} />
-        <div className="ct-scanner-actions">
-          <button type="button" className="ct-btn-outline ct-scanner-action-btn" onClick={onBack}>
-            Go back
-          </button>
-        </div>
+        {onBack ? (
+          <div className="ct-scanner-actions">
+            <button type="button" className="ct-btn-outline ct-scanner-action-btn" onClick={onBack}>
+              Go back
+            </button>
+          </div>
+        ) : null}
       </>
     );
   }
@@ -295,14 +297,16 @@ export function LawScanResults({
         >
           Check applicability
         </button>
-        <button
-          type="button"
-          className="ct-btn-outline ct-scanner-action-btn"
-          disabled={loading}
-          onClick={onBack}
-        >
-          Go back
-        </button>
+        {onBack ? (
+          <button
+            type="button"
+            className="ct-btn-outline ct-scanner-action-btn"
+            disabled={loading}
+            onClick={onBack}
+          >
+            Go back
+          </button>
+        ) : null}
       </div>
     </div>
   );

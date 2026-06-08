@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import io
-import os
 import re
 from typing import Any, BinaryIO
 
@@ -345,13 +344,15 @@ def kg_nodes_to_facts(
 
 def llm_enrich_json(text: str) -> dict[str, Any] | None:
     """Optional OpenAI structured extract (fields only)."""
-    key = (os.environ.get("OPENAI_API_KEY") or "").strip()
-    if not key or len(text) < 40:
+    if len(text) < 40:
         return None
     try:
         import json
-        import urllib.error
-        import urllib.request
+
+        from logic.openai_client import chat_completion, openai_configured
+
+        if not openai_configured():
+            return None
 
         prompt = (
             "Extract JSON with keys: name, markets (array), processesPersonalData (yes/no/unknown), "
@@ -360,25 +361,13 @@ def llm_enrich_json(text: str) -> dict[str, Any] | None:
             "(established, based, or processing data in the EU) — not merely selling to EU customers. "
             "Product description:\n" + text[:6000]
         )
-        body = json.dumps(
-            {
-                "model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
-                "messages": [{"role": "user", "content": prompt}],
-                "response_format": {"type": "json_object"},
-            }
-        ).encode()
-        req = urllib.request.Request(
-            "https://api.openai.com/v1/chat/completions",
-            data=body,
-            headers={
-                "Authorization": f"Bearer {key}",
-                "Content-Type": "application/json",
-            },
-            method="POST",
+        content = chat_completion(
+            messages=[{"role": "user", "content": prompt}],
+            json_object=True,
+            timeout=45,
         )
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            payload = json.loads(resp.read().decode())
-        content = payload["choices"][0]["message"]["content"]
+        if not content:
+            return None
         return json.loads(content)
     except Exception:  # noqa: BLE001
         return None

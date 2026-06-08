@@ -307,4 +307,11 @@ def run_product_assess(
     resp["selected_regulations"] = selected_regs
     resp["selected_laws"] = selected_law_rows
     resp["missing_predicates"] = missing
+
+    from logic.prototype_fast import is_prototype_mode
+    from logic.prototype_smartroof_scope import apply_smartroof_demo_scope
+
+    if is_prototype_mode():
+        resp = apply_smartroof_demo_scope(resp, situation)
+
     return resp

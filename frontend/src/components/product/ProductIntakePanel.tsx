@@ -44,7 +44,7 @@ export function ProductIntakePanel({
         <div className="ct-scanner-head-text">
           <p className="ct-scanner-step">Step 1</p>
           <p className="ct-scanner-intro">
-            Describe your product or service. The map updates as you type.
+            Describe your product or service. I'll scan relevant EU law as you go.
           </p>
         </div>
       </header>
@@ -107,7 +107,7 @@ export function ProductIntakePanel({
       {parsing && (
         <p className="ct-product-parsing text-sm">
           <PixelIcon name="hourglass" size={36} className="ct-product-parsing-icon" />
-          Updating graph…
+          Reading description…
         </p>
       )}
     </div>

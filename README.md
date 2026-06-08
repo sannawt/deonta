@@ -34,7 +34,25 @@ cp .env.example .env.local   # add OPENAI_API_KEY, Neo4j passwords as needed
 make run
 ```
 
-Open **http://localhost:8000/** — ComplianceTwin workbench (chat + assessment panel).
+Open **http://localhost:8001/** — this repo’s **prototype** (fast applicability scan + SmartRoof demo).
+
+### Two local instances (two repos)
+
+| Instance | Typical repo | Port | URL |
+|----------|----------------|------|-----|
+| **Prototype** (catalog scan, demo scope) | `compliance_calculator` (this checkout) | **8001** | http://localhost:8001/ |
+| **Main workbench** (full Neo4j scan, LLM scope) | main ComplianceTwin repo | **8000** | http://localhost:8000/ |
+
+Set `PORT` and `APP_INSTANCE` in each repo’s `.env`. The header shows **Prototype :8001** or the port you’re on.
+
+**One checkout, two terminals** (only one repo on disk):
+
+```bash
+make run-main    # terminal 1 → http://localhost:8000/
+make run         # terminal 2 → http://localhost:8001/
+```
+
+Or start both in the background: `make run-both`
 
 ## Let others use the same app (three options)
 
