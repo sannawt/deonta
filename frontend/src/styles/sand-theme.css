@@ -5453,3 +5453,239 @@ body::before {
   color: var(--txt3);
   line-height: 1.4;
 }
+
+/* ─── Law list tags (Step 2 score, Step 3 scope status) ───────────────────── */
+
+.ct-law-scan-sidebar-item {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px 8px;
+}
+
+.ct-law-scan-sidebar-label {
+  flex: 1 1 auto;
+}
+
+.ct-law-list-tag {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Relevance score tags (Step 2) */
+.ct-law-list-tag--score-high {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.ct-law-list-tag--score-mid {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.ct-law-list-tag--score-low {
+  background: #fff8e1;
+  color: #e65100;
+}
+
+/* Scope status tags (Step 3) */
+.ct-law-list-tag--scope-in {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.ct-law-list-tag--scope-review {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.ct-law-list-tag--scope-out {
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.ct-law-list-tag--scope-neutral {
+  background: var(--sand);
+  color: var(--txt3);
+}
+
+/* ─── Scope dimension card — improved palette ─────────────────────────────── */
+
+/* Override old lilac palette with proper semantic colors */
+.ct-scope-dim-card--pass {
+  border-left: 4px solid #2e7d32;
+}
+
+.ct-scope-dim-card--review {
+  border-left: 4px solid #e65100;
+}
+
+.ct-scope-dim-card--fail {
+  border-left: 4px solid #c62828;
+}
+
+.ct-scope-dim-card--neutral {
+  border-left: 4px solid var(--txt4);
+}
+
+.ct-scope-dim-card-icon--pass {
+  color: #2e7d32 !important;
+  border-color: rgba(46, 125, 50, 0.35) !important;
+  background: #f1f8f2 !important;
+}
+
+.ct-scope-dim-card-icon--review {
+  color: #e65100 !important;
+  border-color: rgba(230, 81, 0, 0.3) !important;
+  background: #fff8f2 !important;
+}
+
+.ct-scope-dim-card-icon--fail {
+  color: #c62828 !important;
+  border-color: rgba(198, 40, 40, 0.3) !important;
+  background: #fff2f2 !important;
+}
+
+.ct-scope-dim-card-icon--neutral {
+  color: var(--txt3) !important;
+  border-color: var(--bdr) !important;
+}
+
+.ct-scope-dim-card-badge--pass {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.ct-scope-dim-card-badge--review {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.ct-scope-dim-card-badge--fail {
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.ct-scope-dim-card-badge--neutral {
+  background: var(--sand);
+  color: var(--txt3);
+}
+
+/* Section title icons */
+.ct-scope-dim-section-icon {
+  display: inline-block;
+  margin-right: 5px;
+  opacity: 0.55;
+}
+
+/* Supporting facts — green-tinted bullets */
+.ct-scope-dim-fact-list--supporting li::before {
+  content: "✓";
+  margin-right: 6px;
+  color: #2e7d32;
+  font-weight: 700;
+  font-size: 0.75em;
+}
+
+.ct-scope-dim-fact-list--supporting {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Unclear facts — amber-tinted bullets */
+.ct-scope-dim-fact-list--unclear {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ct-scope-dim-fact-list--unclear li::before {
+  content: "?";
+  margin-right: 6px;
+  color: #e65100;
+  font-weight: 700;
+}
+
+/* Legal basis section */
+.ct-scope-dim-section--legal {
+  background: #fafafe;
+  padding: 12px;
+  margin: 0 -16px;
+  border-top: 1px dashed var(--bdr);
+}
+
+.ct-scope-dim-section--facts {
+  background: #f8fdf8;
+  padding: 12px;
+  margin: 0 -16px;
+  border-top: 1px dashed rgba(46, 125, 50, 0.15);
+}
+
+.ct-scope-dim-section--open {
+  background: #fff9f4 !important;
+  border: 1px dashed rgba(230, 81, 0, 0.3) !important;
+  padding: 12px;
+  margin: 8px -16px 0;
+}
+
+/* ─── Inline EUR-Lex text links ───────────────────────────────────────────── */
+
+.ct-scope-inline-link {
+  display: inline;
+  color: var(--brand-blue);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(45, 107, 228, 0.3);
+  transition: border-color 0.1s, color 0.1s;
+}
+
+.ct-scope-inline-link:hover {
+  color: var(--blue-dk);
+  border-bottom-color: var(--brand-blue);
+}
+
+.ct-scope-inline-link .ct-cite-ext {
+  font-size: 0.7em;
+  margin-left: 2px;
+  opacity: 0.7;
+  vertical-align: super;
+}
+
+/* ─── Verdict badge improvements ─────────────────────────────────────────── */
+
+.ct-scope-verdict-badge--in {
+  background: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+.ct-scope-verdict-badge--review {
+  background: #fff3e0 !important;
+  color: #e65100 !important;
+}
+
+.ct-scope-verdict-badge--out {
+  background: #fce4ec !important;
+  color: #c62828 !important;
+}
+
+.ct-scope-detail-verdict.ct-scope-verdict-badge--in {
+  background: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+.ct-scope-detail-verdict.ct-scope-verdict-badge--review {
+  background: #fff3e0 !important;
+  color: #e65100 !important;
+}
+
+.ct-scope-detail-verdict.ct-scope-verdict-badge--out {
+  background: #fce4ec !important;
+  color: #c62828 !important;
+}

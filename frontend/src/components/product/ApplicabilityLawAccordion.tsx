@@ -10,6 +10,7 @@ import {
 import { humanizeMissingQuestion } from "../../lib/plainLanguage";
 import { lawNameFromScannedItem } from "../../lib/lawDisplayName";
 import { ScopeDimensionCard } from "./ScopeDimensionCard";
+import { LegalInlineText } from "./LegalInlineText";
 
 const DIM_ORDER = ["temporal", "territorial", "material", "exclusions"];
 
@@ -106,7 +107,12 @@ export function ApplicabilityLawAccordion({
 
       {detail.summary ? (
         <div className="ct-scope-detail-summary">
-          <p>{detail.summary}</p>
+          <p>
+            <LegalInlineText
+              text={detail.summary}
+              regKey={instrument?.reg_key}
+            />
+          </p>
         </div>
       ) : null}
 

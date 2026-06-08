@@ -10,6 +10,7 @@ import {
 } from "../../lib/plainLanguage";
 import { formatEngineTokens } from "../../lib/utils";
 import { ChatCitationLink } from "../chat/ChatCitationLink";
+import { LegalInlineText } from "./LegalInlineText";
 
 interface Props {
   dim: ScopeDimension;
@@ -146,7 +147,10 @@ export function ScopeDimensionCard({
     standaloneCitations.length > 0 ||
     unclearFacts.length > 0;
 
-  const preview = analysisBody ? splitClauses(analysisBody)[0] : "";
+  const clauses = analysisBody ? splitClauses(analysisBody) : [];
+  const preview = clauses[0] ?? "";
+
+  const hasCitations = ruleEntries.length > 0 || standaloneCitations.length > 0;
 
   return (
     <details
@@ -154,12 +158,16 @@ export function ScopeDimensionCard({
       open={defaultOpen}
     >
       <summary className="ct-scope-dim-card-head">
-        <span className="ct-scope-dim-card-icon" aria-hidden>
+        <span className={`ct-scope-dim-card-icon ct-scope-dim-card-icon--${tone}`} aria-hidden>
           {resultIcon(dim.result)}
         </span>
         <div className="ct-scope-dim-card-head-main">
           <span className="ct-scope-dim-card-title">{dim.label}</span>
-          {preview ? <span className="ct-scope-dim-card-preview">{preview}</span> : null}
+          {preview ? (
+            <span className="ct-scope-dim-card-preview">
+              <LegalInlineText text={preview} regKey={regKey} />
+            </span>
+          ) : null}
         </div>
         <span className={`ct-scope-dim-card-badge ct-scope-dim-card-badge--${tone}`}>
           {resultLabel}
@@ -168,12 +176,16 @@ export function ScopeDimensionCard({
 
       {hasDetail ? (
         <div className="ct-scope-dim-card-body">
-          {analysisBody ? (
+          {clauses.length > 0 ? (
             <section className="ct-scope-dim-section">
-              <h5 className="ct-scope-dim-section-title">Findings</h5>
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">◆</span> Findings
+              </h5>
               <ul className="ct-scope-dim-finding-list">
-                {splitClauses(analysisBody).map((clause) => (
-                  <li key={clause}>{clause}</li>
+                {clauses.map((clause, i) => (
+                  <li key={i}>
+                    <LegalInlineText text={clause} regKey={regKey} />
+                  </li>
                 ))}
               </ul>
             </section>
@@ -181,15 +193,21 @@ export function ScopeDimensionCard({
 
           {why ? (
             <section className="ct-scope-dim-section ct-scope-dim-section--conclusion">
-              <h5 className="ct-scope-dim-section-title">Conclusion</h5>
-              <p className="ct-scope-dim-conclusion">{formatEngineTokens(why)}</p>
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">→</span> Conclusion
+              </h5>
+              <p className="ct-scope-dim-conclusion">
+                <LegalInlineText text={formatEngineTokens(why)} regKey={regKey} />
+              </p>
             </section>
           ) : null}
 
           {supportingFacts.length > 0 ? (
-            <section className="ct-scope-dim-section">
-              <h5 className="ct-scope-dim-section-title">Supporting facts</h5>
-              <ul className="ct-scope-dim-fact-list">
+            <section className="ct-scope-dim-section ct-scope-dim-section--facts">
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">✓</span> Supporting facts
+              </h5>
+              <ul className="ct-scope-dim-fact-list ct-scope-dim-fact-list--supporting">
                 {supportingFacts.map((f) => (
                   <li key={f}>{f}</li>
                 ))}
@@ -197,12 +215,17 @@ export function ScopeDimensionCard({
             </section>
           ) : null}
 
-          {ruleEntries.length > 0 || standaloneCitations.length > 0 ? (
-            <section className="ct-scope-dim-section">
-              <h5 className="ct-scope-dim-section-title">Legal basis</h5>
+          {hasCitations ? (
+            <section className="ct-scope-dim-section ct-scope-dim-section--legal">
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">§</span> Legal basis
+              </h5>
               {ruleEntries.map((entry) => (
-                <p key={`${entry.text}-${entry.citation?.label || ""}`} className="ct-scope-dim-legal-line">
-                  {entry.text}
+                <p
+                  key={`${entry.text}-${entry.citation?.label || ""}`}
+                  className="ct-scope-dim-legal-line"
+                >
+                  <LegalInlineText text={entry.text} regKey={regKey} />
                 </p>
               ))}
               <div className="ct-scope-dim-citations">
@@ -228,8 +251,10 @@ export function ScopeDimensionCard({
 
           {unclearFacts.length > 0 ? (
             <section className="ct-scope-dim-section ct-scope-dim-section--open">
-              <h5 className="ct-scope-dim-section-title">Still unclear</h5>
-              <ul className="ct-scope-dim-fact-list">
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">?</span> Still unclear
+              </h5>
+              <ul className="ct-scope-dim-fact-list ct-scope-dim-fact-list--unclear">
                 {unclearFacts.map((f) => (
                   <li key={f}>{f}</li>
                 ))}
