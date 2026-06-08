@@ -225,6 +225,8 @@ def test_format_result_uses_catalog_short():
     assert row["short"] == "GDPR"
     assert row["catalog_code"] == "gdpr"
     assert row["engine_mode"] == "symbolic"
+    assert row["ui_label"] == "Personal data protection"
+    assert "2016/679" in row["legal_instrument"]
 
 
 def test_format_result_document_uuid_uses_title_not_slug():

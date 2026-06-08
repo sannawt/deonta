@@ -1170,22 +1170,39 @@ class ProductSpecBody(BaseModel):
     regulations: list[str] = Field(default_factory=list)
 
 
+class SelectedLawBody(BaseModel):
+    code: str
+    label: str = ""
+    short: str = ""
+    ui_label: str = ""
+    legal_instrument: str = ""
+    number: str = ""
+    engine_mode: str = "retrieval_only"
+    score: Optional[float] = None
+
+
 class ProductAssessBody(BaseModel):
     spec: ProductSpecBody
     kg_facts: list[dict[str, Any]] = Field(default_factory=list)
+    selected_laws: list[SelectedLawBody] = Field(default_factory=list)
     playbook_company_id: Optional[str] = None
     playbook_id: Optional[str] = None
     account_id: Optional[str] = None
     case_id: Optional[str] = None
 
 
+class DraftScopeRulesBody(BaseModel):
+    code: str
+    provisions: list[dict[str, Any]] = Field(default_factory=list)
+
+
 class LawScanBody(BaseModel):
     description: str = ""
     kg_facts: list[dict[str, Any]] = Field(default_factory=list)
-    limit: int = Field(default=5, ge=0, le=500)
+    limit: int = Field(default=15, ge=0, le=500)
     min_score: float = Field(default=0.75, ge=0.0, le=1.0)
     include_secondary: bool = Field(
-        default=False,
+        default=True,
         description="Include implementing/delegated acts and EU body internal rules",
     )
     full_scan: bool = Field(
@@ -1428,6 +1445,8 @@ def api_products_assess(
     x_account_id: Optional[str] = Header(None, alias="X-Account-Id"),
 ) -> dict[str, Any]:
     """Canonical structured assessment (no chat UI)."""
+    from logic.prototype_fast import assess_cache_key, get_cached_assess, put_cached_assess
+
     spec = body.spec.model_dump()
     case_id = (body.case_id or "").strip() or None
     account_id = _resolve_account_id(x_account_id, body.account_id)
@@ -1435,9 +1454,21 @@ def api_products_assess(
     demo_playbook_id = (body.playbook_company_id or "").strip() or None
     if account_playbook_id and account_id:
         demo_playbook_id = None
-    return run_product_assess(
+
+    regulations = spec.get("regulations") or spec.get("selectedLaws") or []
+    assess_key = assess_cache_key(
+        str(spec.get("summary") or ""),
+        regulations if isinstance(regulations, list) else [],
+        body.kg_facts,
+    )
+    cached_assess = get_cached_assess(assess_key)
+    if cached_assess is not None:
+        return cached_assess
+
+    result = run_product_assess(
         spec=spec,
         kg_facts=body.kg_facts,
+        selected_laws=[row.model_dump() for row in body.selected_laws],
         playbook_company_id=demo_playbook_id,
         account_id=account_id,
         account_playbook_id=account_playbook_id,
@@ -1451,6 +1482,19 @@ def api_products_assess(
         run_reason_core_fn=_run_reason_core,
         build_rule_catalog_fn=_build_rule_catalog,
     )
+    put_cached_assess(assess_key, result)
+    return result
+
+
+@app.post("/api/admin/draft-scope-rules")
+def api_admin_draft_scope_rules(body: DraftScopeRulesBody) -> dict[str, Any]:
+    """Draft Soufflé scope rules for human review (requires ALLOW_RULE_DRAFT=1)."""
+    from logic.llm_rule_drafter import draft_scope_rules
+
+    result = draft_scope_rules(body.code, provisions=body.provisions, write_files=True)
+    if not result.get("ok"):
+        raise HTTPException(status_code=400, detail=result.get("error") or "Draft failed")
+    return result
 
 
 _NO_CACHE_HEADERS = {

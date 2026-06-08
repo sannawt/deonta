@@ -88,6 +88,8 @@ export interface LawScanResult {
   score: number;
   engine_mode: "symbolic" | "retrieval_only" | "planned";
   label?: string;
+  ui_label?: string;
+  legal_instrument?: string;
   reg_id?: string;
   catalog_code?: string | null;
   document_tier?: string;
@@ -140,9 +142,9 @@ export async function scanRelevantLaws(body: {
     body: JSON.stringify({
       description: body.description,
       kg_facts: body.kg_facts,
-      limit: body.limit ?? 5,
+      limit: body.limit ?? 15,
       min_score: body.min_score ?? 0.75,
-      include_secondary: body.include_secondary ?? false,
+      include_secondary: body.include_secondary ?? true,
       full_scan: body.full_scan ?? false,
     }),
   });
@@ -163,6 +165,7 @@ export async function scanRelevantLaws(body: {
 export async function assessProduct(body: {
   spec: ProductSpec & { regulations?: string[] };
   kg_facts: KgFact[];
+  selected_laws?: LawScanResult[];
   playbook_company_id?: string;
   playbook_id?: string;
   account_id?: string;
@@ -183,6 +186,16 @@ export async function assessProduct(body: {
         regulations: body.spec.regulations ?? [],
       },
       kg_facts: body.kg_facts,
+      selected_laws: (body.selected_laws ?? []).map((row) => ({
+        code: row.catalog_code || row.code,
+        label: row.label || "",
+        short: row.short || "",
+        ui_label: row.ui_label || "",
+        legal_instrument: row.legal_instrument || "",
+        number: row.number || "",
+        engine_mode: row.engine_mode || "retrieval_only",
+        score: row.score ?? null,
+      })),
       playbook_company_id: body.playbook_company_id,
       playbook_id: body.playbook_id,
       account_id: body.account_id,
@@ -192,6 +205,29 @@ export async function assessProduct(body: {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new Error(`Assessment failed (${res.status}): ${text.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+export async function sendChat(body: {
+  question: string;
+  session_id?: string;
+  playbook_company_id?: string;
+  company_name?: string;
+}): Promise<ChatResponse> {
+  const res = await apiFetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      question: body.question,
+      session_id: body.session_id,
+      playbook_company_id: body.playbook_company_id,
+      company_name: body.company_name,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Chat failed (${res.status}): ${text.slice(0, 200)}`);
   }
   return res.json();
 }

@@ -32,6 +32,7 @@ export function resolveAssessment(data: ChatResponse | null | undefined): Assess
       playbook_total_matched: factsTable?.playbook_total_matched,
       playbook_company_id: factsTable?.playbook_company_id,
       playbook_company_label: factsTable?.playbook_company_label,
+      summary: factsTable?.summary,
     },
     scope: data.worksheet,
     scope_analysis: data.scope_analysis,

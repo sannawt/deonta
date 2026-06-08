@@ -6,8 +6,14 @@ import re
 from typing import Any, Callable
 
 from logic.law_title_format import (
+    _CATALOG_TOPICS,
+    catalog_codes_from_description,
     catalog_for_primary_document,
     classify_document_tier,
+    format_legal_instrument,
+    format_product_ui_label,
+    infer_catalog_code,
+    infer_related_catalog_code,
     is_noise_document,
     is_uuid_slug,
     parse_document_display,
@@ -53,6 +59,18 @@ RETURN
   '' AS short_name,
   '' AS official_number,
   '' AS description
+"""
+
+CATALOG_DOCUMENT_CANDIDATES_CYPHER = """
+UNWIND $patterns AS pattern
+MATCH (d:Document)
+WHERE toLower(d.title) CONTAINS toLower(pattern.text)
+RETURN
+  pattern.code AS catalog_code,
+  pattern.text AS pattern_text,
+  coalesce(d.id, elementId(d)) AS reg_id,
+  coalesce(d.title, d.name, '') AS name
+LIMIT 300
 """
 
 DOCUMENTS_BY_IDS_CYPHER = """
@@ -245,6 +263,245 @@ def _fetch_documents_by_ids(driver: Any, database: str, ids: list[str]) -> list[
         }
         for row in rows
     ]
+
+
+def _catalog_search_patterns(catalog_code: str) -> list[str]:
+    row = law_by_code(catalog_code) or {}
+    patterns: list[str] = []
+    if row.get("number"):
+        patterns.append(str(row["number"]))
+    if row.get("label"):
+        patterns.append(str(row["label"]))
+    for topic in _CATALOG_TOPICS.get(catalog_code, ())[:3]:
+        patterns.append(topic)
+    out: list[str] = []
+    seen: set[str] = set()
+    for raw in patterns:
+        text = re.sub(r"\s+", " ", str(raw).strip())
+        if len(text) >= 4 and text.lower() not in seen:
+            seen.add(text.lower())
+            out.append(text)
+    return out[:4]
+
+
+_SECONDARY_ANCHOR_PATTERNS: dict[str, tuple[str, ...]] = {
+    "red": ("2022/30",),
+}
+
+_ALLOWED_SECONDARY_ACTS: frozenset[tuple[str, str]] = frozenset(
+    {
+        ("red", "2022/30"),
+    }
+)
+
+
+def _title_matches_catalog_number(title: str, number: str) -> bool:
+    num = (number or "").strip()
+    if not num:
+        return False
+    if re.search(
+        rf"(?:Regulation|Directive)\s*\((?:EU|EC)\)\s*{re.escape(num)}\b",
+        title,
+        re.I,
+    ):
+        return True
+    return bool(re.search(rf"\b{re.escape(num)}\b", title))
+
+
+def _score_catalog_document_candidate(
+    title: str,
+    *,
+    catalog_code: str,
+    pattern_text: str,
+) -> int:
+    if is_noise_document(title):
+        return -1
+    if catalog_code == "reach":
+        if not _title_matches_catalog_number(title, "1907/2006"):
+            return 0
+    primary_code, _, primary_row = catalog_for_primary_document(title)
+    if primary_code == catalog_code:
+        return 1000
+    if primary_row and primary_row.get("code") == catalog_code:
+        return 950
+    tier = classify_document_tier(title)
+    related = infer_related_catalog_code(title)
+    if related == catalog_code and tier in {"delegated", "implementing"}:
+        return 850
+    if (
+        tier == "primary"
+        and related == catalog_code
+        and primary_code != catalog_code
+    ):
+        return 150
+    expected = law_by_code(catalog_code) or {}
+    if expected.get("number"):
+        if _title_matches_catalog_number(title, expected["number"]):
+            if catalog_code == primary_code:
+                return 1000
+            if re.search(r"\bderogation from\b|\bamending directive\b", title, re.I):
+                return 100
+            return 400
+        if tier in {"primary", "council", "commission"}:
+            return 0
+    if pattern_text and pattern_text.lower() in title.lower():
+        return 200
+    return 0
+
+
+def _matches_description_catalog(
+    title: str,
+    reg: dict[str, Any],
+    desc_catalog: set[str],
+) -> bool:
+    if reg.get("catalog_anchor"):
+        return str(reg.get("anchor_catalog_code") or "") in desc_catalog
+    mapped = reg_id_to_code(str(reg.get("reg_id") or ""))
+    tier = classify_document_tier(title)
+    code = infer_catalog_code(title, str(reg.get("official_number") or ""))
+    if re.search(r"\bderogation from\b", title, re.I):
+        return False
+    if tier == "primary" and (code in desc_catalog or mapped in desc_catalog):
+        if re.search(r"\bamending directive\b", title, re.I) and code in desc_catalog:
+            return False
+        return True
+    if tier in {"delegated", "implementing"}:
+        parent = infer_related_catalog_code(title)
+        number = _extract_number(title, str(reg.get("official_number") or ""))
+        if (parent, number) in _ALLOWED_SECONDARY_ACTS:
+            return True
+        return False
+    return mapped in desc_catalog or code in desc_catalog
+
+
+def _fetch_catalog_anchor_documents(
+    driver: Any,
+    database: str,
+    catalog_codes: list[str],
+    *,
+    include_secondary: bool = False,
+) -> list[dict[str, Any]]:
+    patterns: list[dict[str, str]] = []
+    seen_codes: set[str] = set()
+    for code in catalog_codes:
+        if code in seen_codes:
+            continue
+        seen_codes.add(code)
+        for text in _catalog_search_patterns(code):
+            patterns.append({"code": code, "text": text})
+        if include_secondary:
+            for text in _SECONDARY_ANCHOR_PATTERNS.get(code, ()):
+                patterns.append({"code": code, "text": text})
+    if not patterns:
+        return []
+
+    rows: list[dict[str, Any]] = []
+    with driver.session(database=database) as session:
+        try:
+            for code in catalog_codes:
+                code_patterns = [p for p in patterns if p["code"] == code]
+                if not code_patterns:
+                    continue
+                rows.extend(
+                    r.data()
+                    for r in session.run(
+                        CATALOG_DOCUMENT_CANDIDATES_CYPHER,
+                        patterns=code_patterns,
+                    )
+                )
+        except Exception:  # noqa: BLE001
+            return []
+
+    best_by_code: dict[str, tuple[int, dict[str, Any]]] = {}
+    for row in rows:
+        catalog_code = str(row.get("catalog_code") or "")
+        title = str(row.get("name") or "")
+        reg_id = str(row.get("reg_id") or "")
+        if not catalog_code or not reg_id or not title:
+            continue
+        score = _score_catalog_document_candidate(
+            title,
+            catalog_code=catalog_code,
+            pattern_text=str(row.get("pattern_text") or ""),
+        )
+        if score < 200:
+            continue
+        tier = classify_document_tier(title)
+        doc_number = _extract_number(title, title)
+        if tier in {"delegated", "implementing"}:
+            if (catalog_code, doc_number) not in _ALLOWED_SECONDARY_ACTS:
+                continue
+            anchor_key = f"{catalog_code}:{tier}:{doc_number}"
+        else:
+            anchor_key = catalog_code
+        prev = best_by_code.get(anchor_key)
+        if not prev or score > prev[0]:
+            best_by_code[anchor_key] = (
+                score,
+                {
+                    "reg_id": reg_id,
+                    "name": title,
+                    "catalog_code": catalog_code,
+                },
+            )
+
+    anchored: list[dict[str, Any]] = []
+    for _anchor_key, (_score, picked) in best_by_code.items():
+        catalog_code = picked["catalog_code"]
+        anchored.append(
+            {
+                "reg_id": picked["reg_id"],
+                "name": picked["name"],
+                "short_name": "",
+                "official_number": "",
+                "description": "",
+                "texts": [],
+                "hit_count": 0,
+                "vector_hit_count": 1,
+                "max_vector_score": 0.54,
+                "catalog_anchor": True,
+                "anchor_catalog_code": catalog_code,
+            }
+        )
+    anchored_codes = {str(a.get("anchor_catalog_code") or "") for a in anchored}
+    for code in catalog_codes:
+        if code in anchored_codes:
+            continue
+        row = law_by_code(code)
+        if not row:
+            continue
+        rid = "REG_" + code.upper().replace("AI_ACT", "AIACT")
+        anchored.append(
+            {
+                "reg_id": rid,
+                "name": row.get("label") or row.get("short") or code,
+                "short_name": row.get("short") or "",
+                "official_number": row.get("number") or "",
+                "description": row.get("ui_label") or row.get("label") or "",
+                "texts": [],
+                "hit_count": 0,
+                "vector_hit_count": 1,
+                "max_vector_score": 0.52,
+                "catalog_anchor": True,
+                "anchor_catalog_code": code,
+                "catalog_synthetic": True,
+            }
+        )
+    return anchored
+
+
+def _merge_regulation_lists(
+    primary: list[dict[str, Any]],
+    extra: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    seen = {str(r.get("reg_id") or "") for r in primary}
+    merged = list(primary)
+    for reg in extra:
+        reg_id = str(reg.get("reg_id") or "")
+        if reg_id and reg_id not in seen:
+            seen.add(reg_id)
+            merged.append(reg)
+    return merged
 
 
 def _vector_search_top_k(*, limit: int, full_scan: bool, regulation_count: int) -> int:
@@ -576,6 +833,21 @@ def _format_result(
 
     engine_code = catalog_code or (code if code in {r["code"] for r in LAW_CATALOG} else "")
     document_tier = display.get("document_tier") or classify_document_tier(title)
+    ui_label = format_product_ui_label(
+        title,
+        official_number=str(reg.get("official_number") or number or ""),
+        catalog_code=catalog_code,
+        document_tier=document_tier,
+        catalog_row=catalog or None,
+        provision_excerpt=text_block,
+    )
+    legal_instrument = format_legal_instrument(
+        title,
+        official_number=str(reg.get("official_number") or number or ""),
+        catalog_code=catalog_code,
+        document_tier=document_tier,
+        catalog_row=catalog or None,
+    )
     return {
         "code": code,
         "short": short,
@@ -586,12 +858,29 @@ def _format_result(
         "score": round(max(0.0, min(1.0, score)), 4),
         "reg_id": reg_id,
         "label": _excerpt(summary, 220),
+        "ui_label": ui_label,
+        "legal_instrument": legal_instrument,
         "catalog_code": catalog_code or None,
         "document_tier": document_tier,
         "engine_mode": engine_mode_for(engine_code or catalog_code or reg_id_to_code(reg_id)),
         "hit_count": int(reg.get("hit_count") or 0),
         "match_rationale": match_rationale or "",
     }
+
+
+def _result_dedup_key(row: dict[str, Any]) -> str:
+    tier = str(row.get("document_tier") or "")
+    catalog_code = str(row.get("catalog_code") or "").strip()
+    number = str(row.get("number") or "").strip()
+    if catalog_code and tier in {"delegated", "implementing"} and number and number != "—":
+        return f"catalog:{catalog_code}:{number}"
+    if catalog_code and tier not in {"delegated", "implementing"}:
+        return f"catalog:{catalog_code}:instrument"
+    if tier == "primary" and catalog_code:
+        return f"primary:{catalog_code}"
+    if number and number != "—":
+        return f"num:{number}"
+    return f"code:{row.get('code')}"
 
 
 def rank_regulations(
@@ -603,6 +892,7 @@ def rank_regulations(
     include_secondary: bool = False,
     kg_facts: list[dict[str, Any]] | None = None,
     vector_ranked: bool = False,
+    description_catalog_codes: list[str] | None = None,
 ) -> tuple[list[dict[str, Any]], str, int, int]:
     if not regulations:
         return [], "none", 0, 0
@@ -663,14 +953,18 @@ def rank_regulations(
         reverse=True,
     )
     effective_min = min_score + (0.05 if include_secondary else 0.0)
+    desc_catalog = set(description_catalog_codes or [])
     total_ranked = sum(1 for score, *_rest in ranked if score > 0)
     out: list[dict[str, Any]] = []
+    seen_dedup: set[str] = set()
     total_passing = 0
     for score, reg, ret_score, term_score, pred_score, vec_raw in ranked:
         if score <= 0:
             continue
         title = str(reg.get("name") or "")
         if is_noise_document(title):
+            continue
+        if desc_catalog and not _matches_description_catalog(title, reg, desc_catalog):
             continue
         tier = classify_document_tier(title)
         is_catalog_primary = _is_catalog_primary(reg, title)
@@ -694,6 +988,20 @@ def rank_regulations(
             score - (0.0 if is_catalog_primary else tier_score_penalty(tier)),
         )
         adjusted = _calibrated_relevance_score(adjusted, vec_raw)
+        title_code = infer_catalog_code(title, str(reg.get("official_number") or ""))
+        anchor_code = str(reg.get("anchor_catalog_code") or "")
+        if reg.get("catalog_anchor") and anchor_code in desc_catalog:
+            adjusted = max(adjusted, 0.92)
+        elif title_code and title_code in desc_catalog:
+            adjusted = min(1.0, adjusted + 0.10)
+        if desc_catalog and not include_secondary:
+            if (
+                not reg.get("catalog_anchor")
+                and title_code not in desc_catalog
+                and tier not in {"primary", "council"}
+                and adjusted < 0.82
+            ):
+                continue
         if adjusted < effective_min:
             continue
         rationale_parts: list[str] = []
@@ -708,6 +1016,10 @@ def rank_regulations(
         )
         row = _format_result(reg, adjusted, match_rationale=match_text)
         row["rank_method"] = method
+        dedup_key = _result_dedup_key(row)
+        if dedup_key in seen_dedup:
+            continue
+        seen_dedup.add(dedup_key)
         total_passing += 1
         if limit <= 0 or len(out) < limit:
             out.append(row)
@@ -715,11 +1027,44 @@ def rank_regulations(
     return out, method, total_ranked, total_passing
 
 
+def _fill_missing_catalog_rows(
+    results: list[dict[str, Any]],
+    regulations: list[dict[str, Any]],
+    description_catalog_codes: list[str],
+    *,
+    limit: int,
+) -> list[dict[str, Any]]:
+    if not description_catalog_codes:
+        return results
+    out = list(results)
+    present = {str(r.get("catalog_code") or "") for r in out if r.get("catalog_code")}
+    for code in description_catalog_codes:
+        if code in present:
+            continue
+        reg = next(
+            (
+                r
+                for r in regulations
+                if r.get("catalog_anchor") and str(r.get("anchor_catalog_code") or "") == code
+            ),
+            None,
+        )
+        if not reg:
+            continue
+        row = _format_result(reg, 0.92, match_rationale="Matched from EU law catalog for your product profile")
+        row["rank_method"] = "catalog_anchor_fill"
+        out.append(row)
+        present.add(code)
+        if limit > 0 and len(out) >= limit:
+            break
+    return out[:limit] if limit > 0 else out
+
+
 def scan_relevant_laws(
     *,
     description: str,
     kg_facts: list[dict[str, Any]] | None = None,
-    limit: int = 5,
+    limit: int = 15,
     min_score: float = 0.75,
     include_secondary: bool = False,
     full_scan: bool = False,
@@ -727,6 +1072,36 @@ def scan_relevant_laws(
     resolve_database_fn: Callable[[], str],
 ) -> dict[str, Any]:
     """Run law relevance scan against Neo4j legal graph."""
+    from logic.prototype_fast import (
+        catalog_scan_response,
+        get_cached_scan,
+        is_prototype_mode,
+        put_cached_scan,
+        scan_cache_key,
+    )
+
+    cache_key = scan_cache_key(
+        description,
+        limit=limit,
+        min_score=min_score,
+        include_secondary=include_secondary,
+        full_scan=full_scan,
+    )
+    cached = get_cached_scan(cache_key)
+    if cached is not None:
+        return cached
+
+    if is_prototype_mode() and not full_scan:
+        catalog_resp = catalog_scan_response(
+            description,
+            limit=limit,
+            min_score=min_score,
+            include_secondary=include_secondary,
+        )
+        if catalog_resp is not None:
+            put_cached_scan(cache_key, catalog_resp)
+            return catalog_resp
+
     if legal_graph_backend() == "local":
         raise RuntimeError(
             "Law scan requires Neo4j legal Aura (twin_p corpus). Set LEGAL_GRAPH_BACKEND=neo4j "
@@ -736,7 +1111,9 @@ def scan_relevant_laws(
         raise RuntimeError(
             "NEO4J_LEGAL_URI and NEO4J_LEGAL_PASSWORD must be set for law scan."
         )
-    scan_query = build_scan_query(description, kg_facts)
+    # Product law scan ranks against the user's written description only.
+    scan_query = build_scan_query(description, None)
+    description_catalog_codes = catalog_codes_from_description(description)
     driver = get_legal_driver_fn()
     database = resolve_database_fn()
 
@@ -766,6 +1143,16 @@ def scan_relevant_laws(
                 regulations = merge_vector_hits_into_regulations(
                     regulations, vector_by_reg, reg_metadata
                 )
+
+    if description_catalog_codes:
+        anchored = _fetch_catalog_anchor_documents(
+            driver,
+            database,
+            description_catalog_codes,
+            include_secondary=include_secondary,
+        )
+        if anchored:
+            regulations = _merge_regulation_lists(regulations, anchored)
 
     if not regulations:
         try:
@@ -820,13 +1207,21 @@ def scan_relevant_laws(
         limit=rank_limit,
         min_score=min_score,
         include_secondary=include_secondary,
-        kg_facts=kg_facts,
+        kg_facts=None,
         vector_ranked=profile.usable(),
+        description_catalog_codes=description_catalog_codes,
     )
+    if description_catalog_codes and not full_scan:
+        results = _fill_missing_catalog_rows(
+            results,
+            regulations,
+            description_catalog_codes,
+            limit=rank_limit or limit,
+        )
     corpus_chars = sum(len(_regulation_search_blob(r)) for r in regulations)
     total_hits = sum(int(r.get("hit_count") or 0) for r in regulations)
     total_vector_hits = sum(int(r.get("vector_hit_count") or 0) for r in regulations)
-    return {
+    payload = {
         "version": 1,
         "scan_query": scan_query,
         "backend": "neo4j",
@@ -853,3 +1248,5 @@ def scan_relevant_laws(
             "query_model": profile.query_model if vector_used else "",
         },
     }
+    put_cached_scan(cache_key, payload)
+    return payload

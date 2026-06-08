@@ -10,6 +10,8 @@ from logic.law_title_format import (
     extract_short_name,
     extract_topic_keywords,
     finalize_display_short,
+    format_legal_instrument,
+    format_product_ui_label,
     generate_short_handle,
     infer_catalog_code,
     is_noise_document,
@@ -20,6 +22,7 @@ from logic.law_title_format import (
     title_summary,
     _sanitize_keyword_phrase,
 )
+from logic.legal_db import law_by_code
 
 
 def test_extract_official_number_from_regulation_title():
@@ -272,4 +275,58 @@ def test_is_noise_document():
     assert is_noise_document("Draft Commission Implementing Regulation on widgets")
     assert not is_noise_document(
         "Regulation (EU) 2016/679 on the protection of personal data"
+    )
+
+
+def test_format_product_ui_label_from_catalog():
+    title = (
+        "Regulation (EU) 2016/679 of the European Parliament and of the Council "
+        "(General Data Protection Regulation)"
+    )
+    row = law_by_code("gdpr")
+    assert format_product_ui_label(title, catalog_code="gdpr", catalog_row=row) == (
+        "Personal data protection"
+    )
+
+
+def test_format_product_ui_label_delegated_red_cybersecurity():
+    title = (
+        "Commission Delegated Regulation (EU) 2022/30 supplementing Directive 2014/53/EU "
+        "with regard to the application of essential requirements for radio equipment"
+    )
+    assert format_product_ui_label(title, document_tier="delegated") == (
+        "Cybersecurity for connected radio equipment"
+    )
+
+
+def test_format_legal_instrument_primary_regulation():
+    title = (
+        "Regulation (EU) 2024/2847 of the European Parliament and of the Council "
+        "on horizontal cybersecurity requirements for products with digital elements "
+        "(Cyber Resilience Act)"
+    )
+    row = law_by_code("cra")
+    assert format_legal_instrument(
+        title, catalog_code="cra", document_tier="primary", catalog_row=row
+    ) == "Cyber Resilience Act, Regulation (EU) 2024/2847"
+
+
+def test_format_legal_instrument_directive_red():
+    title = (
+        "Directive 2014/53/EU of the European Parliament and of the Council "
+        "on the harmonisation of the laws of the Member States relating to radio equipment"
+    )
+    row = law_by_code("red")
+    assert format_legal_instrument(
+        title, catalog_code="red", document_tier="primary", catalog_row=row
+    ) == "Radio Equipment Directive 2014/53/EU"
+
+
+def test_format_legal_instrument_delegated_under_parent():
+    title = (
+        "Commission Delegated Regulation (EU) 2022/30 supplementing Directive 2014/53/EU "
+        "with regard to the application of essential requirements for radio equipment"
+    )
+    assert format_legal_instrument(title, document_tier="delegated") == (
+        "Commission Delegated Regulation (EU) 2022/30 under RED"
     )

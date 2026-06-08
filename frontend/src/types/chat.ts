@@ -55,6 +55,8 @@ export interface ClarifyingQuestion {
   text?: string;
   predicate?: string;
   missing_atom?: string;
+  regulation?: string;
+  dimension?: string;
 }
 
 export interface PlaybookInfo {
@@ -138,6 +140,11 @@ export interface ScopeDimension {
   llm?: ScopeDimensionLlm;
 }
 
+export interface ScopeLegalTest {
+  label: string;
+  answer: string;
+}
+
 export interface ScopeInstrument {
   id: string;
   label: string;
@@ -150,6 +157,11 @@ export interface ScopeInstrument {
   missing_atoms?: string[];
   dimensions: ScopeDimension[];
   llm_summary?: string;
+  assessment_source?: "symbolic" | "llm_assisted" | "heuristic" | "pending";
+  confidence?: "high" | "medium" | "low";
+  legal_tests?: ScopeLegalTest[];
+  facts_used?: string[];
+  missing_facts?: string[];
 }
 
 export interface ScopeAnalysis {
@@ -205,6 +217,7 @@ export interface ChatResponse {
     from_question?: FactRow[];
     from_playbook?: FactRow[];
     playbook_extended?: FactRow[];
+    summary?: FactsSummary;
     question_count?: number;
     playbook_count?: number;
     playbook_total_matched?: number;

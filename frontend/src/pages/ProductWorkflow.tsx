@@ -21,6 +21,11 @@ import { ApplicabilityScopeView } from "../components/product/ApplicabilityScope
 import { ThinkingOverlay } from "../components/ui/ThinkingOverlay";
 import { PixelIcon } from "../components/ui/PixelIcon";
 import { WorkflowStepper } from "../components/product/WorkflowStepper";
+import {
+  readScanCache,
+  scanCacheKey,
+  writeScanCache,
+} from "../lib/prototypeCache";
 
 type Step = "intake" | "laws" | "scope";
 
@@ -55,7 +60,7 @@ export function ProductWorkflow({
   const [allScanResults, setAllScanResults] = useState<LawScanResult[] | null>(null);
   const [scanResponse, setScanResponse] = useState<LawScanResponse | null>(null);
   const [loadingAllResults, setLoadingAllResults] = useState(false);
-  const [includeSecondary, setIncludeSecondary] = useState(false);
+  const [includeSecondary, setIncludeSecondary] = useState(true);
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [kgNodes, setKgNodes] = useState<KgNode[]>([]);
@@ -158,15 +163,30 @@ export function ProductWorkflow({
   }, [description, files]);
 
   const runLawScan = useCallback(async (secondaryOverride?: boolean) => {
-    setScanning(true);
-    setError(null);
     const includeSec = secondaryOverride ?? includeSecondary;
+    const desc = description.trim();
+    const cacheKey = scanCacheKey(desc, includeSec);
+    const cached = readScanCache(cacheKey);
+    if (cached?.results?.length) {
+      const rows = cached.results;
+      setScanResponse(cached);
+      setScanResults(rows);
+      setAllScanResults(null);
+      setSpec((s) => ({
+        ...s,
+        selectedLaws:
+          s.selectedLaws?.length
+            ? s.selectedLaws.filter((c) => rows.some((r) => r.code === c))
+            : rows.map((r) => r.code),
+      }));
+    }
+    setScanning(!cached?.results?.length);
+    setError(null);
     try {
-      const queryText = [description.trim(), spec.summary?.trim()].filter(Boolean).join("\n");
       const data = await scanRelevantLaws({
-        description: queryText,
-        kg_facts: kgFacts,
-        limit: 5,
+        description: description.trim(),
+        kg_facts: [],
+        limit: 15,
         min_score: 0.75,
         include_secondary: includeSec,
         full_scan: false,
@@ -180,8 +200,9 @@ export function ProductWorkflow({
         selectedLaws:
           s.selectedLaws?.length
             ? s.selectedLaws.filter((c) => rows.some((r) => r.code === c))
-            : rows.slice(0, 3).map((r) => r.code),
+            : rows.map((r) => r.code),
       }));
+      writeScanCache(cacheKey, data);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Law scan failed");
       setScanResponse(null);
@@ -190,17 +211,16 @@ export function ProductWorkflow({
     } finally {
       setScanning(false);
     }
-  }, [description, spec.summary, kgFacts, includeSecondary]);
+  }, [description, includeSecondary]);
 
   const loadAllScanResults = useCallback(async () => {
     if (loadingAllResults || allScanResults) return;
     setLoadingAllResults(true);
     setError(null);
     try {
-      const queryText = [description.trim(), spec.summary?.trim()].filter(Boolean).join("\n");
       const data = await scanRelevantLaws({
-        description: queryText,
-        kg_facts: kgFacts,
+        description: description.trim(),
+        kg_facts: [],
         limit: 0,
         min_score: 0.75,
         include_secondary: includeSecondary,
@@ -224,9 +244,7 @@ export function ProductWorkflow({
     allScanResults,
     description,
     includeSecondary,
-    kgFacts,
     loadingAllResults,
-    spec.summary,
   ]);
 
   function handleCheckApplicability() {
@@ -310,13 +328,13 @@ export function ProductWorkflow({
         <ApplicabilityScopeView
           selectedLaws={spec.selectedLaws ?? []}
           scanResults={scanResults}
+          allScanResults={allScanResults}
+          scanResponse={scanResponse}
           spec={spec}
           description={description}
           kgFacts={kgFacts}
           playbookCompanyId={playbookCompanyId}
           onComplete={onComplete}
-          onBackToLaws={() => setStep("laws")}
-          onEditProduct={() => setStep("intake")}
         />
       </>
     );
@@ -384,22 +402,6 @@ export function ProductWorkflow({
               onFilesChange={setFiles}
               onSeeLaws={handleSeeLaws}
             />
-            {kgFacts.some((f) => f.predicate && f.args?.length) && (
-              <div className="ct-product-predicate-facts">
-                <h3 className="ct-card-title">Extracted facts</h3>
-                <ul className="ct-product-fact-list">
-                  {kgFacts
-                    .filter((f) => f.predicate && f.args?.length)
-                    .slice(0, 12)
-                    .map((f) => (
-                      <li key={f.id}>
-                        <code>{f.value || f.label}</code>
-                        {f.source && <span className="ct-muted"> · {f.source}</span>}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            )}
           </div>
           <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
         </div>

@@ -4,17 +4,20 @@ Structured product assessment pipeline (no chat UI dependency).
 
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Optional
 
 from logic.chat_adapter import build_chat_response
+from logic.corpus import load_regulations
 from logic.fact_extractor import propose_scope_facts
+from logic.legal_db import engine_mode_for, law_by_code
+from logic.llm_scope_assess import assess_retrieval_laws
 from logic.predicate_facts import (
     clarifying_questions_from_missing,
     merge_scenario_facts,
     missing_predicates_for_regulations,
 )
 from logic.reasoner import run_universal_reasoner
-from logic.corpus import load_regulations
 from logic.terms import terms_from_question
 
 # Imported from main at runtime to avoid circular imports — callers pass helpers.
@@ -60,6 +63,7 @@ def spec_to_situation(spec: dict[str, Any], kg_facts: list[dict[str, Any]] | Non
 
 
 def _normalize_regulation_codes(codes: list[str] | None) -> list[str]:
+    """Corpus regulation keys for the symbolic reasoner (gdpr, ai_act, …)."""
     if not codes:
         return list(load_regulations())
     known = set(load_regulations())
@@ -69,6 +73,58 @@ def _normalize_regulation_codes(codes: list[str] | None) -> list[str]:
         if code in known and code not in out:
             out.append(code)
     return out or list(load_regulations())
+
+
+def _normalize_catalog_codes(codes: list[str] | None) -> list[str]:
+    """All selected catalog law codes (including retrieval-only instruments)."""
+    if not codes:
+        return []
+    out: list[str] = []
+    for raw in codes:
+        code = str(raw).strip().lower().replace("-", "_")
+        if code and code not in out:
+            out.append(code)
+    return out
+
+
+def _normalize_selected_laws(
+    selected_laws: list[dict[str, Any]] | None,
+    catalog_codes: list[str],
+) -> list[dict[str, Any]]:
+    """Merge explicit selected_laws payload with catalog code fallbacks."""
+    by_code: dict[str, dict[str, Any]] = {}
+    for row in selected_laws or []:
+        code = str(row.get("code") or "").strip().lower().replace("-", "_")
+        if not code:
+            continue
+        catalog = law_by_code(code) or {}
+        by_code[code] = {
+            "code": code,
+            "label": row.get("label") or catalog.get("label") or code,
+            "short": row.get("short") or catalog.get("short") or "",
+            "ui_label": row.get("ui_label") or catalog.get("ui_label") or "",
+            "legal_instrument": row.get("legal_instrument") or catalog.get("label") or "",
+            "number": row.get("number") or catalog.get("number") or "",
+            "engine_mode": row.get("engine_mode") or engine_mode_for(code),
+            "score": row.get("score"),
+        }
+
+    for code in catalog_codes:
+        if code in by_code:
+            continue
+        catalog = law_by_code(code) or {}
+        by_code[code] = {
+            "code": code,
+            "label": catalog.get("label") or code,
+            "short": catalog.get("short") or "",
+            "ui_label": catalog.get("ui_label") or "",
+            "legal_instrument": catalog.get("label") or "",
+            "number": catalog.get("number") or "",
+            "engine_mode": engine_mode_for(code),
+            "score": None,
+        }
+
+    return list(by_code.values())
 
 
 def _kg_facts_to_predicate_atoms(kg_facts: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
@@ -92,6 +148,7 @@ def run_product_assess(
     *,
     spec: dict[str, Any],
     kg_facts: list[dict[str, Any]] | None = None,
+    selected_laws: list[dict[str, Any]] | None = None,
     playbook_company_id: Optional[str] = None,
     account_id: Optional[str] = None,
     account_playbook_id: Optional[str] = None,
@@ -106,9 +163,10 @@ def run_product_assess(
     build_rule_catalog_fn,
 ) -> dict[str, Any]:
     """Run applicability pipeline and return chat-compatible assess envelope."""
-    selected_regs = _normalize_regulation_codes(
-        spec.get("regulations") or spec.get("selectedLaws")
-    )
+    raw_codes = spec.get("regulations") or spec.get("selectedLaws") or []
+    catalog_codes = _normalize_catalog_codes(raw_codes if isinstance(raw_codes, list) else None)
+    selected_law_rows = _normalize_selected_laws(selected_laws, catalog_codes)
+    selected_regs = _normalize_regulation_codes(catalog_codes or None)
     situation = spec_to_situation(spec, kg_facts)
     terms = terms_from_question(situation)
     legal, playbook = fetch_legal_playbook_fn(
@@ -116,6 +174,16 @@ def run_product_assess(
         playbook_company_id=playbook_company_id,
         account_id=account_id,
         account_playbook_id=account_playbook_id,
+    )
+
+    llm_pool = ThreadPoolExecutor(max_workers=1)
+    llm_future = llm_pool.submit(
+        assess_retrieval_laws,
+        selected_law_rows,
+        spec=spec,
+        kg_facts=kg_facts,
+        legal_matches=legal.get("matches") or [],
+        symbolic_codes=set(selected_regs),
     )
 
     proposed = propose_scope_facts(
@@ -197,6 +265,11 @@ def run_product_assess(
             questions.append(q)
             seen_q.add(q.get("id"))
 
+    try:
+        llm_scope_instruments = llm_future.result()
+    finally:
+        llm_pool.shutdown(wait=False)
+
     flow_response = {
         **core.model_dump(),
         "situation": situation,
@@ -212,6 +285,8 @@ def run_product_assess(
         "universal": universal,
         "legal": legal,
         "playbook": playbook,
+        "selected_laws": selected_law_rows,
+        "llm_scope_instruments": llm_scope_instruments,
     }
     rule_catalog_resp = build_rule_catalog_fn()
     rule_catalog_list = [p.model_dump() for p in rule_catalog_resp.provisions]
@@ -230,5 +305,6 @@ def run_product_assess(
         "build_stale": cs.get("stale"),
     }
     resp["selected_regulations"] = selected_regs
+    resp["selected_laws"] = selected_law_rows
     resp["missing_predicates"] = missing
     return resp

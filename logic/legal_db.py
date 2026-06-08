@@ -15,16 +15,23 @@ EngineMode = Literal["symbolic", "retrieval_only", "planned"]
 
 # EU tech law catalog (expand over time; US = planned)
 LAW_CATALOG: tuple[dict[str, str], ...] = (
-    {"code": "gdpr", "label": "GDPR", "short": "GDPR", "number": "2016/679"},
-    {"code": "ai_act", "label": "EU AI Act", "short": "AI Act", "number": "2024/1689"},
-    {"code": "cra", "label": "Cyber Resilience Act (CRA)", "short": "CRA", "number": "2024/2847"},
-    {"code": "dora", "label": "DORA", "short": "DORA", "number": "2022/2554"},
-    {"code": "nis2", "label": "NIS2", "short": "NIS2", "number": "2022/2555"},
-    {"code": "data_act", "label": "EU Data Act", "short": "Data Act", "number": "2023/2854"},
-    {"code": "eprivacy", "label": "ePrivacy", "short": "ePrivacy", "number": "2002/58/EC"},
-    {"code": "gpsr", "label": "GPSR", "short": "GPSR", "number": "2023/988"},
-    {"code": "dma", "label": "DMA", "short": "DMA", "number": "2022/1925"},
-    {"code": "dsa", "label": "DSA", "short": "DSA", "number": "2022/2065"},
+    {"code": "gdpr", "label": "GDPR", "short": "GDPR", "number": "2016/679", "ui_label": "Personal data protection"},
+    {"code": "ai_act", "label": "EU AI Act", "short": "AI Act", "number": "2024/1689", "ui_label": "AI system classification"},
+    {"code": "cra", "label": "Cyber Resilience Act (CRA)", "short": "CRA", "number": "2024/2847", "ui_label": "Cybersecurity by design for connected products"},
+    {"code": "dora", "label": "DORA", "short": "DORA", "number": "2022/2554", "ui_label": "Digital operational resilience"},
+    {"code": "nis2", "label": "NIS2", "short": "NIS2", "number": "2022/2555", "ui_label": "Critical-sector cybersecurity"},
+    {"code": "data_act", "label": "EU Data Act", "short": "Data Act", "number": "2023/2854", "ui_label": "Connected-product data access"},
+    {"code": "eprivacy", "label": "ePrivacy", "short": "ePrivacy", "number": "2002/58/EC", "ui_label": "Electronic communications privacy"},
+    {"code": "gpsr", "label": "General Product Safety Regulation", "short": "GPSR", "number": "2023/988", "ui_label": "General product safety"},
+    {"code": "dma", "label": "DMA", "short": "DMA", "number": "2022/1925", "ui_label": "Digital markets gatekeepers"},
+    {"code": "dsa", "label": "DSA", "short": "DSA", "number": "2022/2065", "ui_label": "Online platform obligations"},
+    {"code": "red", "label": "Radio Equipment Directive", "short": "RED", "number": "2014/53", "ui_label": "Radio equipment / CE marking"},
+    {"code": "eecc", "label": "European Electronic Communications Code", "short": "EECC", "number": "2018/1972", "ui_label": "Telecom networks and services"},
+    {"code": "rohs", "label": "RoHS Directive", "short": "RoHS", "number": "2011/65", "ui_label": "Hazardous substances in electronics"},
+    {"code": "weee", "label": "WEEE Directive", "short": "WEEE", "number": "2012/19", "ui_label": "Electronic waste / take-back"},
+    {"code": "reach", "label": "REACH Regulation", "short": "REACH", "number": "1907/2006", "ui_label": "Chemicals / substances in articles"},
+    {"code": "product_liability", "label": "Product Liability Directive", "short": "PLD", "number": "2024/2853", "ui_label": "Defective product liability"},
+    {"code": "market_surveillance", "label": "Market Surveillance Regulation", "short": "MSR", "number": "2019/1020", "ui_label": "Market surveillance / EU responsible person"},
 )
 
 _SYMBOLIC_CODES = frozenset(load_regulations())

@@ -50,7 +50,7 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
         label: n.label || n.type,
         title: `${n.type}: ${n.label}`,
         shape: "dot",
-        size: n.type === "Product" || n.type === "Scenario" ? 22 : 14,
+        size: n.type === "Product" ? 24 : n.type === "Scenario" ? 20 : 14,
         color: nodeStyle(n.type),
         font: { color: "#334155", size: 13, face: "Plus Jakarta Sans" },
       }))

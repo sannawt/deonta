@@ -81,7 +81,13 @@ def summarize_scope_analysis(scope_analysis: dict[str, Any]) -> dict[str, Any] |
     if not _enabled():
         return None
     instruments = scope_analysis.get("instruments") or []
-    if not instruments:
+    symbolic_only = [
+        i
+        for i in instruments
+        if str(i.get("assessment_source") or "")
+        not in ("llm_assisted", "heuristic", "pending")
+    ]
+    if not symbolic_only:
         return None
 
     api_key = _env("OPENAI_API_KEY")
@@ -92,7 +98,7 @@ def summarize_scope_analysis(scope_analysis: dict[str, Any]) -> dict[str, Any] |
     base_url = _env("OPENAI_BASE_URL", "https://api.openai.com/v1") or "https://api.openai.com/v1"
     url = base_url.rstrip("/") + "/chat/completions"
 
-    payload_in = {"instruments": [_compact_instrument(i) for i in instruments]}
+    payload_in = {"instruments": [_compact_instrument(i) for i in symbolic_only]}
 
     system = (
         "You explain regulatory scope analysis to compliance officers. "

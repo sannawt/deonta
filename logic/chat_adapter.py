@@ -601,15 +601,18 @@ def _build_assessment(
 ) -> dict[str, Any]:
     """Unified assessment envelope for the sticky panel."""
     from logic.facts_summarizer import summarize_facts_for_display
+    from logic.prototype_fast import is_prototype_mode
 
     extended = facts_table.get("playbook_extended") or []
-    facts_summary = summarize_facts_for_display(
-        question=question,
-        from_question=facts_table.get("from_question") or [],
-        from_playbook=facts_table.get("from_playbook") or [],
-        playbook_company_label=str(facts_table.get("playbook_company_label") or ""),
-        playbook_extended_count=len(extended),
-    )
+    facts_summary = None
+    if not is_prototype_mode():
+        facts_summary = summarize_facts_for_display(
+            question=question,
+            from_question=facts_table.get("from_question") or [],
+            from_playbook=facts_table.get("from_playbook") or [],
+            playbook_company_label=str(facts_table.get("playbook_company_label") or ""),
+            playbook_extended_count=len(extended),
+        )
     facts_block: dict[str, Any] = {
         "from_question": facts_table.get("from_question") or [],
         "from_playbook": facts_table.get("from_playbook") or [],
@@ -748,9 +751,14 @@ def build_chat_response(
         question_facts=facts_table.get("from_question") or [],
         case_id=str(flow_response.get("case_id") or "") or None,
         missing_predicates=flow_response.get("missing_predicates") or [],
+        llm_instruments=flow_response.get("llm_scope_instruments") or [],
+        selected_laws=flow_response.get("selected_laws") or [],
     )
-    scope_llm = summarize_scope_analysis(scope_analysis)
-    scope_analysis = merge_scope_llm(scope_analysis, scope_llm)
+    from logic.prototype_fast import is_prototype_mode
+
+    if not is_prototype_mode():
+        scope_llm = summarize_scope_analysis(scope_analysis)
+        scope_analysis = merge_scope_llm(scope_analysis, scope_llm)
 
     assessment = _build_assessment(
         narrative=narrative,

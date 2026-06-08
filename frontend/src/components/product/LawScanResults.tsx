@@ -50,40 +50,29 @@ function LawScanTable({
     <table className="ct-table ct-law-scan-table">
       <thead>
         <tr>
+          <th className="ct-law-scan-index">#</th>
           <th className="ct-law-scan-check" aria-label="Select" />
-          <th>Document title</th>
-          <th>Keywords</th>
-          <th>Relevance score</th>
+          <th>Product UI label</th>
+          <th>Legal instrument</th>
         </tr>
       </thead>
       <tbody>
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           const formatted = formatLawScanRow(row);
-          const keywords = lawScanKeywords(row);
           const selected = selectedCodes.includes(row.code);
           return (
             <tr key={row.code}>
+              <td className="ct-law-scan-index">{index + 1}</td>
               <td className="ct-law-scan-check">
                 <input
                   type="checkbox"
                   checked={selected}
                   onChange={() => onToggle(row.code)}
-                  aria-label={`Select ${formatted.documentTitle}`}
+                  aria-label={`Select ${formatted.productUiLabel}`}
                 />
               </td>
-              <td className="ct-law-scan-doc-title">{formatted.documentTitle}</td>
-              <td className="ct-law-scan-keywords-cell">
-                <KeywordPills keywords={keywords} />
-              </td>
-              <td className="ct-law-scan-score-cell">
-                <span className="ct-law-scan-score" title={formatted.scoreLabel}>
-                  <span
-                    className="ct-law-scan-bar"
-                    style={{ width: formatted.scoreWidth }}
-                  />
-                  {formatted.scoreLabel}
-                </span>
-              </td>
+              <td className="ct-law-scan-ui-label">{formatted.productUiLabel}</td>
+              <td className="ct-law-scan-legal-instrument">{formatted.legalInstrument}</td>
             </tr>
           );
         })}
@@ -135,26 +124,29 @@ function AllResultsPanel({
             <thead>
               <tr>
                 <th>#</th>
-                <th>Document title</th>
+                <th>Product UI label</th>
+                <th>Legal instrument</th>
                 <th>Keywords</th>
                 <th>Score</th>
               </tr>
             </thead>
             <tbody>
-              {results.map((row, index) => (
-                <tr key={row.code}>
-                  <td>{index + 1}</td>
-                  <td className="ct-law-scan-raw-title">
-                    {row.summary || row.label || "—"}
-                  </td>
-                  <td>
-                    <KeywordPills keywords={lawScanKeywords(row)} />
-                  </td>
-                  <td className="ct-law-scan-raw-score">
-                    {Math.round(row.score * 100)}%
-                  </td>
-                </tr>
-              ))}
+              {results.map((row, index) => {
+                const formatted = formatLawScanRow(row);
+                return (
+                  <tr key={row.code}>
+                    <td>{index + 1}</td>
+                    <td className="ct-law-scan-raw-title">{formatted.productUiLabel}</td>
+                    <td>{formatted.legalInstrument}</td>
+                    <td>
+                      <KeywordPills keywords={lawScanKeywords(row)} />
+                    </td>
+                    <td className="ct-law-scan-raw-score">
+                      {Math.round(row.score * 100)}%
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         ) : null}
@@ -176,8 +168,11 @@ function ScanSummary({
   const minPct = Math.round((scanResponse.min_score ?? 0.75) * 100);
   const total = scanResponse.total_match_count ?? scanResponse.match_count ?? resultCount;
   const parts = [
-    `Top ${resultCount} of ${total} document${total === 1 ? "" : "s"} ≥${minPct}% relevance`,
+    `${resultCount} law${resultCount === 1 ? "" : "s"} selected for applicability analysis (≥${minPct}% relevance)`,
   ];
+  if (total > resultCount) {
+    parts.push(`${total} total matches in corpus`);
+  }
   if (!includeSecondary && scanResponse.include_secondary !== true) {
     parts.push("primary legislation only");
   }
@@ -234,7 +229,11 @@ export function LawScanResults({
   return (
     <div className="ct-law-scan">
       <section className="ct-law-scan-user">
-        <h2 className="ct-law-scan-section-title">Suggested laws</h2>
+        <h2 className="ct-law-scan-section-title">Laws selected for applicability analysis</h2>
+        <p className="ct-muted ct-law-scan-intro">
+          Based on your product description, these EU legal instruments are candidates for
+          applicability review. Adjust the selection before continuing.
+        </p>
         <ScanSummary
           scanResponse={scanResponse}
           resultCount={displayRows.length}

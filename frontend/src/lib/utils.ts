@@ -242,6 +242,8 @@ export interface FormattedLawScanRow {
   shortName: string;
   lawNumber: string;
   documentTitle: string;
+  productUiLabel: string;
+  legalInstrument: string;
   catalogBadge: string;
   scoreLabel: string;
   scoreWidth: string;
@@ -331,12 +333,18 @@ export function formatLawScanRow(row: LawScanResult): FormattedLawScanRow {
   const lawNumber =
     row.number && row.number !== "—" ? row.number : "";
   const documentTitle = (row.summary || row.label || row.short || "—").trim();
+  const productUiLabel = (row.ui_label || row.short || documentTitle || "—").trim();
+  const legalInstrument = (
+    row.legal_instrument || documentTitle || row.label || "—"
+  ).trim();
   const scorePct = `${Math.round(Math.max(0, Math.min(1, row.score)) * 100)}%`;
   return {
     key: row.code,
     shortName,
     lawNumber,
     documentTitle,
+    productUiLabel,
+    legalInstrument,
     catalogBadge: badge,
     scoreLabel: scorePct,
     scoreWidth: scorePct,

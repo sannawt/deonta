@@ -392,6 +392,17 @@ def _citations_for_dim(
     return out[:6]
 
 
+def _instrument_reg_keys(instruments: list[dict[str, Any]]) -> set[str]:
+    keys: set[str] = set()
+    for inst in instruments:
+        reg = str(inst.get("reg_key") or inst.get("id") or "").strip().lower()
+        if reg == "eu_ai_act":
+            keys.add("ai_act")
+        elif reg:
+            keys.add(reg.replace("-", "_"))
+    return keys
+
+
 def build_scope_analysis(
     *,
     applicability_results: dict[str, Any],
@@ -400,6 +411,8 @@ def build_scope_analysis(
     question_facts: list[dict[str, Any]] | None = None,
     case_id: str | None = None,
     missing_predicates: list[dict[str, Any]] | None = None,
+    llm_instruments: list[dict[str, Any]] | None = None,
+    selected_laws: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Build per-instrument scope analysis from engine outputs."""
     catalog = _catalog_by_plid(rule_catalog)
@@ -494,7 +507,28 @@ def build_scope_analysis(
                 "risk_category": res.get("risk_category"),
                 "missing_atoms": missing,
                 "dimensions": dimensions,
+                "assessment_source": "symbolic",
             }
         )
+
+    covered = _instrument_reg_keys(instruments)
+    for llm_inst in llm_instruments or []:
+        reg = str(llm_inst.get("reg_key") or "").strip().lower()
+        if reg == "eu_ai_act":
+            reg = "ai_act"
+        if reg and reg in covered:
+            continue
+        instruments.append(llm_inst)
+        if reg:
+            covered.add(reg)
+
+    for law in selected_laws or []:
+        code = str(law.get("code") or "").strip().lower().replace("-", "_")
+        if not code or code in covered:
+            continue
+        from logic.llm_scope_assess import pending_instrument
+
+        instruments.append(pending_instrument(law))
+        covered.add(code)
 
     return {"instruments": instruments}

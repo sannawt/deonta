@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from logic.legal_db import LAW_CATALOG
+from logic.legal_db import LAW_CATALOG, law_by_code
 
 _NUMBER_RE = re.compile(
     r"(?:Regulation|Directive|Decision)\s*\((?:EU|Euratom|EC|EEC)(?:,\s*Euratom)?\)\s*"
@@ -24,8 +24,8 @@ _CONCERNING_RE = re.compile(r"\bconcerning\s+(?:the\s+)?(.+?)(?:\(|\.|$)", re.I)
 _RELATING_RE = re.compile(r"\brelating\s+to\s+(?:the\s+)?(.+?)(?:\(|\.|$)", re.I)
 _PURSUANT_RE = re.compile(r"\bpursuant to\s+(.+?)(?:\(|\.|$)", re.I)
 _SPACING_FIX_RES = (
-    (re.compile(r"(\d{4}/\d+)(of|on|concerning|establishing|pursuant)", re.I), r"\1 \2"),
-    (re.compile(r"(\d{4})(establishing|laying|relating|amending|of|on|concerning|pursuant)", re.I), r"\1 \2"),
+    (re.compile(r"(\d{4}/\d+)(of|on|concerning|establishing|pursuant|supplementing)", re.I), r"\1 \2"),
+    (re.compile(r"(\d{4})(establishing|laying|relating|amending|of|on|concerning|pursuant|supplementing)", re.I), r"\1 \2"),
     (re.compile(r"(Council|Parliament|Commission)(of|on|establishing)", re.I), r"\1 \2"),
     (re.compile(r"(Decision|Regulation|Directive)(EU|EC|EEC)", re.I), r"\1 \2"),
     (re.compile(r"(EU)(\d{4}/\d+)", re.I), r"\1 \2"),
@@ -56,6 +56,12 @@ _KNOWN_TOPIC_PHRASES: tuple[str, ...] = (
     "machine learning",
     "cyber security",
     "cybersecurity",
+    "radio equipment",
+    "electronic communications",
+    "market surveillance",
+    "product liability",
+    "hazardous substances",
+    "electronic waste",
     "network security",
     "financial instruments",
     "criminal records",
@@ -125,17 +131,110 @@ _KEYWORD_STOP = frozenset(
 )
 
 _CATALOG_TOPICS: dict[str, tuple[str, ...]] = {
-    "gdpr": ("personal data", "data processing", "data protection", "privacy"),
-    "ai_act": ("artificial intelligence", "AI systems", "high-risk AI", "machine learning"),
-    "cra": ("cybersecurity", "software products", "vulnerabilities", "digital products"),
+    "gdpr": (
+        "personal data",
+        "data processing",
+        "data protection",
+        "privacy",
+        "device logs",
+        "ip address",
+        "mac address",
+        "operator account",
+    ),
+    "ai_act": (
+        "artificial intelligence",
+        "ai systems",
+        "high-risk ai",
+        "machine learning",
+        "uses ai",
+        " ai ",
+    ),
+    "cra": (
+        "cybersecurity",
+        "software products",
+        "vulnerabilities",
+        "digital products",
+        "embedded firmware",
+        "firmware",
+        "connected product",
+    ),
     "dora": ("digital operational resilience", "financial entities", "ICT risk"),
-    "nis2": ("network security", "critical infrastructure", "cybersecurity"),
-    "data_act": ("data sharing", "IoT products", "cloud switching", "data access"),
-    "eprivacy": ("electronic communications", "cookies", "marketing", "privacy"),
-    "gpsr": ("product safety", "consumer goods", "market surveillance"),
+    "nis2": (
+        "network security",
+        "critical infrastructure",
+        "cybersecurity",
+        "hospitals",
+        "factories",
+        "municipalities",
+    ),
+    "data_act": (
+        "data sharing",
+        "iot products",
+        "cloud switching",
+        "data access",
+        "cloud dashboard",
+        "network performance data",
+    ),
+    "eprivacy": (
+        "electronic communications",
+        "cookies",
+        "marketing",
+        "privacy",
+        "communications privacy",
+        "wireless broadband",
+        "network performance",
+    ),
+    "gpsr": ("product safety", "consumer goods", "market surveillance", "maintenance alerts"),
+    "product_liability": (
+        "product liability",
+        "defective products",
+        "damages",
+        "compensation",
+        "sell the product",
+    ),
     "dma": ("gatekeepers", "digital platforms", "competition", "core platform services"),
     "dsa": ("online platforms", "content moderation", "illegal content", "intermediary services"),
+    "red": (
+        "radio equipment",
+        "electromagnetic compatibility",
+        "ce marking",
+        "wireless devices",
+        "antenna",
+        "receiver box",
+        "wireless broadband",
+    ),
+    "eecc": (
+        "electronic communications",
+        "telecom networks",
+        "telecommunications",
+        "spectrum",
+        "internet provider",
+        "broadband",
+    ),
+    "rohs": ("hazardous substances", "electronics", "restricted substances", "rohs", "receiver box"),
+    "weee": ("electronic waste", "take-back", "weee", "recycling", "antenna kit"),
+    "reach": ("chemicals", "substances", "reach", "articles", "receiver box", "outdoor antenna"),
+    "market_surveillance": (
+        "market surveillance",
+        "compliance",
+        "responsible person",
+        "enforcement",
+        "sell to eu",
+        "selling to eu",
+        "planning to sell",
+        "sell the product",
+    ),
 }
+
+_DESCRIPTION_CATALOG_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\bai\b", re.I), "ai_act"),
+    (re.compile(r"\bantenna\b", re.I), "red"),
+    (re.compile(r"\bfirmware\b", re.I), "cra"),
+    (re.compile(r"\bcloud\b", re.I), "data_act"),
+    (re.compile(r"\bhospital", re.I), "nis2"),
+    (re.compile(r"\bfactor(?:y|ies)\b", re.I), "nis2"),
+    (re.compile(r"\bmunicipalit", re.I), "nis2"),
+)
 # Title keywords → catalog code (longer phrases first)
 _TITLE_KEYWORDS: tuple[tuple[str, str], ...] = (
     ("general data protection regulation", "gdpr"),
@@ -145,8 +244,18 @@ _TITLE_KEYWORDS: tuple[tuple[str, str], ...] = (
     ("digital services act", "dsa"),
     ("digital markets act", "dma"),
     ("network and information security", "nis2"),
-    ("data act", "data_act"),
+    ("european electronic communications code", "eecc"),
+    ("electronic communications code", "eecc"),
+    ("radio equipment directive", "red"),
+    ("radio equipment", "red"),
     ("general product safety regulation", "gpsr"),
+    ("product liability directive", "product_liability"),
+    ("market surveillance and compliance of products", "market_surveillance"),
+    ("market surveillance", "market_surveillance"),
+    ("restriction of the use of certain hazardous substances", "rohs"),
+    ("waste electrical and electronic equipment", "weee"),
+    ("registration, evaluation, authorisation and restriction of chemicals", "reach"),
+    ("data act", "data_act"),
     ("eprivacy", "eprivacy"),
     ("dora", "dora"),
 )
@@ -247,6 +356,12 @@ _HANDLE_PHRASE_MAP: dict[str, str] = {
     "cyber resilience act": "CRA",
     "general product safety": "GPSR",
     "artificial intelligence act": "AI Act",
+    "radio equipment": "RED",
+    "electronic communications code": "EECC",
+    "restriction of the use of certain hazardous substances": "RoHS",
+    "waste electrical and electronic equipment": "WEEE",
+    "market surveillance and compliance of products": "Market surveillance",
+    "product liability": "Product liability",
 }
 
 _HANDLE_VERB_STOP = frozenset(
@@ -351,7 +466,7 @@ def infer_related_catalog_code(title: str, primary_number: str = "") -> str:
         return primary_code
 
     cleaned = clean_document_title(title)
-    parts = re.split(r"\bpursuant to\b", cleaned, maxsplit=1, flags=re.I)
+    parts = re.split(r"\b(?:pursuant to|supplementing)\b", cleaned, maxsplit=1, flags=re.I)
     if len(parts) > 1:
         tail = parts[1][:500]
         for num in extract_all_official_numbers(tail):
@@ -865,6 +980,209 @@ def extract_short_name(title: str) -> str:
         return instrument
 
     return finalize_display_short(title, instrument or "")
+
+
+def catalog_codes_from_description(description: str) -> list[str]:
+    """Infer structured catalog law codes from a product description."""
+    lower = re.sub(r"\s+", " ", (description or "").lower()).strip()
+    if not lower:
+        return []
+    found: list[str] = []
+    seen: set[str] = set()
+
+    def add(code: str) -> None:
+        if code and code not in seen:
+            seen.add(code)
+            found.append(code)
+
+    for rx, code in _DESCRIPTION_CATALOG_PATTERNS:
+        if rx.search(lower):
+            add(code)
+    for code, topics in _CATALOG_TOPICS.items():
+        for topic in topics:
+            if topic in lower:
+                add(code)
+                break
+    for phrase, code in _TITLE_KEYWORDS:
+        if phrase in lower:
+            add(code)
+    return found
+
+
+def _catalog_act_name(row: dict[str, str]) -> str:
+    label = (row.get("label") or "").strip()
+    return re.sub(r"\s*\([^)]+\)\s*$", "", label).strip() or label
+
+
+def _instrument_kind_from_title(title: str) -> str:
+    head = (title or "")[:120].lower()
+    if re.search(r"\bdirective\b", head):
+        return "directive"
+    if re.search(r"\bregulation\b", head):
+        return "regulation"
+    return ""
+
+
+def _official_number_display(title: str, number: str, *, catalog_code: str = "") -> str:
+    num = (number or "").strip()
+    if not num:
+        return ""
+    if re.search(rf"{re.escape(num)}\s*/\s*EC", title or "", re.I) or catalog_code == "reach":
+        return f"(EC) No {num}" if catalog_code == "reach" else f"{num}/EC"
+    if num.endswith("/EC") or num.endswith("/EU"):
+        return num
+    if _instrument_kind_from_title(title) == "directive" or catalog_code in {
+        "eprivacy",
+        "eecc",
+        "red",
+        "rohs",
+        "weee",
+        "product_liability",
+        "nis2",
+    }:
+        return f"{num}/EU"
+    return num
+
+
+def format_legal_instrument(
+    title: str,
+    *,
+    official_number: str = "",
+    catalog_code: str = "",
+    document_tier: str = "",
+    catalog_row: dict[str, str] | None = None,
+) -> str:
+    """Human-readable legal instrument line for applicability tables."""
+    cleaned = clean_document_title(title)
+    tier = document_tier or classify_document_tier(title)
+    number = official_number or extract_official_number(title)
+    row = catalog_row or (law_by_code(catalog_code) if catalog_code else None)
+    related_code = infer_related_catalog_code(title, number) if not catalog_code else catalog_code
+    parent = law_by_code(related_code) if related_code else None
+
+    if tier in {"delegated", "implementing"}:
+        match = re.search(
+            r"(Commission (?:Delegated|Implementing) (?:Regulation|Decision) \(EU\) \d{4}/\d+)",
+            cleaned,
+            re.I,
+        )
+        if match and parent:
+            parent_short = parent.get("short") or _catalog_act_name(parent)
+            return f"{match.group(1)} under {parent_short}"
+        summary = title_summary(cleaned, max_len=220)
+        if summary:
+            return summary
+        return cleaned[:220].rstrip()
+
+    if row:
+        act = _catalog_act_name(row)
+        short = (row.get("short") or "").strip()
+        num = row.get("number") or number
+        num_display = _official_number_display(title, num, catalog_code=row.get("code") or catalog_code)
+        kind = _instrument_kind_from_title(cleaned) or (
+            "directive" if "directive" in act.lower() else "regulation"
+        )
+        code = row.get("code") or catalog_code
+        acronym_regs = frozenset({"GDPR", "GPSR", "NIS2", "DORA", "DMA", "DSA"})
+        if code == "reach":
+            return f"REACH Regulation {num_display}"
+        if kind == "directive":
+            if code == "eprivacy":
+                return f"ePrivacy Directive {num_display}"
+            if act.lower().endswith("directive"):
+                return f"{act} {num_display}"
+            return f"{act} Directive {num_display}"
+        if code == "ai_act":
+            return f"EU AI Act, Regulation (EU) {num}"
+        if code == "market_surveillance":
+            return (
+                f"Regulation (EU) {num} on market surveillance and compliance of products"
+            )
+        if short in acronym_regs:
+            return f"{short}, Regulation (EU) {num}"
+        return f"{act}, Regulation (EU) {num}"
+
+    summary = title_summary(cleaned, max_len=220)
+    return summary or cleaned[:220].rstrip()
+
+
+def format_product_ui_label(
+    title: str,
+    *,
+    official_number: str = "",
+    catalog_code: str = "",
+    document_tier: str = "",
+    catalog_row: dict[str, str] | None = None,
+    provision_excerpt: str = "",
+) -> str:
+    """Short product-facing topic label derived from catalog metadata or document title."""
+    tier = document_tier or classify_document_tier(title)
+    cleaned = clean_document_title(title)
+    lower = cleaned.lower()
+    row = catalog_row or (law_by_code(catalog_code) if catalog_code else None)
+    related_code = infer_related_catalog_code(title, official_number) if tier in {
+        "delegated",
+        "implementing",
+    } else catalog_code
+    parent = law_by_code(related_code) if related_code else None
+
+    if tier in {"delegated", "implementing"}:
+        if ("2022/30" in lower and "2014/53" in lower) and (
+            "cyber" in lower
+            or "essential requirements" in lower
+            or "fraud" in lower
+            or "2022/30" in lower
+        ):
+            return "Cybersecurity for connected radio equipment"
+    if tier in {"delegated", "implementing"} and parent:
+        if (
+            related_code == "red"
+            or ("2022/30" in lower and "2014/53" in lower)
+        ) and (
+            "cyber" in lower
+            or "essential requirements" in lower
+            or "fraud" in lower
+            or "2022/30" in lower
+        ):
+            return "Cybersecurity for connected radio equipment"
+        topics = extract_topic_keywords(
+            title,
+            catalog_code=related_code,
+            provision_excerpt=provision_excerpt,
+        )
+        label = _phrase_as_ui_label(topics[0]) if topics else ""
+        if label:
+            return label
+        subject = _subject_compact_handle(title, max_words=5)
+        if len(subject) >= 3:
+            return subject
+
+    if row and row.get("ui_label") and tier in {"primary", "council", "commission", "other", "unknown", ""}:
+        return row["ui_label"]
+
+    if row and row.get("ui_label"):
+        return row["ui_label"]
+
+    topics = extract_topic_keywords(
+        title,
+        catalog_code=catalog_code or related_code,
+        provision_excerpt=provision_excerpt,
+    )
+    label = _phrase_as_ui_label(topics[0]) if topics else ""
+    if label:
+        return label
+
+    subject = _subject_compact_handle(title, max_words=5)
+    if len(subject) >= 3:
+        return subject
+    return title_summary(title, max_len=80) or cleaned[:80].rstrip()
+
+
+def _phrase_as_ui_label(phrase: str) -> str:
+    cleaned = _sanitize_keyword_phrase(phrase)
+    if len(cleaned) < 3:
+        return ""
+    return cleaned[0].upper() + cleaned[1:]
 
 
 def title_summary(title: str, *, max_len: int = 300) -> str:

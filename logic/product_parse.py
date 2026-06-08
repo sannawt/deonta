@@ -7,7 +7,16 @@ import os
 import re
 from typing import Any, BinaryIO
 
-from logic.fact_extractor import _AI, _EU, _PERSONAL, _PROCESSING, _PROVIDER
+from logic.fact_extractor import _AI, _PERSONAL, _PROCESSING, _PROVIDER
+
+# Territorial nexus only — selling *to* EU customers is not enough for euLink=yes.
+_EU_TERRITORIAL_LINK = re.compile(
+    r"\b(?:established|based|located|headquartered|operat(?:e|ing)|process(?:es|ing)?)\s+"
+    r"(?:data\s+)?in\s+(?:the\s+)?(?:EU|EEA|European Union)\b"
+    r"|(?:EU|EEA)\s+(?:establishment|branch|office|subsidiary)\b"
+    r"|in\s+the\s+(?:EU|EEA)\s+(?:as\s+)?(?:a\s+)?(?:controller|processor|provider)\b",
+    re.I,
+)
 from logic.kg_schema import graph_edge, graph_node, new_node_id
 from logic.predicate_facts import graph_to_predicate_facts
 
@@ -158,15 +167,16 @@ def parse_description(text: str) -> dict[str, Any]:
     nodes: list[dict[str, Any]] = []
     edges: list[dict[str, Any]] = []
 
-    scenario_id = new_node_id("sc")
-    scenario_node = graph_node(
-        node_id=scenario_id,
-        node_type="Scenario",
-        label=name or "Product scenario",
+    product_id = new_node_id("pr")
+    product_label = name or "Your product"
+    product_node = graph_node(
+        node_id=product_id,
+        node_type="Product",
+        label=product_label,
         properties={"description": raw[:4000]},
         source="parse",
     )
-    nodes.append(scenario_node)
+    nodes.append(product_node)
 
     org_id = new_node_id("ac")
     org_props: dict[str, Any] = {}
@@ -181,7 +191,7 @@ def parse_description(text: str) -> dict[str, Any]:
             source="parse",
         )
     )
-    edges.append(graph_edge(from_id=org_id, to_id=scenario_id, edge_type="PARTICIPATES_IN"))
+    edges.append(graph_edge(from_id=org_id, to_id=product_id, edge_type="PARTICIPATES_IN"))
 
     for market in markets[:8]:
         mid = new_node_id("mk")
@@ -193,7 +203,7 @@ def parse_description(text: str) -> dict[str, Any]:
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=scenario_id, to_id=mid, edge_type="OPERATES_IN"))
+        edges.append(graph_edge(from_id=product_id, to_id=mid, edge_type="OPERATES_IN"))
 
     personal_signal = _signal_from_text(raw, _PERSONAL)
     processing_signal = "yes" if _PROCESSING.search(raw) else "unknown"
@@ -211,7 +221,7 @@ def parse_description(text: str) -> dict[str, Any]:
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=scenario_id, to_id=did, edge_type="PROCESSES_DATA"))
+        edges.append(graph_edge(from_id=product_id, to_id=did, edge_type="PROCESSES_DATA"))
         person_id = new_node_id("ps")
         if personal_signal == "yes":
             nodes.append(
@@ -239,19 +249,18 @@ def parse_description(text: str) -> dict[str, Any]:
                 source="parse",
             )
         )
-        edges.append(graph_edge(from_id=scenario_id, to_id=aid, edge_type="USES_AI"))
+        edges.append(graph_edge(from_id=product_id, to_id=aid, edge_type="USES_AI"))
         if _PROVIDER.search(raw):
             edges.append(graph_edge(from_id=org_id, to_id=aid, edge_type="ACTS_AS"))
 
     if processing_signal == "yes":
-        scenario_node.setdefault("properties", {})["processing"] = "yes"
+        product_node.setdefault("properties", {})["processing"] = "yes"
     if _AI.search(raw) or _PROCESSING.search(raw):
-        scenario_node.setdefault("properties", {})["automated_means"] = "yes"
+        product_node.setdefault("properties", {})["automated_means"] = "yes"
 
-    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=scenario_id)
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=product_id)
     facts = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
-    eu_markets = {m.upper() for m in markets} & {"EU", "EEA"}
-    eu_link = "yes" if (_EU.search(raw) or eu_markets) else "unknown"
+    eu_link = "yes" if _EU_TERRITORIAL_LINK.search(raw) else "unknown"
     return {
         "name": name,
         "summary": raw,
@@ -283,16 +292,16 @@ def parse_documents(files: list[tuple[str, bytes]]) -> dict[str, Any]:
         )
     combined = "\n\n".join(chunks)
     parsed = parse_description(combined)
-    scenario_id = None
+    product_id = None
     for n in parsed.get("nodes") or []:
         if n.get("type") in ("Product", "Scenario"):
-            scenario_id = n.get("id")
+            product_id = n.get("id")
             break
     for dn in doc_nodes:
         parsed.setdefault("nodes", []).append(dn)
-        if scenario_id:
+        if product_id:
             parsed.setdefault("edges", []).append(
-                graph_edge(from_id=scenario_id, to_id=dn["id"], edge_type="DESCRIBED_BY")
+                graph_edge(from_id=product_id, to_id=dn["id"], edge_type="DESCRIBED_BY")
             )
     parsed["document_count"] = len(files)
     return parsed
@@ -347,6 +356,8 @@ def llm_enrich_json(text: str) -> dict[str, Any] | None:
         prompt = (
             "Extract JSON with keys: name, markets (array), processesPersonalData (yes/no/unknown), "
             "euLink (yes/no/unknown), aiSystem (yes/no/unknown), summary (string). "
+            "Set euLink to yes only when the organisation has a clear EU/EEA territorial nexus "
+            "(established, based, or processing data in the EU) — not merely selling to EU customers. "
             "Product description:\n" + text[:6000]
         )
         body = json.dumps(
@@ -399,11 +410,11 @@ def parse_product_input(
 
     nodes = parsed.get("nodes") or []
     edges = parsed.get("edges") or []
-    scenario_id = next(
-        (n.get("id") for n in nodes if n.get("type") == "Scenario"),
-        "scenario",
+    product_id = next(
+        (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),
+        "product",
     )
-    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(scenario_id))
+    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(product_id))
     parsed["predicate_facts"] = predicate_facts
     parsed["facts"] = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
     return parsed

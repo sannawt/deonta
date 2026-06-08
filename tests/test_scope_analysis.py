@@ -114,3 +114,83 @@ def test_build_scope_analysis_rules_invoked():
     mat = next(d for d in gdpr["dimensions"] if d["id"] == "material")
     assert len(mat["rules_invoked"]) >= 1
     assert mat["rules_invoked"][0]["provision_long_id"] == "GDPR_A4.1"
+
+
+def test_build_scope_analysis_merges_llm_instruments():
+    llm_gpsr = {
+        "id": "GPSR",
+        "label": "GPSR",
+        "full_name": "General Product Safety Regulation",
+        "reg_key": "gpsr",
+        "verdict": "cannot_determine",
+        "verdict_display": "Cannot conclude yet",
+        "headline": "GPSR scope open",
+        "dimensions": [
+            {
+                "id": "material",
+                "label": "Material scope",
+                "result": "UNKNOWN",
+                "evidence": "",
+                "decisive_facts": [],
+                "citations": [],
+                "rules_invoked": [],
+            }
+        ],
+        "legal_tests": [{"label": "Consumer product on EU market?", "answer": "unknown"}],
+        "assessment_source": "llm_assisted",
+    }
+    out = build_scope_analysis(
+        applicability_results=_applicability(),
+        provenance=_provenance(),
+        rule_catalog=[],
+        llm_instruments=[llm_gpsr],
+        selected_laws=[
+            {"code": "gdpr"},
+            {"code": "ai_act"},
+            {"code": "gpsr"},
+            {"code": "red"},
+        ],
+    )
+    ids = {i["id"] for i in out["instruments"]}
+    assert "GDPR" in ids
+    assert "EU_AI_ACT" in ids
+    assert "GPSR" in ids
+    assert "RED" in ids
+    gpsr = next(i for i in out["instruments"] if i["id"] == "GPSR")
+    assert gpsr["assessment_source"] == "llm_assisted"
+    gdpr = next(i for i in out["instruments"] if i["id"] == "GDPR")
+    assert gdpr["assessment_source"] == "symbolic"
+
+
+def test_build_scope_analysis_per_reg_missing_atoms():
+    missing = [
+        {
+            "regulation": "gdpr",
+            "dimension": "material",
+            "predicate": "processing",
+            "example": "processing(case, data)",
+            "description": "Is there processing?",
+        }
+    ]
+    out = build_scope_analysis(
+        applicability_results=_applicability(),
+        provenance=_provenance(),
+        rule_catalog=[],
+        missing_predicates=missing,
+        selected_laws=[{"code": "gdpr"}, {"code": "gpsr"}],
+        llm_instruments=[
+            {
+                "id": "GPSR",
+                "label": "GPSR",
+                "full_name": "GPSR",
+                "reg_key": "gpsr",
+                "verdict": "cannot_determine",
+                "dimensions": [],
+                "assessment_source": "llm_assisted",
+            }
+        ],
+    )
+    gdpr = next(i for i in out["instruments"] if i["id"] == "GDPR")
+    gpsr = next(i for i in out["instruments"] if i["id"] == "GPSR")
+    assert any("processing" in a for a in gdpr.get("missing_atoms") or [])
+    assert not any("processing" in a for a in gpsr.get("missing_atoms") or [])
