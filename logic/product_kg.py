@@ -5,9 +5,11 @@ from __future__ import annotations
 import re
 from typing import Any, Optional
 
+from logic.kg_intake_extract import extract_intake_from_documents, merge_intake
 from logic.kg_schema import graph_edge, graph_node
 from logic.playbook_merge import get_playbook, rank_playbook_nodes_for_terms
-from logic.predicate_facts import graph_to_predicate_facts
+from logic.predicate_facts import graph_to_predicate_facts, missing_predicates_for_regulations
+from logic.kg_intake_builder import build_from_intake
 from logic.product_parse import kg_nodes_to_facts, parse_product_input
 
 
@@ -23,7 +25,7 @@ def link_playbook_nodes(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Add playbook nodes and alignment edges to product graph."""
     blob = " ".join(
-        f"{n.get('label','')} {n.get('properties',{})}" for n in product_nodes
+        f"{n.get('label','')} {n.get('properties', {})}" for n in product_nodes
     )
     terms = _tokenize(blob)
     ranked = rank_playbook_nodes_for_terms(playbook_doc, terms, cap=cap)
@@ -74,8 +76,29 @@ def build_product_kg(
     description: str = "",
     files: list[tuple[str, bytes]] | None = None,
     manual_nodes: list[dict[str, Any]] | None = None,
+    intake: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    parsed = parse_product_input(description=description, files=files or [])
+    suggested_intake: dict[str, Any] = {}
+    field_sources: dict[str, str] = {}
+
+    if files:
+        extracted = extract_intake_from_documents(files)
+        suggested_intake = extracted.get("intake") or {}
+        field_sources = extracted.get("field_sources") or {}
+
+    merged_intake, merged_sources = merge_intake(intake, suggested_intake, extracted_sources=field_sources)
+
+    if intake or files or merged_intake:
+        parsed = build_from_intake(merged_intake)
+        if description.strip():
+            enrich = parse_product_input(description=description, use_llm=False)
+            spec = parsed.setdefault("spec", {})
+            for key in ("name", "summary", "markets", "processesPersonalData", "euLink", "aiSystem"):
+                if not spec.get(key) and enrich.get(key):
+                    spec[key] = enrich[key]
+    else:
+        parsed = parse_product_input(description=description, files=files or [])
+
     nodes = list(parsed.get("nodes") or [])
     edges = list(parsed.get("edges") or [])
 
@@ -109,13 +132,19 @@ def build_product_kg(
         else:
             f["provenance"] = f.get("source") or "manual"
 
+    missing_predicates = missing_predicates_for_regulations(
+        ["gdpr", "eu_ai_act"],
+        predicate_facts,
+    )
+
     return {
         "version": 1,
         "nodes": nodes,
         "edges": edges,
         "facts": facts,
         "predicate_facts": predicate_facts,
-        "spec": {
+        "spec": parsed.get("spec")
+        or {
             "name": parsed.get("name") or "",
             "summary": parsed.get("summary") or description,
             "markets": parsed.get("markets") or [],
@@ -125,35 +154,7 @@ def build_product_kg(
         },
         "playbook_id": playbook_id,
         "playbook_linked": bool(playbook_doc),
+        "suggested_intake": suggested_intake,
+        "field_sources": merged_sources,
+        "missing_predicates": missing_predicates[:12],
     }
-
-
-def merge_kg_patch(
-    kg: dict[str, Any],
-    patch_nodes: list[dict[str, Any]] | None = None,
-    patch_edges: list[dict[str, Any]] | None = None,
-) -> dict[str, Any]:
-    nodes = list(kg.get("nodes") or [])
-    edges = list(kg.get("edges") or [])
-    by_id = {n["id"]: n for n in nodes if n.get("id")}
-    if patch_nodes:
-        for n in patch_nodes:
-            if n.get("id"):
-                n = {**n, "source": n.get("source") or "manual"}
-                by_id[n["id"]] = n
-    nodes = list(by_id.values())
-    if patch_edges:
-        seen = {(e.get("from"), e.get("to"), e.get("type")) for e in edges}
-        for e in patch_edges:
-            key = (e.get("from"), e.get("to"), e.get("type"))
-            if key not in seen:
-                edges.append(e)
-                seen.add(key)
-    scenario_id = next(
-        (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),
-        "scenario",
-    )
-    predicate_facts = graph_to_predicate_facts(nodes, edges, case_id=str(scenario_id))
-    facts = kg_nodes_to_facts(nodes, predicate_facts=predicate_facts)
-    out = {**kg, "nodes": nodes, "edges": edges, "facts": facts, "predicate_facts": predicate_facts}
-    return out

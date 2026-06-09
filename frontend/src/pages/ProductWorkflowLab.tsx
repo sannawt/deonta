@@ -29,7 +29,7 @@ interface Props {
   onNavigateHome: () => void;
 }
 
-export function ProductWorkflow({
+export function ProductWorkflowLab({
   onComplete,
   playbookCompanyId,
   onNavigateHome,

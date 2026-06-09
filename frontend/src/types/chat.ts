@@ -116,6 +116,11 @@ export interface ScopeRuleInvoked {
   proof_steps?: number;
 }
 
+export interface ScopeExternalSource {
+  label: string;
+  url: string;
+}
+
 export interface ScopeDimensionLlm {
   interpretation?: string;
   why_result?: string;
@@ -139,6 +144,7 @@ export interface ScopeDimension {
     provision_long_id?: string | null;
   }>;
   llm?: ScopeDimensionLlm;
+  external_sources?: ScopeExternalSource[];
 }
 
 export interface ScopeLegalTest {

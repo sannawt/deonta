@@ -7,6 +7,7 @@ export type AppRoute =
   | "dashboard"
   | "chat"
   | "product"
+  | "product-lab"
   | "law"
   | "monitoring";
 

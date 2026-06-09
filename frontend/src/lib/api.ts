@@ -1,5 +1,6 @@
 import type { ChatResponse } from "../types/chat";
 import { accountHeaders, accountHeadersMultipart, ensureAccountId } from "./account";
+import type { ProductIntakePayload } from "./kgIntakeSchema";
 import type { ProductSpec } from "./productStore";
 
 export interface KgNode {
@@ -26,6 +27,12 @@ export interface PlaybookSummary {
   node_count?: number;
 }
 
+export interface MissingPredicateRow {
+  predicate: string;
+  description?: string;
+  regulation?: string;
+}
+
 export interface ProductKgResponse {
   version: number;
   nodes: KgNode[];
@@ -41,6 +48,9 @@ export interface ProductKgResponse {
   };
   playbook_id?: string;
   playbook_linked?: boolean;
+  suggested_intake?: Partial<ProductIntakePayload>;
+  field_sources?: Record<string, string>;
+  missing_predicates?: MissingPredicateRow[];
 }
 
 export interface LawCatalogItem {
@@ -331,6 +341,7 @@ export async function parseProduct(input: {
   description?: string;
   playbook_id?: string;
   files?: File[];
+  intake?: ProductIntakePayload;
 }): Promise<ProductKgResponse> {
   await ensureAccountId();
 
@@ -342,6 +353,7 @@ export async function parseProduct(input: {
       body: JSON.stringify({
         description: input.description ?? "",
         playbook_id: input.playbook_id ?? null,
+        intake: input.intake ?? null,
       }),
     });
     if (!res.ok) {
@@ -355,6 +367,7 @@ export async function parseProduct(input: {
   const form = new FormData();
   if (input.description) form.append("description", input.description);
   if (input.playbook_id) form.append("playbook_id", input.playbook_id);
+  if (input.intake) form.append("intake_json", JSON.stringify(input.intake));
   for (const f of input.files) {
     form.append("files", f);
   }

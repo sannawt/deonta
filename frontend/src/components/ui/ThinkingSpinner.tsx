@@ -12,14 +12,16 @@ export function ThinkingSpinner({ active = true, label = "Thinking…", size = 5
 
   return (
     <div className="ct-thinking" role="status" aria-live="polite" aria-label={label}>
-      <img
-        src={brandIcons.hourglass}
-        alt=""
-        className="ct-thinking-icon"
-        width={size}
-        height={size}
-        draggable={false}
-      />
+      <span className="ct-hourglass-spin-wrap" aria-hidden>
+        <img
+          src={brandIcons.hourglass}
+          alt=""
+          className="ct-thinking-icon"
+          width={size}
+          height={size}
+          draggable={false}
+        />
+      </span>
       {label ? <span className="ct-thinking-label">{label}</span> : null}
     </div>
   );

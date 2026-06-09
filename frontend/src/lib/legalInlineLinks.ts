@@ -1,3 +1,4 @@
+import { resolveExternalSourceUrl } from "./externalLegalSources";
 import { eurlexUrlFromRefText } from "./legalLinks";
 
 export interface TextSegment {
@@ -14,7 +15,7 @@ export interface TextSegment {
  *   paragraph 1 / para. 1
  */
 const INLINE_REF_RE =
-  /\b(?:Recitals?\s+\d+(?:\s*[,&and\s]+\d+)*|Articles?\s+\d+(?:\(\d+\))?(?:(?:\s*[,&]\s*|\s+and\s+)\d+(?:\(\d+\))?)*|Arts?\.?\s*\d+(?:\(\d+\))?(?:\s*[,&]\s*\d+(?:\(\d+\))?)*|Annex\s+[IVX]+(?:\s+point\s+\d+)?|para(?:graph|\.)\s*\d+(?:\(\d+\))?)\b/gi;
+  /\b(?:Recitals?\s+\d+(?:\s*[,&and\s]+\d+)*|Articles?\s+\d+(?:\(\d+\))*(?:\([a-z]\))?(?:(?:\s*[,&]\s*|\s+and\s+)\d+(?:\(\d+\))*(?:\([a-z]\))?)*|Arts?\.?\s*\d+(?:\(\d+\))*(?:\([a-z]\))?(?:\s*[,&]\s*\d+(?:\(\d+\))*(?:\([a-z]\))?)*|Annex(?:es)?\s+[IVXLC]+(?:\s+point\s+\d+)?|Chapter\s+[IVXLC]+|Title\s+[IVXLC]+|para(?:graph|\.)\s*\d+(?:\(\d+\))?(?:\([a-z]\))?|Digital Omnibus|AI Act implementation timeline|EDPB guidelines|Cyber Resilience Act \(EC\)|Digital Services Act \(EC\)|Digital Markets Act \(EC\)|NIS2 Directive \(EC\)|EU Data Act \(EC\))\b/gi;
 
 /**
  * Split a plain-text string into segments. Each "link" segment represents
@@ -35,7 +36,10 @@ export function parseInlineLegalRefs(
       segments.push({ kind: "text", text: text.slice(lastIndex, start) });
     }
     const raw = match[0];
-    const href = eurlexUrlFromRefText(raw, regKey) ?? undefined;
+    const href =
+      resolveExternalSourceUrl(raw) ??
+      eurlexUrlFromRefText(raw, regKey) ??
+      undefined;
     segments.push({ kind: href ? "link" : "text", text: raw, href });
     lastIndex = start + raw.length;
   }

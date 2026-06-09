@@ -1,48 +1,54 @@
 import type { ReactNode } from "react";
-import type { brandIcons } from "../../lib/brandIcons";
-import { PixelIcon } from "../ui/PixelIcon";
-
-type IconName = keyof typeof brandIcons;
 
 interface Props {
   stepLabel: string;
+  title?: string;
   intro: string;
-  icon?: IconName;
   actions: ReactNode;
   results: ReactNode;
+  actionsTitle?: string;
+  resultsTitle?: string;
   actionsAriaLabel?: string;
   resultsAriaLabel?: string;
 }
 
 export function WorkflowSplitLayout({
   stepLabel,
+  title,
   intro,
-  icon,
   actions,
   results,
+  actionsTitle = "Actions",
+  resultsTitle = "Results",
   actionsAriaLabel = "Actions",
   resultsAriaLabel = "Results",
 }: Props) {
+  const showHeader = Boolean(stepLabel || title || intro);
+
   return (
     <div className="ct-workflow-step">
-      <header
-        className={`ct-scanner-head${icon ? "" : " ct-scanner-head--text-only"}`}
-      >
-        {icon ? (
-          <PixelIcon name={icon} size={96} className="ct-scanner-head-icon" />
-        ) : null}
-        <div className="ct-scanner-head-text">
-          <p className="ct-scanner-step">{stepLabel}</p>
-          <p className="ct-scanner-intro">{intro}</p>
-        </div>
-      </header>
+      {showHeader ? (
+        <header className="ct-workflow-step-header">
+          {stepLabel ? <p className="ct-workflow-step-eyebrow">{stepLabel}</p> : null}
+          {title ? <h2 className="ct-workflow-step-title">{title}</h2> : null}
+          {intro ? <p className="ct-workflow-step-intro">{intro}</p> : null}
+        </header>
+      ) : null}
 
       <div className="ct-workflow-split">
         <aside className="ct-workflow-pane ct-workflow-pane--actions" aria-label={actionsAriaLabel}>
-          {actions}
+          {actionsTitle ? (
+            <header className="ct-workflow-pane-header">
+              <span className="ct-workflow-pane-header-label">{actionsTitle}</span>
+            </header>
+          ) : null}
+          <div className="ct-workflow-pane-body">{actions}</div>
         </aside>
         <section className="ct-workflow-pane ct-workflow-pane--results" aria-label={resultsAriaLabel}>
-          {results}
+          <header className="ct-workflow-pane-header">
+            <span className="ct-workflow-pane-header-label">{resultsTitle}</span>
+          </header>
+          <div className="ct-workflow-pane-body ct-workflow-pane-body--results">{results}</div>
         </section>
       </div>
     </div>

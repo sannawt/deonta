@@ -397,9 +397,6 @@ def parse_product_input(
                 parsed["summary"] = llm["summary"]
 
     nodes = parsed.get("nodes") or []
-    for n in nodes:
-        if n.get("type") in ("Product", "Scenario"):
-            n["label"] = "Your product"
     edges = parsed.get("edges") or []
     product_id = next(
         (n.get("id") for n in nodes if n.get("type") in ("Product", "Scenario")),

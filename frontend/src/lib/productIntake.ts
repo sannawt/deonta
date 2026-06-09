@@ -1,3 +1,10 @@
+import {
+  hasStructuredIntake,
+  intakeToDescription,
+  type ProductIntakeState,
+} from "./kgIntakeSchema";
+
+/** @deprecated Use intakeToDescription with ProductIntakeState */
 export function buildIntakeDescription(
   productInfo: string,
   marketsAndLocation: string,
@@ -23,3 +30,5 @@ export function hasIntakeInput(
     kgFactsCount > 0
   );
 }
+
+export { hasStructuredIntake, intakeToDescription, type ProductIntakeState };

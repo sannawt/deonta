@@ -4,12 +4,12 @@ import {
   STATUS_SYMBOL,
   buildLawVerdictDetail,
   filterQuestionsForLaw,
-  verdictBadgeClass,
   type ScannedLawItem,
 } from "../../lib/applicabilityScan";
-import { humanizeMissingQuestion } from "../../lib/plainLanguage";
 import { lawNameFromScannedItem } from "../../lib/lawDisplayName";
-import { ScopeDimensionCard } from "./ScopeDimensionCard";
+import { lawSummaryForCode } from "../../lib/lawSummaries";
+import { productScopeAssessment } from "../../lib/scopeProductAssessment";
+import { ScopeDimensionsTable } from "./ScopeDimensionsTable";
 import { LegalInlineText } from "./LegalInlineText";
 
 const DIM_ORDER = ["temporal", "territorial", "material", "exclusions"];
@@ -42,19 +42,10 @@ export function ApplicabilityLawAccordion({
     return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
   });
 
-  const instrumentMissing = (instrument?.missing_facts ?? instrument?.missing_atoms ?? [])
-    .map((m) => humanizeMissingQuestion(m))
-    .filter(Boolean);
-
   const lawTitle = lawNameFromScannedItem(item);
-  const subtitle =
-    instrument?.label?.trim() &&
-    instrument.label.trim().toLowerCase() !== lawTitle.toLowerCase()
-      ? instrument.label.trim()
-      : item.scanRow?.number?.trim() || "";
-
   const statusSymbol = STATUS_SYMBOL[item.status] || "△";
-  const badgeClass = verdictBadgeClass(detail.verdict);
+  const catalog = lawSummaryForCode(lawCode);
+  const overallAssessment = productScopeAssessment(instrument, lawCode);
 
   const toggle = () => {
     setOpen((v) => {
@@ -66,6 +57,58 @@ export function ApplicabilityLawAccordion({
 
   const isOpen = collapsible ? open : true;
 
+  const detailBody = (
+    <div className="ct-scope-law-panel-body ct-scope-detail-view">
+      {overallAssessment ? (
+        <p className="ct-scope-detail-prose ct-scope-overall-assessment">
+          <LegalInlineText text={overallAssessment} regKey={instrument?.reg_key || lawCode} />
+        </p>
+      ) : null}
+
+      {dimensions.length > 0 ? (
+        <section className="ct-scope-detail-dimensions">
+          <ScopeDimensionsTable
+            dimensions={dimensions}
+            regKey={instrument?.reg_key || lawCode}
+          />
+        </section>
+      ) : detail.legalTests.length === 0 ? (
+        <p className="ct-scope-prose">No scope dimension breakdown for this instrument yet.</p>
+      ) : null}
+
+      {catalog ? (
+        <details className="ct-scope-detail-more">
+          <summary className="ct-scope-detail-more-summary">About this regulation</summary>
+          <p className="ct-scope-detail-prose">
+            <LegalInlineText text={catalog.overview} regKey={lawCode} />
+          </p>
+          {catalog.appliesWhen ? (
+            <p className="ct-scope-detail-prose">
+              <LegalInlineText text={catalog.appliesWhen} regKey={lawCode} />
+            </p>
+          ) : null}
+          {catalog.keyProvisions?.length ? (
+            <ul className="ct-law-scan-provision-list">
+              {catalog.keyProvisions.map((prov) => (
+                <li key={prov}>
+                  <LegalInlineText text={prov} regKey={lawCode} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </details>
+      ) : null}
+    </div>
+  );
+
+  if (!collapsible) {
+    return (
+      <div className="ct-scope-law-panel ct-scope-law-panel--detail ct-scope-law-panel--flat">
+        {detailBody}
+      </div>
+    );
+  }
+
   const headContent = (
     <>
       <span className="ct-scope-law-symbol" aria-hidden>
@@ -75,81 +118,18 @@ export function ApplicabilityLawAccordion({
         <span className="ct-scope-law-panel-title">
           <strong>{lawTitle}</strong>
         </span>
-        <span className={`ct-scope-verdict-badge ${badgeClass}`}>{detail.verdict}</span>
       </span>
-      {collapsible ? (
-        <span className="ct-scope-law-chevron" aria-hidden>
-          {open ? "▾" : "▸"}
-        </span>
-      ) : null}
+      <span className="ct-scope-law-chevron" aria-hidden>
+        {open ? "▾" : "▸"}
+      </span>
     </>
   );
 
-  const detailBody = (
-    <div className="ct-scope-law-panel-body ct-scope-detail-view">
-      <header className="ct-scope-detail-hero">
-        <div className="ct-scope-detail-hero-text">
-          <h2 className="ct-scope-detail-title">{lawTitle}</h2>
-          {subtitle ? <p className="ct-scope-detail-subtitle">{subtitle}</p> : null}
-        </div>
-        <span className={`ct-scope-detail-verdict ${badgeClass}`}>{detail.verdict}</span>
-      </header>
-
-      {detail.summary ? (
-        <div className="ct-scope-detail-summary">
-          <p>
-            <LegalInlineText
-              text={detail.summary}
-              regKey={instrument?.reg_key}
-            />
-          </p>
-        </div>
-      ) : null}
-
-      {instrumentMissing.length > 0 ? (
-        <aside className="ct-scope-detail-open-questions">
-          <h3 className="ct-scope-detail-section-title">Open questions</h3>
-          <ul>
-            {instrumentMissing.map((q) => (
-              <li key={q}>{q}</li>
-            ))}
-          </ul>
-        </aside>
-      ) : null}
-
-      {dimensions.length > 0 ? (
-        <section className="ct-scope-detail-dimensions">
-          <div className="ct-scope-dim-table">
-            {dimensions.map((dim) => (
-              <ScopeDimensionCard
-                key={dim.id}
-                dim={dim}
-                regKey={instrument?.reg_key}
-                openQuestions={lawQuestions}
-              />
-            ))}
-          </div>
-        </section>
-      ) : detail.legalTests.length === 0 ? (
-        <p className="ct-scope-prose">No scope dimension breakdown for this instrument yet.</p>
-      ) : null}
-    </div>
-  );
-
   return (
-    <div
-      className={`ct-scope-law-panel ct-scope-law-${item.status}${isOpen ? " open" : ""}${collapsible ? "" : " ct-scope-law-panel--detail"}`}
-    >
-      {collapsible ? (
-        <button type="button" className="ct-scope-law-panel-head" onClick={toggle}>
-          {headContent}
-        </button>
-      ) : (
-        <div className="ct-scope-law-panel-head ct-scope-law-panel-head--static ct-scope-law-panel-head--hidden">
-          {headContent}
-        </div>
-      )}
-
+    <div className={`ct-scope-law-panel ct-scope-law-${item.status}${isOpen ? " open" : ""}`}>
+      <button type="button" className="ct-scope-law-panel-head" onClick={toggle}>
+        {headContent}
+      </button>
       {isOpen ? detailBody : null}
     </div>
   );

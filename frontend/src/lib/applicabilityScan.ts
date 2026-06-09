@@ -282,7 +282,8 @@ function verdictLabel(
   selected: boolean,
 ): string {
   if (!selected) return "Not selected";
-  if (!instrument || instrument.assessment_source === "pending") {
+  if (!instrument) return "Scope assessment pending";
+  if (instrument.assessment_source === "pending" && !instrument.dimensions?.length) {
     return "Scope assessment pending";
   }
   if (instrument.verdict_display) return instrument.verdict_display;
@@ -301,16 +302,16 @@ function summaryText(instrument: ScopeInstrument | undefined): string {
 }
 
 function buildLegalTests(instrument: ScopeInstrument | undefined): LegalTestRow[] {
-  if (instrument?.legal_tests?.length) {
-    return instrument.legal_tests.map((t) => ({
-      label: t.label,
-      answer: t.answer,
-    }));
-  }
   if (instrument?.dimensions?.length) {
     return instrument.dimensions.map((d) => ({
       label: d.label,
       answer: dimAnswer(d.result),
+    }));
+  }
+  if (instrument?.legal_tests?.length) {
+    return instrument.legal_tests.map((t) => ({
+      label: t.label,
+      answer: t.answer,
     }));
   }
   return [];

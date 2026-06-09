@@ -258,7 +258,7 @@ def catalog_scan_response(
 ) -> dict[str, Any] | None:
     """Build a law-scan response from catalog keyword inference only (no Neo4j)."""
     codes = _enrich_demo_catalog_codes(description, catalog_codes_from_description(description))
-    if len(codes) < 3:
+    if len(codes) < 2:
         return None
 
     rows: list[dict[str, Any]] = []

@@ -8,6 +8,7 @@ import {
   instrumentMatchesCode,
   type ProductScopeSignals,
 } from "../../lib/applicabilityScan";
+import { lawNameFromScannedItem } from "../../lib/lawDisplayName";
 import { ApplicabilityLawAccordion } from "./ApplicabilityLawAccordion";
 import { ScopeLawSidebar } from "./ScopeLawSidebar";
 import { WorkflowSplitLayout } from "./WorkflowSplitLayout";
@@ -97,23 +98,32 @@ export function ApplicabilityScopeWorkbench({
     );
   }
 
+  const resultsTitle = focusedItem
+    ? lawNameFromScannedItem(focusedItem)
+    : "Scope analysis";
+
   return (
     <WorkflowSplitLayout
       stepLabel="Step 3"
-      intro="Choose a law on the left to view its scope analysis on the right."
+      title="Scope analysis"
+      intro="Select a law on the left to read its applicability assessment on the right."
+      actionsTitle="Selected laws"
+      resultsTitle={resultsTitle}
       actionsAriaLabel="Law selection"
       resultsAriaLabel="Scope analysis"
       actions={
-        <ScopeLawSidebar
-          items={selectedItems}
-          focusedCode={focusedCode}
-          onSelect={setFocusedCode}
-        />
+        <div className="ct-workflow-actions-stack">
+          <ScopeLawSidebar
+            items={selectedItems}
+            focusedCode={focusedCode}
+            onSelect={setFocusedCode}
+          />
+        </div>
       }
       results={
-        <section className="ct-scope-detail-box" aria-label="Scope analysis">
+        <div className="ct-workflow-results-stack">
           {selectedItems.length === 0 ? (
-            <p className="ct-muted">
+            <p className="ct-workflow-results-empty">
               No laws selected. Go back to Step 2 to choose instruments.
             </p>
           ) : focusedItem ? (
@@ -126,9 +136,11 @@ export function ApplicabilityScopeWorkbench({
               defaultOpen
             />
           ) : (
-            <p className="ct-muted">Select a law on the left to view scope analysis.</p>
+            <p className="ct-workflow-results-empty">
+              Select a law on the left to view scope analysis.
+            </p>
           )}
-        </section>
+        </div>
       }
     />
   );

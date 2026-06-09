@@ -1091,18 +1091,25 @@ def scan_relevant_laws(
     if cached is not None:
         return cached
 
-    if is_prototype_mode() and not full_scan:
-        catalog_resp = catalog_scan_response(
+    def _try_catalog_scan() -> dict[str, Any] | None:
+        return catalog_scan_response(
             description,
             limit=limit,
             min_score=min_score,
             include_secondary=include_secondary,
         )
+
+    if is_prototype_mode() and not full_scan:
+        catalog_resp = _try_catalog_scan()
         if catalog_resp is not None:
             put_cached_scan(cache_key, catalog_resp)
             return catalog_resp
 
     if legal_graph_backend() == "local":
+        catalog_resp = _try_catalog_scan()
+        if catalog_resp is not None:
+            put_cached_scan(cache_key, catalog_resp)
+            return catalog_resp
         raise RuntimeError(
             "Law scan requires Neo4j legal Aura (twin_p corpus). Set LEGAL_GRAPH_BACKEND=neo4j "
             "in .env.local — local CSV export is not sufficient for regulation-level scan."
@@ -1111,8 +1118,7 @@ def scan_relevant_laws(
         raise RuntimeError(
             "NEO4J_LEGAL_URI and NEO4J_LEGAL_PASSWORD must be set for law scan."
         )
-    # Product law scan ranks against the user's written description only.
-    scan_query = build_scan_query(description, None)
+    scan_query = build_scan_query(description, kg_facts)
     description_catalog_codes = catalog_codes_from_description(description)
     driver = get_legal_driver_fn()
     database = resolve_database_fn()
@@ -1207,10 +1213,39 @@ def scan_relevant_laws(
         limit=rank_limit,
         min_score=min_score,
         include_secondary=include_secondary,
-        kg_facts=None,
+        kg_facts=kg_facts,
         vector_ranked=profile.usable(),
         description_catalog_codes=description_catalog_codes,
     )
+    if not results and not full_scan:
+        for relaxed_min in (max(0.55, min_score - 0.1), max(0.5, min_score - 0.2)):
+            if relaxed_min >= min_score:
+                continue
+            relaxed, _, _, _ = rank_regulations(
+                scan_query,
+                regulations,
+                limit=rank_limit,
+                min_score=relaxed_min,
+                include_secondary=True,
+                kg_facts=kg_facts,
+                vector_ranked=profile.usable(),
+                description_catalog_codes=description_catalog_codes,
+            )
+            if relaxed:
+                results = relaxed
+                payload_min = relaxed_min
+                break
+        else:
+            payload_min = min_score
+    else:
+        payload_min = min_score
+
+    if not results and not full_scan:
+        catalog_resp = _try_catalog_scan()
+        if catalog_resp is not None and catalog_resp.get("results"):
+            put_cached_scan(cache_key, catalog_resp)
+            return catalog_resp
+
     if description_catalog_codes and not full_scan:
         results = _fill_missing_catalog_rows(
             results,
@@ -1230,7 +1265,7 @@ def scan_relevant_laws(
         "total_ranked": total_ranked,
         "match_count": len(results),
         "total_match_count": total_passing,
-        "min_score": min_score,
+        "min_score": payload_min,
         "include_secondary": include_secondary,
         "full_scan": full_scan,
         "display_limit": limit if not full_scan else 0,

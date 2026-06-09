@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AppShell, type AppRoute } from "./components/shell/AppShell";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ProductWorkflow } from "./pages/ProductWorkflow";
+import { ProductWorkflowLab } from "./pages/ProductWorkflowLab";
 import { ComplianceChatPage } from "./pages/ComplianceChatPage";
 import { MonitoringPage } from "./pages/MonitoringPage";
 import { RuntimeInfo } from "./components/product/RuntimeInfo";
@@ -10,11 +11,19 @@ import {
   saveProducts,
   upsertProduct,
   type ProductRecord,
+  type ProductWorkflowId,
 } from "./lib/productStore";
 import { fetchLaws } from "./lib/api";
 import { ensureCatalogLoaded } from "./lib/ruleCatalog";
 
-const ROUTES: AppRoute[] = ["dashboard", "chat", "product", "law", "monitoring"];
+const ROUTES: AppRoute[] = [
+  "dashboard",
+  "chat",
+  "product",
+  "product-lab",
+  "law",
+  "monitoring",
+];
 
 function routeFromHash(): AppRoute {
   const h = (window.location.hash || "").replace(/^#\/?/, "");
@@ -23,7 +32,8 @@ function routeFromHash(): AppRoute {
 
 export default function App() {
   const [route, setRoute] = useState<AppRoute>(() => routeFromHash());
-  const [products, setProducts] = useState<ProductRecord[]>(() => loadProducts());
+  const [products, setProducts] = useState<ProductRecord[]>(() => loadProducts("default"));
+  const [labProducts, setLabProducts] = useState<ProductRecord[]>(() => loadProducts("lab"));
   const [playbookCompanyId] = useState("");
 
   function navigate(next: AppRoute) {
@@ -43,13 +53,24 @@ export default function App() {
     fetchLaws().catch(() => {});
   }, []);
 
-  const handleProductComplete = useCallback((product: ProductRecord) => {
-    setProducts((prev) => {
-      const next = upsertProduct(prev, product);
-      saveProducts(next);
-      return next;
-    });
-  }, []);
+  const handleProductComplete = useCallback(
+    (workflow: ProductWorkflowId, product: ProductRecord) => {
+      if (workflow === "lab") {
+        setLabProducts((prev) => {
+          const next = upsertProduct(prev, product);
+          saveProducts(next, "lab");
+          return next;
+        });
+        return;
+      }
+      setProducts((prev) => {
+        const next = upsertProduct(prev, product);
+        saveProducts(next, "default");
+        return next;
+      });
+    },
+    [],
+  );
 
   const showDev = import.meta.env.DEV;
 
@@ -63,7 +84,9 @@ export default function App() {
         {route === "dashboard" && (
           <DashboardPage
             products={products}
+            labProducts={labProducts}
             onProductPath={() => navigate("product")}
+            onProductLabPath={() => navigate("product-lab")}
             onChatPath={() => navigate("chat")}
           />
         )}
@@ -75,7 +98,15 @@ export default function App() {
         {route === "product" && (
           <ProductWorkflow
             playbookCompanyId={playbookCompanyId || undefined}
-            onComplete={handleProductComplete}
+            onComplete={(product) => handleProductComplete("default", product)}
+            onNavigateHome={() => navigate("dashboard")}
+          />
+        )}
+
+        {route === "product-lab" && (
+          <ProductWorkflowLab
+            playbookCompanyId={playbookCompanyId || undefined}
+            onComplete={(product) => handleProductComplete("lab", product)}
             onNavigateHome={() => navigate("dashboard")}
           />
         )}

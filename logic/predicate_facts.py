@@ -22,6 +22,15 @@ _EDGE_TO_PREDICATE: dict[str, str] = {
     "USES_AI": "has_feature",
     "OPERATES_IN": "market",
     "ACTS_AS": "provider",
+    "CONCERNS": "concerns",
+    "IDENTIFIES": "identifies",
+    "CONTROLLER": "controller",
+    "PROCESSOR": "processor",
+    "PROVIDER": "provider",
+    "DEPLOYER": "deployer",
+    "IMPORTER": "importer",
+    "DISTRIBUTOR": "distributor",
+    "IN_CONTEXT_OF_ESTABLISHMENT": "processing_in_context_of_establishment",
 }
 
 
@@ -161,8 +170,13 @@ def graph_to_predicate_facts(
             elif etype == "USES_AI":
                 facts.append(fact_row(pred, [src_ref, "machine_based"], source="kg", status="derived"))
             elif etype == "OPERATES_IN":
+                market = _slug(str(tgt.get("label") or tgt_ref))
+                facts.append(fact_row(pred, [src_ref, market], source="kg", status="derived"))
+            elif etype in ("ACTS_AS", "CONTROLLER", "PROCESSOR", "PROVIDER", "DEPLOYER", "IMPORTER", "DISTRIBUTOR"):
                 facts.append(fact_row(pred, [src_ref, tgt_ref], source="kg", status="derived"))
-            elif etype == "ACTS_AS":
+            elif etype in ("CONCERNS", "IDENTIFIES"):
+                facts.append(fact_row(pred, [src_ref, tgt_ref], source="kg", status="derived"))
+            elif etype == "IN_CONTEXT_OF_ESTABLISHMENT":
                 facts.append(fact_row(pred, [src_ref, tgt_ref], source="kg", status="derived"))
 
     if "processing" in index and any(n.get("type") == "Data" for n in nodes):

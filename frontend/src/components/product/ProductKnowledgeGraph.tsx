@@ -2,24 +2,14 @@ import { useEffect, useRef } from "react";
 import { Network } from "vis-network";
 import { DataSet } from "vis-data";
 import type { KgEdge, KgNode } from "../../lib/api";
-
-const TYPE_COLORS: Record<string, string> = {
-  Product: "#4a7fd4",
-  Scenario: "#4a7fd4",
-  Market: "#5ba8a0",
-  Data: "#c4a574",
-  Datum: "#c4a574",
-  AI: "#9b8ec4",
-  AISystem: "#9b8ec4",
-  Actor: "#7a9e6a",
-  Document: "#a8b4c0",
-};
+import { KG_EDGE_COLOR, KG_EDGE_HIGHLIGHT, KG_TYPE_COLORS } from "../../lib/kgTheme";
 
 function nodeStyle(type: string) {
-  const fill = TYPE_COLORS[type] ?? "#b8c5d4";
+  const fill = KG_TYPE_COLORS[type] ?? "#8aa8c8";
+  const border = type === "Actor" ? "#333333" : fill;
   return {
     background: fill,
-    border: fill,
+    border,
     highlight: { background: fill, border: "#2d6be4" },
     hover: { background: fill, border: "#2d6be4" },
   };
@@ -33,9 +23,6 @@ interface Props {
 export function ProductKnowledgeGraph({ nodes, edges }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const networkRef = useRef<Network | null>(null);
-  const nodesRef = useRef(nodes);
-
-  nodesRef.current = nodes;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -46,30 +33,30 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
 
     const visNodes = new DataSet(
       productNodes.map((n) => {
-        const isMain =
-          n.type === "Product" || n.type === "Scenario";
-        const label = isMain ? "Your product" : n.label || n.type;
+        const label = n.label || n.type;
         return {
-        id: n.id,
-        label,
-        title: `${n.type}: ${label}`,
-        shape: "dot",
-        size: n.type === "Product" ? 24 : n.type === "Scenario" ? 20 : 14,
-        color: nodeStyle(n.type),
-        font: { color: "#334155", size: 13, face: "Plus Jakarta Sans" },
-      };
-      })
+          id: n.id,
+          label,
+          title: `${n.type}: ${label}`,
+          shape: "dot",
+          size: n.type === "Product" ? 24 : n.type === "Scenario" ? 20 : 14,
+          color: nodeStyle(n.type),
+          font: { color: "#333333", size: 13, face: "Plus Jakarta Sans" },
+        };
+      }),
     );
     const visEdges = new DataSet(
       productEdges.map((e) => ({
         id: e.id,
         from: e.from,
         to: e.to,
+        label: e.label || e.type,
         arrows: { to: { enabled: true, scaleFactor: 0.45 } },
-        color: { color: "#e8ecf0", highlight: "#c5d0dc", hover: "#c5d0dc" },
+        color: { color: KG_EDGE_COLOR, highlight: KG_EDGE_HIGHLIGHT, hover: KG_EDGE_HIGHLIGHT },
         width: 1,
         smooth: { enabled: true, type: "continuous", roundness: 0.4 },
-      }))
+        font: { size: 9, color: "#888888", strokeWidth: 0, face: "Plus Jakarta Sans" },
+      })),
     );
 
     const data = { nodes: visNodes, edges: visEdges };
@@ -90,7 +77,7 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
         navigationButtons: false,
         keyboard: true,
       },
-      edges: { font: { size: 0 } },
+      edges: { font: { align: "middle" } },
       layout: { improvedLayout: true },
     };
 
@@ -112,7 +99,7 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
     <div className="ct-kg-wrap">
       <div ref={containerRef} className="ct-kg-canvas" aria-label="Product knowledge graph" />
       {nodes.length === 0 && (
-        <p className="ct-kg-hint">Your product map appears here as you add details.</p>
+        <p className="ct-kg-hint">Your product map appears here as you fill in the form.</p>
       )}
     </div>
   );

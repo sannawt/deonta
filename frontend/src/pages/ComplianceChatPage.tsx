@@ -527,11 +527,13 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
             <ChatMessage role="assistant">
               {busyLabel === "between_slides" ? (
                 <p className="ct-chat-slide-wait">
-                  <PixelIcon
-                    name="hourglass"
-                    size={40}
-                    className="ct-chat-slide-wait-icon"
-                  />
+                  <span className="ct-hourglass-spin-wrap" aria-hidden>
+                    <PixelIcon
+                      name="hourglass"
+                      size={40}
+                      className="ct-chat-slide-wait-icon"
+                    />
+                  </span>
                   <span>{busyText}</span>
                 </p>
               ) : (

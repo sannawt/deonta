@@ -172,7 +172,9 @@ export function ProductWorkflowChat({
         })}
         {(parsing || scanning) && (
           <div className="ct-workflow-chat-bubble ct-workflow-chat-bubble-status">
-            <PixelIcon name="hourglass" size={28} className="ct-workflow-chat-status-icon" />
+            <span className="ct-hourglass-spin-wrap" aria-hidden>
+              <PixelIcon name="hourglass" size={28} className="ct-workflow-chat-status-icon" />
+            </span>
             {scanning && !parsing
               ? "Thinking…"
               : parsing && scanning

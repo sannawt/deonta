@@ -29,16 +29,28 @@ const PREDICATE_PHRASES: Record<string, string> = {
   regulation_material: "The activity falls within the regulation's material scope.",
   regulation_excluded: "Whether an exclusion or carve-out applies.",
   in_force: "The regulation is in force for the assessment period.",
+  affected_person_in_union:
+    "Whether people affected by the AI system are located in the Union (Art. 2 territorial link).",
+  annex_iii_high_risk:
+    "Whether the AI system falls under an Annex III high-risk use-case category (e.g. employment, credit, biometrics).",
+  annex_i_harmonisation:
+    "Whether the product is covered by listed Union harmonisation legislation (Annex I, Sections A & B).",
+  biometric_ancillary:
+    "Whether biometric categorisation is ancillary to lawfully acquired datasets and does not infer protected categories.",
+  provider_mandate_eu:
+    "Whether an EU-established actor is mandated to act on behalf of a non-EU provider.",
+  ai_system_art3:
+    "Whether the product meets the Art. 3(1) definition of an AI system.",
 };
 
 export function dimensionResultPlain(result: string): string {
   switch (result) {
     case "PASS":
-      return "Met";
+      return "In scope";
     case "FAIL":
-      return "Not met";
+      return "Out of scope";
     case "UNKNOWN":
-      return "Unclear";
+      return "Needs review";
     case "NOT_REACHED":
       return "Not reached";
     case "DEFERRED":
@@ -79,6 +91,8 @@ function normalizePredicateKey(text: string): string {
 export function isTechnicalAtom(text: string): boolean {
   const t = (text || "").trim();
   if (!t) return true;
+  if (/^predicate used by improved recital/i.test(t)) return true;
+  if (/^required for this scope gate/i.test(t)) return true;
   if (/^[a-z][a-z0-9_]*\s*\(/i.test(t)) return true;
   if (/['"]/.test(t) && /[(),]/.test(t)) return true;
   if (/\b(alice|church|safe.?harbour|dir\s*\d|decision\s+\d)/i.test(t)) return true;
@@ -92,6 +106,31 @@ export function isTechnicalAtom(text: string): boolean {
 export function humanizeFactText(raw: string): string {
   const cleaned = formatEngineTokens(stripInternalIds(raw));
   if (!cleaned || cleaned === "—") return "";
+
+  if (/affected person located in the union for ai act territorial link/i.test(cleaned)) {
+    return "Whether people affected by the system are located in the Union (Art. 2 territorial link)";
+  }
+  if (/annex iii high-risk use-case category/i.test(cleaned)) {
+    return "Whether the system falls under an Annex III high-risk category (e.g. employment, credit, biometrics)";
+  }
+  if (/listed union harmonisation legislation/i.test(cleaned)) {
+    return "Whether the product is covered by listed Union harmonisation legislation (Annex I)";
+  }
+  if (/biometric categorisation is ancillary/i.test(cleaned)) {
+    return "Whether biometric categorisation is ancillary and does not infer protected categories";
+  }
+  if (/actor established in the union mandated to act on behalf/i.test(cleaned)) {
+    return "Whether an EU-established actor is mandated to act for a non-EU provider";
+  }
+
+  if (/^predicate used by improved recital-derived rules for (AIAct|GDPR)_R(\d+)/i.test(cleaned)) {
+    const m = cleaned.match(/(AIAct|GDPR)_R(\d+)/i);
+    if (m) {
+      const recital = m[2];
+      const reg = m[1].toLowerCase().includes("ai") ? "AI Act" : "GDPR";
+      return `Whether Recital ${recital} of the ${reg} supports scope on your facts.`;
+    }
+  }
 
   const predKey = normalizePredicateKey(predicateOnlyFromAtom(cleaned));
   if (PREDICATE_PHRASES[predKey]) return PREDICATE_PHRASES[predKey];
@@ -132,6 +171,7 @@ export function humanizeRuleExplanation(
 export function humanizeMissingQuestion(raw: string): string {
   const text = humanizeFactText(raw);
   if (!text || isTechnicalAtom(text)) return "";
+  if (/^whether recital \d+ of the (ai act|gdpr) supports scope/i.test(text)) return "";
   const question = text.endsWith("?") ? text : `${text}?`;
   return question.charAt(0).toUpperCase() + question.slice(1);
 }

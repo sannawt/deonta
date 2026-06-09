@@ -5,6 +5,17 @@ const REG_ELI: Record<string, string> = {
   DSA: "2022/2065",
   DMA: "2022/1925",
   CRA: "2024/2847",
+  DataAct: "2023/2854",
+  ePrivacy: "2002/58",
+  DORA: "2022/2554",
+  GPSR: "2023/988",
+  RED: "2014/53",
+  RoHS: "2011/65",
+  WEEE: "2012/19",
+  REACH: "1907/2006",
+  PLD: "2024/2853",
+  MSR: "2019/1020",
+  EECC: "2018/1972",
 };
 
 const REG_CELEX: Record<string, string> = {
@@ -14,6 +25,17 @@ const REG_CELEX: Record<string, string> = {
   DSA: "32022R2065",
   DMA: "32022R1925",
   CRA: "32024R2847",
+  DataAct: "32023L2854",
+  ePrivacy: "32002L0058",
+  DORA: "32022R2554",
+  GPSR: "32023R0988",
+  RED: "32014L0053",
+  RoHS: "32011L0065",
+  WEEE: "32012L0019",
+  REACH: "32006R1907",
+  PLD: "32024L2853",
+  MSR: "32019R1020",
+  EECC: "32018L1972",
 };
 
 type RegPrefix = keyof typeof REG_ELI;
@@ -26,6 +48,17 @@ export function regKeyToPrefix(regKey?: string): RegPrefix | null {
   if (key === "dsa" || key === "digital_services_act") return "DSA";
   if (key === "dma" || key === "digital_markets_act") return "DMA";
   if (key === "cra" || key === "cyber_resilience_act") return "CRA";
+  if (key === "data_act" || key === "eu_data_act") return "DataAct";
+  if (key === "eprivacy" || key === "e_privacy") return "ePrivacy";
+  if (key === "dora") return "DORA";
+  if (key === "gpsr") return "GPSR";
+  if (key === "red" || key === "radio_equipment") return "RED";
+  if (key === "rohs") return "RoHS";
+  if (key === "weee") return "WEEE";
+  if (key === "reach") return "REACH";
+  if (key === "product_liability" || key === "pld") return "PLD";
+  if (key === "market_surveillance" || key === "msr") return "MSR";
+  if (key === "eecc") return "EECC";
   return null;
 }
 
@@ -79,7 +112,7 @@ export function eurlexUrlFromRefText(text: string, regKey?: string): string | nu
     return `https://eur-lex.europa.eu/eli/reg/${REG_ELI[prefix]}/oj/art_${num}`;
   }
 
-  const annex = trimmed.match(/Annex\s+([IVX]+)/i);
+  const annex = trimmed.match(/Annexes?\s+([IVXLC]+)/i);
   if (annex) {
     return `https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:${REG_CELEX[prefix]}`;
   }

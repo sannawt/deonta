@@ -1,64 +1,43 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import {
+  INTAKE_CARDS,
+  type IntakeFieldSources,
+  type ProductIntakeState,
+} from "../../lib/kgIntakeSchema";
 import { PixelIcon } from "../ui/PixelIcon";
-
-const INTAKE_STEPS = [
-  {
-    id: 1,
-    title: "Product or service",
-    prompt: "What is your product or service? Describe what it does and who uses it.",
-    placeholder: "e.g. A B2B SaaS platform that helps manufacturers monitor equipment sensors…",
-    field: "product" as const,
-  },
-  {
-    id: 2,
-    title: "Customers and location",
-    prompt: "Where are your customers, and where is your organization located?",
-    placeholder: "e.g. Customers in the EU and UK. Company based in Finland with a US subsidiary…",
-    field: "markets" as const,
-  },
-  {
-    id: 3,
-    title: "Supporting documents",
-    prompt: "Or provide documents that describe your product and practices.",
-    placeholder: "",
-    field: "documents" as const,
-  },
-] as const;
+import { ProductIntakeForm } from "./ProductIntakeForm";
 
 const SUGGESTED_DOCS = [
-  "Product specifications or technical documentation",
   "Privacy policy",
+  "Product specifications",
   "Terms of service",
   "Data processing agreements",
-  "Security or compliance policies",
 ];
 
 interface Props {
-  productInfo: string;
-  marketsAndLocation: string;
+  intake: ProductIntakeState;
+  fieldSources: IntakeFieldSources;
+  extractSummary: string[];
   files: File[];
   parsing: boolean;
   canContinue: boolean;
-  onProductInfoChange: (v: string) => void;
-  onMarketsAndLocationChange: (v: string) => void;
+  onIntakeChange: (patch: Partial<ProductIntakeState>) => void;
   onFilesChange: (files: File[]) => void;
   onSeeLaws: () => void | Promise<void>;
 }
 
 export function ProductIntakePanel({
-  productInfo,
-  marketsAndLocation,
+  intake,
+  fieldSources,
+  extractSummary,
   files,
   parsing,
   canContinue,
-  onProductInfoChange,
-  onMarketsAndLocationChange,
+  onIntakeChange,
   onFilesChange,
   onSeeLaws,
 }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
-  const [step, setStep] = useState(1);
-  const current = INTAKE_STEPS[step - 1];
 
   function addFiles(list: FileList | File[]) {
     const next = [...files];
@@ -68,148 +47,119 @@ export function ProductIntakePanel({
     onFilesChange(next);
   }
 
-  const productValue = productInfo;
-  const marketsValue = marketsAndLocation;
-  const showWriteHint =
-    current.field === "product"
-      ? !productValue.trim()
-      : current.field === "markets"
-        ? !marketsValue.trim()
-        : false;
-
-  const canAdvanceFromProduct =
-    productInfo.trim().length >= 12 || files.length > 0;
-  const canAdvanceFromMarkets = true;
-
-  function handleContinue() {
-    if (step === 1 && !canAdvanceFromProduct) return;
-    if (step < 3) setStep(step + 1);
-  }
-
   return (
     <div
-      className="ct-product-column"
-      onDragOver={(e) => {
-        if (current.field === "documents") e.preventDefault();
-      }}
+      className="ct-product-column ct-intake-panel"
+      onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => {
-        if (current.field !== "documents") return;
         e.preventDefault();
         if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
       }}
     >
-      <nav className="ct-intake-progress" aria-label="Intake progress">
-        {INTAKE_STEPS.map((s) => (
-          <button
-            key={s.id}
-            type="button"
-            className={`ct-intake-progress-item${s.id === step ? " ct-intake-progress-item--current" : ""}${s.id < step ? " ct-intake-progress-item--done" : ""}`}
-            onClick={() => {
-              if (s.id < step) setStep(s.id);
-            }}
-            disabled={s.id > step}
-            aria-current={s.id === step ? "step" : undefined}
+      <div className="ct-intake-three-boxes">
+        {INTAKE_CARDS.map((card) => (
+          <section
+            key={card.id}
+            className="ct-intake-box"
+            aria-labelledby={`intake-box-${card.id}`}
           >
-            <span className="ct-intake-progress-num">{s.id}</span>
-            <span className="ct-intake-progress-label">{s.title}</span>
-          </button>
+            <header className="ct-intake-box-head">
+              <h2 className="ct-intake-box-title" id={`intake-box-${card.id}`}>
+                {card.title}
+              </h2>
+              {card.prompt ? <p className="ct-intake-box-prompt">{card.prompt}</p> : null}
+            </header>
+
+            {card.id === "product" ? (
+              <div className="ct-intake-upload-inline">
+                <div className="ct-intake-upload-bar">
+                  <div className="ct-intake-upload-side">
+                    {SUGGESTED_DOCS.slice(0, 2).map((doc) => (
+                      <button
+                        key={doc}
+                        type="button"
+                        className="ct-intake-doc-chip"
+                        onClick={() => fileRef.current?.click()}
+                      >
+                        {doc}
+                      </button>
+                    ))}
+                  </div>
+
+                  <span className="ct-intake-upload-or" aria-hidden="true">
+                    OR
+                  </span>
+
+                  <button
+                    type="button"
+                    className="ct-intake-upload-center"
+                    onClick={() => fileRef.current?.click()}
+                    aria-label="Upload documents"
+                    title="Upload documents (PDF, DOCX, TXT, MD)"
+                  >
+                    <PixelIcon name="document" size={36} className="ct-intake-upload-icon" alt="" />
+                    <span className="ct-intake-upload-center-label">Upload documents</span>
+                  </button>
+
+                  <span className="ct-intake-upload-or" aria-hidden="true">
+                    OR
+                  </span>
+
+                  <div className="ct-intake-upload-side">
+                    {SUGGESTED_DOCS.slice(2).map((doc) => (
+                      <button
+                        key={doc}
+                        type="button"
+                        className="ct-intake-doc-chip"
+                        onClick={() => fileRef.current?.click()}
+                      >
+                        {doc}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <p className="ct-intake-upload-formats">PDF · DOCX · TXT · MD — or drag files here</p>
+
+                {files.length > 0 ? (
+                  <ul className="ct-intake-file-stack">
+                    {files.map((f) => (
+                      <li key={`${f.name}-${f.size}`}>{f.name}</li>
+                    ))}
+                  </ul>
+                ) : null}
+
+                {extractSummary.length > 0 ? (
+                  <p className="ct-intake-extract-summary">
+                    We found: {extractSummary.join(", ")} — please confirm below.
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+
+            <ProductIntakeForm
+              card={card.id}
+              intake={intake}
+              fieldSources={fieldSources}
+              onChange={onIntakeChange}
+            />
+          </section>
         ))}
-      </nav>
-
-      <div className="ct-intake-step-head">
-        <p className="ct-intake-step-prompt">{current.prompt}</p>
       </div>
 
-      {current.field === "documents" ? (
-        <div className="ct-intake-doc-zone">
-          <ul className="ct-intake-doc-list">
-            {SUGGESTED_DOCS.map((doc) => (
-              <li key={doc}>{doc}</li>
-            ))}
-          </ul>
+      {parsing ? <p className="ct-intake-parsing">Building knowledge graph…</p> : null}
 
-          <button
-            type="button"
-            className="ct-product-upload-btn ct-intake-upload-btn"
-            onClick={() => fileRef.current?.click()}
-          >
-            <PixelIcon name="document" size={56} className="ct-product-upload-icon" />
-            <span className="ct-product-upload-text">
-              <span className="ct-product-upload-label">Upload documents</span>
-              <span className="ct-product-upload-hint">PDF, DOCX, TXT, MD — drag and drop here</span>
-            </span>
-          </button>
-
-          {files.length > 0 && (
-            <p className="ct-product-files text-sm">
-              {files.map((f) => f.name).join(" · ")}
-            </p>
-          )}
-        </div>
-      ) : (
-        <div className="ct-product-write-zone">
-          {showWriteHint && (
-            <p className="ct-product-write-hint" aria-hidden="true">
-              {current.placeholder}
-            </p>
-          )}
-          <textarea
-            id={current.field === "product" ? "product-description" : "product-markets"}
-            className="textarea ct-product-chat-input"
-            value={current.field === "product" ? productValue : marketsValue}
-            onChange={(e) =>
-              current.field === "product"
-                ? onProductInfoChange(e.target.value)
-                : onMarketsAndLocationChange(e.target.value)
-            }
-            placeholder=""
-            aria-label={current.title}
-          />
-        </div>
-      )}
-
-      <div className="ct-product-actions ct-intake-actions">
-        {step > 1 && (
-          <button
-            type="button"
-            className="ct-btn-outline ct-intake-back"
-            onClick={() => setStep(step - 1)}
-          >
-            Back
-          </button>
-        )}
-
-        {step < 3 ? (
-          <>
-            <button
-              type="button"
-              className="ct-btn-primary ct-product-cta"
-              disabled={step === 1 ? !canAdvanceFromProduct : !canAdvanceFromMarkets}
-              onClick={handleContinue}
-            >
-              Continue
-            </button>
-            {step === 1 && (
-              <button
-                type="button"
-                className="ct-intake-skip-link"
-                onClick={() => setStep(3)}
-              >
-                Or upload documents instead
-              </button>
-            )}
-          </>
-        ) : (
-          <button
-            type="button"
-            className="ct-btn-primary ct-product-cta"
-            disabled={!canContinue || parsing}
-            onClick={() => void onSeeLaws()}
-          >
-            See which laws apply
-          </button>
-        )}
-      </div>
+      <footer className="ct-intake-sheet-footer ct-intake-sheet-footer--sticky">
+        <span />
+        <button
+          type="button"
+          className="ct-intake-next-btn"
+          disabled={!canContinue || parsing}
+          onClick={() => void onSeeLaws()}
+        >
+          See which laws apply
+        </button>
+      </footer>
 
       <input
         ref={fileRef}
@@ -222,13 +172,6 @@ export function ProductIntakePanel({
           e.target.value = "";
         }}
       />
-
-      {parsing && (
-        <p className="ct-product-parsing text-sm">
-          <PixelIcon name="hourglass" size={36} className="ct-product-parsing-icon" />
-          Reading your input…
-        </p>
-      )}
     </div>
   );
 }

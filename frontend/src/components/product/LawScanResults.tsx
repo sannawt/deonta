@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import type { LawScanResponse } from "../../lib/api";
-import type { LawScanResult } from "../../lib/api";
+import type { LawScanResponse, LawScanResult } from "../../lib/api";
+import { lawNameFromScanRow } from "../../lib/lawDisplayName";
 import { WorkflowSplitLayout } from "./WorkflowSplitLayout";
 import { LawScanLawDetail } from "./LawScanLawDetail";
-import { LawScanLawSidebar } from "./LawScanLawSidebar";
+import { LawScanPanel } from "./LawScanPanel";
 
 interface Props {
   scanResponse: LawScanResponse | null;
@@ -12,9 +12,51 @@ interface Props {
   loadingAll?: boolean;
   onLoadAll?: () => void;
   selectedCodes: string[];
+  onToggleLaw?: (code: string) => void;
   loading?: boolean;
   onCheckApplicability: () => void;
   onBack?: () => void;
+  /** When true, renders only the left panel (for external split layouts). */
+  panelOnly?: boolean;
+  /** When true, renders only the right detail pane. */
+  detailOnly?: boolean;
+  focusedCode?: string | null;
+  onFocusCode?: (code: string) => void;
+  showAll?: boolean;
+  onToggleShowAll?: () => void;
+}
+
+export function LawScanEmpty({
+  scanResponse,
+  onBack,
+}: {
+  scanResponse: LawScanResponse | null;
+  onBack?: () => void;
+}) {
+  const minPct = Math.round((scanResponse?.min_score ?? 0.75) * 100);
+  return (
+    <div className="ct-product-column ct-intake-panel">
+      <div className="ct-intake-three-boxes">
+        <section className="ct-intake-box">
+          <header className="ct-intake-box-head">
+            <h2 className="ct-intake-box-title">Relevant laws</h2>
+          </header>
+          <p className="ct-intake-guided-hint">
+            No regulations at or above {minPct}% relevance. Add EU markets, describe what personal
+            data flows through the product, and where AI is used — then try again.
+          </p>
+        </section>
+      </div>
+      {onBack ? (
+        <footer className="ct-intake-sheet-footer ct-intake-sheet-footer--sticky">
+          <button type="button" className="ct-intake-link-btn" onClick={onBack}>
+            Edit intake
+          </button>
+          <span />
+        </footer>
+      ) : null}
+    </div>
+  );
 }
 
 export function LawScanResults({
@@ -27,125 +69,102 @@ export function LawScanResults({
   loading,
   onCheckApplicability,
   onBack,
+  panelOnly = false,
+  detailOnly = false,
+  focusedCode: focusedCodeProp,
+  onFocusCode,
+  showAll: showAllProp,
+  onToggleShowAll,
 }: Props) {
   const [showAllInline, setShowAllInline] = useState(false);
-  const [focusedCode, setFocusedCode] = useState<string | null>(results[0]?.code ?? null);
+  const [focusedCodeInternal, setFocusedCodeInternal] = useState<string | null>(
+    results[0]?.code ?? null,
+  );
 
-  const displayRows = showAllInline && allResults ? allResults : results;
+  const showAll = showAllProp ?? showAllInline;
+  const setShowAll = onToggleShowAll ?? (() => setShowAllInline((v) => !v));
+  const focusedCode = focusedCodeProp ?? focusedCodeInternal;
+  const setFocusedCode = onFocusCode ?? setFocusedCodeInternal;
+
+  const displayRows = showAll && allResults ? allResults : results;
 
   useEffect(() => {
     if (!displayRows.length) {
-      setFocusedCode(null);
+      setFocusedCodeInternal(null);
       return;
     }
-    if (!focusedCode || !displayRows.some((r) => r.code === focusedCode)) {
-      setFocusedCode(displayRows[0].code);
+    if (focusedCodeProp === undefined) {
+      setFocusedCodeInternal((prev) =>
+        prev && displayRows.some((r) => r.code === prev) ? prev : displayRows[0].code,
+      );
     }
-  }, [displayRows, focusedCode]);
+  }, [displayRows, focusedCodeProp]);
 
   if (loading && !results.length) {
     return null;
   }
 
   if (!results.length && !loading) {
-    const minPct = Math.round((scanResponse?.min_score ?? 0.75) * 100);
-    return (
-      <>
-        <p className="ct-muted">
-          No regulations at or above {minPct}% relevance. Try a longer product description.
-        </p>
-        {onBack ? (
-          <div className="ct-scanner-actions">
-            <button type="button" className="ct-btn-outline ct-scanner-action-btn" onClick={onBack}>
-              Go back
-            </button>
-          </div>
-        ) : null}
-      </>
-    );
+    return <LawScanEmpty scanResponse={scanResponse} onBack={onBack} />;
   }
 
   const canCheck = selectedCodes.length > 0 && !loading;
   const total =
-    scanResponse?.total_match_count ??
-    scanResponse?.match_count ??
-    results.length;
-  const canExpand =
-    (total > results.length || (allResults && allResults.length > results.length)) &&
-    Boolean(onLoadAll);
+    scanResponse?.total_match_count ?? scanResponse?.match_count ?? results.length;
+  const canExpand = Boolean(
+    onLoadAll &&
+      (total > results.length || (allResults != null && allResults.length > results.length)),
+  );
 
   const focusedRow = displayRows.find((r) => r.code === focusedCode) ?? displayRows[0] ?? null;
+  const resultsTitle = focusedRow ? lawNameFromScanRow(focusedRow) : "Regulation detail";
+
+  const panel = (
+    <LawScanPanel
+      results={results}
+      allResults={allResults}
+      showAll={showAll}
+      totalMatches={total}
+      loadingAll={loadingAll}
+      canExpand={canExpand}
+      focusedCode={focusedCode}
+      selectedCodes={selectedCodes}
+      canContinue={canCheck}
+      onFocus={setFocusedCode}
+      onToggleShowAll={setShowAll}
+      onLoadAll={() => {
+        onLoadAll?.();
+        if (!onToggleShowAll) setShowAllInline(true);
+      }}
+      onCheckApplicability={onCheckApplicability}
+      onBack={onBack}
+    />
+  );
+
+  const detail = (
+    <div className="ct-workflow-results-stack">
+      <LawScanLawDetail
+        row={focusedRow}
+        scanResponse={scanResponse}
+        shownCount={displayRows.length}
+      />
+    </div>
+  );
+
+  if (panelOnly) return panel;
+  if (detailOnly) return detail;
 
   return (
     <WorkflowSplitLayout
-      stepLabel="Step 2"
-      intro="Regulations ranked by relevance. Choose a law on the left to view search results on the right."
-      icon="scale"
-      actionsAriaLabel="Law selection"
-      resultsAriaLabel="Search results dashboard"
-      actions={
-        <div className="ct-workflow-actions-stack">
-          <LawScanLawSidebar
-            rows={displayRows}
-            focusedCode={focusedCode}
-            onFocus={setFocusedCode}
-          />
-          <div className="ct-workflow-actions-footer">
-            {canExpand ? (
-              <div className="ct-law-scan-expand-row">
-                {!allResults ? (
-                  <button
-                    type="button"
-                    className="ct-btn-outline ct-law-scan-expand-btn"
-                    disabled={loadingAll}
-                    onClick={() => {
-                      onLoadAll?.();
-                      setShowAllInline(true);
-                    }}
-                  >
-                    {loadingAll ? "Loading all matches…" : `Show all ${total} matches`}
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="ct-btn-outline ct-law-scan-expand-btn"
-                    onClick={() => setShowAllInline((v) => !v)}
-                  >
-                    {showAllInline
-                      ? `Show top ${results.length} only`
-                      : `Show all ${allResults.length} matches`}
-                  </button>
-                )}
-              </div>
-            ) : null}
-            <button
-              type="button"
-              className="ct-btn-primary ct-scanner-action-btn"
-              disabled={!canCheck}
-              onClick={onCheckApplicability}
-            >
-              Check applicability
-            </button>
-            {onBack ? (
-              <button
-                type="button"
-                className="ct-btn-outline ct-scanner-action-btn"
-                disabled={loading}
-                onClick={onBack}
-              >
-                Go back
-              </button>
-            ) : null}
-          </div>
-        </div>
-      }
-      results={
-        <LawScanLawDetail
-          row={focusedRow}
-          scanResponse={scanResponse}
-          shownCount={displayRows.length}
-        />
-      }
+      stepLabel=""
+      title=""
+      intro=""
+      actionsTitle=""
+      resultsTitle={resultsTitle}
+      actionsAriaLabel="Relevant laws"
+      resultsAriaLabel="Regulation detail"
+      actions={panel}
+      results={detail}
     />
   );
 }

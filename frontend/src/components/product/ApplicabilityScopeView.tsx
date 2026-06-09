@@ -14,6 +14,7 @@ import { ScopeAnalysisChatBlock } from "./ScopeAnalysisChatBlock";
 import { buildApplicabilityVerdictSummary } from "../../lib/applicabilityVerdict";
 import { buildScopeChatDocument, type ScopeChatDocument } from "../../lib/scopeChatNarrative";
 import { instrumentMatchesCode } from "../../lib/applicabilityScan";
+import { ensureScopeInstruments } from "../../lib/scopeFallback";
 import { resolveAssessCodes } from "../../lib/utils";
 import type { ChatResponse, ScopeAnalysis } from "../../types/chat";
 import {
@@ -222,7 +223,12 @@ export function ApplicabilityScopeView({
 
   const assessment = resolveAssessment(response);
   const scopeAnalysis = filterScopeAnalysis(assessment?.scope_analysis, assessCodes);
-  const instruments = scopeAnalysis?.instruments ?? [];
+  const rawInstruments = scopeAnalysis?.instruments ?? [];
+
+  const instruments = useMemo(
+    () => ensureScopeInstruments(rawInstruments, selectedLaws, displayScanResults, spec),
+    [rawInstruments, selectedLaws, displayScanResults, spec],
+  );
 
   const verdictSummary = useMemo(
     () =>

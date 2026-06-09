@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from contextlib import asynccontextmanager
@@ -1249,6 +1250,7 @@ class PlaybookPatchBody(BaseModel):
 class ProductParseBody(BaseModel):
     description: str = ""
     playbook_id: Optional[str] = None
+    intake: Optional[dict[str, Any]] = None
 
 
 class ProductKgPatchBody(BaseModel):
@@ -1362,6 +1364,7 @@ async def api_playbook_documents(
 async def api_products_parse(
     description: str = Form(""),
     playbook_id: Optional[str] = Form(None),
+    intake_json: Optional[str] = Form(None),
     files: list[UploadFile] = File(default=[]),
     account_id: str = Header(..., alias="X-Account-Id"),
 ) -> dict[str, Any]:
@@ -1370,11 +1373,18 @@ async def api_products_parse(
     for uf in files or []:
         raw = await uf.read()
         file_tuples.append((uf.filename or "upload", raw))
+    intake: dict[str, Any] | None = None
+    if intake_json:
+        try:
+            intake = json.loads(intake_json)
+        except json.JSONDecodeError:
+            intake = None
     kg = build_product_kg(
         account_id=aid,
         playbook_id=(playbook_id or "").strip() or None,
         description=description,
         files=file_tuples or None,
+        intake=intake,
     )
     return {"version": 1, **kg}
 
@@ -1389,6 +1399,7 @@ def api_products_parse_json(
         account_id=aid,
         playbook_id=(body.playbook_id or "").strip() or None,
         description=body.description,
+        intake=body.intake,
     )
     return {"version": 1, **kg}
 

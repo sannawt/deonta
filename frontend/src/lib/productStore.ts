@@ -43,7 +43,16 @@ export interface ProductRecord {
   };
 }
 
-const STORAGE_KEY = "ct_products_v1";
+export type ProductWorkflowId = "default" | "lab";
+
+const STORAGE_KEYS: Record<ProductWorkflowId, string> = {
+  default: "ct_products_v1",
+  lab: "ct_products_v1_lab",
+};
+
+function storageKey(workflow: ProductWorkflowId = "default"): string {
+  return STORAGE_KEYS[workflow];
+}
 
 function safeParse<T>(raw: string | null): T | null {
   if (!raw) return null;
@@ -54,16 +63,16 @@ function safeParse<T>(raw: string | null): T | null {
   }
 }
 
-export function loadProducts(): ProductRecord[] {
+export function loadProducts(workflow: ProductWorkflowId = "default"): ProductRecord[] {
   const data = safeParse<{ version: number; products: ProductRecord[] }>(
-    localStorage.getItem(STORAGE_KEY)
+    localStorage.getItem(storageKey(workflow))
   );
   if (!data || data.version !== 1 || !Array.isArray(data.products)) return [];
   return data.products;
 }
 
-export function saveProducts(products: ProductRecord[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, products }));
+export function saveProducts(products: ProductRecord[], workflow: ProductWorkflowId = "default") {
+  localStorage.setItem(storageKey(workflow), JSON.stringify({ version: 1, products }));
 }
 
 export function specToKgFacts(spec: ProductSpec): KgFact[] {

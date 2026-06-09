@@ -1700,12 +1700,23 @@ details > summary::-webkit-details-marker { display: none; }
 .ct-thinking {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+}
+
+/* Padding absorbs corner sweep while the hourglass rotates */
+.ct-hourglass-spin-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 10px;
+  box-sizing: content-box;
 }
 
 .ct-thinking-icon {
   display: block;
   animation: ct-hourglass-spin 1.1s linear infinite;
+  transform-origin: center center;
 }
 
 .ct-thinking-label {
@@ -1725,6 +1736,14 @@ details > summary::-webkit-details-marker { display: none; }
   border-radius: inherit;
 }
 
+.ct-thinking-overlay .ct-thinking {
+  gap: 28px;
+}
+
+.ct-thinking-overlay .ct-hourglass-spin-wrap {
+  padding: 14px;
+}
+
 .ct-card-relative {
   position: relative;
 }
@@ -1736,7 +1755,11 @@ details > summary::-webkit-details-marker { display: none; }
 }
 
 .ct-btn-with-spinner .ct-thinking {
-  gap: 0;
+  gap: 10px;
+}
+
+.ct-btn-with-spinner .ct-hourglass-spin-wrap {
+  padding: 5px;
 }
 
 .ct-btn-with-spinner .ct-thinking-icon {

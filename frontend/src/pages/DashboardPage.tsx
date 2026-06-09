@@ -14,7 +14,9 @@ const EU_INSTRUMENTS = [
 
 interface Props {
   products: ProductRecord[];
+  labProducts: ProductRecord[];
   onProductPath: () => void;
+  onProductLabPath: () => void;
   onChatPath: () => void;
 }
 
@@ -31,10 +33,20 @@ function assessmentBadge(product: ProductRecord): { label: string; tone: string 
   return { label: "Assessed", tone: "done" };
 }
 
-export function DashboardPage({ products, onProductPath, onChatPath }: Props) {
-  const recentProducts = [...products]
+export function DashboardPage({
+  products,
+  labProducts,
+  onProductPath,
+  onProductLabPath,
+  onChatPath,
+}: Props) {
+  const recentBackup = [...products]
     .sort((a, b) => b.updated_at - a.updated_at)
-    .slice(0, 4);
+    .slice(0, 3);
+
+  const recentLab = [...labProducts]
+    .sort((a, b) => b.updated_at - a.updated_at)
+    .slice(0, 3);
 
   return (
     <div className="ct-dashboard">
@@ -59,8 +71,26 @@ export function DashboardPage({ products, onProductPath, onChatPath }: Props) {
           <div className="ct-dashboard-action-text">
             <h2 className="ct-dashboard-action-title">Product scan</h2>
             <p className="ct-dashboard-action-body">
-              Describe your product in three guided steps. Build a knowledge graph,
-              scan relevant EU laws, and get an applicability verdict.
+              The stable three-step workflow: intake, law scan, and scope analysis.
+              Use this as your backup while you experiment in the lab version.
+            </p>
+          </div>
+          <span className="ct-dashboard-action-arrow" aria-hidden>→</span>
+        </button>
+
+        <button
+          type="button"
+          className="ct-dashboard-action-card ct-dashboard-action-card--lab"
+          onClick={onProductLabPath}
+        >
+          <div className="ct-dashboard-action-icon">
+            <PixelIcon name="hourglass" size={48} />
+          </div>
+          <div className="ct-dashboard-action-text">
+            <h2 className="ct-dashboard-action-title">Product scan lab</h2>
+            <p className="ct-dashboard-action-body">
+              A separate copy of the same Steps 1–3 workflow for design experiments.
+              Saved products are kept apart from the backup workflow.
             </p>
           </div>
           <span className="ct-dashboard-action-arrow" aria-hidden>→</span>
@@ -85,11 +115,11 @@ export function DashboardPage({ products, onProductPath, onChatPath }: Props) {
         </button>
       </section>
 
-      {recentProducts.length > 0 ? (
-        <section className="ct-dashboard-section" aria-label="Recent products">
-          <h2 className="ct-dashboard-section-title">Recent products</h2>
+      {recentBackup.length > 0 ? (
+        <section className="ct-dashboard-section" aria-label="Recent products — backup workflow">
+          <h2 className="ct-dashboard-section-title">Recent products — backup</h2>
           <div className="ct-dashboard-product-list">
-            {recentProducts.map((product) => {
+            {recentBackup.map((product) => {
               const badge = assessmentBadge(product);
               return (
                 <div key={product.id} className="ct-dashboard-product-row">
@@ -106,6 +136,37 @@ export function DashboardPage({ products, onProductPath, onChatPath }: Props) {
                     type="button"
                     className="ct-btn-outline ct-dashboard-product-btn"
                     onClick={onProductPath}
+                  >
+                    Continue
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
+      {recentLab.length > 0 ? (
+        <section className="ct-dashboard-section" aria-label="Recent products — lab workflow">
+          <h2 className="ct-dashboard-section-title">Recent products — lab</h2>
+          <div className="ct-dashboard-product-list">
+            {recentLab.map((product) => {
+              const badge = assessmentBadge(product);
+              return (
+                <div key={product.id} className="ct-dashboard-product-row">
+                  <div className="ct-dashboard-product-info">
+                    <span className="ct-dashboard-product-name">{product.label}</span>
+                    <span className="ct-dashboard-product-date">
+                      {formatDate(product.updated_at)}
+                    </span>
+                  </div>
+                  <span className={`ct-dashboard-product-badge ct-dashboard-product-badge--${badge.tone}`}>
+                    {badge.label}
+                  </span>
+                  <button
+                    type="button"
+                    className="ct-btn-outline ct-dashboard-product-btn"
+                    onClick={onProductLabPath}
                   >
                     Continue
                   </button>
