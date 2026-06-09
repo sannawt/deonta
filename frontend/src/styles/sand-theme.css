@@ -1684,44 +1684,12 @@ body::before {
 }
 
 .ct-scope-dim-card-body {
-  padding: 0 16px 16px;
+  padding: 14px 16px 16px;
   border-top: 1px solid var(--bdr);
   background: #fff;
-}
-
-.ct-scope-dim-section {
-  padding: 14px 0 0;
-}
-
-.ct-scope-dim-section + .ct-scope-dim-section {
-  margin-top: 4px;
-  padding-top: 14px;
-  border-top: 1px dashed var(--bdr);
-}
-
-.ct-scope-dim-section-title {
-  margin: 0 0 8px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--pixel-muted, #8a8a8a);
-}
-
-.ct-scope-dim-section--conclusion .ct-scope-dim-conclusion {
-  margin: 0;
-  padding: 10px 12px;
-  background: var(--scope-lilac-wash, #fcfbfe);
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: var(--sand-deep, #2c2416);
-}
-
-.ct-scope-dim-section--open {
-  padding: 12px;
-  margin-top: 12px;
-  background: rgba(180, 120, 30, 0.06);
-  border: 1px dashed rgba(180, 120, 30, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .ct-scope-cite-chip {
@@ -5579,70 +5547,62 @@ body::before {
   color: var(--txt3);
 }
 
-/* Section title icons */
-.ct-scope-dim-section-icon {
-  display: inline-block;
-  margin-right: 5px;
-  opacity: 0.55;
+/* Dimension card body — simplified: one text block + sources */
+
+.ct-scope-dim-main-text {
+  margin: 0 0 14px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--txt2);
 }
 
-/* Supporting facts — purple bullets */
-.ct-scope-dim-fact-list--supporting {
-  list-style: none;
-  padding-left: 0;
+.ct-scope-dim-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--bdr);
 }
 
-.ct-scope-dim-fact-list--supporting li::before {
-  content: "✓";
-  margin-right: 6px;
-  color: #7a6b96;
+.ct-scope-dim-sources-label {
+  font-size: 0.68rem;
   font-weight: 700;
-  font-size: 0.75em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--txt4);
 }
 
-/* Unclear facts — dark bullets */
-.ct-scope-dim-fact-list--unclear {
+.ct-scope-dim-unclear {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(139, 125, 168, 0.3);
+  margin-top: 4px;
+}
+
+.ct-scope-dim-unclear-list {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.ct-scope-dim-fact-list--unclear li::before {
+.ct-scope-dim-unclear-list li {
+  font-size: 0.84rem;
+  color: var(--txt3);
+  padding-left: 14px;
+  position: relative;
+}
+
+.ct-scope-dim-unclear-list li::before {
   content: "?";
-  margin-right: 6px;
-  color: var(--pixel-muted);
+  position: absolute;
+  left: 0;
+  color: var(--scope-summary-accent, #8b7da8);
   font-weight: 700;
-}
-
-/* Background (secondary evidence) section */
-.ct-scope-dim-section--evidence {
-  background: var(--scope-lilac-wash, #fcfbfe);
-  padding: 12px;
-  margin: 0 -16px;
-  border-top: 1px dashed rgba(139, 125, 168, 0.2);
-}
-
-/* Supporting facts section */
-.ct-scope-dim-section--facts {
-  background: var(--scope-lilac-soft, #fefeff);
-  padding: 12px;
-  margin: 0 -16px;
-  border-top: 1px dashed rgba(139, 125, 168, 0.2);
-}
-
-/* Legal basis section */
-.ct-scope-dim-section--legal {
-  background: var(--scope-lilac-wash, #fcfbfe);
-  padding: 12px;
-  margin: 0 -16px;
-  border-top: 1px dashed rgba(139, 125, 168, 0.2);
-}
-
-/* Still unclear section */
-.ct-scope-dim-section--open {
-  background: var(--scope-lilac-accent, #f3eef9) !important;
-  border: 1px dashed rgba(139, 125, 168, 0.35) !important;
-  padding: 12px;
-  margin: 8px -16px 0;
 }
 
 /* ─── Inline EUR-Lex text links ───────────────────────────────────────────── */
