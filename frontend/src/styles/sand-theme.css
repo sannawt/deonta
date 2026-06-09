@@ -5480,98 +5480,98 @@ body::before {
   white-space: nowrap;
 }
 
-/* Relevance score tags (Step 2) */
+/* Relevance score tags (Step 2) — black / white / purple */
 .ct-law-list-tag--score-high {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--scope-lilac-deep, #ebe4f4);
+  color: #3d3058;
 }
 
 .ct-law-list-tag--score-mid {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: var(--scope-lilac-accent, #f3eef9);
+  color: var(--scope-summary-accent, #8b7da8);
 }
 
 .ct-law-list-tag--score-low {
-  background: #fff8e1;
-  color: #e65100;
-}
-
-/* Scope status tags (Step 3) */
-.ct-law-list-tag--scope-in {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.ct-law-list-tag--scope-review {
-  background: #fff3e0;
-  color: #e65100;
-}
-
-.ct-law-list-tag--scope-out {
-  background: #fce4ec;
-  color: #c62828;
-}
-
-.ct-law-list-tag--scope-neutral {
   background: var(--sand);
   color: var(--txt3);
 }
 
-/* ─── Scope dimension card — improved palette ─────────────────────────────── */
+/* Scope status tags (Step 3) — black / white / purple */
+.ct-law-list-tag--scope-in {
+  background: var(--scope-lilac-deep, #ebe4f4);
+  color: #3d3058;
+}
 
-/* Override old lilac palette with proper semantic colors */
+.ct-law-list-tag--scope-review {
+  background: var(--scope-lilac-accent, #f3eef9);
+  color: var(--scope-summary-accent, #8b7da8);
+}
+
+.ct-law-list-tag--scope-out {
+  background: var(--sand);
+  color: var(--pixel-muted);
+}
+
+.ct-law-list-tag--scope-neutral {
+  background: var(--sand);
+  color: var(--txt4);
+}
+
+/* ─── Scope dimension card — black / white / purple palette ──────────────── */
+
 .ct-scope-dim-card--pass {
-  border-left: 4px solid #2e7d32;
+  border-left: 4px solid #7a6b96;
 }
 
 .ct-scope-dim-card--review {
-  border-left: 4px solid #e65100;
+  border-left: 4px solid #b8aed0;
 }
 
 .ct-scope-dim-card--fail {
-  border-left: 4px solid #c62828;
+  border-left: 4px solid var(--pixel-muted, #4a4a4a);
 }
 
 .ct-scope-dim-card--neutral {
-  border-left: 4px solid var(--txt4);
+  border-left: 4px solid var(--bdr2);
 }
 
 .ct-scope-dim-card-icon--pass {
-  color: #2e7d32 !important;
-  border-color: rgba(46, 125, 50, 0.35) !important;
-  background: #f1f8f2 !important;
+  color: #7a6b96 !important;
+  border-color: rgba(122, 107, 150, 0.35) !important;
+  background: var(--scope-lilac-accent, #f3eef9) !important;
 }
 
 .ct-scope-dim-card-icon--review {
-  color: #e65100 !important;
-  border-color: rgba(230, 81, 0, 0.3) !important;
-  background: #fff8f2 !important;
+  color: var(--scope-summary-accent, #8b7da8) !important;
+  border-color: rgba(139, 125, 168, 0.3) !important;
+  background: var(--scope-lilac-wash, #fcfbfe) !important;
 }
 
 .ct-scope-dim-card-icon--fail {
-  color: #c62828 !important;
-  border-color: rgba(198, 40, 40, 0.3) !important;
-  background: #fff2f2 !important;
+  color: var(--pixel-muted, #4a4a4a) !important;
+  border-color: rgba(74, 74, 74, 0.25) !important;
+  background: var(--sand, #f0f0f0) !important;
 }
 
 .ct-scope-dim-card-icon--neutral {
-  color: var(--txt3) !important;
+  color: var(--txt4) !important;
   border-color: var(--bdr) !important;
+  background: #fff !important;
 }
 
 .ct-scope-dim-card-badge--pass {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--scope-lilac-deep, #ebe4f4);
+  color: #3d3058;
 }
 
 .ct-scope-dim-card-badge--review {
-  background: #fff3e0;
-  color: #e65100;
+  background: var(--scope-lilac-accent, #f3eef9);
+  color: var(--scope-summary-accent, #8b7da8);
 }
 
 .ct-scope-dim-card-badge--fail {
-  background: #fce4ec;
-  color: #c62828;
+  background: var(--sand);
+  color: var(--pixel-muted);
 }
 
 .ct-scope-dim-card-badge--neutral {
@@ -5586,21 +5586,21 @@ body::before {
   opacity: 0.55;
 }
 
-/* Supporting facts — green-tinted bullets */
-.ct-scope-dim-fact-list--supporting li::before {
-  content: "✓";
-  margin-right: 6px;
-  color: #2e7d32;
-  font-weight: 700;
-  font-size: 0.75em;
-}
-
+/* Supporting facts — purple bullets */
 .ct-scope-dim-fact-list--supporting {
   list-style: none;
   padding-left: 0;
 }
 
-/* Unclear facts — amber-tinted bullets */
+.ct-scope-dim-fact-list--supporting li::before {
+  content: "✓";
+  margin-right: 6px;
+  color: #7a6b96;
+  font-weight: 700;
+  font-size: 0.75em;
+}
+
+/* Unclear facts — dark bullets */
 .ct-scope-dim-fact-list--unclear {
   list-style: none;
   padding-left: 0;
@@ -5609,36 +5609,38 @@ body::before {
 .ct-scope-dim-fact-list--unclear li::before {
   content: "?";
   margin-right: 6px;
-  color: #e65100;
+  color: var(--pixel-muted);
   font-weight: 700;
 }
 
 /* Background (secondary evidence) section */
 .ct-scope-dim-section--evidence {
-  background: #f9f9f9;
+  background: var(--scope-lilac-wash, #fcfbfe);
   padding: 12px;
   margin: 0 -16px;
-  border-top: 1px dashed var(--bdr);
+  border-top: 1px dashed rgba(139, 125, 168, 0.2);
+}
+
+/* Supporting facts section */
+.ct-scope-dim-section--facts {
+  background: var(--scope-lilac-soft, #fefeff);
+  padding: 12px;
+  margin: 0 -16px;
+  border-top: 1px dashed rgba(139, 125, 168, 0.2);
 }
 
 /* Legal basis section */
 .ct-scope-dim-section--legal {
-  background: #fafafe;
+  background: var(--scope-lilac-wash, #fcfbfe);
   padding: 12px;
   margin: 0 -16px;
-  border-top: 1px dashed var(--bdr);
+  border-top: 1px dashed rgba(139, 125, 168, 0.2);
 }
 
-.ct-scope-dim-section--facts {
-  background: #f8fdf8;
-  padding: 12px;
-  margin: 0 -16px;
-  border-top: 1px dashed rgba(46, 125, 50, 0.15);
-}
-
+/* Still unclear section */
 .ct-scope-dim-section--open {
-  background: #fff9f4 !important;
-  border: 1px dashed rgba(230, 81, 0, 0.3) !important;
+  background: var(--scope-lilac-accent, #f3eef9) !important;
+  border: 1px dashed rgba(139, 125, 168, 0.35) !important;
   padding: 12px;
   margin: 8px -16px 0;
 }
@@ -5647,53 +5649,58 @@ body::before {
 
 .ct-scope-inline-link {
   display: inline;
-  color: var(--brand-blue);
+  color: #5a4d7a;
   text-decoration: none;
   font-weight: 600;
-  border-bottom: 1px solid rgba(45, 107, 228, 0.3);
+  border-bottom: 1px solid rgba(90, 77, 122, 0.3);
   transition: border-color 0.1s, color 0.1s;
 }
 
 .ct-scope-inline-link:hover {
-  color: var(--blue-dk);
-  border-bottom-color: var(--brand-blue);
+  color: #3d3058;
+  border-bottom-color: #7a6b96;
 }
 
 .ct-scope-inline-link .ct-cite-ext {
   font-size: 0.7em;
   margin-left: 2px;
-  opacity: 0.7;
+  opacity: 0.6;
   vertical-align: super;
 }
 
-/* ─── Verdict badge improvements ─────────────────────────────────────────── */
+/* ─── Verdict badges — black / white / purple only ───────────────────────── */
 
 .ct-scope-verdict-badge--in {
-  background: #e8f5e9 !important;
-  color: #2e7d32 !important;
+  background: var(--scope-lilac-deep, #ebe4f4) !important;
+  color: #3d3058 !important;
 }
 
 .ct-scope-verdict-badge--review {
-  background: #fff3e0 !important;
-  color: #e65100 !important;
+  background: var(--scope-lilac-accent, #f3eef9) !important;
+  color: var(--scope-summary-accent, #8b7da8) !important;
 }
 
 .ct-scope-verdict-badge--out {
-  background: #fce4ec !important;
-  color: #c62828 !important;
+  background: var(--sand) !important;
+  color: var(--pixel-muted) !important;
+}
+
+.ct-scope-verdict-badge--neutral {
+  background: var(--sand) !important;
+  color: var(--txt3) !important;
 }
 
 .ct-scope-detail-verdict.ct-scope-verdict-badge--in {
-  background: #e8f5e9 !important;
-  color: #2e7d32 !important;
+  background: var(--scope-lilac-deep, #ebe4f4) !important;
+  color: #3d3058 !important;
 }
 
 .ct-scope-detail-verdict.ct-scope-verdict-badge--review {
-  background: #fff3e0 !important;
-  color: #e65100 !important;
+  background: var(--scope-lilac-accent, #f3eef9) !important;
+  color: var(--scope-summary-accent, #8b7da8) !important;
 }
 
 .ct-scope-detail-verdict.ct-scope-verdict-badge--out {
-  background: #fce4ec !important;
-  color: #c62828 !important;
+  background: var(--sand) !important;
+  color: var(--pixel-muted) !important;
 }
