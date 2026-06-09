@@ -119,14 +119,13 @@ export function ApplicabilityLawAccordion({
 
       {dimensions.length > 0 ? (
         <section className="ct-scope-detail-dimensions">
-          <div className="ct-scope-dim-card-stack">
+          <div className="ct-scope-dim-table">
             {dimensions.map((dim) => (
               <ScopeDimensionCard
                 key={dim.id}
                 dim={dim}
                 regKey={instrument?.reg_key}
                 openQuestions={lawQuestions}
-                defaultOpen={dim.result === "UNKNOWN" || dim.result === "FAIL"}
               />
             ))}
           </div>
