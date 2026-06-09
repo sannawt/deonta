@@ -5613,6 +5613,14 @@ body::before {
   font-weight: 700;
 }
 
+/* Background (secondary evidence) section */
+.ct-scope-dim-section--evidence {
+  background: #f9f9f9;
+  padding: 12px;
+  margin: 0 -16px;
+  border-top: 1px dashed var(--bdr);
+}
+
 /* Legal basis section */
 .ct-scope-dim-section--legal {
   background: #fafafe;

@@ -9,6 +9,7 @@ import {
   isTechnicalAtom,
 } from "../../lib/plainLanguage";
 import { formatEngineTokens } from "../../lib/utils";
+import { eurlexUrlForProvision } from "../../lib/legalLinks";
 import { ChatCitationLink } from "../chat/ChatCitationLink";
 import { LegalInlineText } from "./LegalInlineText";
 
@@ -76,15 +77,30 @@ export function ScopeDimensionCard({
     dimWithDisplay.result_display?.trim() || dimensionResultPlain(dim.result);
   const tone = resultTone(dim.result, resultLabel);
 
-  const rawAnalysis =
-    dim.llm?.interpretation?.trim() ||
-    dim.evidence?.trim() ||
-    dimensionResultSentence(dim.label, dim.result);
+  // Show LLM interpretation as primary analysis
+  const llmBody = dim.llm?.interpretation?.trim() || "";
+  // Show evidence separately when it adds different content
+  const evidenceBody = (() => {
+    const ev = dim.evidence?.trim() || "";
+    if (!ev || ev === llmBody) return "";
+    // Only show evidence if it has substantive content and isn't just a fallback sentence
+    if (ev.length < 20) return "";
+    return ev;
+  })();
 
-  const { body: analysisBody, refs: evidenceRefs } = splitEvidenceRefs(rawAnalysis);
+  const primaryAnalysis = llmBody || evidenceBody || dimensionResultSentence(dim.label, dim.result);
+  const { body: analysisBody, refs: evidenceRefs } = splitEvidenceRefs(primaryAnalysis);
+
   const why = dim.llm?.why_result?.trim() || "";
-
   const rules = dim.rules_invoked ?? [];
+
+  // Proof lines: show those with human-readable notes
+  const proofLines = (dim.proof_lines ?? []).filter((pl) => {
+    const note = (pl.note || "").trim();
+    if (!note) return false;
+    if (isTechnicalAtom(note)) return false;
+    return note.length > 12;
+  });
 
   const supportingFacts: string[] = [];
   const unclearFacts: string[] = [];
@@ -114,6 +130,12 @@ export function ScopeDimensionCard({
     addUnique(supportingFacts, f);
   }
 
+  // Add proof-line notes into supporting facts too
+  for (const pl of proofLines) {
+    const note = (pl.note || "").trim();
+    addUnique(supportingFacts, note);
+  }
+
   const dimQuestions = openQuestions.filter(
     (q) => !q.dimension || q.dimension === dim.id,
   );
@@ -122,12 +144,31 @@ export function ScopeDimensionCard({
     if (text) addUnique(unclearFacts, text);
   }
 
+  // Build rule entries — show actual rule_text when it's substantial
   const ruleEntries = rules
-    .map((rule) => ({
-      text: humanizeRuleExplanation(rule.rule_text, rule.head_atom),
-      citation: rule.citation,
-    }))
+    .map((rule) => {
+      const ruleText = (rule.rule_text || "").trim();
+      const isSubstantial = ruleText.length > 40 && !/^[a-z_]+\(/.test(ruleText);
+      return {
+        text: isSubstantial ? formatEngineTokens(ruleText) : humanizeRuleExplanation(rule.rule_text, rule.head_atom),
+        citation: rule.citation,
+        provision_long_id: rule.provision_long_id,
+      };
+    })
     .filter((entry) => entry.text);
+
+  // Collect proof-line citations (provision_long_id → link)
+  const proofLineCitations = proofLines
+    .filter((pl) => pl.provision_long_id)
+    .map((pl) => {
+      const plid = pl.provision_long_id!;
+      const url = eurlexUrlForProvision(plid);
+      const label = plid
+        .replace(/^[A-Za-z]+_/, "")
+        .replace(/^A(\d+)/, "Art. $1")
+        .replace(/^R(\d+)/, "Recital $1");
+      return { provision_long_id: plid, label, eurlex_url: url };
+    });
 
   const legalCitations = collectDimensionCitations(dim, evidenceRefs, regKey);
   const ruleCitationKeys = new Set(
@@ -139,18 +180,29 @@ export function ScopeDimensionCard({
     (citation) => !ruleCitationKeys.has(citation.provision_long_id || citation.label),
   );
 
+  // Merge proof-line citations with standalone ones (dedup)
+  const existingKeys = new Set([
+    ...legalCitations.map((c) => c.provision_long_id || c.label),
+  ]);
+  const extraProofCitations = proofLineCitations.filter(
+    (c) => !existingKeys.has(c.provision_long_id || c.label),
+  );
+
+  const hasCitations = ruleEntries.length > 0 || standaloneCitations.length > 0 || extraProofCitations.length > 0;
+
   const hasDetail =
     analysisBody ||
+    evidenceBody ||
     why ||
     supportingFacts.length > 0 ||
-    ruleEntries.length > 0 ||
-    standaloneCitations.length > 0 ||
+    hasCitations ||
     unclearFacts.length > 0;
 
   const clauses = analysisBody ? splitClauses(analysisBody) : [];
+  const evidenceClauses = evidenceBody && evidenceBody !== analysisBody
+    ? splitClauses(evidenceBody)
+    : [];
   const preview = clauses[0] ?? "";
-
-  const hasCitations = ruleEntries.length > 0 || standaloneCitations.length > 0;
 
   return (
     <details
@@ -191,6 +243,21 @@ export function ScopeDimensionCard({
             </section>
           ) : null}
 
+          {evidenceClauses.length > 0 ? (
+            <section className="ct-scope-dim-section ct-scope-dim-section--evidence">
+              <h5 className="ct-scope-dim-section-title">
+                <span className="ct-scope-dim-section-icon">▸</span> Background
+              </h5>
+              <ul className="ct-scope-dim-finding-list">
+                {evidenceClauses.map((clause, i) => (
+                  <li key={i}>
+                    <LegalInlineText text={clause} regKey={regKey} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
           {why ? (
             <section className="ct-scope-dim-section ct-scope-dim-section--conclusion">
               <h5 className="ct-scope-dim-section-title">
@@ -222,7 +289,7 @@ export function ScopeDimensionCard({
               </h5>
               {ruleEntries.map((entry) => (
                 <p
-                  key={`${entry.text}-${entry.citation?.label || ""}`}
+                  key={`${entry.text}-${entry.citation?.label || entry.provision_long_id || ""}`}
                   className="ct-scope-dim-legal-line"
                 >
                   <LegalInlineText text={entry.text} regKey={regKey} />
@@ -239,6 +306,13 @@ export function ScopeDimensionCard({
                     />
                   ))}
                 {standaloneCitations.map((citation) => (
+                  <ChatCitationLink
+                    key={citation.provision_long_id || citation.label}
+                    citation={citation}
+                    className="ct-scope-cite-chip"
+                  />
+                ))}
+                {extraProofCitations.map((citation) => (
                   <ChatCitationLink
                     key={citation.provision_long_id || citation.label}
                     citation={citation}

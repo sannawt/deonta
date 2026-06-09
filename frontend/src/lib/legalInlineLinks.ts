@@ -8,11 +8,13 @@ export interface TextSegment {
 
 /**
  * Inline legal reference pattern:
- *   Art. 6(1)  |  Art 3  |  Arts. 6, 7  |  Recital 50  |  Recitals 12, 50, 55
+ *   Art. 6(1)  |  Art 3  |  Arts. 6, 7  |  Article 6  |  Articles 6 and 7
+ *   Recital 50  |  Recitals 12, 50, 55
  *   Annex I    |  Annex III point 2
+ *   paragraph 1 / para. 1
  */
 const INLINE_REF_RE =
-  /\b(?:Recitals?\s+\d+(?:\s*[,&]\s*\d+)*|Arts?\.?\s*\d+(?:\(\d+\))?(?:\s*[,&]\s*\d+(?:\(\d+\))?)*|Annex\s+[IVX]+(?:\s+point\s+\d+)?)\b/gi;
+  /\b(?:Recitals?\s+\d+(?:\s*[,&and\s]+\d+)*|Articles?\s+\d+(?:\(\d+\))?(?:(?:\s*[,&]\s*|\s+and\s+)\d+(?:\(\d+\))?)*|Arts?\.?\s*\d+(?:\(\d+\))?(?:\s*[,&]\s*\d+(?:\(\d+\))?)*|Annex\s+[IVX]+(?:\s+point\s+\d+)?|para(?:graph|\.)\s*\d+(?:\(\d+\))?)\b/gi;
 
 /**
  * Split a plain-text string into segments. Each "link" segment represents
