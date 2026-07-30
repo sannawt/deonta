@@ -1,5 +1,6 @@
 import type { LawScanResponse, LawScanResult } from "../../lib/api";
 import { eurlexInstrumentUrl, lawSummaryForCode } from "../../lib/lawSummaries";
+import { lawNameFromScanRow } from "../../lib/lawDisplayName";
 import { lawScanKeywords } from "../../lib/utils";
 import { LegalInlineText } from "./LegalInlineText";
 
@@ -7,7 +8,11 @@ interface Props {
   row: LawScanResult | null;
   scanResponse?: LawScanResponse | null;
   shownCount?: number;
+  /** Hide relevance scores and catalog boilerplate — used on applicability step. */
+  compact?: boolean;
 }
+
+const CATALOG_MATCH_BOILERPLATE = "Matched from EU law catalog for your product profile";
 
 function KeywordPills({ keywords }: { keywords: string[] }) {
   if (!keywords.length) {
@@ -24,7 +29,7 @@ function KeywordPills({ keywords }: { keywords: string[] }) {
   );
 }
 
-export function LawScanLawDetail({ row, scanResponse, shownCount = 0 }: Props) {
+export function LawScanLawDetail({ row, scanResponse, shownCount = 0, compact = false }: Props) {
   const total =
     scanResponse?.total_match_count ?? scanResponse?.match_count ?? shownCount;
 
@@ -41,12 +46,17 @@ export function LawScanLawDetail({ row, scanResponse, shownCount = 0 }: Props) {
   const keywords = lawScanKeywords(row);
   const scorePct = Math.round(Math.max(0, Math.min(1, row.score)) * 100);
   const instrumentUrl = eurlexInstrumentUrl(lawCode);
+  const displayName = lawNameFromScanRow(row);
+  const rationale = row.match_rationale?.trim();
+  const showRationale =
+    !compact &&
+    rationale &&
+    rationale !== CATALOG_MATCH_BOILERPLATE &&
+    !/^matched from eu law catalog/i.test(rationale);
 
   return (
     <div className="ct-law-scan-detail ct-law-scan-detail--rich">
-      {row.number || catalog?.number ? (
-        <p className="ct-law-scan-detail-meta">{catalog?.number || row.number}</p>
-      ) : null}
+      <h3 className="ct-law-scan-detail-heading">{displayName}</h3>
 
       {instrumentUrl ? (
         <p className="ct-law-scan-detail-eurlex">
@@ -59,20 +69,22 @@ export function LawScanLawDetail({ row, scanResponse, shownCount = 0 }: Props) {
         </p>
       ) : null}
 
-      <div className="ct-law-scan-detail-relevance">
-        <div className="ct-law-scan-detail-relevance-row">
-          <span className="ct-law-scan-detail-relevance-label">Relevance</span>
-          <span className="ct-law-scan-detail-relevance-value">{scorePct}%</span>
+      {!compact ? (
+        <div className="ct-law-scan-detail-relevance">
+          <div className="ct-law-scan-detail-relevance-row">
+            <span className="ct-law-scan-detail-relevance-label">Relevance</span>
+            <span className="ct-law-scan-detail-relevance-value">{scorePct}%</span>
+          </div>
+          <div className="ct-law-scan-bar" aria-hidden>
+            <div className="ct-law-scan-bar-fill" style={{ width: `${scorePct}%` }} />
+          </div>
+          {total > shownCount ? (
+            <p className="ct-law-scan-detail-footnote">
+              Showing {shownCount} of {total} matches above the relevance threshold.
+            </p>
+          ) : null}
         </div>
-        <div className="ct-law-scan-bar" aria-hidden>
-          <div className="ct-law-scan-bar-fill" style={{ width: `${scorePct}%` }} />
-        </div>
-        {total > shownCount ? (
-          <p className="ct-law-scan-detail-footnote">
-            Showing {shownCount} of {total} matches above the relevance threshold.
-          </p>
-        ) : null}
-      </div>
+      ) : null}
 
       <section className="ct-law-scan-detail-block">
         <h3 className="ct-law-scan-detail-block-title">Summary</h3>
@@ -93,11 +105,11 @@ export function LawScanLawDetail({ row, scanResponse, shownCount = 0 }: Props) {
         </section>
       ) : null}
 
-      {row.match_rationale ? (
+      {showRationale ? (
         <section className="ct-law-scan-detail-block">
           <h3 className="ct-law-scan-detail-block-title">Why it matched your product</h3>
           <p className="ct-law-scan-detail-text ct-law-scan-detail-prose">
-            <LegalInlineText text={row.match_rationale} regKey={lawCode} />
+            <LegalInlineText text={rationale} regKey={lawCode} />
           </p>
         </section>
       ) : null}
@@ -115,10 +127,12 @@ export function LawScanLawDetail({ row, scanResponse, shownCount = 0 }: Props) {
         </section>
       ) : null}
 
-      <section className="ct-law-scan-detail-block">
-        <h3 className="ct-law-scan-detail-block-title">Keywords</h3>
-        <KeywordPills keywords={keywords} />
-      </section>
+      {!compact ? (
+        <section className="ct-law-scan-detail-block">
+          <h3 className="ct-law-scan-detail-block-title">Keywords</h3>
+          <KeywordPills keywords={keywords} />
+        </section>
+      ) : null}
     </div>
   );
 }

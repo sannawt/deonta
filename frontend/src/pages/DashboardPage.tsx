@@ -71,7 +71,7 @@ export function DashboardPage({
           <div className="ct-dashboard-action-text">
             <h2 className="ct-dashboard-action-title">Product scan</h2>
             <p className="ct-dashboard-action-body">
-              The stable three-step workflow: intake, law scan, and scope analysis.
+              The stable three-step workflow: intake, law scan, and applicability.
               Use this as your backup while you experiment in the lab version.
             </p>
           </div>

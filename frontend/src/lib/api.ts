@@ -1,7 +1,12 @@
-import type { ChatResponse } from "../types/chat";
-import { accountHeaders, accountHeadersMultipart, ensureAccountId } from "./account";
+import type { ChatResponse, ScopeCitation } from "../types/chat";
 import type { ProductIntakePayload } from "./kgIntakeSchema";
 import type { ProductSpec } from "./productStore";
+
+const API_CREDENTIALS: RequestCredentials = "include";
+
+function jsonHeaders(): HeadersInit {
+  return { "Content-Type": "application/json" };
+}
 
 export interface KgNode {
   id: string;
@@ -73,12 +78,22 @@ export interface KgFact {
 
 async function apiFetch(input: string, init?: RequestInit): Promise<Response> {
   try {
-    return await fetch(input, init);
+    return await fetch(input, { credentials: API_CREDENTIALS, ...init });
   } catch {
     throw new Error(
       "Cannot reach the API. Start this prototype with: make run — then open http://127.0.0.1:8001/ (main workbench is on :8000)."
     );
   }
+}
+
+export async function fetchProvisions(ids: string[]): Promise<ScopeCitation[]> {
+  const unique = [...new Set(ids.map((id) => id.trim()).filter(Boolean))];
+  if (!unique.length) return [];
+  const params = new URLSearchParams({ ids: unique.join(",") });
+  const res = await apiFetch(`/api/provisions?${params.toString()}`);
+  if (!res.ok) throw new Error(`Failed to load provisions (${res.status})`);
+  const data = await res.json();
+  return data.provisions ?? [];
 }
 
 export async function fetchLaws(): Promise<LawCatalogItem[]> {
@@ -135,7 +150,55 @@ export interface LawScanResponse {
   total_vector_hits?: number;
   results: LawScanResult[];
   rank_method?: string;
+  symbolic_codes?: string[];
   embedding_search?: LawScanEmbeddingMeta;
+}
+
+export interface SymbolicLawItem {
+  code: string;
+  label: string;
+  short: string;
+  number: string;
+  ui_label: string;
+  engine_mode: "symbolic";
+}
+
+export async function fetchSymbolicLaws(): Promise<SymbolicLawItem[]> {
+  const res = await apiFetch("/api/laws/symbolic");
+  if (!res.ok) throw new Error(`Failed to load scope rules (${res.status})`);
+  const data = await res.json();
+  return data.laws ?? [];
+}
+
+export async function assessScopeRules(body: {
+  spec: ProductSpec & { regulations?: string[] };
+  kg_facts: KgFact[];
+  case_id?: string;
+  playbook_id?: string;
+}): Promise<ChatResponse> {
+  const res = await apiFetch("/api/products/scope-rules", {
+    method: "POST",
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      spec: {
+        name: body.spec.name,
+        summary: body.spec.summary,
+        markets: body.spec.markets,
+        processesPersonalData: body.spec.processesPersonalData,
+        euLink: body.spec.euLink,
+        aiSystem: body.spec.aiSystem,
+        regulations: [],
+      },
+      kg_facts: body.kg_facts,
+      case_id: body.case_id,
+      playbook_id: body.playbook_id,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Scope rules assessment failed (${res.status}): ${text.slice(0, 200)}`);
+  }
+  return res.json();
 }
 
 export async function scanRelevantLaws(body: {
@@ -181,10 +244,9 @@ export async function assessProduct(body: {
   account_id?: string;
   case_id?: string;
 }): Promise<ChatResponse> {
-  const headers = await accountHeaders();
   const res = await apiFetch("/api/products/assess", {
     method: "POST",
-    headers,
+    headers: jsonHeaders(),
     body: JSON.stringify({
       spec: {
         name: body.spec.name,
@@ -208,7 +270,6 @@ export async function assessProduct(body: {
       })),
       playbook_company_id: body.playbook_company_id,
       playbook_id: body.playbook_id,
-      account_id: body.account_id,
       case_id: body.case_id,
     }),
   });
@@ -296,6 +357,12 @@ export async function fetchLawSummary(code: string) {
   return res.json();
 }
 
+export async function fetchLawObligations(code: string) {
+  const res = await apiFetch(`/api/laws/${encodeURIComponent(code)}/obligations`);
+  if (!res.ok) throw new Error(`Obligations not found (${res.status})`);
+  return res.json();
+}
+
 export async function fetchEvidencePack(obligationIds: string[], lawCodes: string[]) {
   const res = await apiFetch("/api/laws/evidence-pack", {
     method: "POST",
@@ -319,18 +386,16 @@ export async function fetchPlaybookCompanies() {
 }
 
 export async function fetchAccountPlaybooks(): Promise<PlaybookSummary[]> {
-  const headers = await accountHeaders();
-  const res = await apiFetch("/api/playbooks", { headers });
+  const res = await apiFetch("/api/playbooks");
   if (!res.ok) throw new Error(`Failed to load playbooks (${res.status})`);
   const data = await res.json();
   return data.playbooks ?? [];
 }
 
 export async function createAccountPlaybook(name: string) {
-  const headers = await accountHeaders();
   const res = await apiFetch("/api/playbooks", {
     method: "POST",
-    headers,
+    headers: jsonHeaders(),
     body: JSON.stringify({ name }),
   });
   if (!res.ok) throw new Error(`Failed to create playbook (${res.status})`);
@@ -343,13 +408,10 @@ export async function parseProduct(input: {
   files?: File[];
   intake?: ProductIntakePayload;
 }): Promise<ProductKgResponse> {
-  await ensureAccountId();
-
   if (!input.files?.length) {
-    const headers = await accountHeaders();
     const res = await apiFetch("/api/products/parse/json", {
       method: "POST",
-      headers,
+      headers: jsonHeaders(),
       body: JSON.stringify({
         description: input.description ?? "",
         playbook_id: input.playbook_id ?? null,
@@ -363,7 +425,6 @@ export async function parseProduct(input: {
     return res.json();
   }
 
-  const h = await accountHeadersMultipart();
   const form = new FormData();
   if (input.description) form.append("description", input.description);
   if (input.playbook_id) form.append("playbook_id", input.playbook_id);
@@ -373,7 +434,6 @@ export async function parseProduct(input: {
   }
   const res = await apiFetch("/api/products/parse", {
     method: "POST",
-    headers: h,
     body: form,
   });
   if (!res.ok) {
@@ -384,12 +444,10 @@ export async function parseProduct(input: {
 }
 
 export async function uploadPlaybookDocuments(playbookId: string, files: File[]) {
-  const h = await accountHeadersMultipart();
   const form = new FormData();
   for (const f of files) form.append("files", f);
   const res = await apiFetch(`/api/playbooks/${encodeURIComponent(playbookId)}/documents`, {
     method: "POST",
-    headers: h,
     body: form,
   });
   if (!res.ok) throw new Error(`Playbook upload failed (${res.status})`);

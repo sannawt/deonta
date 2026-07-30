@@ -7,9 +7,15 @@ interface Props {
   dimensions: ScopeDimension[];
   regKey?: string;
   openQuestions?: ClarifyingQuestion[];
+  onCitationSelect?: (provisionId: string) => void;
 }
 
-export function ScopeDimensionsTable({ dimensions, regKey, openQuestions = [] }: Props) {
+export function ScopeDimensionsTable({
+  dimensions,
+  regKey,
+  openQuestions = [],
+  onCitationSelect,
+}: Props) {
   const sorted = [...dimensions].sort((a, b) => {
     const ai = DIM_ORDER.indexOf(a.id);
     const bi = DIM_ORDER.indexOf(b.id);
@@ -18,11 +24,6 @@ export function ScopeDimensionsTable({ dimensions, regKey, openQuestions = [] }:
 
   return (
     <div className="ct-scope-dim-table ct-scope-dim-table--compact">
-      <div className="ct-scope-dim-table-head" aria-hidden>
-        <span>Dimension</span>
-        <span>Scope</span>
-        <span>Summary</span>
-      </div>
       {sorted.map((dim) => (
         <ScopeDimensionCard
           key={dim.id}
@@ -30,6 +31,7 @@ export function ScopeDimensionsTable({ dimensions, regKey, openQuestions = [] }:
           regKey={regKey}
           openQuestions={openQuestions}
           compact
+          onCitationSelect={onCitationSelect}
         />
       ))}
     </div>

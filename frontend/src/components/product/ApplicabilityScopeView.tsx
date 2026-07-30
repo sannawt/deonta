@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { assessProduct, parseProduct, type LawScanResult, type LawScanResponse } from "../../lib/api";
-import { ensureAccountId } from "../../lib/account";
 import { resolveAssessment } from "../../lib/assessment";
 import {
   createProduct,
@@ -43,6 +42,8 @@ interface Props {
   description: string;
   kgFacts: KgFact[];
   playbookCompanyId?: string;
+  assessmentId?: string;
+  assessmentLabel?: string;
   embedded?: boolean;
   presentation?: "workbench" | "chat";
   onScopeDocument?: (payload: {
@@ -62,6 +63,8 @@ export function ApplicabilityScopeView({
   description,
   kgFacts,
   playbookCompanyId,
+  assessmentId,
+  assessmentLabel,
   embedded = false,
   presentation = "workbench",
   onScopeDocument,
@@ -80,6 +83,8 @@ export function ApplicabilityScopeView({
     selectedLaws,
     scanResults: displayScanResults,
     playbookCompanyId,
+    assessmentId,
+    assessmentLabel,
   });
   payloadRef.current = {
     spec,
@@ -88,6 +93,8 @@ export function ApplicabilityScopeView({
     selectedLaws,
     scanResults: displayScanResults,
     playbookCompanyId,
+    assessmentId,
+    assessmentLabel,
   };
 
   const onCompleteRef = useRef(onComplete);
@@ -112,6 +119,8 @@ export function ApplicabilityScopeView({
         selectedLaws: rowCodes,
         scanResults: results,
         playbookCompanyId: playbookId,
+        assessmentId: savedAssessmentId,
+        assessmentLabel: savedAssessmentLabel,
       } = payloadRef.current;
       const resolvedCodes = resolveAssessCodes(rowCodes, results);
       if (!resolvedCodes.length) {
@@ -134,7 +143,6 @@ export function ApplicabilityScopeView({
       setError(null);
 
       try {
-        const aid = await ensureAccountId();
         if (!active || runId !== assessRunRef.current) return;
 
         let factsForAssess = currentFacts;
@@ -176,14 +184,16 @@ export function ApplicabilityScopeView({
           };
         }
 
-        const created = createProduct(assessSpec);
+        const created = createProduct(assessSpec, {
+          id: savedAssessmentId,
+          label: savedAssessmentLabel,
+        });
         created.kgFacts = factsForAssess;
         const selectedScanRows = results.filter((r) => rowCodes.includes(r.code));
         const result = await assessProduct({
           spec: { ...assessSpec, regulations: resolvedCodes },
           kg_facts: factsForAssess,
           selected_laws: selectedScanRows,
-          account_id: aid,
           playbook_company_id: playbookId,
           case_id: created.id,
         });
@@ -202,7 +212,7 @@ export function ApplicabilityScopeView({
         onCompleteRef.current(updated);
       } catch (e) {
         if (!active || runId !== assessRunRef.current) return;
-        const message = e instanceof Error ? e.message : "Symbolic scope analysis failed";
+        const message = e instanceof Error ? e.message : "Applicability assessment failed";
         if (cached) {
           setError(`${message} Showing your last saved scope results.`);
         } else {

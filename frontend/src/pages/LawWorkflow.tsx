@@ -54,8 +54,10 @@ export function LawWorkflow({ lawCodes, onBack }: Props) {
     (summary?.obligations as Array<{ id: string; topic: string; text: string }>) || [];
 
   return (
-    <div className="ct-page">
-      <h1 className="ct-page-title">Law-led workflow</h1>
+    <div className="ct-page ct-app-page">
+      <header className="ct-app-page-header">
+        <h1 className="ct-dashboard-title">Law-led workflow</h1>
+      </header>
       <p className="ct-page-sub">
         Understand obligations and build an evidence document list for: {lawCodes.join(", ")}
       </p>

@@ -1,18 +1,25 @@
-import { useRef } from "react";
+import { type ReactNode } from "react";
 import {
-  INTAKE_CARDS,
+  canAdvanceCard,
+  isCardComplete,
   type IntakeFieldSources,
   type ProductIntakeState,
 } from "../../lib/kgIntakeSchema";
-import { PixelIcon } from "../ui/PixelIcon";
 import { ProductIntakeForm } from "./ProductIntakeForm";
 
-const SUGGESTED_DOCS = [
-  "Privacy policy",
-  "Product specifications",
-  "Terms of service",
-  "Data processing agreements",
+export type PlaybookSubTab = "company" | "product" | "market";
+
+const SUB_TABS: { id: PlaybookSubTab; label: string }[] = [
+  { id: "company", label: "Company" },
+  { id: "product", label: "Product" },
+  { id: "market", label: "Market" },
 ];
+
+const SUB_TAB_CARDS: Record<PlaybookSubTab, "organisation" | "product" | "data_ai"> = {
+  company: "organisation",
+  product: "product",
+  market: "organisation",
+};
 
 interface Props {
   intake: ProductIntakeState;
@@ -21,157 +28,102 @@ interface Props {
   files: File[];
   parsing: boolean;
   canContinue: boolean;
+  activeSubTab?: PlaybookSubTab;
+  onSubTabChange?: (tab: PlaybookSubTab) => void;
   onIntakeChange: (patch: Partial<ProductIntakeState>) => void;
   onFilesChange: (files: File[]) => void;
+  onRunParse: () => Promise<boolean>;
   onSeeLaws: () => void | Promise<void>;
+  graph?: ReactNode;
 }
 
 export function ProductIntakePanel({
   intake,
   fieldSources,
   extractSummary,
-  files,
-  parsing,
   canContinue,
+  activeSubTab = "company",
+  onSubTabChange,
   onIntakeChange,
-  onFilesChange,
   onSeeLaws,
+  graph,
 }: Props) {
-  const fileRef = useRef<HTMLInputElement>(null);
+  const cardId = SUB_TAB_CARDS[activeSubTab];
+  const cardComplete = isCardComplete(cardId, intake);
+  const canProceed = canAdvanceCard(cardId, intake) && cardComplete;
 
-  function addFiles(list: FileList | File[]) {
-    const next = [...files];
-    for (const f of Array.from(list)) {
-      if (!next.find((x) => x.name === f.name && x.size === f.size)) next.push(f);
-    }
-    onFilesChange(next);
+  function getCardTitle() {
+    if (activeSubTab === "company") return "Your organisation";
+    if (activeSubTab === "product") return "Product & features";
+    if (activeSubTab === "market") return "Markets";
+    return "";
+  }
+
+  function getCardPrompt() {
+    if (activeSubTab === "company") return "Review and confirm who operates the product.";
+    if (activeSubTab === "product") return "Review and confirm the product name and what it does.";
+    if (activeSubTab === "market") return "Confirm where you offer the product.";
+    return "";
   }
 
   return (
-    <div
-      className="ct-product-column ct-intake-panel"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        e.preventDefault();
-        if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
-      }}
-    >
-      <div className="ct-intake-three-boxes">
-        {INTAKE_CARDS.map((card) => (
-          <section
-            key={card.id}
-            className="ct-intake-box"
-            aria-labelledby={`intake-box-${card.id}`}
-          >
-            <header className="ct-intake-box-head">
-              <h2 className="ct-intake-box-title" id={`intake-box-${card.id}`}>
-                {card.title}
-              </h2>
-              {card.prompt ? <p className="ct-intake-box-prompt">{card.prompt}</p> : null}
-            </header>
+    <div className="ct-intake-workspace">
+      {/* Main content */}
+      <section className="ct-intake-col ct-intake-col--questions" aria-label="Product facts">
+        <div className="ct-intake-subtabs" role="tablist" aria-label="Section">
+          {SUB_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeSubTab === tab.id}
+              className={`ct-intake-subtab${activeSubTab === tab.id ? " ct-intake-subtab--active" : ""}`}
+              onClick={() => onSubTabChange?.(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-            {card.id === "product" ? (
-              <div className="ct-intake-upload-inline">
-                <div className="ct-intake-upload-bar">
-                  <div className="ct-intake-upload-side">
-                    {SUGGESTED_DOCS.slice(0, 2).map((doc) => (
-                      <button
-                        key={doc}
-                        type="button"
-                        className="ct-intake-doc-chip"
-                        onClick={() => fileRef.current?.click()}
-                      >
-                        {doc}
-                      </button>
-                    ))}
-                  </div>
+        <div className="ct-intake-questions-inner">
+          <header className="ct-intake-box-head">
+            <h2 className="ct-intake-box-title">{getCardTitle()}</h2>
+            <p className="ct-intake-box-prompt">{getCardPrompt()}</p>
+          </header>
 
-                  <span className="ct-intake-upload-or" aria-hidden="true">
-                    OR
-                  </span>
+          {extractSummary.length > 0 ? (
+            <p className="ct-intake-extract-summary">
+              Extracted from your documents: {extractSummary.join(", ")}. Please confirm below.
+            </p>
+          ) : null}
 
-                  <button
-                    type="button"
-                    className="ct-intake-upload-center"
-                    onClick={() => fileRef.current?.click()}
-                    aria-label="Upload documents"
-                    title="Upload documents (PDF, DOCX, TXT, MD)"
-                  >
-                    <PixelIcon name="document" size={36} className="ct-intake-upload-icon" alt="" />
-                    <span className="ct-intake-upload-center-label">Upload documents</span>
-                  </button>
+          <ProductIntakeForm
+            card={cardId}
+            intake={intake}
+            fieldSources={fieldSources}
+            onChange={onIntakeChange}
+            filterSection={activeSubTab === "market" ? "markets" : undefined}
+          />
 
-                  <span className="ct-intake-upload-or" aria-hidden="true">
-                    OR
-                  </span>
+          <footer className="ct-intake-sheet-footer">
+            <span />
+            <button
+              type="button"
+              className="ct-intake-next-btn"
+              disabled={!canContinue && !canProceed}
+              onClick={() => void onSeeLaws()}
+            >
+              Continue to scope analysis →
+            </button>
+          </footer>
+        </div>
+      </section>
 
-                  <div className="ct-intake-upload-side">
-                    {SUGGESTED_DOCS.slice(2).map((doc) => (
-                      <button
-                        key={doc}
-                        type="button"
-                        className="ct-intake-doc-chip"
-                        onClick={() => fileRef.current?.click()}
-                      >
-                        {doc}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <p className="ct-intake-upload-formats">PDF · DOCX · TXT · MD — or drag files here</p>
-
-                {files.length > 0 ? (
-                  <ul className="ct-intake-file-stack">
-                    {files.map((f) => (
-                      <li key={`${f.name}-${f.size}`}>{f.name}</li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                {extractSummary.length > 0 ? (
-                  <p className="ct-intake-extract-summary">
-                    We found: {extractSummary.join(", ")} — please confirm below.
-                  </p>
-                ) : null}
-              </div>
-            ) : null}
-
-            <ProductIntakeForm
-              card={card.id}
-              intake={intake}
-              fieldSources={fieldSources}
-              onChange={onIntakeChange}
-            />
-          </section>
-        ))}
-      </div>
-
-      {parsing ? <p className="ct-intake-parsing">Building knowledge graph…</p> : null}
-
-      <footer className="ct-intake-sheet-footer ct-intake-sheet-footer--sticky">
-        <span />
-        <button
-          type="button"
-          className="ct-intake-next-btn"
-          disabled={!canContinue || parsing}
-          onClick={() => void onSeeLaws()}
-        >
-          See which laws apply
-        </button>
-      </footer>
-
-      <input
-        ref={fileRef}
-        type="file"
-        multiple
-        hidden
-        accept=".pdf,.txt,.md,.doc,.docx"
-        onChange={(e) => {
-          if (e.target.files?.length) addFiles(e.target.files);
-          e.target.value = "";
-        }}
-      />
+      {graph ? (
+        <section className="ct-intake-col ct-intake-col--graph" aria-label="Knowledge graph">
+          <div className="ct-intake-graph-body">{graph}</div>
+        </section>
+      ) : null}
     </div>
   );
 }

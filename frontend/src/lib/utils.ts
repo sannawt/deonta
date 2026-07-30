@@ -1,8 +1,10 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import type { DimResult } from "../types/chat";
 import type { LawScanResult } from "./api";
 
-export function cn(...classes: (string | false | null | undefined)[]): string {
-  return classes.filter(Boolean).join(" ");
+export function cn(...inputs: ClassValue[]): string {
+  return twMerge(clsx(inputs));
 }
 
 export function nanoid(): string {

@@ -37,6 +37,16 @@ LAW_CATALOG: tuple[dict[str, str], ...] = (
 _SYMBOLIC_CODES = frozenset(load_regulations())
 
 
+def symbolic_regulation_codes() -> list[str]:
+    """Corpus keys with deterministic scope rules (always assessed)."""
+    return sorted(_SYMBOLIC_CODES)
+
+
+def is_symbolic_regulation(code: str) -> bool:
+    key = (code or "").strip().lower().replace("-", "_")
+    return key in _SYMBOLIC_CODES
+
+
 def engine_mode_for(code: str) -> EngineMode:
     key = (code or "").strip().lower().replace("-", "_")
     if key in _SYMBOLIC_CODES:

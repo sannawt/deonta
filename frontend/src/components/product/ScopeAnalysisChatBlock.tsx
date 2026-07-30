@@ -13,7 +13,7 @@ export function ScopeAnalysisChatBlock({ document, loading = false }: Props) {
     <article className="ct-scope-chat-doc">
       <header className="ct-scope-chat-doc-head">
         <h3 className="ct-scope-chat-doc-title">
-          Scope analysis: {document.productTitle}
+          Applicability: {document.productTitle}
           {loading ? " (assessing…)" : ""}
         </h3>
       </header>

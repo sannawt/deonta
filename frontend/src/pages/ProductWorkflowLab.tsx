@@ -32,7 +32,7 @@ interface Props {
 export function ProductWorkflowLab({
   onComplete,
   playbookCompanyId,
-  onNavigateHome,
+  onNavigateHome: _onNavigateHome,
 }: Props) {
   const [step, setStep] = useState<Step>("intake");
   const [scanning, setScanning] = useState(false);
@@ -76,44 +76,83 @@ export function ProductWorkflowLab({
   const step2Ready =
     step1Complete && scanResults.length > 0 && (spec.selectedLaws?.length ?? 0) > 0;
 
-  function workflowSteps(current: Step) {
+  function buildTopTabs(current: Step) {
     return [
       {
-        id: "start",
-        label: "Start",
-        enabled: true,
-        current: false,
-        onClick: onNavigateHome,
-      },
-      {
-        id: "step1",
-        label: "Step 1",
-        title: "Product intake",
+        id: "playbook",
+        label: "Company playbook",
         enabled: true,
         current: current === "intake",
         onClick: () => setStep("intake"),
+        subTabs: [
+          { id: "company", label: "Company", enabled: true, current: current === "intake", onClick: () => setStep("intake") },
+          { id: "product", label: "Product", enabled: true, current: false, onClick: () => setStep("intake") },
+          { id: "market", label: "Market", enabled: true, current: false, onClick: () => setStep("intake") },
+        ],
       },
       {
-        id: "step2",
-        label: "Step 2",
-        title: "Relevant laws",
+        id: "scope",
+        label: "Scope Analysis",
         enabled: step1Complete && hasInput,
-        current: current === "laws",
+        current: current === "laws" || current === "scope",
         onClick: () => {
-          if (!step1Complete || !hasInput || current === "laws") return;
+          if (current === "laws" || current === "scope") return;
           void goToLawsStep();
         },
+        subTabs: [
+          {
+            id: "laws",
+            label: "Laws",
+            enabled: step1Complete && hasInput,
+            current: current === "laws",
+            onClick: () => {
+              if (!step1Complete || !hasInput || current === "laws") return;
+              void goToLawsStep();
+            },
+          },
+          {
+            id: "reasoning",
+            label: "Reasoning",
+            enabled: step2Ready,
+            current: current === "scope",
+            onClick: () => {
+              if (!step2Ready || current === "scope") return;
+              void goToScopeStep();
+            },
+          },
+          { id: "scope-reports", label: "Reports", enabled: step2Ready, current: false, onClick: () => { if (step2Ready) void goToScopeStep(); } },
+        ],
       },
       {
-        id: "step3",
-        label: "Step 3",
-        title: "Applicability",
-        enabled: step2Ready,
-        current: current === "scope",
-        onClick: () => {
-          if (!step2Ready || current === "scope") return;
-          void goToScopeStep();
-        },
+        id: "obligations",
+        label: "Obligations",
+        enabled: false,
+        current: false,
+        onClick: undefined,
+        subTabs: [
+          { id: "reporting", label: "Reporting", enabled: false, current: false },
+          { id: "design-req", label: "Design requirements", enabled: false, current: false },
+          { id: "overlapping", label: "Overlapping", enabled: false, current: false },
+        ],
+      },
+      {
+        id: "evidence",
+        label: "Evidence",
+        enabled: false,
+        current: false,
+        onClick: undefined,
+        subTabs: [
+          { id: "ev-reports", label: "Reports", enabled: false, current: false },
+          { id: "audits", label: "Audits", enabled: false, current: false },
+        ],
+      },
+      {
+        id: "reports",
+        label: "Reports",
+        enabled: false,
+        current: false,
+        onClick: undefined,
+        subTabs: [],
       },
     ];
   }
@@ -281,7 +320,7 @@ export function ProductWorkflowLab({
     return (
       <>
         <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-        <WorkflowStepper steps={workflowSteps("scope")} />
+        <WorkflowStepper topTabs={buildTopTabs("scope")} />
         <div className="ct-page ct-scope-page">
           <ApplicabilityScopeView
             selectedLaws={spec.selectedLaws ?? EMPTY_LAW_CODES}
@@ -303,7 +342,7 @@ export function ProductWorkflowLab({
     return (
       <>
         <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-        <WorkflowStepper steps={workflowSteps("laws")} />
+        <WorkflowStepper topTabs={buildTopTabs("laws")} />
         <div className={`ct-page ct-product-flow${scanning ? " ct-law-scan-loading" : ""}`}>
           <ThinkingOverlay show={scanning && !preparingStep} label={PREPARING_STEP_LABEL} />
           {!scanning && (
@@ -330,7 +369,7 @@ export function ProductWorkflowLab({
   return (
     <>
       <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-      <WorkflowStepper steps={workflowSteps("intake")} />
+      <WorkflowStepper topTabs={buildTopTabs("intake")} />
       <div className="ct-page ct-product-flow">
         {error && <div className="err">{error}</div>}
 
@@ -352,12 +391,15 @@ export function ProductWorkflowLab({
               canContinue={hasInput}
               onIntakeChange={patchIntake}
               onFilesChange={setFiles}
+              onRunParse={runParse}
               onSeeLaws={handleSeeLaws}
             />
           }
           results={
-            <div className="ct-workflow-results-stack ct-workflow-results-stack--graph">
-              <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
+            <div className="ct-intake-graph-column">
+              <div className="ct-intake-graph-area">
+                <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
+              </div>
               <KgFactsList facts={kgFacts} />
             </div>
           }

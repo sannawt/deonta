@@ -5,7 +5,6 @@ import {
   uploadPlaybookDocuments,
   type PlaybookSummary,
 } from "../../lib/api";
-import { ensureAccountId } from "../../lib/account";
 
 interface Props {
   selectedId: string | null;
@@ -23,7 +22,6 @@ export function PlaybookSelector({ selectedId, onSelect }: Props) {
     setLoading(true);
     setError(null);
     try {
-      await ensureAccountId();
       const rows = await fetchAccountPlaybooks();
       setPlaybooks(rows);
       if (!selectedId && rows[0]?.playbook_id) {

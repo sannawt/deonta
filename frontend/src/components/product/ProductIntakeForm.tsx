@@ -1,12 +1,15 @@
 import { useState } from "react";
 import {
+  AI_FEATURE_OPTIONS,
   customMarketsFrom,
+  DATA_FLOW_OPTIONS,
   fieldSourceLabel,
   formatMarketLabel,
   type IntakeCardId,
   type IntakeFieldSources,
   MARKET_OPTIONS,
   normalizeCustomMarket,
+  PRODUCT_FEATURE_OPTIONS,
   type ProductIntakeState,
   type TriState,
 } from "../../lib/kgIntakeSchema";
@@ -16,6 +19,8 @@ interface Props {
   intake: ProductIntakeState;
   fieldSources?: IntakeFieldSources;
   onChange: (patch: Partial<ProductIntakeState>) => void;
+  /** Optional: only show a specific section within the card */
+  filterSection?: "markets";
 }
 
 function FieldLabel({
@@ -80,7 +85,18 @@ function toggleInList(list: string[], id: string): string[] {
   return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
 }
 
-export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }: Props) {
+/** Toggle a checkbox in a list where "none" is exclusive with other options. */
+function toggleExclusiveNone(list: string[], id: string): string[] {
+  if (id === "none") {
+    return list.includes("none") ? [] : ["none"];
+  }
+  const withoutNone = list.filter((x) => x !== "none");
+  return withoutNone.includes(id)
+    ? withoutNone.filter((x) => x !== id)
+    : [...withoutNone, id];
+}
+
+export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange, filterSection }: Props) {
   const src = (key: keyof ProductIntakeState) => fieldSources[key];
   const customMarkets = customMarketsFrom(intake.markets);
   const [otherOpen, setOtherOpen] = useState(customMarkets.length > 0);
@@ -96,8 +112,11 @@ export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }:
 
   if (card === "organisation") {
     const showOtherInput = otherOpen || customMarkets.length > 0;
+    const showOrgFields = filterSection !== "markets";
+    const showMarketFields = !filterSection || filterSection === "markets";
     return (
       <div className="ct-intake-form-grid">
+        {showOrgFields && (
         <div className="ct-intake-field ct-intake-field--span-3">
           <FieldLabel htmlFor="organisation-name" source={src("organisationName")}>
             Organisation name
@@ -111,7 +130,8 @@ export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }:
             placeholder="Company or team name"
           />
         </div>
-        <div className="ct-intake-field ct-intake-field--span-3">
+        )}
+        {showMarketFields && <div className="ct-intake-field ct-intake-field--span-3">
           <FieldLabel source={src("markets")}>Where you operate or sell</FieldLabel>
           <div className="ct-intake-check-grid ct-intake-check-grid--5">
             {MARKET_OPTIONS.map((m) => (
@@ -185,19 +205,19 @@ export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }:
               ) : null}
             </div>
           ) : null}
-        </div>
-        <YesNoBoxes
+        </div>}
+        {showMarketFields && <YesNoBoxes
           label="Company established in the EU or EEA"
           value={intake.establishedInEu}
           source={src("establishedInEu")}
           onChange={(v) => onChange({ establishedInEu: v })}
-        />
-        <YesNoBoxes
+        />}
+        {showMarketFields && <YesNoBoxes
           label="Offer the product to people in the EU or EEA"
           value={intake.sellsToEu}
           source={src("sellsToEu")}
           onChange={(v) => onChange({ sellsToEu: v })}
-        />
+        />}
       </div>
     );
   }
@@ -219,16 +239,35 @@ export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }:
           />
         </div>
         <div className="ct-intake-field ct-intake-field--span-3">
+          <FieldLabel source={src("productFeatures")}>Features — what does it do?</FieldLabel>
+          <div className="ct-intake-check-grid ct-intake-check-grid--features">
+            {PRODUCT_FEATURE_OPTIONS.map((f) => (
+              <label key={f.id} className="ct-intake-check-item">
+                <input
+                  type="checkbox"
+                  checked={(intake.productFeatures ?? []).includes(f.id)}
+                  onChange={() =>
+                    onChange({
+                      productFeatures: toggleInList(intake.productFeatures ?? [], f.id),
+                    })
+                  }
+                />
+                <span>{f.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="ct-intake-field ct-intake-field--span-3">
           <FieldLabel htmlFor="product-summary" source={src("productSummary")}>
-            Features — what does it do?
+            Other details
           </FieldLabel>
           <textarea
             id="product-summary"
             className="ct-intake-input ct-intake-input--textarea"
             value={intake.productSummary}
             onChange={(e) => onChange({ productSummary: e.target.value })}
-            placeholder="Main capabilities, who uses it, how it works"
-            rows={4}
+            placeholder="Optional — anything else about what it does"
+            rows={2}
           />
         </div>
       </div>
@@ -238,37 +277,63 @@ export function ProductIntakeForm({ card, intake, fieldSources = {}, onChange }:
   return (
     <div className="ct-intake-form-grid ct-intake-guided">
       <div className="ct-intake-field ct-intake-field--span-3">
+        <FieldLabel source={src("dataFlows")}>Data flows</FieldLabel>
+        <div className="ct-intake-check-grid ct-intake-check-grid--features">
+          {DATA_FLOW_OPTIONS.map((f) => (
+            <label key={f.id} className="ct-intake-check-item">
+              <input
+                type="checkbox"
+                checked={(intake.dataFlows ?? []).includes(f.id)}
+                onChange={() =>
+                  onChange({ dataFlows: toggleExclusiveNone(intake.dataFlows ?? [], f.id) })
+                }
+              />
+              <span>{f.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="ct-intake-field ct-intake-field--span-3">
         <FieldLabel htmlFor="data-flow" source={src("dataFlowDescription")}>
-          What kind of data flows through your product?
+          Other data details
         </FieldLabel>
-        <p className="ct-intake-guided-hint">
-          Describe what you collect, store, or share — e.g. customer emails for sign-up, employee
-          records in HR, applicant CVs, usage logs. Say if you do not handle personal data.
-        </p>
         <textarea
           id="data-flow"
           className="ct-intake-input ct-intake-input--textarea"
           value={intake.dataFlowDescription}
           onChange={(e) => onChange({ dataFlowDescription: e.target.value })}
-          placeholder="e.g. We store customer names, emails, and payment details for subscriptions. Employees upload internal documents."
-          rows={4}
+          placeholder="Optional — anything else about what you collect or share"
+          rows={2}
         />
       </div>
       <div className="ct-intake-field ct-intake-field--span-3">
+        <FieldLabel source={src("aiFeatures")}>AI use</FieldLabel>
+        <div className="ct-intake-check-grid ct-intake-check-grid--features">
+          {AI_FEATURE_OPTIONS.map((f) => (
+            <label key={f.id} className="ct-intake-check-item">
+              <input
+                type="checkbox"
+                checked={(intake.aiFeatures ?? []).includes(f.id)}
+                onChange={() =>
+                  onChange({ aiFeatures: toggleExclusiveNone(intake.aiFeatures ?? [], f.id) })
+                }
+              />
+              <span>{f.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="ct-intake-field ct-intake-field--span-3">
         <FieldLabel htmlFor="ai-usage" source={src("aiUsageDescription")}>
-          Is AI used? Where and how?
+          Other AI details
         </FieldLabel>
-        <p className="ct-intake-guided-hint">
-          Describe any machine learning, automation, or generative AI — what it does and where in
-          the product. Say clearly if you do not use AI.
-        </p>
         <textarea
           id="ai-usage"
           className="ct-intake-input ct-intake-input--textarea"
           value={intake.aiUsageDescription}
           onChange={(e) => onChange({ aiUsageDescription: e.target.value })}
-          placeholder="e.g. An ML model ranks job applicants from uploaded CVs. A chatbot answers support questions using an LLM."
-          rows={4}
+          placeholder="Optional — anything else about how AI is used"
+          rows={2}
         />
       </div>
     </div>

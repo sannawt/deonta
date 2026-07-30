@@ -1,49 +1,124 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { scanRelevantLaws, type LawScanResult, type LawScanResponse } from "../lib/api";
-import { type ProductRecord } from "../lib/productStore";
+import { useCallback, useEffect, useState } from "react";
+import { type ProductRecord, specToKgFacts } from "../lib/productStore";
+import { defaultAssessmentTitle, isDefaultAssessmentTitle, suggestAssessmentTitle } from "../lib/assessmentRef";
+import { filterDiscoveryCodes } from "../lib/applicabilityScan";
+import { resolveAssessment } from "../lib/assessment";
+import { nanoid } from "../lib/utils";
+import type { LawScanResult, SymbolicLawItem } from "../lib/api";
 import { ProductIntakePanel } from "../components/product/ProductIntakePanel";
 import { ProductKnowledgeGraph } from "../components/product/ProductKnowledgeGraph";
-import { KgFactsList } from "../components/product/KgFactsList";
-import { WorkflowSplitLayout } from "../components/product/WorkflowSplitLayout";
-import { LawScanResults } from "../components/product/LawScanResults";
-import { ApplicabilityScopeView } from "../components/product/ApplicabilityScopeView";
+import { ApplicabilityStep } from "../components/product/ApplicabilityStep";
+import { ObligationsStep } from "../components/product/ObligationsStep";
+import { ReviewWorksheetStep } from "../components/product/ReviewWorksheetStep";
 import { ThinkingOverlay } from "../components/ui/ThinkingOverlay";
-import { WorkflowStepper } from "../components/product/WorkflowStepper";
-import {
-  readScanCache,
-  scanCacheKey,
-  writeScanCache,
-} from "../lib/prototypeCache";
+import { WorkflowStepper, type TopTab } from "../components/product/WorkflowStepper";
 import { pause, SLIDE_TRANSITION_MS } from "../lib/complianceChatFlow";
 import { useProductIntake } from "../hooks/useProductIntake";
+import type { ChatResponse } from "../types/chat";
 
 const PREPARING_STEP_LABEL = "Preparing next step…";
 
-type Step = "intake" | "laws" | "scope";
+type Step = "intake" | "laws" | "scope" | "obligations" | "worksheet";
 
-const EMPTY_LAW_CODES: string[] = [];
+interface WorksheetContext {
+  lawCodes: string[];
+  scanResults: LawScanResult[];
+  symbolicLaws: SymbolicLawItem[];
+  symbolicCodes: string[];
+  includedDiscovery: string[];
+  selectedObligationIds?: string[];
+}
 
 interface Props {
+  resumeProduct?: ProductRecord | null;
   playbookCompanyId?: string;
+  playbookId?: string;
   onComplete: (product: ProductRecord) => void;
   onNavigateHome: () => void;
+  onOpenAssessmentDetail?: (productId: string) => void;
+  onAddToAiRegister?: (assessmentId: string) => void;
+}
+
+function inferStep(product: ProductRecord): Step {
+  if (product.lastWorksheet) return "worksheet";
+  if (product.lastObligations?.selected_obligation_ids?.length) return "obligations";
+  if (product.lastAssessment) return "scope";
+  return "intake";
+}
+
+function worksheetContextFromProduct(product: ProductRecord): WorksheetContext {
+  return {
+    lawCodes: product.lastWorksheet?.law_codes ?? product.lastObligations?.law_codes ?? [],
+    scanResults: [],
+    symbolicLaws: [],
+    symbolicCodes: ["gdpr", "ai_act"],
+    includedDiscovery: filterDiscoveryCodes(product.spec.selectedLaws ?? []),
+    selectedObligationIds: product.lastObligations?.selected_obligation_ids,
+  };
 }
 
 export function ProductWorkflow({
+  resumeProduct,
   onComplete,
   playbookCompanyId,
-  onNavigateHome,
+  playbookId,
+  onNavigateHome: _onNavigateHome,
+  onOpenAssessmentDetail,
+  onAddToAiRegister,
 }: Props) {
-  const [step, setStep] = useState<Step>("intake");
-  const [scanning, setScanning] = useState(false);
-  const [scanResults, setScanResults] = useState<LawScanResult[]>([]);
-  const [allScanResults, setAllScanResults] = useState<LawScanResult[] | null>(null);
-  const [scanResponse, setScanResponse] = useState<LawScanResponse | null>(null);
-  const [loadingAllResults, setLoadingAllResults] = useState(false);
-  const includeSecondary = true;
-  const scanStarted = useRef(false);
-  const [step1Complete, setStep1Complete] = useState(false);
+  const [step, setStep] = useState<Step>(() =>
+    resumeProduct ? inferStep(resumeProduct) : "intake",
+  );
+  const [worksheetContext, setWorksheetContext] = useState<WorksheetContext | null>(() =>
+    resumeProduct?.lastWorksheet || resumeProduct?.lastAssessment
+      ? worksheetContextFromProduct(resumeProduct)
+      : null,
+  );
+  const [step1Complete, setStep1Complete] = useState(() =>
+    Boolean(
+      resumeProduct?.spec.name?.trim() ||
+        resumeProduct?.spec.summary?.trim() ||
+        resumeProduct?.lastAssessment,
+    ),
+  );
+  const [playbookSubTab, setPlaybookSubTab] = useState<"company" | "product" | "market">("company");
   const [preparingStep, setPreparingStep] = useState(false);
+  const [assessmentId] = useState(() => resumeProduct?.id ?? nanoid());
+  const [assessmentTitle, setAssessmentTitle] = useState(() =>
+    resumeProduct?.label?.trim() || defaultAssessmentTitle(resumeProduct?.id ?? assessmentId),
+  );
+  const [titleSuggested, setTitleSuggested] = useState(false);
+  const [savedAssessment, setSavedAssessment] = useState<ChatResponse | null>(
+    () => resumeProduct?.lastAssessment?.response ?? null,
+  );
+  const [applicabilityAdvance, setApplicabilityAdvance] = useState<{
+    canAdvance: boolean;
+    busy: boolean;
+    advance: () => void;
+  } | null>(null);
+  const [obligationsSave, setObligationsSave] = useState<{
+    canSave: boolean;
+    busy: boolean;
+    save: () => void;
+  } | null>(null);
+
+  const handleAssessmentComplete = useCallback(
+    (product: ProductRecord) => {
+      const merged = {
+        ...product,
+        id: assessmentId,
+        label: assessmentTitle.trim() || product.label,
+        playbook_id: playbookId || product.playbook_id,
+        spec: {
+          ...product.spec,
+          selectedLaws: filterDiscoveryCodes(product.spec.selectedLaws ?? []),
+        },
+      };
+      setSavedAssessment(merged.lastAssessment?.response ?? null);
+      onComplete(merged);
+    },
+    [assessmentId, assessmentTitle, onComplete, playbookId],
+  );
 
   const {
     intake,
@@ -55,6 +130,7 @@ export function ProductWorkflow({
     kgNodes,
     kgEdges,
     kgFacts,
+    setKgFacts,
     spec,
     setSpec,
     parsing,
@@ -65,7 +141,41 @@ export function ProductWorkflow({
     setReviewed,
     runParse,
     scheduleParse,
-  } = useProductIntake();
+  } = useProductIntake(playbookId);
+
+  useEffect(() => {
+    if (!resumeProduct) return;
+    setSpec({
+      ...resumeProduct.spec,
+      selectedLaws: filterDiscoveryCodes(resumeProduct.spec.selectedLaws ?? []),
+    });
+    setKgFacts(resumeProduct.kgFacts ?? specToKgFacts(resumeProduct.spec));
+    patchIntake({
+      productName: resumeProduct.spec.name,
+      productSummary: resumeProduct.spec.summary,
+      markets: resumeProduct.spec.markets,
+      processesPersonalData: resumeProduct.spec.processesPersonalData,
+      gdprTerritorialLink: resumeProduct.spec.euLink,
+      aiActTerritorialLink: resumeProduct.spec.euLink,
+      hasAi: resumeProduct.spec.aiSystem,
+    });
+    setStep(inferStep(resumeProduct));
+    setWorksheetContext(worksheetContextFromProduct(resumeProduct));
+    setSavedAssessment(resumeProduct.lastAssessment?.response ?? null);
+    setStep1Complete(
+      Boolean(
+        resumeProduct.spec.name?.trim() ||
+          resumeProduct.spec.summary?.trim() ||
+          resumeProduct.lastAssessment,
+      ),
+    );
+    setReviewed(true);
+    if (!resumeProduct.label?.trim()) {
+      setAssessmentTitle(defaultAssessmentTitle(resumeProduct.id));
+    } else {
+      setAssessmentTitle(resumeProduct.label);
+    }
+  }, [resumeProduct, patchIntake, setKgFacts, setReviewed, setSpec]);
 
   const waitBeforeNextStep = useCallback(async () => {
     setPreparingStep(true);
@@ -73,150 +183,181 @@ export function ProductWorkflow({
     setPreparingStep(false);
   }, []);
 
-  const step2Ready =
-    step1Complete && scanResults.length > 0 && (spec.selectedLaws?.length ?? 0) > 0;
+  const lawsReady = hasInput || Boolean(savedAssessment) || step1Complete;
+  const scopeReady = step1Complete || Boolean(savedAssessment) || step === "laws" || step === "scope";
+  const canLeaveScope = Boolean(applicabilityAdvance?.canAdvance);
+  const obligationsReady = Boolean(worksheetContext?.lawCodes.length) || canLeaveScope;
 
-  function workflowSteps(current: Step) {
+  function buildTopTabs(current: Step): TopTab[] {
+    const worksheetEnabled =
+      Boolean(worksheetContext?.selectedObligationIds?.length) ||
+      Boolean(obligationsSave?.canSave) ||
+      Boolean(resumeProduct?.lastWorksheet);
+
     return [
       {
-        id: "start",
-        label: "Start",
-        enabled: true,
-        current: false,
-        onClick: onNavigateHome,
-      },
-      {
-        id: "step1",
-        label: "Step 1",
-        title: "Product intake",
+        id: "playbook",
+        label: "Company playbook",
         enabled: true,
         current: current === "intake",
-        onClick: () => setStep("intake"),
+        onClick: () => { setStep("intake"); setPlaybookSubTab("company"); },
+        subTabs: [
+          {
+            id: "company",
+            label: "Company",
+            enabled: true,
+            current: current === "intake" && playbookSubTab === "company",
+            onClick: () => { setStep("intake"); setPlaybookSubTab("company"); },
+          },
+          {
+            id: "product",
+            label: "Product",
+            enabled: true,
+            current: current === "intake" && playbookSubTab === "product",
+            onClick: () => { setStep("intake"); setPlaybookSubTab("product"); },
+          },
+          {
+            id: "market",
+            label: "Market",
+            enabled: true,
+            current: current === "intake" && playbookSubTab === "market",
+            onClick: () => { setStep("intake"); setPlaybookSubTab("market"); },
+          },
+        ],
       },
       {
-        id: "step2",
-        label: "Step 2",
-        title: "Relevant laws",
-        enabled: step1Complete && hasInput,
-        current: current === "laws",
+        id: "scope",
+        label: "Scope Analysis",
+        enabled: scopeReady,
+        current: current === "laws" || current === "scope",
         onClick: () => {
-          if (!step1Complete || !hasInput || current === "laws") return;
+          if (current === "laws" || current === "scope") return;
+          if (step1Complete || savedAssessment) { setStep("laws"); return; }
           void goToLawsStep();
         },
+        subTabs: [
+          {
+            id: "laws",
+            label: "Laws",
+            enabled: lawsReady,
+            current: current === "laws",
+            onClick: () => {
+              if (current === "laws") return;
+              if (step1Complete || savedAssessment) { setStep("laws"); return; }
+              void goToLawsStep();
+            },
+          },
+          {
+            id: "reasoning",
+            label: "Reasoning",
+            enabled: scopeReady,
+            current: current === "scope",
+            onClick: () => {
+              if (!scopeReady || current === "scope") return;
+              setStep("scope");
+            },
+          },
+          {
+            id: "scope-reports",
+            label: "Reports",
+            enabled: scopeReady,
+            current: false,
+            onClick: () => {
+              if (!scopeReady) return;
+              setStep("scope");
+            },
+          },
+        ],
       },
       {
-        id: "step3",
-        label: "Step 3",
-        title: "Applicability",
-        enabled: step2Ready,
-        current: current === "scope",
+        id: "obligations",
+        label: "Obligations",
+        enabled: obligationsReady,
+        current: current === "obligations",
         onClick: () => {
-          if (!step2Ready || current === "scope") return;
-          void goToScopeStep();
+          if (current === "obligations") return;
+          if (worksheetContext?.lawCodes.length) { setStep("obligations"); return; }
+          if (canLeaveScope) applicabilityAdvance?.advance();
         },
+        subTabs: [
+          {
+            id: "reporting",
+            label: "Reporting",
+            enabled: obligationsReady,
+            current: current === "obligations",
+            onClick: () => {
+              if (current === "obligations") return;
+              if (worksheetContext?.lawCodes.length) { setStep("obligations"); return; }
+              if (canLeaveScope) applicabilityAdvance?.advance();
+            },
+          },
+          {
+            id: "design-req",
+            label: "Design requirements",
+            enabled: obligationsReady,
+            current: false,
+            onClick: () => {
+              if (!obligationsReady) return;
+              if (worksheetContext?.lawCodes.length) setStep("obligations");
+            },
+          },
+          {
+            id: "overlapping",
+            label: "Overlapping",
+            enabled: obligationsReady,
+            current: false,
+            onClick: () => {
+              if (!obligationsReady) return;
+              if (worksheetContext?.lawCodes.length) setStep("obligations");
+            },
+          },
+        ],
+      },
+      {
+        id: "evidence",
+        label: "Evidence",
+        enabled: worksheetEnabled,
+        current: current === "worksheet",
+        onClick: () => {
+          if (current === "worksheet") return;
+          if (obligationsSave?.canSave) { obligationsSave.save(); return; }
+          if (worksheetContext?.lawCodes.length) setStep("worksheet");
+        },
+        subTabs: [
+          {
+            id: "ev-reports",
+            label: "Reports",
+            enabled: worksheetEnabled,
+            current: current === "worksheet",
+            onClick: () => {
+              if (current === "worksheet") return;
+              if (obligationsSave?.canSave) { obligationsSave.save(); return; }
+              if (worksheetContext?.lawCodes.length) setStep("worksheet");
+            },
+          },
+          {
+            id: "audits",
+            label: "Audits",
+            enabled: worksheetEnabled,
+            current: false,
+            onClick: () => {
+              if (!worksheetEnabled) return;
+              if (worksheetContext?.lawCodes.length) setStep("worksheet");
+            },
+          },
+        ],
+      },
+      {
+        id: "reports",
+        label: "Reports",
+        enabled: worksheetEnabled,
+        current: false,
+        onClick: () => {
+          if (worksheetEnabled && worksheetContext?.lawCodes.length) setStep("worksheet");
+        },
+        subTabs: [],
       },
     ];
-  }
-
-  const runLawScan = useCallback(async (secondaryOverride?: boolean) => {
-    const includeSec = secondaryOverride ?? includeSecondary;
-    const desc = description.trim();
-    const cacheKey = scanCacheKey(desc, includeSec);
-    const cached = readScanCache(cacheKey);
-    if (cached?.results?.length) {
-      const rows = cached.results;
-      setScanResponse(cached);
-      setScanResults(rows);
-      setAllScanResults(null);
-      setSpec((s) => ({
-        ...s,
-        selectedLaws:
-          s.selectedLaws?.length
-            ? s.selectedLaws.filter((c) => rows.some((r) => r.code === c))
-            : rows.map((r) => r.code),
-      }));
-    }
-    setScanning(!cached?.results?.length);
-    setError(null);
-    try {
-      let data = await scanRelevantLaws({
-        description: description.trim(),
-        kg_facts: kgFacts,
-        limit: 15,
-        min_score: 0.75,
-        include_secondary: includeSec,
-        full_scan: false,
-      });
-      if (!data.results?.length && kgFacts.length > 0) {
-        data = await scanRelevantLaws({
-          description: description.trim(),
-          kg_facts: kgFacts,
-          limit: 15,
-          min_score: 0.6,
-          include_secondary: true,
-          full_scan: false,
-        });
-      }
-      const rows = data.results ?? [];
-      setScanResponse(data);
-      setScanResults(rows);
-      setAllScanResults(null);
-      setSpec((s) => ({
-        ...s,
-        selectedLaws:
-          s.selectedLaws?.length
-            ? s.selectedLaws.filter((c) => rows.some((r) => r.code === c))
-            : rows.map((r) => r.code),
-      }));
-      writeScanCache(cacheKey, data);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Law scan failed");
-      setScanResponse(null);
-      setScanResults([]);
-      setAllScanResults(null);
-    } finally {
-      setScanning(false);
-    }
-  }, [description, includeSecondary, kgFacts, setError, setSpec]);
-
-  const loadAllScanResults = useCallback(async () => {
-    if (loadingAllResults || allScanResults) return;
-    setLoadingAllResults(true);
-    setError(null);
-    try {
-      const data = await scanRelevantLaws({
-        description: description.trim(),
-        kg_facts: kgFacts,
-        limit: 0,
-        min_score: 0.75,
-        include_secondary: includeSecondary,
-        full_scan: true,
-      });
-      setAllScanResults(data.results ?? []);
-      setScanResponse((prev) =>
-        prev
-          ? {
-              ...prev,
-              total_match_count: data.total_match_count ?? data.match_count,
-            }
-          : data,
-      );
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not load all law matches");
-    } finally {
-      setLoadingAllResults(false);
-    }
-  }, [allScanResults, description, includeSecondary, kgFacts, loadingAllResults, setError]);
-
-  async function goToScopeStep() {
-    const selected = spec.selectedLaws ?? [];
-    if (!selected.length) {
-      setError("Select at least one regulation to check.");
-      return;
-    }
-    setError(null);
-    await waitBeforeNextStep();
-    setStep("scope");
   }
 
   async function goToLawsStep() {
@@ -225,32 +366,108 @@ export function ProductWorkflow({
       return;
     }
     setError(null);
+    if (isDefaultAssessmentTitle(assessmentTitle, assessmentId)) {
+      const suggested = suggestAssessmentTitle({
+        productName: intake.productName,
+        productSummary: intake.productSummary,
+        markets: intake.markets,
+        organisationName: intake.organisationName,
+      });
+      if (suggested) {
+        setAssessmentTitle(suggested);
+        setTitleSuggested(true);
+      }
+    }
     await waitBeforeNextStep();
     setStep1Complete(true);
     setReviewed(true);
     setStep("laws");
-    if (scanStarted.current) return;
-
-    setScanning(true);
-    setScanResults([]);
-    setScanResponse(null);
-    scanStarted.current = true;
-
-    const ok = await runParse();
-    if (!ok) {
-      setScanning(false);
-      scanStarted.current = false;
-      return;
-    }
-    await runLawScan();
   }
 
-  function handleCheckApplicability() {
-    void goToScopeStep();
-  }
-
-  function handleSeeLaws() {
+  function goToLawsFromIntake() {
     void goToLawsStep();
+  }
+
+  function createStubProduct(): ProductRecord {
+    return {
+      id: assessmentId,
+      label: assessmentTitle,
+      created_at: Date.now(),
+      updated_at: Date.now(),
+      spec,
+      kgFacts,
+      playbook_id: playbookId,
+    };
+  }
+
+  function handleObligationsComplete(payload: {
+    law_codes: string[];
+    selected_obligation_ids: string[];
+  }) {
+    const base = resumeProduct ?? createStubProduct();
+    const nextContext: WorksheetContext = {
+      ...(worksheetContext ?? worksheetContextFromProduct(base)),
+      lawCodes: payload.law_codes,
+      selectedObligationIds: payload.selected_obligation_ids,
+    };
+    setWorksheetContext(nextContext);
+    const product: ProductRecord = {
+      ...base,
+      id: assessmentId,
+      label: assessmentTitle,
+      playbook_id: playbookId,
+      spec: {
+        ...spec,
+        selectedLaws: filterDiscoveryCodes(spec.selectedLaws ?? []),
+      },
+      kgFacts,
+      lastAssessment: savedAssessment
+        ? { created_at: Date.now(), prompt: description, response: savedAssessment }
+        : base.lastAssessment,
+      lastObligations: {
+        created_at: Date.now(),
+        law_codes: payload.law_codes,
+        selected_obligation_ids: payload.selected_obligation_ids,
+      },
+      updated_at: Date.now(),
+    };
+    onComplete(product);
+    void waitBeforeNextStep().then(() => setStep("worksheet"));
+  }
+
+  function handleWorksheetComplete() {
+    const base = resumeProduct ?? createStubProduct();
+    const resolved = resolveAssessment(savedAssessment);
+    const openCount = resolved?.open_questions?.length ?? 0;
+    const product: ProductRecord = {
+      ...base,
+      id: assessmentId,
+      label: assessmentTitle,
+      playbook_id: playbookId,
+      spec: {
+        ...spec,
+        selectedLaws: filterDiscoveryCodes(spec.selectedLaws ?? []),
+      },
+      kgFacts,
+      lastAssessment: savedAssessment
+        ? { created_at: Date.now(), prompt: description, response: savedAssessment }
+        : base.lastAssessment,
+      lastObligations: worksheetContext?.selectedObligationIds
+        ? {
+            created_at: Date.now(),
+            law_codes: worksheetContext.lawCodes,
+            selected_obligation_ids: worksheetContext.selectedObligationIds,
+          }
+        : base.lastObligations,
+      lastWorksheet: {
+        created_at: Date.now(),
+        law_codes: worksheetContext?.lawCodes ?? [],
+        open_question_count: openCount,
+      },
+      updated_at: Date.now(),
+    };
+    onComplete(product);
+    onOpenAssessmentDetail?.(product.id);
   }
 
   useEffect(() => {
@@ -258,111 +475,128 @@ export function ProductWorkflow({
     scheduleParse();
   }, [intake, files, step, scheduleParse]);
 
-  useEffect(() => {
-    if (step !== "laws") return;
-    if (scanStarted.current) return;
-    scanStarted.current = true;
-    void (async () => {
-      setScanning(true);
-      setScanResults([]);
-      setScanResponse(null);
-      setError(null);
-      const ok = await runParse();
-      if (!ok) {
-        setScanning(false);
-        scanStarted.current = false;
-        return;
-      }
-      await runLawScan();
-    })();
-  }, [step, runLawScan, runParse, setError]);
+  const sharedHeader = (current: Step) => (
+    <WorkflowStepper
+      topTabs={buildTopTabs(current)}
+      assessmentId={assessmentId}
+      assessmentTitle={assessmentTitle}
+      onAssessmentTitleChange={setAssessmentTitle}
+    />
+  );
 
-  if (step === "scope") {
+  if (step === "worksheet" && worksheetContext) {
     return (
-      <>
+      <div className="ct-app-page">
         <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-        <WorkflowStepper steps={workflowSteps("scope")} />
-        <div className="ct-page ct-scope-page">
-          <ApplicabilityScopeView
-            selectedLaws={spec.selectedLaws ?? EMPTY_LAW_CODES}
-            scanResults={scanResults}
-            allScanResults={allScanResults}
-            scanResponse={scanResponse}
+        {sharedHeader("worksheet")}
+        <div className="ct-page ct-worksheet-page">
+          <ReviewWorksheetStep
+            assessmentId={assessmentId}
+            assessmentTitle={assessmentTitle}
+            onTitleChange={setAssessmentTitle}
+            spec={spec}
+            intake={intake}
+            kgFacts={kgFacts}
+            assessment={savedAssessment}
+            scanResults={worksheetContext.scanResults}
+            symbolicLaws={worksheetContext.symbolicLaws}
+            symbolicCodes={worksheetContext.symbolicCodes}
+            includedDiscovery={worksheetContext.includedDiscovery}
+            onComplete={handleWorksheetComplete}
+            onEditFrameworkMap={() => setStep("scope")}
+            onEditIntake={() => setStep("intake")}
+            onAddToAiRegister={
+              onAddToAiRegister ? () => onAddToAiRegister(assessmentId) : undefined
+            }
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "obligations" && worksheetContext) {
+    return (
+      <div className="ct-app-page">
+        <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
+        {sharedHeader("obligations")}
+        <div className="ct-page ct-obligations-page">
+          <ObligationsStep
+            lawCodes={worksheetContext.lawCodes}
+            initialSelectedIds={worksheetContext.selectedObligationIds}
+            onComplete={handleObligationsComplete}
+            onSaveStateChange={setObligationsSave}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (step === "laws" || step === "scope") {
+    return (
+      <div className="ct-app-page">
+        <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
+        {sharedHeader(step)}
+        <div className="ct-page ct-applicability-page">
+          <ApplicabilityStep
+            key="applicability"
             spec={spec}
             description={description}
             kgFacts={kgFacts}
             playbookCompanyId={playbookCompanyId}
-            onComplete={onComplete}
+            playbookId={playbookId}
+            assessmentId={assessmentId}
+            assessmentLabel={assessmentTitle}
+            onAssessmentLabelChange={(next) => {
+              setAssessmentTitle(next);
+              setTitleSuggested(false);
+            }}
+            titleSuggested={titleSuggested}
+            initialAssessment={savedAssessment}
+            phase={step === "laws" ? "laws" : "scope"}
+            onComplete={handleAssessmentComplete}
+            onContinueToWorksheet={(ctx) => {
+              setWorksheetContext((prev) => ({
+                ...ctx,
+                selectedObligationIds: prev?.selectedObligationIds,
+              }));
+              void waitBeforeNextStep().then(() => setStep("obligations"));
+            }}
+            onAdvanceStateChange={setApplicabilityAdvance}
           />
         </div>
-      </>
-    );
-  }
-
-  if (step === "laws") {
-    return (
-      <>
-        <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-        <WorkflowStepper steps={workflowSteps("laws")} />
-        <div className={`ct-page ct-product-flow${scanning ? " ct-law-scan-loading" : ""}`}>
-          <ThinkingOverlay show={scanning && !preparingStep} label={PREPARING_STEP_LABEL} />
-          {!scanning && (
-            <>
-              {error && <div className="err">{error}</div>}
-              <LawScanResults
-                scanResponse={scanResponse}
-                results={scanResults}
-                allResults={allScanResults}
-                loadingAll={loadingAllResults}
-                onLoadAll={loadAllScanResults}
-                selectedCodes={spec.selectedLaws ?? []}
-                loading={false}
-                onCheckApplicability={handleCheckApplicability}
-                onBack={() => setStep("intake")}
-              />
-            </>
-          )}
-        </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="ct-app-page">
       <ThinkingOverlay show={preparingStep} label={PREPARING_STEP_LABEL} />
-      <WorkflowStepper steps={workflowSteps("intake")} />
+      {sharedHeader("intake")}
       <div className="ct-page ct-product-flow">
         {error && <div className="err">{error}</div>}
 
-        <WorkflowSplitLayout
-          stepLabel=""
-          title=""
-          intro=""
-          actionsTitle=""
-          resultsTitle="Knowledge graph"
-          actionsAriaLabel="Product intake"
-          resultsAriaLabel="Knowledge graph"
-          actions={
-            <ProductIntakePanel
-              intake={intake}
-              fieldSources={fieldSources}
-              extractSummary={extractSummary}
-              files={files}
-              parsing={parsing}
-              canContinue={hasInput}
-              onIntakeChange={patchIntake}
-              onFilesChange={setFiles}
-              onSeeLaws={handleSeeLaws}
-            />
-          }
-          results={
-            <div className="ct-workflow-results-stack ct-workflow-results-stack--graph">
-              <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
-              <KgFactsList facts={kgFacts} />
+        <ProductIntakePanel
+          intake={intake}
+          fieldSources={fieldSources}
+          extractSummary={extractSummary}
+          files={files}
+          parsing={parsing}
+          canContinue={hasInput}
+          activeSubTab={playbookSubTab}
+          onSubTabChange={setPlaybookSubTab}
+          onIntakeChange={patchIntake}
+          onFilesChange={setFiles}
+          onRunParse={runParse}
+          onSeeLaws={goToLawsFromIntake}
+          graph={
+            <div className="ct-intake-graph-column">
+              <div className="ct-intake-graph-area">
+                <ProductKnowledgeGraph nodes={kgNodes} edges={kgEdges} />
+              </div>
             </div>
           }
         />
       </div>
-    </>
+    </div>
   );
 }

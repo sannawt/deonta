@@ -7,11 +7,11 @@ from typing import Any, Literal, Optional
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse
+from fastapi import Cookie, Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from neo4j import GraphDatabase, Driver
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 from logic.corpus import (
     corpus_status,
@@ -48,6 +48,15 @@ from logic.law_relevance_scan import scan_relevant_laws
 from logic.neo4j_legal_inspect import inspect_legal_graph
 from logic.legal_db import evidence_pack, law_summary_stub, list_laws
 from logic.account_store import ensure_account, new_account_id, normalize_account_id
+from logic.auth_email import build_verify_url, dev_expose_link, send_magic_link_email
+from logic.auth_session import (
+    SESSION_COOKIE,
+    create_session_token,
+    decode_session_token,
+    session_cookie_kwargs,
+)
+from logic.auth_store import consume_magic_link, create_magic_link, get_user_by_account_id, init_auth_db, upsert_user
+from logic.product_store import load_account_products, save_account_products, upsert_account_product
 from logic.assess_pipeline import run_product_assess
 from logic.playbook_merge import (
     append_playbook_nodes,
@@ -315,6 +324,7 @@ def shutdown_drivers() -> None:
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    init_auth_db()
     ensure_corpus_ready()
     yield
     shutdown_drivers()
@@ -368,14 +378,32 @@ def _resolve_account_id(
     return normalize_account_id(header_value) or normalize_account_id(body_value)
 
 
-def _require_account_id(
-    x_account_id: Optional[str] = Header(None, alias="X-Account-Id"),
-) -> str:
-    aid = _resolve_account_id(x_account_id)
-    if not aid:
-        raise HTTPException(status_code=401, detail="Missing or invalid X-Account-Id")
-    ensure_account(aid)
-    return aid
+class CurrentUser(BaseModel):
+    account_id: str
+    email: str
+
+
+def get_current_user(
+    ct_session: Optional[str] = Cookie(None, alias=SESSION_COOKIE),
+    authorization: Optional[str] = Header(None),
+) -> CurrentUser:
+    token = (ct_session or "").strip()
+    if not token and authorization:
+        auth = authorization.strip()
+        if auth.lower().startswith("bearer "):
+            token = auth[7:].strip()
+    payload = decode_session_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    user = get_user_by_account_id(payload["account_id"])
+    if not user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    ensure_account(user["account_id"])
+    return CurrentUser(account_id=user["account_id"], email=user["email"])
+
+
+def _require_account_id(user: CurrentUser = Depends(get_current_user)) -> str:
+    return user.account_id
 
 
 def _fetch_legal_playbook(
@@ -757,14 +785,14 @@ def _build_rule_catalog() -> RuleCatalogResponse:
 
 
 @app.post("/api/ask", response_model=AskResponse)
-def ask(body: AskBody) -> AskResponse:
+def ask(body: AskBody, _user: CurrentUser = Depends(get_current_user)) -> AskResponse:
     terms = terms_from_question(body.question)
     legal, playbook = _fetch_legal_playbook(terms)
     return AskResponse(terms_used=terms, legal=legal, playbook=playbook)
 
 
 @app.post("/api/reason", response_model=ReasonResponse)
-def reason(body: ReasonBody) -> ReasonResponse:
+def reason(body: ReasonBody, _user: CurrentUser = Depends(get_current_user)) -> ReasonResponse:
     q = (body.question or "").strip()
     terms = terms_from_question(q) if q else []
     raw_facts = [f.model_dump() for f in body.facts]
@@ -772,7 +800,10 @@ def reason(body: ReasonBody) -> ReasonResponse:
 
 
 @app.post("/api/applicability-flow", response_model=ApplicabilityFlowResponse)
-def applicability_flow(body: ApplicabilityFlowBody) -> ApplicabilityFlowResponse:
+def applicability_flow(
+    body: ApplicabilityFlowBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> ApplicabilityFlowResponse:
     situation = body.situation.strip()
     terms = terms_from_question(situation)
     legal, playbook = _fetch_legal_playbook(
@@ -832,7 +863,7 @@ def applicability_flow(body: ApplicabilityFlowBody) -> ApplicabilityFlowResponse
 
 
 @app.get("/api/playbook-companies")
-def get_playbook_companies() -> dict[str, Any]:
+def get_playbook_companies(_user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     """List selectable company playbooks (Vaisala, Iloq, Atlas Copco, …)."""
     companies = list_playbook_companies()
     pb_ok = False
@@ -847,17 +878,20 @@ def get_playbook_companies() -> dict[str, Any]:
 
 
 @app.get("/api/corpus-status")
-def get_corpus_status() -> dict[str, Any]:
+def get_corpus_status(_user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     return corpus_status()
 
 
 @app.get("/api/rule-catalog", response_model=RuleCatalogResponse)
-def get_rule_catalog() -> RuleCatalogResponse:
+def get_rule_catalog(_user: CurrentUser = Depends(get_current_user)) -> RuleCatalogResponse:
     return _build_rule_catalog()
 
 
 @app.post("/api/universal-reason", response_model=UniversalReasonResponse)
-def universal_reason(body: UniversalReasonBody) -> UniversalReasonResponse:
+def universal_reason(
+    body: UniversalReasonBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> UniversalReasonResponse:
     raw_facts = [f.model_dump() for f in body.facts]
     result = run_universal_reasoner(
         raw_facts,
@@ -879,7 +913,7 @@ class ChatBody(BaseModel):
 
 
 @app.post("/api/chat")
-def chat(body: ChatBody) -> dict[str, Any]:
+def chat(body: ChatBody, _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     """
     ComplianceTwin chat endpoint.
 
@@ -1051,7 +1085,10 @@ class ProductDetailResponse(BaseModel):
 
 
 @app.get("/api/products")
-def list_products(playbook_company_id: Optional[str] = None) -> dict[str, Any]:
+def list_products(
+    playbook_company_id: Optional[str] = None,
+    _user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
     """
     Products for the knowledge view.
 
@@ -1116,7 +1153,7 @@ def list_products(playbook_company_id: Optional[str] = None) -> dict[str, Any]:
 
 
 @app.get("/api/products/{product_id}")
-def get_product(product_id: str) -> dict[str, Any]:
+def get_product(product_id: str, _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     """
     Product knowledge detail.
 
@@ -1263,38 +1300,96 @@ class EvidencePackBody(BaseModel):
     law_codes: list[str] = Field(default_factory=list)
 
 
-@app.post("/api/account/bootstrap")
-def api_account_bootstrap(body: Optional[AccountBootstrapBody] = None) -> dict[str, Any]:
+class RequestLinkBody(BaseModel):
+    email: EmailStr
+
+
+class AccountProductsPutBody(BaseModel):
+    products: list[dict[str, Any]] = Field(default_factory=list)
+
+
+@app.post("/api/auth/request-link")
+def api_auth_request_link(body: RequestLinkBody) -> dict[str, Any]:
     try:
-        existing = None
-        if body and body.account_id:
-            existing = normalize_account_id(body.account_id)
-        if existing:
-            ensure_account(existing)
-            return {"version": 1, "account_id": existing, "created": False}
-        aid = new_account_id()
-        ensure_account(aid)
-        return {"version": 1, "account_id": aid, "created": True}
-    except OSError as exc:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Account storage is not writable: {exc}",
-        ) from exc
+        token, _expires = create_magic_link(str(body.email))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    verify_url = build_verify_url(token)
+    send_magic_link_email(str(body.email), verify_url)
+    payload: dict[str, Any] = {
+        "version": 1,
+        "ok": True,
+        "message": "If that email is valid, a sign-in link has been sent.",
+    }
+    if dev_expose_link():
+        payload["verify_url"] = verify_url
+    return payload
+
+
+@app.get("/api/auth/verify")
+def api_auth_verify(token: str = "") -> RedirectResponse:
+    email = consume_magic_link(token)
+    if not email:
+        raise HTTPException(status_code=400, detail="Invalid or expired sign-in link")
+    user = upsert_user(email)
+    jwt_token = create_session_token(user["account_id"], user["email"])
+    response = RedirectResponse(url="/#/workspace", status_code=302)
+    response.set_cookie(SESSION_COOKIE, jwt_token, **session_cookie_kwargs())
+    return response
+
+
+@app.get("/api/auth/me")
+def api_auth_me(user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
+    return {"version": 1, "email": user.email, "account_id": user.account_id}
+
+
+@app.post("/api/auth/logout")
+def api_auth_logout() -> JSONResponse:
+    response = JSONResponse({"version": 1, "ok": True})
+    response.delete_cookie(SESSION_COOKIE, path="/")
+    return response
+
+
+@app.get("/api/account/products")
+def api_list_account_products(user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
+    products = load_account_products(user.account_id)
+    return {"version": 1, "products": products}
+
+
+@app.put("/api/account/products")
+def api_put_account_products(
+    body: AccountProductsPutBody,
+    user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
+    save_account_products(user.account_id, body.products)
+    return {"version": 1, "products": body.products}
+
+
+@app.patch("/api/account/products/{product_id}")
+def api_patch_account_product(
+    product_id: str,
+    body: dict[str, Any],
+    user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
+    row = {**body, "id": product_id}
+    try:
+        saved = upsert_account_product(user.account_id, row)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return {"version": 1, "product": saved}
 
 
 @app.get("/api/playbooks")
-def api_list_playbooks(account_id: str = Header(..., alias="X-Account-Id")) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
-    return {"version": 1, "playbooks": list_playbooks(aid)}
+def api_list_playbooks(user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
+    return {"version": 1, "playbooks": list_playbooks(user.account_id)}
 
 
 @app.post("/api/playbooks")
 def api_create_playbook(
     body: PlaybookCreateBody,
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
-    doc = create_playbook(aid, body.name)
+    doc = create_playbook(user.account_id, body.name)
     mirror_playbook_to_neo4j(doc)
     return {"version": 1, **doc}
 
@@ -1302,10 +1397,9 @@ def api_create_playbook(
 @app.get("/api/playbooks/{playbook_id}")
 def api_get_playbook(
     playbook_id: str,
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
-    doc = get_playbook(aid, playbook_id)
+    doc = get_playbook(user.account_id, playbook_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Playbook not found")
     return {"version": 1, **doc}
@@ -1315,10 +1409,9 @@ def api_get_playbook(
 def api_patch_playbook(
     playbook_id: str,
     body: PlaybookPatchBody,
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
-    doc = update_playbook(aid, playbook_id, body.model_dump(exclude_none=True))
+    doc = update_playbook(user.account_id, playbook_id, body.model_dump(exclude_none=True))
     if not doc:
         raise HTTPException(status_code=404, detail="Playbook not found")
     mirror_playbook_to_neo4j(doc)
@@ -1329,10 +1422,9 @@ def api_patch_playbook(
 async def api_playbook_documents(
     playbook_id: str,
     files: list[UploadFile] = File(...),
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
-    doc = get_playbook(aid, playbook_id)
+    doc = get_playbook(user.account_id, playbook_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Playbook not found")
     file_tuples: list[tuple[str, bytes]] = []
@@ -1349,7 +1441,7 @@ async def api_playbook_documents(
         "node_count": len(nodes),
     }
     updated = append_playbook_nodes(
-        aid,
+        user.account_id,
         playbook_id,
         nodes,
         parsed.get("edges"),
@@ -1366,9 +1458,8 @@ async def api_products_parse(
     playbook_id: Optional[str] = Form(None),
     intake_json: Optional[str] = Form(None),
     files: list[UploadFile] = File(default=[]),
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
     file_tuples: list[tuple[str, bytes]] = []
     for uf in files or []:
         raw = await uf.read()
@@ -1380,7 +1471,7 @@ async def api_products_parse(
         except json.JSONDecodeError:
             intake = None
     kg = build_product_kg(
-        account_id=aid,
+        account_id=user.account_id,
         playbook_id=(playbook_id or "").strip() or None,
         description=description,
         files=file_tuples or None,
@@ -1392,11 +1483,10 @@ async def api_products_parse(
 @app.post("/api/products/parse/json")
 def api_products_parse_json(
     body: ProductParseBody,
-    account_id: str = Header(..., alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
-    aid = _require_account_id(account_id)
     kg = build_product_kg(
-        account_id=aid,
+        account_id=user.account_id,
         playbook_id=(body.playbook_id or "").strip() or None,
         description=body.description,
         intake=body.intake,
@@ -1404,18 +1494,41 @@ def api_products_parse_json(
     return {"version": 1, **kg}
 
 
+@app.get("/api/provisions")
+def api_provisions(ids: str = "", _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
+    """Batch lookup provision title and text by provision_long_id."""
+    from logic.legal_links import enrich_citation
+
+    plids = [p.strip() for p in (ids or "").split(",") if p.strip()]
+    if not plids:
+        return {"version": 1, "provisions": []}
+    provisions = [enrich_citation(plid) for plid in plids]
+    return {"version": 1, "provisions": provisions}
+
+
+@app.get("/api/laws/symbolic")
+def api_symbolic_laws(_user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
+    from logic.legal_db import law_by_code, symbolic_regulation_codes
+
+    laws: list[dict[str, Any]] = []
+    for code in symbolic_regulation_codes():
+        row = law_by_code(code) or {}
+        laws.append({**row, "code": code, "engine_mode": "symbolic"})
+    return {"version": 1, "laws": laws}
+
+
 @app.get("/api/laws")
-def api_list_laws() -> dict[str, Any]:
+def api_list_laws(_user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     return {"version": 1, "laws": list_laws()}
 
 
 @app.get("/api/laws/{code}/summary")
-def api_law_summary(code: str) -> dict[str, Any]:
+def api_law_summary(code: str, _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     return {"version": 1, **law_summary_stub(code)}
 
 
 @app.get("/api/laws/{code}/obligations")
-def api_law_obligations(code: str) -> dict[str, Any]:
+def api_law_obligations(code: str, _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     summary = law_summary_stub(code)
     return {
         "version": 1,
@@ -1425,12 +1538,15 @@ def api_law_obligations(code: str) -> dict[str, Any]:
 
 
 @app.post("/api/laws/evidence-pack")
-def api_evidence_pack(body: EvidencePackBody) -> dict[str, Any]:
+def api_evidence_pack(
+    body: EvidencePackBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
     return {"version": 1, **evidence_pack(body.obligation_ids, body.law_codes)}
 
 
 @app.get("/api/legal-graph/inspect")
-def api_legal_graph_inspect() -> dict[str, Any]:
+def api_legal_graph_inspect(_user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     """Read-only snapshot of Neo4j legal Aura node labels, regulations, and text corpus."""
     if legal_graph_backend() == "local":
         raise HTTPException(
@@ -1452,7 +1568,10 @@ def api_legal_graph_inspect() -> dict[str, Any]:
 
 
 @app.post("/api/products/workflow-chat")
-def api_products_workflow_chat(body: WorkflowChatBody) -> dict[str, Any]:
+def api_products_workflow_chat(
+    body: WorkflowChatBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
     """OpenAI-powered assistant copy for the product workflow chat UI."""
     from logic.workflow_chat import generate_workflow_reply
 
@@ -1469,7 +1588,10 @@ def api_products_workflow_chat(body: WorkflowChatBody) -> dict[str, Any]:
 
 
 @app.post("/api/products/law-scan")
-def api_products_law_scan(body: LawScanBody) -> dict[str, Any]:
+def api_products_law_scan(
+    body: LawScanBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
     """Semantic relevance scan over Neo4j legal Aura (twin_p corpus)."""
     try:
         return scan_relevant_laws(
@@ -1497,14 +1619,14 @@ def api_products_law_scan(body: LawScanBody) -> dict[str, Any]:
 @app.post("/api/products/assess")
 def api_products_assess(
     body: ProductAssessBody,
-    x_account_id: Optional[str] = Header(None, alias="X-Account-Id"),
+    user: CurrentUser = Depends(get_current_user),
 ) -> dict[str, Any]:
     """Canonical structured assessment (no chat UI)."""
     from logic.prototype_fast import assess_cache_key, get_cached_assess, put_cached_assess
 
     spec = body.spec.model_dump()
     case_id = (body.case_id or "").strip() or None
-    account_id = _resolve_account_id(x_account_id, body.account_id)
+    account_id = user.account_id
     account_playbook_id = (body.playbook_id or "").strip() or None
     demo_playbook_id = (body.playbook_company_id or "").strip() or None
     if account_playbook_id and account_id:
@@ -1541,8 +1663,59 @@ def api_products_assess(
     return result
 
 
+@app.post("/api/products/scope-rules")
+def api_products_scope_rules(
+    body: ProductAssessBody,
+    user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
+    """Deterministic scope-rule assessment for symbolic laws only (GDPR, AI Act, …)."""
+    from logic.legal_db import symbolic_regulation_codes
+    from logic.prototype_fast import assess_cache_key, get_cached_assess, put_cached_assess
+
+    spec = body.spec.model_dump()
+    case_id = (body.case_id or "").strip() or None
+    account_id = user.account_id
+    account_playbook_id = (body.playbook_id or "").strip() or None
+    demo_playbook_id = (body.playbook_company_id or "").strip() or None
+    if account_playbook_id and account_id:
+        demo_playbook_id = None
+
+    assess_key = assess_cache_key(
+        str(spec.get("summary") or ""),
+        ["__scope_rules__", *symbolic_regulation_codes()],
+        body.kg_facts,
+    )
+    cached_assess = get_cached_assess(assess_key)
+    if cached_assess is not None:
+        return cached_assess
+
+    result = run_product_assess(
+        spec=spec,
+        kg_facts=body.kg_facts,
+        selected_laws=[],
+        playbook_company_id=demo_playbook_id,
+        account_id=account_id,
+        account_playbook_id=account_playbook_id,
+        case_id=case_id,
+        fetch_legal_playbook_fn=_fetch_legal_playbook,
+        build_fact_payload_fn=_build_fact_payload,
+        effective_payload_signals_fn=_effective_payload_signals,
+        clarifying_questions_for_payload_fn=_clarifying_questions_for_payload,
+        bucket_legal_matches_fn=bucket_legal_matches,
+        compatibility_facts_for_payload_fn=compatibility_facts_for_payload,
+        run_reason_core_fn=_run_reason_core,
+        build_rule_catalog_fn=_build_rule_catalog,
+        symbolic_only=True,
+    )
+    put_cached_assess(assess_key, result)
+    return result
+
+
 @app.post("/api/admin/draft-scope-rules")
-def api_admin_draft_scope_rules(body: DraftScopeRulesBody) -> dict[str, Any]:
+def api_admin_draft_scope_rules(
+    body: DraftScopeRulesBody,
+    _user: CurrentUser = Depends(get_current_user),
+) -> dict[str, Any]:
     """Draft Soufflé scope rules for human review (requires ALLOW_RULE_DRAFT=1)."""
     from logic.llm_rule_drafter import draft_scope_rules
 
@@ -1618,7 +1791,7 @@ def _ui_meta() -> dict[str, Any]:
 
 
 @app.get("/api/ui-meta")
-def ui_meta(request: Request) -> dict[str, Any]:
+def ui_meta(request: Request, _user: CurrentUser = Depends(get_current_user)) -> dict[str, Any]:
     """Tell the browser which UI build is active (debug stale-cache issues)."""
     meta = _ui_meta()
     host_port = request.url.port
@@ -1635,14 +1808,24 @@ def ui_meta(request: Request) -> dict[str, Any]:
     return meta
 
 
-def _public_png(name: str) -> FileResponse:
+def _public_asset(name: str, media_type: str) -> FileResponse:
     for base in (FRONTEND_DIST, BASE_DIR / "frontend" / "public"):
         path = base / name
         if path.is_file():
-            return FileResponse(path, media_type="image/png")
+            return FileResponse(path, media_type=media_type)
     from fastapi import HTTPException
 
     raise HTTPException(status_code=404, detail="Run make frontend")
+
+
+def _public_png(name: str) -> FileResponse:
+    return _public_asset(name, "image/png")
+
+
+@app.get("/app-atmosphere.jpg")
+def app_atmosphere_jpg() -> FileResponse:
+    """Beach sky + sand atmosphere background from frontend/public."""
+    return _public_asset("app-atmosphere.jpg", "image/jpeg")
 
 
 @app.get("/hourglass.png")

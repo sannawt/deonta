@@ -23,6 +23,10 @@ interface Props {
 export function ProductKnowledgeGraph({ nodes, edges }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const networkRef = useRef<Network | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const nodesDataRef = useRef<DataSet<any> | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const edgesDataRef = useRef<DataSet<any> | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -59,15 +63,15 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
       })),
     );
 
-    const data = { nodes: visNodes, edges: visEdges };
     const options = {
       physics: {
         enabled: true,
-        stabilization: { iterations: 80 },
+        stabilization: { iterations: 150, fit: false },
         barnesHut: {
           gravitationalConstant: -12000,
           springLength: 140,
-          damping: 0.09,
+          // High damping kills oscillation/bouncing immediately
+          damping: 0.5,
         },
       },
       interaction: {
@@ -81,17 +85,52 @@ export function ProductKnowledgeGraph({ nodes, edges }: Props) {
       layout: { improvedLayout: true },
     };
 
-    if (networkRef.current) {
-      networkRef.current.setData(data);
+    if (networkRef.current && nodesDataRef.current && edgesDataRef.current) {
+      // Update existing datasets in-place so positioned nodes keep their positions
+      const existingIds = new Set(nodesDataRef.current.getIds().map(String));
+      const incomingItems = visNodes.get();
+      const incomingIds = new Set(incomingItems.map((n) => String(n.id)));
+
+      const toAdd = incomingItems.filter((n) => !existingIds.has(String(n.id)));
+      const toUpdate = incomingItems.filter((n) => existingIds.has(String(n.id)));
+      const toRemove = [...existingIds].filter((id) => !incomingIds.has(id));
+
+      if (toRemove.length) nodesDataRef.current.remove(toRemove);
+      if (toUpdate.length) nodesDataRef.current.update(toUpdate);
+      if (toAdd.length) nodesDataRef.current.add(toAdd);
+
+      edgesDataRef.current.clear();
+      edgesDataRef.current.add(visEdges.get());
+
+      // Only re-run physics briefly when new nodes appear
+      if (toAdd.length > 0) {
+        networkRef.current.setOptions({ physics: { enabled: true } });
+      }
     } else {
-      networkRef.current = new Network(containerRef.current, data, options);
+      nodesDataRef.current = visNodes;
+      edgesDataRef.current = visEdges;
+      networkRef.current = new Network(containerRef.current, { nodes: visNodes, edges: visEdges }, options);
     }
+
+    const network = networkRef.current;
+    const onStabilized = () => {
+      network?.setOptions({ physics: { enabled: false } });
+    };
+    network.once("stabilizationIterationsDone", onStabilized);
+    network.once("stabilized", onStabilized);
+
+    return () => {
+      network.off("stabilizationIterationsDone", onStabilized);
+      network.off("stabilized", onStabilized);
+    };
   }, [nodes, edges]);
 
   useEffect(() => {
     return () => {
       networkRef.current?.destroy();
       networkRef.current = null;
+      nodesDataRef.current = null;
+      edgesDataRef.current = null;
     };
   }, []);
 

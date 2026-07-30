@@ -6,7 +6,6 @@ import {
   sendChat,
   type LawScanResult,
 } from "../lib/api";
-import { ensureAccountId } from "../lib/account";
 import { resolveAssessment } from "../lib/assessment";
 import { buildApplicabilityVerdictSummary } from "../lib/applicabilityVerdict";
 import { buildScopeChatDocument, type ScopeChatLawBlock } from "../lib/scopeChatNarrative";
@@ -228,7 +227,6 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
 
       const resolvedCodes = resolveAssessCodes(codes, rows);
       const selectedScanRows = rows.filter((r) => resolvedCodes.includes(r.code));
-      const aid = await ensureAccountId();
       const created = createProduct({
         ...currentSpec,
         summary: currentSpec.summary || desc,
@@ -240,7 +238,6 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
         spec: { ...currentSpec, summary: currentSpec.summary || desc, regulations: resolvedCodes },
         kg_facts: facts,
         selected_laws: selectedScanRows,
-        account_id: aid,
         case_id: created.id,
       });
 
@@ -473,7 +470,7 @@ export function ComplianceChatPage({ onNavigateHome }: Props) {
           : "Thinking…";
 
   return (
-    <div className="ct-page ct-chat-page">
+    <div className="ct-page ct-app-page ct-chat-page">
       <header className="ct-chat-page-head">
         <PixelIcon name="legalSand" size={56} className="ct-chat-page-icon" />
         <div className="ct-chat-page-head-text">

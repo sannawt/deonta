@@ -1,6 +1,7 @@
 import type { LawScanResult } from "./api";
 import type { ClarifyingQuestion, ScopeInstrument } from "../types/chat";
 import type { ApplicabilityTier, LawApplicabilityRow } from "./applicabilityVerdict";
+import { lawNameFromSymbolicLaw } from "./lawDisplayName";
 import {
   humanizeFactText,
   humanizeMissingQuestion,
@@ -672,3 +673,86 @@ export const STATUS_LABEL: Record<LawScanStatus, string> = {
   potential: "Scan relevance — scope pending",
   excluded: "Excluded",
 };
+
+export const DEFAULT_SYMBOLIC_CODES = ["ai_act", "gdpr"] as const;
+
+export function isSymbolicCode(code: string): boolean {
+  const c = normCode(code);
+  return DEFAULT_SYMBOLIC_CODES.includes(c as (typeof DEFAULT_SYMBOLIC_CODES)[number]);
+}
+
+export function filterDiscoveryCodes(codes: string[]): string[] {
+  return codes.filter((c) => !isSymbolicCode(c));
+}
+
+export function buildScopeRuleItems(args: {
+  symbolicCodes: string[];
+  symbolicLaws: Array<{ code: string; label?: string; short?: string; ui_label?: string }>;
+  instruments: ScopeInstrument[];
+  tierRows: LawApplicabilityRow[];
+  assessing?: boolean;
+}): ScannedLawItem[] {
+  const { symbolicCodes, symbolicLaws, instruments, tierRows, assessing } = args;
+  const tierByCode = new Map(tierRows.map((r) => [r.code, r]));
+
+  return symbolicCodes.map((code) => {
+    const catalog = symbolicLaws.find((l) => normCode(l.code) === normCode(code));
+    const instrument = instruments.find((inst) => instrumentMatchesCode(inst, code));
+    const tierRow = tierByCode.get(code);
+    const tier = tierRow?.tier ?? "potentially";
+    const status: LawScanStatus =
+      assessing && !instrument
+        ? "potential"
+        : resolveLawStatus(true, tier, instrument, "symbolic");
+
+    return {
+      rowCode: code,
+      listLabel: catalog ? lawNameFromSymbolicLaw(catalog) : code,
+      fullLabel: catalog ? lawNameFromSymbolicLaw(catalog) : code,
+      selected: true,
+      tier,
+      status,
+      score: 1,
+      engineMode: "symbolic",
+    };
+  });
+}
+
+export function buildDiscoveredItems(args: {
+  scanResults: LawScanResult[];
+  includedCodes: string[];
+  tierRows: LawApplicabilityRow[];
+  instruments: ScopeInstrument[];
+}): ScannedLawItem[] {
+  const { scanResults, includedCodes, tierRows, instruments } = args;
+  const discoveryScan = scanResults.filter((r) => !isSymbolicCode(r.catalog_code || r.code));
+  return buildScannedLawList({
+    scanResults: discoveryScan,
+    selectedCodes: includedCodes,
+    tierRows,
+    instruments,
+  });
+}
+
+export function lawsEligibleForObligations(items: ScannedLawItem[]): string[] {
+  return items
+    .filter(
+      (item) =>
+        item.selected &&
+        (item.status === "confirmed" || item.status === "assessment_required"),
+    )
+    .map((item) => item.rowCode);
+}
+
+export function statusLabelShort(status: LawScanStatus): string {
+  switch (status) {
+    case "confirmed":
+      return "In scope";
+    case "assessment_required":
+      return "Needs review";
+    case "potential":
+      return "Assessing…";
+    case "excluded":
+      return "Not likely";
+  }
+}

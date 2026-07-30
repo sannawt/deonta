@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ChatResponse, ScopeAnalysis, ScopeDimension, ScopeInstrument } from "../../types/chat";
 import { WorksheetTable } from "../cards/WorksheetTable";
+import { ProvisionText } from "../legal/ProvisionText";
 import { stripInternalIds } from "../../lib/utils";
 
 const RESULT_BADGE: Record<string, string> = {
@@ -30,18 +31,6 @@ const FACT_KIND_LABEL: Record<string, string> = {
   missing: "Still needed",
   summary: "Summary",
 };
-
-function ProvisionText({ c }: { c: { excerpt?: string | null; text?: string | null; title?: string | null } }) {
-  // Lawyer view should show the actual provision text (not a shortened tooltip excerpt).
-  const body = c.text || c.excerpt;
-  if (!body) return null;
-  return (
-    <blockquote className="scope-provision-text">
-      {c.title && <div className="scope-provision-text-title">{c.title}</div>}
-      {body}
-    </blockquote>
-  );
-}
 
 function dedupeCitations<T extends { provision_long_id?: string; label?: string }>(items: T[]): T[] {
   const out: T[] = [];
@@ -129,7 +118,7 @@ function DimensionBlock({
             {lawyerCitations.map((c, i) => (
               <div key={i} className="scope-provision-card">
                 <CitationChip c={c as any} />
-                <ProvisionText c={c as any} />
+                <ProvisionText title={c.title} text={c.text} excerpt={c.excerpt} />
               </div>
             ))}
           </div>
@@ -307,7 +296,7 @@ export function ScopeAnalysisPanel({
     if (fallbackWorksheet?.rows?.length) {
       return <WorksheetTable worksheet={fallbackWorksheet} />;
     }
-    return <p className="text-xs text-muted">No scope analysis available.</p>;
+    return <p className="text-xs text-muted">No applicability assessment available.</p>;
   }
 
   const active = instruments.find((i) => i.id === activeTab) || instruments[0];

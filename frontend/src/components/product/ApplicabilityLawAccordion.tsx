@@ -9,6 +9,7 @@ import {
 import { lawNameFromScannedItem } from "../../lib/lawDisplayName";
 import { lawSummaryForCode } from "../../lib/lawSummaries";
 import { productScopeAssessment } from "../../lib/scopeProductAssessment";
+import { collectLawProvisions } from "../../lib/scopeLegalBasis";
 import { ScopeDimensionsTable } from "./ScopeDimensionsTable";
 import { LegalInlineText } from "./LegalInlineText";
 
@@ -21,6 +22,8 @@ interface Props {
   defaultOpen?: boolean;
   collapsible?: boolean;
   onFocus?: () => void;
+  onCitationSelect?: (provisionId: string) => void;
+  onViewLegalBasis?: () => void;
 }
 
 export function ApplicabilityLawAccordion({
@@ -30,6 +33,8 @@ export function ApplicabilityLawAccordion({
   defaultOpen = false,
   collapsible = true,
   onFocus,
+  onCitationSelect,
+  onViewLegalBasis,
 }: Props) {
   const [open, setOpen] = useState(defaultOpen || !collapsible);
   const lawCode = item.scanRow?.catalog_code || item.scanRow?.code || item.rowCode;
@@ -46,6 +51,10 @@ export function ApplicabilityLawAccordion({
   const statusSymbol = STATUS_SYMBOL[item.status] || "△";
   const catalog = lawSummaryForCode(lawCode);
   const overallAssessment = productScopeAssessment(instrument, lawCode);
+  const provisionCount = collectLawProvisions(
+    instrument,
+    instrument?.reg_key || lawCode,
+  ).length;
 
   const toggle = () => {
     setOpen((v) => {
@@ -67,9 +76,21 @@ export function ApplicabilityLawAccordion({
 
       {dimensions.length > 0 ? (
         <section className="ct-scope-detail-dimensions">
+          {provisionCount > 0 && onViewLegalBasis ? (
+            <div className="ct-scope-legal-basis-actions">
+              <button
+                type="button"
+                className="ct-scope-legal-basis-btn"
+                onClick={onViewLegalBasis}
+              >
+                View legal basis ({provisionCount})
+              </button>
+            </div>
+          ) : null}
           <ScopeDimensionsTable
             dimensions={dimensions}
             regKey={instrument?.reg_key || lawCode}
+            onCitationSelect={onCitationSelect}
           />
         </section>
       ) : detail.legalTests.length === 0 ? (

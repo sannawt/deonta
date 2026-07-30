@@ -56,7 +56,7 @@ export function AssessmentResults({ productId, productLabel, response }: Props) 
               <ScopeAnalysisPanel scopeAnalysis={assessment.scope_analysis} />
             </div>
           ) : (
-            <div className="empty">No scope analysis in this record.</div>
+            <div className="empty">No applicability assessment in this record.</div>
           )}
         </div>
       )}

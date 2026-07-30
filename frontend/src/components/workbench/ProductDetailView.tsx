@@ -76,7 +76,7 @@ export function ProductDetailView({ productId, onBack }: Props) {
             <ScopeAnalysisPanel scopeAnalysis={scopeAnalysis} />
           ) : (
             <div className="empty">
-              No scope analysis stored for this product yet. Run a chat assessment to generate a full reasoning trace.
+              No applicability assessment stored for this product yet. Run a chat assessment to generate a full reasoning trace.
             </div>
           )}
         </div>

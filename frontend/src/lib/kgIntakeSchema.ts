@@ -57,16 +57,61 @@ export const DATA_SUBJECT_OPTIONS = [
   { id: "job_applicants", label: "Job applicants" },
 ] as const;
 
+export const DATA_FLOW_OPTIONS = [
+  { id: "personal_data", label: "Processes personal data" },
+  { id: "accounts_profiles", label: "Accounts / profiles" },
+  { id: "customers", label: "Customer data" },
+  { id: "employees", label: "Employee data" },
+  { id: "job_applicants", label: "Job applicants / CVs" },
+  { id: "special_category", label: "Special-category data" },
+  { id: "third_parties", label: "Shared with vendors" },
+  { id: "none", label: "No personal data" },
+] as const;
+
 export const AI_FEATURE_OPTIONS = [
   { id: "machine_learning", label: "Machine learning" },
   { id: "automated_decisions", label: "Automated decisions" },
   { id: "generative_ai", label: "Generative AI" },
   { id: "computer_vision", label: "Computer vision" },
+  { id: "recommendations", label: "Recommendations / ranking" },
+  { id: "high_risk", label: "High-risk AI use" },
+  { id: "none", label: "No AI" },
 ] as const;
+
+export function formatDataFlowLabel(id: string): string {
+  const known = DATA_FLOW_OPTIONS.find((f) => f.id === id);
+  return known?.label ?? id.replace(/_/g, " ");
+}
+
+export function formatAiFeatureLabel(id: string): string {
+  const known = AI_FEATURE_OPTIONS.find((f) => f.id === id);
+  return known?.label ?? id.replace(/_/g, " ");
+}
+
+export const PRODUCT_FEATURE_OPTIONS = [
+  { id: "software_saas", label: "Software / SaaS" },
+  { id: "mobile_app", label: "Mobile app" },
+  { id: "web_platform", label: "Web platform" },
+  { id: "marketplace", label: "Marketplace" },
+  { id: "hardware_device", label: "Hardware / device" },
+  { id: "analytics", label: "Analytics / reporting" },
+  { id: "recommendations", label: "Recommendations" },
+  { id: "payments", label: "Payments / billing" },
+  { id: "identity_access", label: "Identity / access" },
+  { id: "messaging", label: "Messaging" },
+  { id: "automation", label: "Workflow automation" },
+  { id: "content_media", label: "Content / media" },
+] as const;
+
+export function formatProductFeatureLabel(id: string): string {
+  const known = PRODUCT_FEATURE_OPTIONS.find((f) => f.id === id);
+  return known?.label ?? id.replace(/_/g, " ");
+}
 
 export interface ProductIntakeState {
   productName: string;
   productSummary: string;
+  productFeatures: string[];
   organisationName: string;
   isAnnexIProduct: boolean;
   actorRoles: string[];
@@ -77,6 +122,7 @@ export interface ProductIntakeState {
   aiActTerritorialLink: TriState;
   processesPersonalData: TriState;
   dataSubjects: string[];
+  dataFlows: string[];
   specialCategoryData: TriState;
   hasAi: TriState;
   aiFeatures: string[];
@@ -91,6 +137,7 @@ export type IntakeFieldSources = Partial<Record<keyof ProductIntakeState | strin
 export const EMPTY_INTAKE: ProductIntakeState = {
   productName: "",
   productSummary: "",
+  productFeatures: [],
   organisationName: "",
   isAnnexIProduct: false,
   actorRoles: [],
@@ -101,6 +148,7 @@ export const EMPTY_INTAKE: ProductIntakeState = {
   aiActTerritorialLink: "unknown",
   processesPersonalData: "unknown",
   dataSubjects: [],
+  dataFlows: [],
   specialCategoryData: "unknown",
   hasAi: "unknown",
   aiFeatures: [],
@@ -114,27 +162,42 @@ export type ProductIntakePayload = ProductIntakeState;
 
 export type IntakeCardId = "organisation" | "product" | "data_ai";
 
+export const INTAKE_DOCUMENT_STEP = {
+  id: "documents",
+  title: "Upload product and business documents",
+  progressLabel: "Documents",
+  prompt: "We extract the facts that matter for compliance",
+} as const;
+
+export type IntakeFlowStepId = typeof INTAKE_DOCUMENT_STEP.id | IntakeCardId;
+
 export const INTAKE_CARDS: ReadonlyArray<{
   id: IntakeCardId;
   title: string;
+  progressLabel: string;
   prompt: string;
 }> = [
   {
     id: "organisation",
     title: "Your organisation",
-    prompt: "",
+    progressLabel: "Organisation",
+    prompt: "Review and confirm who operates the product and where you offer it.",
   },
   {
     id: "product",
     title: "Product & features",
-    prompt: "",
+    progressLabel: "Product",
+    prompt: "Review and confirm the product name and what it does.",
   },
   {
     id: "data_ai",
-    title: "Data flows & AI",
-    prompt: "",
+    title: "Data & AI",
+    progressLabel: "Data & AI",
+    prompt: "Confirm data handling and any AI use.",
   },
 ] as const;
+
+export const INTAKE_FLOW_STEPS = [INTAKE_DOCUMENT_STEP, ...INTAKE_CARDS] as const;
 
 export const INTAKE_SECTIONS = INTAKE_CARDS;
 
@@ -147,8 +210,8 @@ export interface MissingPredicateHint {
 
 const CARD_FIELDS: Record<IntakeCardId, (keyof ProductIntakeState)[]> = {
   organisation: ["organisationName", "actorRoles", "markets", "establishedInEu", "sellsToEu"],
-  product: ["productName", "productSummary"],
-  data_ai: ["dataFlowDescription", "aiUsageDescription"],
+  product: ["productName", "productFeatures", "productSummary"],
+  data_ai: ["dataFlows", "dataFlowDescription", "aiFeatures", "aiUsageDescription"],
 };
 
 const NO_PERSONAL_DATA =
@@ -160,12 +223,119 @@ const NO_AI_HINTS =
 const AI_HINTS =
   /\b(ai|artificial intelligence|machine learning|ml model|neural|llm|gpt|generative|automated decision|computer vision|chatbot|algorithm|deep learning)\b/i;
 
+function isAiUsageAnswered(text: string): boolean {
+  const t = text.trim();
+  if (!t) return true;
+  if (t.length >= 8) return true;
+  if (/^(no|none|n\/?a|not used|no ai)\.?$/i.test(t)) return true;
+  return NO_AI_HINTS.test(t);
+}
+
+function isDataFlowsAnswered(text: string): boolean {
+  const t = text.trim();
+  if (t.length >= 8) return true;
+  return NO_PERSONAL_DATA.test(t);
+}
+
+const PRODUCT_NAME_STOPWORDS = new Set([
+  "the",
+  "a",
+  "an",
+  "our",
+  "my",
+  "we",
+  "product",
+  "service",
+  "platform",
+  "application",
+  "app",
+  "software",
+  "solution",
+  "system",
+  "unnamed",
+  "unnamed product",
+]);
+
+/** Best-effort product name from summary or description text. */
+export function inferProductNameFromText(text: string): string {
+  const raw = text.trim();
+  if (!raw) return "";
+
+  const firstLine = raw.split("\n")[0]?.trim() ?? "";
+  // Ignore structured intake dumps (organisation / markets / etc.)
+  if (
+    /^(organisation|organization|markets|roles|compliance context|established in|sells to|summary|data flows|ai usage|additional detail)\s*:/i.test(
+      firstLine,
+    )
+  ) {
+    return "";
+  }
+
+  const patterns: RegExp[] = [
+    /^product:\s*(.+?)(?:\n|$)/i,
+    /^(?:product|service|platform|application|app)\s*[:\-]\s*["']?([^"'\n.,;]{2,60})/i,
+    /^(?:name|product name)\s*[:\-]\s*["']?([^"'\n.,;]{2,60})/i,
+    /^["']?([A-Za-z][A-Za-z0-9][\w.-]{1,30})["']?\s+(?:is|helps|lets|screens|scans|processes)\b/i,
+    /^([A-Z][A-Z0-9]{2,17})\b/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = raw.match(pattern);
+    const candidate = (match?.[1] ?? "").trim().replace(/^["']|["']$/g, "");
+    if (!candidate || candidate.length < 2) continue;
+    if (PRODUCT_NAME_STOPWORDS.has(candidate.toLowerCase())) continue;
+    if (candidate.split(/\s+/).length > 4) continue;
+    return candidate.slice(0, 80);
+  }
+
+  const words = firstLine.split(/\s+/);
+  if (
+    words.length >= 1 &&
+    words.length <= 4 &&
+    !firstLine.endsWith(".") &&
+    !firstLine.endsWith("!") &&
+    !firstLine.endsWith("?")
+  ) {
+    const candidate = firstLine.replace(/^["']|["']$/g, "");
+    if (candidate.length >= 2 && !PRODUCT_NAME_STOPWORDS.has(candidate.toLowerCase())) {
+      return candidate.slice(0, 80);
+    }
+  }
+
+  return "";
+}
+
+export function deriveProductFields(intake: ProductIntakeState): Partial<ProductIntakeState> {
+  if (intake.productName.trim().length >= 2) return {};
+  const fromSummary = inferProductNameFromText(intake.productSummary);
+  if (fromSummary.length >= 2) return { productName: fromSummary };
+  return {};
+}
+
 export function deriveDataAiFields(intake: ProductIntakeState): Partial<ProductIntakeState> {
   const data = intake.dataFlowDescription.trim();
   const ai = intake.aiUsageDescription.trim();
+  const flows = intake.dataFlows ?? [];
+  const features = intake.aiFeatures ?? [];
   const patch: Partial<ProductIntakeState> = {};
 
-  if (data) {
+  if (flows.includes("none")) {
+    patch.processesPersonalData = "no";
+    patch.specialCategoryData = "no";
+    patch.dataSubjects = [];
+  } else if (flows.length > 0) {
+    if (flows.includes("personal_data") || flows.some((f) => f !== "none")) {
+      patch.processesPersonalData = "yes";
+    }
+    if (flows.includes("special_category")) {
+      patch.specialCategoryData = "yes";
+    }
+    const subjects: string[] = [];
+    if (flows.includes("customers") || flows.includes("accounts_profiles")) subjects.push("customers");
+    if (flows.includes("employees")) subjects.push("employees");
+    if (flows.includes("job_applicants")) subjects.push("job_applicants");
+    if (subjects.length) patch.dataSubjects = subjects;
+  } else if (data) {
     if (NO_PERSONAL_DATA.test(data)) {
       patch.processesPersonalData = "no";
     } else if (PERSONAL_DATA_HINTS.test(data) || data.length >= 16) {
@@ -184,7 +354,15 @@ export function deriveDataAiFields(intake: ProductIntakeState): Partial<ProductI
     }
   }
 
-  if (ai) {
+  if (features.includes("none")) {
+    patch.hasAi = "no";
+    patch.highRiskAiUse = "no";
+  } else if (features.length > 0) {
+    patch.hasAi = "yes";
+    if (features.includes("high_risk")) {
+      patch.highRiskAiUse = "yes";
+    }
+  } else if (ai) {
     if (NO_AI_HINTS.test(ai)) {
       patch.hasAi = "no";
     } else if (AI_HINTS.test(ai) || ai.length >= 16) {
@@ -207,7 +385,7 @@ export function deriveDataAiFields(intake: ProductIntakeState): Partial<ProductI
 }
 
 export function applyDerivedDataAi(intake: ProductIntakeState): ProductIntakeState {
-  return { ...intake, ...deriveDataAiFields(intake) };
+  return { ...intake, ...deriveProductFields(intake), ...deriveDataAiFields(intake) };
 }
 
 export function narrativeFromStructured(suggested: Partial<ProductIntakeState>): Partial<ProductIntakeState> {
@@ -268,7 +446,9 @@ export function cardSummary(id: IntakeCardId, intake: ProductIntakeState): strin
     case "product": {
       const parts: string[] = [];
       if (intake.productName.trim()) parts.push(intake.productName.trim());
-      if (intake.productSummary.trim()) {
+      if (intake.productFeatures.length) {
+        parts.push(intake.productFeatures.map((f) => formatProductFeatureLabel(f)).join(", "));
+      } else if (intake.productSummary.trim()) {
         parts.push(
           intake.productSummary.trim().length > 40
             ? `${intake.productSummary.trim().slice(0, 40)}…`
@@ -279,14 +459,18 @@ export function cardSummary(id: IntakeCardId, intake: ProductIntakeState): strin
     }
     case "data_ai": {
       const parts: string[] = [];
-      if (intake.dataFlowDescription.trim()) {
+      if (intake.dataFlows?.length) {
+        parts.push(intake.dataFlows.map((f) => formatDataFlowLabel(f)).join(", "));
+      } else if (intake.dataFlowDescription.trim()) {
         parts.push(
           intake.dataFlowDescription.trim().length > 48
             ? `${intake.dataFlowDescription.trim().slice(0, 48)}…`
             : intake.dataFlowDescription.trim(),
         );
       }
-      if (intake.aiUsageDescription.trim()) {
+      if (intake.aiFeatures?.length) {
+        parts.push(intake.aiFeatures.map((f) => formatAiFeatureLabel(f)).join(", "));
+      } else if (intake.aiUsageDescription.trim()) {
         parts.push(
           intake.aiUsageDescription.trim().length > 40
             ? `${intake.aiUsageDescription.trim().slice(0, 40)}…`
@@ -309,10 +493,22 @@ export function cardGaps(id: IntakeCardId, intake: ProductIntakeState): string[]
       break;
     case "product":
       if (!intake.productName.trim()) gaps.push("product name");
+      if (!intake.productFeatures.length && intake.productSummary.trim().length < 8) {
+        gaps.push("features");
+      }
       break;
     case "data_ai":
-      if (intake.dataFlowDescription.trim().length < 8) gaps.push("what data flows through the product");
-      if (intake.aiUsageDescription.trim().length < 8) gaps.push("whether and where AI is used");
+      if (!(intake.dataFlows?.length || isDataFlowsAnswered(intake.dataFlowDescription))) {
+        gaps.push("data flows");
+      }
+      if (
+        !(
+          intake.aiFeatures?.length ||
+          isAiUsageAnswered(intake.aiUsageDescription)
+        )
+      ) {
+        gaps.push("AI use");
+      }
       break;
   }
   return gaps;
@@ -328,7 +524,17 @@ export function firstIncompleteCardIndex(intake: ProductIntakeState): number {
 }
 
 export function canAdvanceCard(id: IntakeCardId, intake: ProductIntakeState): boolean {
-  if (id === "product") return intake.productName.trim().length >= 2;
+  if (id === "product") {
+    return (
+      intake.productName.trim().length >= 2 &&
+      (intake.productFeatures.length > 0 || intake.productSummary.trim().length >= 8)
+    );
+  }
+  if (id === "data_ai") {
+    const dataOk = (intake.dataFlows?.length ?? 0) > 0 || isDataFlowsAnswered(intake.dataFlowDescription);
+    const aiOk = (intake.aiFeatures?.length ?? 0) > 0 || isAiUsageAnswered(intake.aiUsageDescription);
+    return dataOk && aiOk;
+  }
   return true;
 }
 
@@ -346,6 +552,7 @@ function intakeComplianceSignals(intake: ProductIntakeState): string[] {
   const dataText = intake.dataFlowDescription.trim();
   const hasPersonal =
     intake.processesPersonalData === "yes" ||
+    ((intake.dataFlows ?? []).some((f) => f !== "none") && !(intake.dataFlows ?? []).includes("none")) ||
     (dataText.length >= 8 && !NO_PERSONAL_DATA.test(dataText));
   if (hasPersonal) {
     signals.push("processes personal data");
@@ -355,14 +562,15 @@ function intakeComplianceSignals(intake: ProductIntakeState): string[] {
   const aiText = intake.aiUsageDescription.trim();
   const hasAi =
     intake.hasAi === "yes" ||
+    ((intake.aiFeatures ?? []).some((f) => f !== "none") && !(intake.aiFeatures ?? []).includes("none")) ||
     (aiText.length >= 8 && !NO_AI_HINTS.test(aiText) && (AI_HINTS.test(aiText) || aiText.length >= 16));
   if (hasAi) {
     signals.push("uses artificial intelligence and machine learning");
     signals.push("AI systems high-risk AI");
   }
 
-  const summary = `${intake.productName} ${intake.productSummary}`.toLowerCase();
-  if (/\b(software|saas|platform|cloud|firmware|connected)\b/.test(summary)) {
+  const summary = `${intake.productName} ${intake.productSummary} ${intake.productFeatures.join(" ")}`.toLowerCase();
+  if (/\b(software|saas|platform|cloud|firmware|connected|hardware|device|mobile)\b/.test(summary)) {
     signals.push("software products cybersecurity digital products");
   }
 
@@ -372,6 +580,11 @@ function intakeComplianceSignals(intake: ProductIntakeState): string[] {
 export function intakeToDescription(intake: ProductIntakeState): string {
   const parts: string[] = [];
   if (intake.productName.trim()) parts.push(`Product: ${intake.productName.trim()}`);
+  if (intake.productFeatures.length) {
+    parts.push(
+      `Features: ${intake.productFeatures.map((f) => formatProductFeatureLabel(f)).join(", ")}`,
+    );
+  }
   if (intake.productSummary.trim()) parts.push(`Summary: ${intake.productSummary.trim()}`);
   if (intake.organisationName.trim()) parts.push(`Organisation: ${intake.organisationName.trim()}`);
   if (intake.actorRoles.length) parts.push(`Roles: ${intake.actorRoles.join(", ")}`);
@@ -380,15 +593,21 @@ export function intakeToDescription(intake: ProductIntakeState): string {
   }
   if (intake.establishedInEu !== "unknown") parts.push(`Established in EU: ${intake.establishedInEu}`);
   if (intake.sellsToEu !== "unknown") parts.push(`Sells to EU: ${intake.sellsToEu}`);
+  if (intake.dataFlows?.length) {
+    parts.push(`Data flows: ${intake.dataFlows.map((f) => formatDataFlowLabel(f)).join(", ")}`);
+  }
   if (intake.dataFlowDescription.trim()) {
-    parts.push(`Data flows:\n${intake.dataFlowDescription.trim()}`);
-  } else if (intake.processesPersonalData !== "unknown") {
+    parts.push(`Data flow details:\n${intake.dataFlowDescription.trim()}`);
+  } else if (!intake.dataFlows?.length && intake.processesPersonalData !== "unknown") {
     parts.push(`Processes personal data: ${intake.processesPersonalData}`);
   }
   if (intake.dataSubjects.length) parts.push(`Data subjects: ${intake.dataSubjects.join(", ")}`);
+  if (intake.aiFeatures?.length) {
+    parts.push(`AI use: ${intake.aiFeatures.map((f) => formatAiFeatureLabel(f)).join(", ")}`);
+  }
   if (intake.aiUsageDescription.trim()) {
-    parts.push(`AI usage:\n${intake.aiUsageDescription.trim()}`);
-  } else if (intake.hasAi !== "unknown") {
+    parts.push(`AI usage details:\n${intake.aiUsageDescription.trim()}`);
+  } else if (!intake.aiFeatures?.length && intake.hasAi !== "unknown") {
     parts.push(`Uses AI: ${intake.hasAi}`);
   }
   if (intake.supplementalNote.trim()) parts.push(`Additional detail:\n${intake.supplementalNote.trim()}`);
@@ -408,11 +627,14 @@ export function hasStructuredIntake(
 ): boolean {
   return (
     intake.productName.trim().length >= 2 ||
+    intake.productFeatures.length > 0 ||
     intake.productSummary.trim().length >= 12 ||
     intake.organisationName.trim().length >= 2 ||
     intake.actorRoles.length > 0 ||
     intake.markets.length > 0 ||
+    intake.dataFlows?.length > 0 ||
     intake.dataFlowDescription.trim().length >= 8 ||
+    intake.aiFeatures?.length > 0 ||
     intake.aiUsageDescription.trim().length >= 8 ||
     intake.processesPersonalData === "yes" ||
     intake.hasAi === "yes" ||

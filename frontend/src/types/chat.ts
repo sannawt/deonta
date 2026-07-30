@@ -163,6 +163,7 @@ export interface ScopeInstrument {
   risk_category?: string | null;
   missing_atoms?: string[];
   dimensions: ScopeDimension[];
+  track?: "symbolic" | "discovery";
   llm_summary?: string;
   assessment_source?: "symbolic" | "llm_assisted" | "heuristic" | "demo_fixture" | "pending";
   confidence?: "high" | "medium" | "low";

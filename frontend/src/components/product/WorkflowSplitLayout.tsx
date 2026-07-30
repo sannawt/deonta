@@ -10,6 +10,9 @@ interface Props {
   resultsTitle?: string;
   actionsAriaLabel?: string;
   resultsAriaLabel?: string;
+  splitClassName?: string;
+  detail?: ReactNode;
+  detailAriaLabel?: string;
 }
 
 export function WorkflowSplitLayout({
@@ -22,8 +25,18 @@ export function WorkflowSplitLayout({
   resultsTitle = "Results",
   actionsAriaLabel = "Actions",
   resultsAriaLabel = "Results",
+  splitClassName,
+  detail,
+  detailAriaLabel = "Legal basis",
 }: Props) {
   const showHeader = Boolean(stepLabel || title || intro);
+  const splitClasses = [
+    "ct-workflow-split",
+    splitClassName,
+    detail ? "ct-workflow-split--with-detail" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className="ct-workflow-step">
@@ -35,7 +48,7 @@ export function WorkflowSplitLayout({
         </header>
       ) : null}
 
-      <div className="ct-workflow-split">
+      <div className={splitClasses}>
         <aside className="ct-workflow-pane ct-workflow-pane--actions" aria-label={actionsAriaLabel}>
           {actionsTitle ? (
             <header className="ct-workflow-pane-header">
@@ -50,6 +63,14 @@ export function WorkflowSplitLayout({
           </header>
           <div className="ct-workflow-pane-body ct-workflow-pane-body--results">{results}</div>
         </section>
+        {detail ? (
+          <section
+            className="ct-workflow-pane ct-workflow-pane--legal-basis"
+            aria-label={detailAriaLabel}
+          >
+            <div className="ct-workflow-pane-body ct-workflow-pane-body--legal-basis">{detail}</div>
+          </section>
+        ) : null}
       </div>
     </div>
   );

@@ -1,0 +1,176 @@
+/**
+ * ComplianceTwin design-system tokens.
+ * Palette derived from beach sky + sand atmosphere photo.
+ */
+:root {
+  /* Surfaces */
+  --ds-background-page: #FFFFFF;
+  --ds-background-surface: #FFFFFF;
+  --ds-background-subtle: #F7ECD9;
+  --ds-background-inverse: #1A4A6B;
+
+  /* Text */
+  --ds-text-primary: #2A2118;
+  --ds-text-secondary: #6B5A45;
+  --ds-text-muted: #8A755C;
+  --ds-text-inverse: #ffffff;
+  --ds-text-inverse-muted: #C5DCEB;
+
+  /* Borders */
+  --ds-border-default: #E0C9A5;
+  --ds-border-strong: #D2B48A;
+
+  /* Actions — sky-derived blue */
+  --ds-action-primary: #2F7FB8;
+  --ds-action-primary-hover: #1F5F8C;
+  --ds-action-primary-soft: #D8EEFA;
+  --ds-action-primary-border: #A8D0EB;
+  --ds-action-navy: #1A4A6B;
+  --ds-action-navy-hover: #256087;
+  --ds-action-teal: #3D7A6E;
+  --ds-action-teal-soft: #E8F3F0;
+  --ds-action-destructive: #b42318;
+  --ds-action-destructive-soft: #fef3f2;
+
+  /* Status — success (completed / verified only) */
+  --ds-status-success-text: #166534;
+  --ds-status-success-background: #f0fdf4;
+  --ds-status-success-border: #bbf7d0;
+
+  /* Status — warning — sand-warm */
+  --ds-status-warning-text: #8A5A28;
+  --ds-status-warning-background: #F7ECD9;
+  --ds-status-warning-border: #E2B78C;
+
+  /* Status — critical */
+  --ds-status-critical-text: #b42318;
+  --ds-status-critical-background: #fef3f2;
+  --ds-status-critical-border: #fecdca;
+
+  /* Status — information / applicability (sky, not green) */
+  --ds-status-info-text: #1F5F8C;
+  --ds-status-info-background: #D8EEFA;
+  --ds-status-info-border: #A8D0EB;
+
+  /* Status — unknown */
+  --ds-status-unknown-text: #6B5A45;
+  --ds-status-unknown-background: #F7ECD9;
+  --ds-status-unknown-border: #E0C9A5;
+
+  /* AI assessment panel */
+  --ds-ai-background: #D8EEFA;
+  --ds-ai-border: #A8D0EB;
+  --ds-ai-heading: #1F5F8C;
+  --ds-ai-text: #2A2118;
+
+  /* Typography */
+  --ds-font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --ds-font-mono: "DM Mono", "Fira Code", ui-monospace, monospace;
+  --ds-font-serif: "Source Serif 4", Georgia, serif;
+
+  --ds-text-display: 2rem;
+  --ds-text-page-title: 1.5rem;
+  --ds-text-section: 1.125rem;
+  --ds-text-card-title: 1rem;
+  --ds-text-body: 0.875rem;
+  --ds-text-body-sm: 0.8125rem;
+  --ds-text-label: 0.75rem;
+  --ds-text-meta: 0.6875rem;
+  --ds-text-button: 0.875rem;
+
+  --ds-leading-tight: 1.25;
+  --ds-leading-snug: 1.4;
+  --ds-leading-body: 1.55;
+  --ds-leading-legal: 1.7;
+
+  --ds-weight-regular: 400;
+  --ds-weight-medium: 500;
+  --ds-weight-semibold: 600;
+  --ds-weight-bold: 700;
+
+  /* Spacing scale (4px base) */
+  --ds-space-0: 0;
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem;
+  --ds-space-6: 1.5rem;
+  --ds-space-8: 2rem;
+  --ds-space-10: 2.5rem;
+  --ds-space-12: 3rem;
+  --ds-space-16: 4rem;
+
+  /* Radius */
+  --ds-radius-sm: 6px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 10px;
+  --ds-radius-xl: 12px;
+  --ds-radius-full: 9999px;
+
+  /* Shadows — overlays only */
+  --ds-shadow-none: none;
+  --ds-shadow-sm: 0 1px 2px rgba(42, 33, 24, 0.06);
+  --ds-shadow-md: 0 4px 16px rgba(42, 33, 24, 0.1);
+  --ds-shadow-lg: 0 12px 32px rgba(42, 33, 24, 0.14);
+
+  /* Focus */
+  --ds-focus-ring: 0 0 0 3px rgba(47, 127, 184, 0.28);
+  --ds-focus-ring-offset: 0 0 0 1px var(--ds-background-surface);
+
+  /* Z-index */
+  --ds-z-base: 0;
+  --ds-z-sticky: 20;
+  --ds-z-dropdown: 40;
+  --ds-z-drawer: 50;
+  --ds-z-modal: 60;
+  --ds-z-toast: 70;
+
+  /* Motion */
+  --ds-duration-fast: 120ms;
+  --ds-duration-normal: 200ms;
+  --ds-duration-slow: 320ms;
+  --ds-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --ds-sidebar-width: 260px;
+  --ds-sidebar-collapsed: 64px;
+  --ds-header-height: 56px;
+  --ds-content-max: 1120px;
+  --ds-reading-max: 42rem;
+  --ds-context-panel: 320px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ds-duration-fast: 0ms;
+    --ds-duration-normal: 0ms;
+    --ds-duration-slow: 0ms;
+  }
+}
+
+/* Design-system scoped utilities */
+.ds-root {
+  color: var(--ds-text-primary);
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-body);
+  line-height: var(--ds-leading-body);
+  background: var(--ds-background-page);
+}
+
+.ds-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-focus-ring-offset), var(--ds-focus-ring);
+}
+
+.ds-legal-prose {
+  max-width: var(--ds-reading-max);
+  line-height: var(--ds-leading-legal);
+  color: var(--ds-text-primary);
+}
+
+.ds-citation {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-meta);
+  color: var(--ds-text-secondary);
+}

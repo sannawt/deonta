@@ -10,7 +10,7 @@ from typing import Any, Optional
 from logic.chat_adapter import build_chat_response
 from logic.corpus import load_regulations
 from logic.fact_extractor import propose_scope_facts
-from logic.legal_db import engine_mode_for, law_by_code
+from logic.legal_db import engine_mode_for, is_symbolic_regulation, law_by_code, symbolic_regulation_codes
 from logic.llm_scope_assess import assess_retrieval_laws
 from logic.predicate_facts import (
     clarifying_questions_from_missing,
@@ -144,6 +144,37 @@ def _kg_facts_to_predicate_atoms(kg_facts: list[dict[str, Any]] | None) -> list[
     return atoms
 
 
+def _symbolic_rows() -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for code in symbolic_regulation_codes():
+        catalog = law_by_code(code) or {}
+        rows.append(
+            {
+                "code": code,
+                "label": catalog.get("label") or code,
+                "short": catalog.get("short") or "",
+                "ui_label": catalog.get("ui_label") or "",
+                "legal_instrument": catalog.get("label") or "",
+                "number": catalog.get("number") or "",
+                "engine_mode": "symbolic",
+                "score": None,
+                "track": "symbolic",
+            }
+        )
+    return rows
+
+
+def _tag_instrument_tracks(resp: dict[str, Any], symbolic_regs: list[str]) -> None:
+    symbolic_set = set(symbolic_regs)
+    scope = resp.get("scope_analysis") or {}
+    instruments = scope.get("instruments") or []
+    for inst in instruments:
+        reg_key = str(inst.get("reg_key") or "").strip().lower().replace("-", "_")
+        inst["track"] = "symbolic" if reg_key in symbolic_set else "discovery"
+    scope["instruments"] = instruments
+    resp["scope_analysis"] = scope
+
+
 def run_product_assess(
     *,
     spec: dict[str, Any],
@@ -161,12 +192,22 @@ def run_product_assess(
     compatibility_facts_for_payload_fn,
     run_reason_core_fn,
     build_rule_catalog_fn,
+    symbolic_only: bool = False,
 ) -> dict[str, Any]:
     """Run applicability pipeline and return chat-compatible assess envelope."""
+    symbolic_regs = symbolic_regulation_codes()
     raw_codes = spec.get("regulations") or spec.get("selectedLaws") or []
-    catalog_codes = _normalize_catalog_codes(raw_codes if isinstance(raw_codes, list) else None)
-    selected_law_rows = _normalize_selected_laws(selected_laws, catalog_codes)
-    selected_regs = _normalize_regulation_codes(catalog_codes or None)
+    discovery_catalog = [
+        c
+        for c in _normalize_catalog_codes(raw_codes if isinstance(raw_codes, list) else None)
+        if not is_symbolic_regulation(c)
+    ]
+    if symbolic_only:
+        discovery_catalog = []
+    catalog_codes = list(symbolic_regs) + discovery_catalog
+    discovery_rows = _normalize_selected_laws(selected_laws, discovery_catalog)
+    selected_law_rows = _symbolic_rows() + discovery_rows
+    selected_regs = list(symbolic_regs)
     situation = spec_to_situation(spec, kg_facts)
     terms = terms_from_question(situation)
     legal, playbook = fetch_legal_playbook_fn(
@@ -177,14 +218,16 @@ def run_product_assess(
     )
 
     llm_pool = ThreadPoolExecutor(max_workers=1)
-    llm_future = llm_pool.submit(
-        assess_retrieval_laws,
-        selected_law_rows,
-        spec=spec,
-        kg_facts=kg_facts,
-        legal_matches=legal.get("matches") or [],
-        symbolic_codes=set(selected_regs),
-    )
+    llm_future = None
+    if discovery_rows and not symbolic_only:
+        llm_future = llm_pool.submit(
+            assess_retrieval_laws,
+            discovery_rows,
+            spec=spec,
+            kg_facts=kg_facts,
+            legal_matches=legal.get("matches") or [],
+            symbolic_codes=set(symbolic_regs),
+        )
 
     proposed = propose_scope_facts(
         situation,
@@ -265,9 +308,13 @@ def run_product_assess(
             questions.append(q)
             seen_q.add(q.get("id"))
 
-    try:
-        llm_scope_instruments = llm_future.result()
-    finally:
+    llm_scope_instruments: list[dict[str, Any]] = []
+    if llm_future is not None:
+        try:
+            llm_scope_instruments = llm_future.result()
+        finally:
+            llm_pool.shutdown(wait=False)
+    else:
         llm_pool.shutdown(wait=False)
 
     flow_response = {
@@ -306,7 +353,10 @@ def run_product_assess(
     }
     resp["selected_regulations"] = selected_regs
     resp["selected_laws"] = selected_law_rows
+    resp["symbolic_codes"] = symbolic_regs
+    resp["discovery_codes"] = discovery_catalog
     resp["missing_predicates"] = missing
+    _tag_instrument_tracks(resp, symbolic_regs)
 
     from logic.prototype_fast import is_prototype_mode
     from logic.prototype_smartroof_scope import apply_smartroof_demo_scope

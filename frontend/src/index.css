@@ -2,43 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── ComplianceTwin design tokens ──────────────────────────── */
+/* ── ComplianceTwin design tokens (from beach sky + sand photo) ─ */
 :root {
-  /* Reference palette (light cloud) */
-  --blue: #2D6BE4;
-  --blue-dk: #0F1D4E;
-  --blue-lt: #e8f2ff;
-  --blue-mid: #5b8fef;
+  --blue: #2F7FB8;
+  --blue-dk: #1A4A6B;
+  --blue-lt: #D8EEFA;
+  --blue-mid: #4A97C9;
+  --brand-blue: #2F7FB8;
+  --accent-teal: #3D7A6E;
 
-  --cloud0: #ffffff;
-  --cloud1: #f5f9ff;
-  --cloud2: #eaf3ff;
-  --cloud3: #d6eaff;
-  --cloud4: #bdd9ff;
+  --cloud0: #FFFFFF;
+  --cloud1: #FFFFFF;
+  --cloud2: #EACDA5;
+  --cloud3: #E2B78C;
+  --cloud4: #D2B48A;
 
-  --txt: #0f172a;
-  --txt2: #374151;
-  --txt3: #6b7280;
-  --txt4: #9ca3af;
+  --txt: #2A2118;
+  --txt2: #6B5A45;
+  --txt3: #6B5A45;
+  --txt4: #8A755C;
 
-  --green: #059669;
-  --green-l: rgba(5, 150, 105, .09);
-  --red: #dc2626;
-  --red-l: rgba(220, 38, 38, .08);
-  --amber: #d97706;
-  --amber-l: rgba(217, 119, 6, .09);
-  --amber-lt: #fffbeb;
-  --def: #1e3a8a;
-  --def-l: rgba(30, 58, 138, .08);
-  --def-lt: #eef2ff;
+  --green: #3D7A6E;
+  --green-l: rgba(61, 122, 110, .1);
+  --red: #b42318;
+  --red-l: rgba(180, 35, 24, .08);
+  --amber: #b8895c;
+  --amber-l: rgba(184, 137, 92, .12);
+  --amber-lt: #f7ecd9;
+  --def: #1A4A6B;
+  --def-l: rgba(26, 74, 107, .08);
+  --def-lt: #D8EEFA;
 
-  --bdr: rgba(45, 107, 228, .11);
-  --bdr2: rgba(45, 107, 228, .2);
-  --glass: rgba(255, 255, 255, .8);
+  --bdr: #E0C9A5;
+  --bdr2: #D2B48A;
+  --glass: rgba(255, 251, 245, .82);
 
-  --sh-xs: 0 1px 3px rgba(15, 29, 78, .05), 0 0 0 1px rgba(45, 107, 228, .07);
-  --sh-sm: 0 2px 8px rgba(15, 29, 78, .07), 0 0 0 1px rgba(45, 107, 228, .07);
-  --sh-md: 0 4px 20px rgba(15, 29, 78, .08), 0 1px 4px rgba(45, 107, 228, .05);
+  --sh-xs: 0 1px 3px rgba(42, 33, 24, .05), 0 0 0 1px rgba(224, 201, 165, .75);
+  --sh-sm: 0 2px 8px rgba(42, 33, 24, .07), 0 0 0 1px rgba(224, 201, 165, .85);
+  --sh-md: 0 4px 20px rgba(42, 33, 24, .08), 0 1px 4px rgba(47, 127, 184, .06);
 
   --sidebar-w: 244px;
   --sidebar-w-collapsed: 52px;
@@ -93,18 +94,7 @@ html, body, #root {
   min-height: 100vh;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 110% 70% at -5% 0%, rgba(195, 221, 255, .5) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 108% 100%, rgba(180, 212, 255, .4) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 255, 255, .85) 0%, transparent 70%),
-    linear-gradient(180deg, #eef6ff 0%, #f8fcff 50%, #f0f8ff 100%);
-}
+/* Atmosphere image is applied in sand-theme.css (body::before) */
 
 /* ── Typography helpers ────────────────────────────────────── */
 .font-mono { font-family: 'DM Mono', 'Fira Code', monospace; }
@@ -128,7 +118,7 @@ body::before {
 .badge-green  { background: var(--green-l); color: var(--green); border: 1px solid rgba(5,150,105,.2); }
 .badge-amber  { background: var(--amber-l); color: var(--amber); border: 1px solid rgba(217,119,6,.2); }
 .badge-red    { background: var(--red-l);   color: var(--red);   border: 1px solid rgba(220,38,38,.15); }
-.badge-blue   { background: var(--blue-lt); color: var(--blue);  border: 1px solid rgba(45,107,228,.2); }
+.badge-blue   { background: var(--blue-lt); color: var(--blue);  border: 1px solid rgba(29,78,216,.2); }
 .badge-gray   { background: var(--cloud2);  color: var(--txt3);  border: 1px solid var(--bdr); }
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 9999px; font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.03em; white-space: nowrap; }
 
@@ -1399,7 +1389,8 @@ details > summary::-webkit-details-marker { display: none; }
   flex: 1 0 auto;
   min-height: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: stretch;
   background: linear-gradient(180deg, var(--cloud1) 0%, var(--cloud0) 40%);
 }
 .ct-header {

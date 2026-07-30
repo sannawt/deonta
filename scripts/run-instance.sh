@@ -33,4 +33,5 @@ case "$INSTANCE" in
 esac
 
 echo "ComplianceTwin ${APP_INSTANCE} → http://127.0.0.1:${PORT}/ (peer: ${PEER})"
+.venv/bin/pip install -q -r requirements.txt
 exec .venv/bin/uvicorn main:app --reload --host 127.0.0.1 --port "$PORT"

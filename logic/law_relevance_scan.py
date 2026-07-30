@@ -21,7 +21,14 @@ from logic.law_title_format import (
     tier_score_penalty,
     title_summary,
 )
-from logic.legal_db import LAW_CATALOG, engine_mode_for, law_by_code, neo4j_legal_configured
+from logic.legal_db import (
+    LAW_CATALOG,
+    engine_mode_for,
+    is_symbolic_regulation,
+    law_by_code,
+    neo4j_legal_configured,
+    symbolic_regulation_codes,
+)
 from logic.local_legal_store import legal_graph_backend
 from logic.neo4j_embedding_config import load_embedding_profile
 from logic.neo4j_vector_search import (
@@ -1027,6 +1034,19 @@ def rank_regulations(
     return out, method, total_ranked, total_passing
 
 
+def _row_catalog_code(row: dict[str, Any]) -> str:
+    return str(row.get("catalog_code") or row.get("code") or "").strip().lower().replace("-", "_")
+
+
+def filter_discovery_results(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove symbolic (rule-based) laws from semantic discovery results."""
+    return [r for r in results if not is_symbolic_regulation(_row_catalog_code(r))]
+
+
+def _scan_payload_extras() -> dict[str, Any]:
+    return {"symbolic_codes": symbolic_regulation_codes()}
+
+
 def _fill_missing_catalog_rows(
     results: list[dict[str, Any]],
     regulations: list[dict[str, Any]],
@@ -1039,6 +1059,8 @@ def _fill_missing_catalog_rows(
     out = list(results)
     present = {str(r.get("catalog_code") or "") for r in out if r.get("catalog_code")}
     for code in description_catalog_codes:
+        if is_symbolic_regulation(code):
+            continue
         if code in present:
             continue
         reg = next(
@@ -1089,15 +1111,26 @@ def scan_relevant_laws(
     )
     cached = get_cached_scan(cache_key)
     if cached is not None:
-        return cached
+        return {
+            **cached,
+            "results": filter_discovery_results(cached.get("results") or []),
+            **_scan_payload_extras(),
+        }
 
     def _try_catalog_scan() -> dict[str, Any] | None:
-        return catalog_scan_response(
+        resp = catalog_scan_response(
             description,
             limit=limit,
             min_score=min_score,
             include_secondary=include_secondary,
         )
+        if resp is None:
+            return None
+        return {
+            **resp,
+            "results": filter_discovery_results(resp.get("results") or []),
+            **_scan_payload_extras(),
+        }
 
     if is_prototype_mode() and not full_scan:
         catalog_resp = _try_catalog_scan()
@@ -1253,6 +1286,7 @@ def scan_relevant_laws(
             description_catalog_codes,
             limit=rank_limit or limit,
         )
+    results = filter_discovery_results(results)
     corpus_chars = sum(len(_regulation_search_blob(r)) for r in regulations)
     total_hits = sum(int(r.get("hit_count") or 0) for r in regulations)
     total_vector_hits = sum(int(r.get("vector_hit_count") or 0) for r in regulations)
@@ -1273,6 +1307,7 @@ def scan_relevant_laws(
         "total_vector_hits": total_vector_hits,
         "results": results,
         "rank_method": rank_method,
+        **_scan_payload_extras(),
         "embedding_search": {
             "has_neo4j_embeddings": profile.has_embeddings,
             "vector_search_used": vector_used,
